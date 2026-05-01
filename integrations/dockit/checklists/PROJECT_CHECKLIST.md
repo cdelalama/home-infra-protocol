@@ -42,8 +42,18 @@ forgotten).
     (or `https://<host>:<port>` for hosts with their own TLS),
   - Caddyfile backup saved as
     `Caddyfile.bak.before-<service>-<YYYYMMDD>-<HHMM>`.
-- [ ] `edge-caddy` reloaded
-  (`docker compose restart edge-caddy` or `caddy reload`).
+- [ ] `edge-caddy` restarted on NAS using the **full path** of the
+  compose plugin (the `docker compose` subcommand is not available
+  on QNAP; see `~/src/home-infra/docs/CONVENTIONS.md` *Docker Image
+  Management*):
+  ```sh
+  /usr/local/lib/docker/cli-plugins/docker-compose \
+      -f /share/Container/compose/edge-caddy/docker-compose.yml \
+      restart edge-caddy
+  ```
+  Use `restart`, not `caddy reload`. Reload alone may not pick up a
+  newly added vhost depending on how Caddy was started; restart is
+  the safer pattern documented in past TLS Hub sessions.
 - [ ] HTTPS verified from LAN
   (`curl -fsS https://<service>.lamanoriega.com/...`).
 - [ ] Cert chain confirmed

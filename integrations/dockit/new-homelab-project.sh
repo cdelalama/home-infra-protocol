@@ -210,15 +210,17 @@ fi
 if [ "$CREATE_GITHUB" = true ]; then
     echo ""
     echo "[3/4] Creating GitHub repo $GH_OWNER/$PROJECT_NAME ($VISIBILITY) ..."
-    DESC_ARG=""
-    [ -n "$DESCRIPTION" ] && DESC_ARG="--description $DESCRIPTION"
-    # shellcheck disable=SC2086
-    gh repo create "$GH_OWNER/$PROJECT_NAME" \
+    # Build the gh argv via positional parameters so values containing
+    # spaces (e.g. --description "Some words here") survive.
+    set -- "$GH_OWNER/$PROJECT_NAME" \
         "--$VISIBILITY" \
-        --source="$TARGET_DIR" \
+        "--source=$TARGET_DIR" \
         --remote=origin \
-        --push \
-        $DESC_ARG \
+        --push
+    if [ -n "$DESCRIPTION" ]; then
+        set -- "$@" --description "$DESCRIPTION"
+    fi
+    gh repo create "$@" \
         || { echo "ERROR: gh repo create failed (local repo intact at $TARGET_DIR)" >&2; exit 2; }
     echo "[4/4] Pushed to https://github.com/$GH_OWNER/$PROJECT_NAME"
 else

@@ -3,6 +3,42 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.1.5] - 2026-05-01
+
+### Fixed
+
+- `integrations/dockit/new-homelab-project.sh`: `--description` with
+  spaces was being split into multiple arguments to `gh repo create`.
+  The previous build constructed `DESC_ARG="--description $DESCRIPTION"`
+  and expanded it unquoted, so `--description "Project with words"`
+  reached `gh` as four separate positional args. Fixed using POSIX
+  positional parameters (`set -- ... ; set -- "$@" --description
+  "$DESCRIPTION"`) so the description survives as a single argv
+  element regardless of internal spacing.
+- `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: the
+  edge-caddy reload step previously listed `docker compose restart
+  edge-caddy` or `caddy reload` as equivalent options. Both are
+  wrong on QNAP NAS — the `docker compose` subcommand is not on
+  PATH there (per `home-infra/docs/CONVENTIONS.md`) and `caddy
+  reload` may not pick up newly added vhosts depending on how
+  Caddy was started. Replaced with the full compose-plugin path
+  (`/usr/local/lib/docker/cli-plugins/docker-compose -f
+  /share/Container/compose/edge-caddy/docker-compose.yml restart
+  edge-caddy`) and a note that `restart` is the safer pattern for
+  new vhosts.
+
+### Changed
+
+- `integrations/dockit/templates/AGENTS.md`: tightened the
+  `docs/PROJECTS.md` mandatory-update rule. Previously said
+  "whenever a project is created, bumps version, or changes
+  status" — too aggressive for projects with frequent internal
+  patches. Now scopes the rule to **deployed reality**: project
+  created or retired, deployed version on a host changes, status
+  changes, host placement changes, exposure (UI / API / URL)
+  changes. Internal patch releases that never reach a host do not
+  warrant a PROJECTS.md update. Found by GPT-5 review.
+
 ## [0.1.4] - 2026-05-01
 
 ### Added

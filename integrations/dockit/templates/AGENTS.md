@@ -32,8 +32,12 @@ the agent must update in the same session, in `~/src/home-infra/`:
 - `docs/INVENTORY.md` — when hosts, IPs, or ports change.
 - `docs/SERVICES.md` — when a service is added, removed, or
   relocated to another host.
-- `docs/PROJECTS.md` — whenever a project is created, bumps version,
-  or changes status.
+- `docs/PROJECTS.md` — when **deployed reality** changes: the
+  project is created or retired, the deployed version on a host
+  changes, status changes, host placement changes, exposure (UI /
+  API / URL) changes. Internal patch releases that never reach a
+  host do not warrant a PROJECTS.md update — the table tracks
+  observed state, not repo HEAD.
 - `catalog/services.yml` — only if the service is portal-visible
   (`infra-portal` will render it).
 

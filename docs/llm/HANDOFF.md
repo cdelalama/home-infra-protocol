@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.4 -->
+<!-- doc-version: 0.1.5 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,22 +7,55 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-01 - Claude
-- Session Focus: Patch 0.1.4 — orchestrator + Claude skill for
-  end-to-end "new homelab project" UX.
-- Status: 0.1.4 closes the loop on the operator's UX target ("from
-  `~/src/`, tell the LLM to start a new project, everything just
-  happens"). Three entry points now converge on the same homelab
-  profile: the existing `apply-profile.sh` (profile-only), the new
-  `new-homelab-project.sh` (orchestrator that calls LLM-DocKit's
-  `dockit-init-project.sh` + `apply-profile.sh` + optional GitHub
-  creation), and a Claude skill `/new-homelab-project` that wraps
-  the orchestrator with a five-question conversation and closes the
-  loop by editing `home-infra/docs/PROJECTS.md`. The orchestrator
-  was smoke-tested end-to-end against `/tmp/smoke-homelab` (validator
-  6/6 PASS, two-commit history, `AGENTS.md` + `CLAUDE.md` symlink
-  present). Effects visible to others stay opt-in: `--github` is the
-  flag that authorises GitHub repo creation; the skill confirms a
-  literal plan with the operator before any external effect.
+- Session Focus: Patch 0.1.5 — three GPT-5-review fixes against the
+  0.1.4 ship.
+- Status: 0.1.5 fixes three real issues found by GPT-5 reviewing the
+  freshly published 0.1.4. (1) `new-homelab-project.sh` was
+  splitting a `--description` with spaces into multiple args to
+  `gh repo create`; rewritten to use POSIX positional parameters so
+  the description survives as a single argv element. (2)
+  `PROJECT_CHECKLIST.md` listed `docker compose restart edge-caddy`
+  or `caddy reload` as equivalent — both wrong on QNAP NAS where
+  `docker compose` is not on PATH and reload alone may not pick up
+  new vhosts; replaced with the full compose-plugin path and an
+  explicit note preferring `restart` for new vhosts. (3)
+  `templates/AGENTS.md` mandated PROJECTS.md updates "whenever a
+  project bumps version" — too aggressive for projects with
+  frequent internal patches; scoped to deployed-reality changes
+  (project created or retired, deployed version on a host changes,
+  status / host / exposure / URL changes). End-to-end smoke test
+  against `/tmp/smoke-homelab` confirmed: branch is `main`, AGENTS.md
+  reflects the new wording, checklist reflects the QNAP path,
+  `set --` quoting verified mechanically with a description
+  containing spaces (argv[7] = the entire description).
+
+## Patch 0.1.5 Outcome
+
+- `integrations/dockit/new-homelab-project.sh`: `gh repo create`
+  invocation rewritten to build argv via POSIX positional
+  parameters. `set -- "$GH_OWNER/$PROJECT_NAME" "--$VISIBILITY"
+  "--source=$TARGET_DIR" --remote=origin --push` then conditionally
+  `set -- "$@" --description "$DESCRIPTION"` if non-empty, then
+  `gh repo create "$@"`. Verified by stubbing `gh` with a printer
+  and reading argv element by element: the description with three
+  spaces survives as a single arg.
+- `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: edge-caddy
+  reload step now uses the full path
+  `/usr/local/lib/docker/cli-plugins/docker-compose -f
+  /share/Container/compose/edge-caddy/docker-compose.yml restart
+  edge-caddy`, with a note that `restart` is the safer pattern for
+  new vhosts (Caddy's `reload` may not pick up new sites depending
+  on how it was started). The QNAP-specific path is required
+  because `docker compose` is not on PATH on QNAP per
+  `~/src/home-infra/docs/CONVENTIONS.md`.
+- `integrations/dockit/templates/AGENTS.md`: PROJECTS.md
+  mandatory-update rule tightened. Was: "whenever a project is
+  created, bumps version, or changes status" — too aggressive for
+  projects with frequent internal patches. Now: deployed-reality
+  scope (created / retired, deployed version on a host changes,
+  status / host / exposure changes). Internal patches that don't
+  reach a host don't warrant a PROJECTS.md update.
+- 25 doc-version targets synced via `scripts/bump-version.sh 0.1.5`.
 
 ## Patch 0.1.4 Outcome
 
