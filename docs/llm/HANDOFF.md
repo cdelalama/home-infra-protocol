@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.2 -->
+<!-- doc-version: 0.1.3 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,16 +7,43 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-01 - Claude
-- Session Focus: Patch 0.1.2 — README Ecosystem map.
-- Status: 0.1.2 is documentation-only. The README now carries an explicit
-  Ecosystem map listing the four homelab repositories alongside this one
-  with role and visibility per repo. The map makes the public/private split
-  explicit (private source-of-truth and consumer repos contain real hosts,
-  IPs and runbook references; the protocol stays public). It also clarifies
-  that `LLM-DocKit` is kept separate from this protocol on purpose so it can
-  stay general-purpose; ecosystem projects scaffold from `LLM-DocKit` first
-  per the *Project Bootstrap Rule* and may opt into the protocol's contracts
-  as they mature.
+- Session Focus: Patch 0.1.3 — homelab profile for LLM-DocKit projects.
+- Status: 0.1.3 ships an opt-in profile under `integrations/dockit/`
+  (5 files: `INTEGRATION.md`, `templates/AGENTS.md`,
+  `templates/infra.contract.yml`,
+  `checklists/PROJECT_CHECKLIST.md`, `apply-profile.sh`). New homelab
+  projects scaffolded from `cdelalama/LLM-DocKit` apply this profile
+  with one command and immediately see the source-of-truth
+  conventions, the deploy checklist, and an experimental contract
+  template. `apply-profile.sh` is POSIX `sh`, idempotent, never
+  overwrites; smoke-tested locally (create + idempotent re-run).
+  `LLM-DocKit` stays general-purpose; the homelab-specific layer
+  lives here on purpose.
+
+## Patch 0.1.3 Outcome
+
+- `integrations/dockit/INTEGRATION.md`: design rationale (separation
+  from LLM-DocKit, multi-LLM rationale with `AGENTS.md` canonical),
+  what gets installed, how to apply, what the profile does NOT do,
+  future-native-support notes.
+- `integrations/dockit/templates/AGENTS.md`: required reading order,
+  mandatory `home-infra` updates rule, anti-rules. LLM-neutral
+  language so Codex / Cursor / others can read the same file.
+- `integrations/dockit/templates/infra.contract.yml`: protocol-
+  aligned template with `TODO:` placeholders. Marked optional and
+  experimental.
+- `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: operational
+  checklist for "deploy is done" — build, secrets, runtime, network
+  + TLS, source-of-truth updates, project docs, optional contract,
+  smoke checks.
+- `integrations/dockit/apply-profile.sh`: POSIX `sh`, idempotent.
+  `cp -n` semantics for files (existing files never replaced),
+  symlink `CLAUDE.md → AGENTS.md` so Claude Code's loader picks up
+  the canonical content without duplicating it. Smoke-tested:
+  fresh dir → 4 created; re-run → 4 skipped.
+- `docs/version-sync-manifest.yml`: added
+  `integrations/dockit/INTEGRATION.md`. 25 doc-version targets
+  synced via `scripts/bump-version.sh 0.1.3`.
 
 ## Patch 0.1.2 Outcome
 

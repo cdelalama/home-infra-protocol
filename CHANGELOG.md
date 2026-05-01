@@ -1,7 +1,41 @@
-<!-- doc-version: 0.1.2 -->
+<!-- doc-version: 0.1.3 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
+
+## [0.1.3] - 2026-05-01
+
+### Added
+
+- New directory `integrations/dockit/`: opt-in profile for projects
+  scaffolded from `cdelalama/LLM-DocKit` that participate in the
+  homelab. Five files:
+  - `INTEGRATION.md` — what the profile is, how to apply, design
+    rationale, multi-LLM rationale (`AGENTS.md` canonical).
+  - `templates/AGENTS.md` — LLM-neutral agent context for the new
+    project (required reading order, mandatory `home-infra` updates
+    rule, anti-rules).
+  - `templates/infra.contract.yml` — protocol-aligned contract
+    template with `TODO:` placeholders. Optional and experimental.
+  - `checklists/PROJECT_CHECKLIST.md` — operational deploy checklist
+    (build, secrets, runtime, network/TLS, source-of-truth updates,
+    project docs, optional contract, smoke checks).
+  - `apply-profile.sh` — POSIX `sh` script, idempotent. Copies the
+    files into a target project; symlinks `CLAUDE.md → AGENTS.md`
+    so Claude Code's loader picks up the same content. Never
+    overwrites existing files.
+- `integrations/dockit/INTEGRATION.md` added to
+  `docs/version-sync-manifest.yml`.
+
+### Changed
+
+- This profile is intentionally hosted in `home-infra-protocol`,
+  not in `LLM-DocKit`. `LLM-DocKit` stays general-purpose; the
+  protocol owns the homelab-specific layer. A future native
+  `dockit init --profile <path>` mechanism would delegate to the
+  same `apply-profile.sh` to keep entry points in sync.
+
+### Fixed
 
 ## [0.1.2] - 2026-05-01
 

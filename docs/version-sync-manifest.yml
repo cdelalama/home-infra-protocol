@@ -26,3 +26,4 @@ targets:
 - path: docs/operations/README.md  marker: html-comment
 - path: docs/operations/API_CONTRACT.md marker: html-comment
 - path: docs/operations/DEPLOY_PLAYBOOK.md marker: html-comment
+- path: integrations/dockit/INTEGRATION.md marker: html-comment
