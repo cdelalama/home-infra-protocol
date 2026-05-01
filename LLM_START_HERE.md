@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.0 -->
+<!-- doc-version: 0.1.1 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -101,6 +101,7 @@ Source of truth: `docs/llm/HANDOFF.md`.
 ## Quick Navigation
 
 - Protocol Spec: `SPEC.md`
+- Governance: `docs/GOVERNANCE.md`
 - Project Overview: `docs/PROJECT_CONTEXT.md`
 - Architecture: `docs/ARCHITECTURE.md`
 - Completion Rule: `docs/COMPLETION_RULE.md`

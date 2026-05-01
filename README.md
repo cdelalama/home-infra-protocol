@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.0 -->
+<!-- doc-version: 0.1.1 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -38,6 +38,7 @@ Start with [SPEC.md](SPEC.md), then compare the example catalog under
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Protocol components and roadmap |
 | [docs/COMPLETION_RULE.md](docs/COMPLETION_RULE.md) | Definition of done for infrastructure changes |
 | [docs/PROJECT_CONTRACTS.md](docs/PROJECT_CONTRACTS.md) | Project-level contract direction |
+| [docs/GOVERNANCE.md](docs/GOVERNANCE.md) | Field policy, ownership, bootstrap, compliance claims |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Exposure and trust model |
 | [docs/RECOVERY_MODEL.md](docs/RECOVERY_MODEL.md) | Rebuilding the knowledge system |
 | [docs/LLM_WORKFLOW.md](docs/LLM_WORKFLOW.md) | How LLM agents should use the protocol |

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.0 -->
+<!-- doc-version: 0.1.1 -->
 # Repository Structure
 
 ```text
@@ -28,6 +28,7 @@ home-infra-protocol/
 │   ├── ARCHITECTURE.md
 │   ├── COMPLETION_RULE.md
 │   ├── PROJECT_CONTRACTS.md
+│   ├── GOVERNANCE.md
 │   ├── SECURITY_MODEL.md
 │   ├── RECOVERY_MODEL.md
 │   ├── LLM_WORKFLOW.md

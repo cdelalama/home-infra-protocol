@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.0 -->
+<!-- doc-version: 0.1.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -27,6 +27,11 @@ by a human operator with LLM assistance.
    requires a coordinated release.
 7. **Secrets are references only.** Catalogs may name secret stores and variable
    names, never secret values.
+
+## Governance
+
+Field policy, ownership boundaries, project bootstrap rules, and compliance
+claim rules live in `docs/GOVERNANCE.md`.
 
 ## Core Entities
 
