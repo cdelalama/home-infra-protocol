@@ -1,0 +1,41 @@
+hosts:
+  - id: nas
+    name: NAS
+    role: storage and services
+    ip: 10.0.0.10
+
+  - id: home-automation
+    name: Home Automation Host
+    role: home automation
+    ip: 10.0.0.20
+
+services:
+  - id: infra
+    name: Infra Portal
+    category: infra
+    url: https://infra.example.internal/
+    host_id: nas
+    runtime: docker
+    image: infra-portal:0.1.0
+    tags: [portal, catalog]
+    description: Example internal infrastructure portal.
+    status:
+      type: http
+      url: https://infra.example.internal/api/health
+      timeout_ms: 2000
+      expect_status: 200
+
+  - id: home-dashboard
+    name: Home Dashboard
+    category: automation
+    url: https://home.example.internal/
+    fallback_url: http://10.0.0.20:8123/
+    host_id: home-automation
+    runtime: docker
+    tags: [home, automation]
+    deps: [infra]
+    description: Example home automation dashboard.
+    status:
+      type: http
+      url: https://home.example.internal/
+      timeout_ms: 2000

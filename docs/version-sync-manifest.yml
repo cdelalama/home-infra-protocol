@@ -1,0 +1,27 @@
+# Version Sync Manifest -- single source of truth
+# Read by scripts/bump-version.sh and scripts/check-version-sync.sh
+
+targets:
+- path: VERSION                    marker: version-file
+- path: CHANGELOG.md               marker: changelog
+- path: README.md                  marker: html-comment
+- path: HOW_TO_USE.md              marker: html-comment
+- path: LLM_START_HERE.md          marker: html-comment
+- path: SPEC.md                    marker: html-comment
+- path: docs/PROJECT_CONTEXT.md    marker: html-comment
+- path: docs/ARCHITECTURE.md       marker: html-comment
+- path: docs/STRUCTURE.md          marker: html-comment
+- path: docs/VERSIONING_RULES.md   marker: html-comment
+- path: docs/COMPLETION_RULE.md    marker: html-comment
+- path: docs/PROJECT_CONTRACTS.md  marker: html-comment
+- path: docs/SECURITY_MODEL.md     marker: html-comment
+- path: docs/RECOVERY_MODEL.md     marker: html-comment
+- path: docs/LLM_WORKFLOW.md       marker: html-comment
+- path: docs/llm/HANDOFF.md        marker: html-comment
+- path: docs/llm/HISTORY.md        marker: html-comment
+- path: docs/llm/DECISIONS.md      marker: html-comment
+- path: docs/llm/README.md         marker: html-comment
+- path: docs/llm/REVIEWS.md        marker: html-comment
+- path: docs/operations/README.md  marker: html-comment
+- path: docs/operations/API_CONTRACT.md marker: html-comment
+- path: docs/operations/DEPLOY_PLAYBOOK.md marker: html-comment

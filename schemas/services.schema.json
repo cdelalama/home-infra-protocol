@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://home-infra-protocol.example/schemas/services.schema.json",
+  "title": "Home Infra Protocol Services",
+  "type": "object",
+  "required": ["services"],
+  "properties": {
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "url"],
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "name": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "minLength": 1 },
+          "fallback_url": { "type": "string" },
+          "host_id": { "type": "string" },
+          "runtime": { "type": "string" },
+          "image": { "type": "string" },
+          "container_name": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "description": { "type": "string" },
+          "deps": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "runbook": { "type": "string" },
+          "hidden": { "type": "boolean", "default": false },
+          "disabled": { "type": "boolean", "default": false },
+          "status": {
+            "type": "object",
+            "required": ["type"],
+            "additionalProperties": true,
+            "properties": {
+              "type": { "enum": ["http", "tcp", "none"] },
+              "url": { "type": "string" },
+              "host": { "type": "string" },
+              "port": { "type": "integer", "minimum": 1 },
+              "timeout_ms": { "type": "integer", "minimum": 1 },
+              "expect_status": { "type": "integer" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

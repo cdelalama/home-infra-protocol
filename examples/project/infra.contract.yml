@@ -1,0 +1,17 @@
+id: example-app
+name: Example App
+repository: https://github.com/example/example-app
+
+services:
+  - example-app
+
+runbooks:
+  deploy: docs/DEPLOY.md
+  restore: docs/RESTORE.md
+  verify: docs/VERIFY.md
+  rollback: docs/ROLLBACK.md
+
+secret_refs:
+  - name: EXAMPLE_APP_TOKEN
+    store: doppler
+    notes: Variable name only; never commit the value.
