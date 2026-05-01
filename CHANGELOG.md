@@ -1,7 +1,42 @@
-<!-- doc-version: 0.1.3 -->
+<!-- doc-version: 0.1.4 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
+
+## [0.1.4] - 2026-05-01
+
+### Added
+
+- `integrations/dockit/new-homelab-project.sh`: orchestrator that
+  bootstraps a brand-new homelab project end-to-end. Runs
+  `cdelalama/LLM-DocKit:scripts/dockit-init-project.sh` for the
+  generic scaffold, then `apply-profile.sh` for the homelab layer,
+  then optionally `gh repo create` + push when `--github` is
+  passed. GitHub creation is opt-in (effects visible to others stay
+  explicit). Aborts if the target directory already exists or if
+  `cdelalama/<name>` is already taken on GitHub. Smoke-tested
+  end-to-end against `/tmp/smoke-homelab`: validator 6/6 PASS, two
+  commits in the new project (initial scaffold + apply homelab
+  profile), `AGENTS.md` present, `CLAUDE.md` is the symlink.
+- `integrations/dockit/skills/new-homelab-project/SKILL.md`:
+  Claude Code skill that wraps the orchestrator with a five-question
+  conversation (name, description, host, exposes-UI, GitHub now?),
+  prints a literal plan, confirms, runs the orchestrator, then
+  edits `~/src/home-infra/docs/PROJECTS.md` to register the project
+  and commits + pushes in `home-infra`. One-time setup is a single
+  symlink under `~/.claude/skills/`.
+
+### Changed
+
+- `integrations/dockit/INTEGRATION.md`: now documents three entry
+  points (orchestrator, skill, profile-only) instead of just the
+  profile-only path. Added a "Layering and single source of truth"
+  section emphasising that all three entry points converge on the
+  same `apply-profile.sh` for the homelab layer; higher layers add
+  concerns (orchestrator adds GitHub creation; skill adds the
+  PROJECTS.md edit) without duplicating profile logic.
+
+### Fixed
 
 ## [0.1.3] - 2026-05-01
 

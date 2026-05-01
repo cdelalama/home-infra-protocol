@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.3 -->
+<!-- doc-version: 0.1.4 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -48,21 +48,77 @@ safely; it reports what it created and what it skipped.
 
 ## How to apply
 
-From the new project's root:
+There are three entry points, all converging on the same five files
+(`AGENTS.md`, `CLAUDE.md` symlink, `infra.contract.yml`,
+`.claude/checklists/homelab-project.md`).
+
+### 1. End-to-end one-shot (recommended)
+
+If the project does not exist yet, the simplest path is the
+orchestrator script `new-homelab-project.sh` in this same directory.
+It calls `cdelalama/LLM-DocKit:scripts/dockit-init-project.sh` first
+(generic scaffold), then `apply-profile.sh` (the homelab layer), and
+optionally creates a GitHub repo and pushes. Example:
+
+```sh
+~/src/home-infra-protocol/integrations/dockit/new-homelab-project.sh \
+    my-new-thing \
+    --description "What this does" \
+    --host nas \
+    --exposes-ui \
+    --github
+```
+
+By default the orchestrator creates the new project at
+`~/src/<name>`, defaults to language `Spanish`, and **does not**
+create a GitHub repository unless `--github` is passed (effects
+visible to others stay opt-in). It deliberately does not edit
+`~/src/home-infra/`; the corresponding `docs/PROJECTS.md` entry is
+the operator's responsibility (or the
+`/new-homelab-project` Claude skill below).
+
+Run with `--help` to see all flags:
+
+```sh
+~/src/home-infra-protocol/integrations/dockit/new-homelab-project.sh --help
+```
+
+### 2. Claude Code skill
+
+`integrations/dockit/skills/new-homelab-project/SKILL.md` ships a
+conversational wrapper around the orchestrator. When the operator
+says they want to start a new project for the homelab, the skill
+asks five questions (name, description, host, exposes-UI, GitHub
+now?), prints a literal plan, confirms, runs the orchestrator, then
+edits `~/src/home-infra/docs/PROJECTS.md` to register the project
+and commits + pushes in `home-infra`. One-time setup:
+
+```sh
+ln -s ~/src/home-infra-protocol/integrations/dockit/skills/new-homelab-project \
+      ~/.claude/skills/new-homelab-project
+```
+
+After the symlink is in place, every Claude Code session can invoke
+`/new-homelab-project` from any directory.
+
+### 3. Apply profile to an existing project
+
+If the project already exists (for example you scaffolded it with
+`/adopt-dockit` or by hand), apply only the homelab layer:
 
 ```sh
 ~/src/home-infra-protocol/integrations/dockit/apply-profile.sh
 ```
 
-Or pass the target explicitly:
+Or with an explicit target:
 
 ```sh
-~/src/home-infra-protocol/integrations/dockit/apply-profile.sh ~/src/<new-project>
+~/src/home-infra-protocol/integrations/dockit/apply-profile.sh ~/src/<existing-project>
 ```
 
-The script is POSIX `sh`, idempotent, and only runs `cp`, `mkdir`,
-and `ln`. It never touches `~/src/home-infra/` and never edits files
-that already exist in the target.
+`apply-profile.sh` is POSIX `sh`, idempotent, and only runs `cp`,
+`mkdir`, and `ln`. It never touches `~/src/home-infra/` and never
+edits files that already exist in the target.
 
 ## Multi-LLM rationale (`AGENTS.md` is canonical)
 
@@ -89,18 +145,22 @@ copies that can drift.
 - Does not embed homelab content in `LLM-DocKit`. `LLM-DocKit` stays
   general-purpose; this profile is the homelab-specific layer.
 
-## Future: native profile support in LLM-DocKit
+## Layering and the single source of truth
 
-When `LLM-DocKit` grows a generic profile mechanism (for example
-`dockit init --profile <path>` reading a `~/.dockitrc`
-`default_profile`), the same `apply-profile.sh` logic delegates to
-that mechanism without changing this profile's content. Until then,
-the manual invocation above is the supported path.
+All three entry points (orchestrator, skill, profile-only) converge
+on the same `apply-profile.sh` for the homelab layer. The skill
+calls the orchestrator; the orchestrator calls
+`dockit-init-project.sh` and then `apply-profile.sh`. There is
+exactly one place where "what the homelab profile installs" is
+decided: `apply-profile.sh`. Higher layers add concerns (orchestrator
+adds GitHub creation; skill adds the PROJECTS.md edit) without
+duplicating profile logic.
 
-A Claude Code skill `/new-homelab-project <name>` is a separate,
-optional convenience wrapper. If implemented, it should call the
-exact same `apply-profile.sh` so the two entry points cannot
-diverge.
+If `cdelalama/LLM-DocKit` later grows a native profile mechanism
+(for example `dockit init --profile <path>` reading a `~/.dockitrc`
+`default_profile`), the orchestrator and skill delegate to it and
+this file's `apply-profile.sh` becomes a thin shim — but the same
+content lives in one place.
 
 ## Related
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.3 -->
+<!-- doc-version: 0.1.4 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,18 +7,68 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-01 - Claude
-- Session Focus: Patch 0.1.3 — homelab profile for LLM-DocKit projects.
-- Status: 0.1.3 ships an opt-in profile under `integrations/dockit/`
-  (5 files: `INTEGRATION.md`, `templates/AGENTS.md`,
-  `templates/infra.contract.yml`,
-  `checklists/PROJECT_CHECKLIST.md`, `apply-profile.sh`). New homelab
-  projects scaffolded from `cdelalama/LLM-DocKit` apply this profile
-  with one command and immediately see the source-of-truth
-  conventions, the deploy checklist, and an experimental contract
-  template. `apply-profile.sh` is POSIX `sh`, idempotent, never
-  overwrites; smoke-tested locally (create + idempotent re-run).
-  `LLM-DocKit` stays general-purpose; the homelab-specific layer
-  lives here on purpose.
+- Session Focus: Patch 0.1.4 — orchestrator + Claude skill for
+  end-to-end "new homelab project" UX.
+- Status: 0.1.4 closes the loop on the operator's UX target ("from
+  `~/src/`, tell the LLM to start a new project, everything just
+  happens"). Three entry points now converge on the same homelab
+  profile: the existing `apply-profile.sh` (profile-only), the new
+  `new-homelab-project.sh` (orchestrator that calls LLM-DocKit's
+  `dockit-init-project.sh` + `apply-profile.sh` + optional GitHub
+  creation), and a Claude skill `/new-homelab-project` that wraps
+  the orchestrator with a five-question conversation and closes the
+  loop by editing `home-infra/docs/PROJECTS.md`. The orchestrator
+  was smoke-tested end-to-end against `/tmp/smoke-homelab` (validator
+  6/6 PASS, two-commit history, `AGENTS.md` + `CLAUDE.md` symlink
+  present). Effects visible to others stay opt-in: `--github` is the
+  flag that authorises GitHub repo creation; the skill confirms a
+  literal plan with the operator before any external effect.
+
+## Patch 0.1.4 Outcome
+
+- `integrations/dockit/new-homelab-project.sh`: POSIX `sh`
+  orchestrator. Inputs: `<name>` plus optional flags
+  (`--description`, `--host`, `--exposes-ui`, `--language`,
+  `--target-dir`, `--github`, `--visibility`, `--dockit-source`).
+  Steps: (1) validate (slug, target absent, GitHub name available
+  if `--github`); (2) call
+  `~/src/LLM-DocKit/scripts/dockit-init-project.sh` for the generic
+  scaffold; (3) call `apply-profile.sh` for the homelab layer; (4)
+  commit profile additions in the new project as a second commit;
+  (5) `gh repo create … --source=… --push` if `--github`. Prints a
+  suggested PROJECTS.md row at the end; explicitly does NOT edit
+  `~/src/home-infra/` itself (the skill or the operator does that
+  with judgement).
+- `integrations/dockit/skills/new-homelab-project/SKILL.md`: Claude
+  Code skill. Asks the operator five questions in one round (name,
+  description, host, exposes-UI, GitHub now?), prints a literal
+  plan, waits for confirmation, runs the orchestrator with the
+  matching flags, then edits `~/src/home-infra/docs/PROJECTS.md`
+  (Active Projects table + Project Details subsection) and commits
+  + pushes there. Failure modes documented: target exists, GitHub
+  name taken, `gh` not authenticated, partial-success after local
+  steps — all leave the local repo intact, none trigger destructive
+  cleanup.
+- `integrations/dockit/INTEGRATION.md` rewritten to document the
+  three entry points (orchestrator, skill, profile-only) and added
+  a "Layering and single source of truth" section emphasising that
+  all three converge on the same `apply-profile.sh` so profile
+  logic cannot drift between callers.
+- 25 doc-version targets synced via `scripts/bump-version.sh 0.1.4`.
+
+## One-time setup for the operator
+
+To make `/new-homelab-project` discoverable from any Claude Code
+session, create a single symlink:
+
+```sh
+ln -s ~/src/home-infra-protocol/integrations/dockit/skills/new-homelab-project \
+      ~/.claude/skills/new-homelab-project
+```
+
+After that, "quiero empezar un proyecto nuevo" (or any equivalent
+phrase) inside Claude Code from `~/src/` is enough — Claude proposes
+the skill, asks the five questions, and runs the orchestrator.
 
 ## Patch 0.1.3 Outcome
 
