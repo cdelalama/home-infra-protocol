@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.1 -->
+<!-- doc-version: 0.1.2 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -17,6 +17,27 @@ The protocol started from the `home-infra` and `infra-portal` split:
 `home-infra` owns durable truth, while `infra-portal` renders that truth and
 adds observed telemetry. This repository extracts that pattern into reusable
 specification material, schemas, examples, and future validation tooling.
+
+## Ecosystem map
+
+The protocol exists alongside four other repositories that together form a
+working homelab. Visibility differs deliberately: source-of-truth and consumer
+repositories are private because they contain real hosts, IPs, runbook
+references, and secret store names. The protocol stays public so others can
+adopt or learn from the same contracts.
+
+| Repository | Role | Visibility | Status |
+|------------|------|------------|--------|
+| [`cdelalama/LLM-DocKit`](https://github.com/cdelalama/LLM-DocKit) | General-purpose documentation scaffold reused across projects in this ecosystem and beyond | Public | Operational |
+| `cdelalama/home-infra-protocol` (this repo) | Public specification of the contracts | Public | Draft v0.1 |
+| `cdelalama/home-infra` | Private source-of-truth implementation (inventory, services, hosts, runbooks) | Private | Operational |
+| `cdelalama/infra-portal` | Private consumer / renderer reading the source-of-truth catalog | Private | Operational |
+| `cdelalama/infra-agent` | Planned per-host telemetry provider | — | Not yet created |
+
+`LLM-DocKit` is intentionally kept separate from this protocol so it can stay
+general-purpose. New ecosystem projects scaffold from `LLM-DocKit` first
+(per `docs/GOVERNANCE.md` *Project Bootstrap Rule*) and may opt into the
+protocol's contracts as they mature.
 
 ## Quick Start
 

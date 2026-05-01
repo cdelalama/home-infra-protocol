@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.1 -->
+<!-- doc-version: 0.1.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,12 +6,36 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Current Status
 
-- Last Updated: 2026-05-01 - Codex
-- Session Focus: Patch 0.1.1 — document protocol governance and ecosystem
-  project bootstrap rules.
-- Status: 0.1.1 is documentation-only. The protocol now records field policy,
-  ownership boundaries, compliance-claim rules, and the rule that new ecosystem
-  projects start from LLM-DocKit unless the user explicitly approves a waiver.
+- Last Updated: 2026-05-01 - Claude
+- Session Focus: Patch 0.1.2 — README Ecosystem map.
+- Status: 0.1.2 is documentation-only. The README now carries an explicit
+  Ecosystem map listing the four homelab repositories alongside this one
+  with role and visibility per repo. The map makes the public/private split
+  explicit (private source-of-truth and consumer repos contain real hosts,
+  IPs and runbook references; the protocol stays public). It also clarifies
+  that `LLM-DocKit` is kept separate from this protocol on purpose so it can
+  stay general-purpose; ecosystem projects scaffold from `LLM-DocKit` first
+  per the *Project Bootstrap Rule* and may opt into the protocol's contracts
+  as they mature.
+
+## Patch 0.1.2 Outcome
+
+- `README.md`: new "Ecosystem map" section between *Overview* and
+  *Quick Start*. Five-row table (LLM-DocKit, this repo,
+  `home-infra`, `infra-portal`, `infra-agent`) with role,
+  visibility and status. Explanatory paragraph above the table
+  states why visibility differs.
+- `LLM-DocKit` framed as separate-on-purpose so it can be reused
+  outside this homelab; `infra-agent` flagged as planned, not yet
+  created.
+- 24 doc-version targets synced via `scripts/bump-version.sh 0.1.2`.
+
+## Patch 0.1.1 Outcome
+
+- `docs/GOVERNANCE.md`: field policy, ownership boundaries, project
+  bootstrap rules, and compliance-claim freshness rules. The protocol
+  now records that new ecosystem projects start from LLM-DocKit unless
+  the user explicitly approves a waiver.
 
 ## Project Summary
 
