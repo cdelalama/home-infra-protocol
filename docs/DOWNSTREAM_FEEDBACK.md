@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.0 -->
+<!-- doc-version: 0.2.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -153,7 +153,7 @@ is accepted until the proposal lands.
 - Source: `infra-portal` v0.7.2 (`src/server/health.ts:82-86`)
 - Date observed: 2026-05-02
 - Category: semantic-gap, consumer-drift
-- Status: partially implemented (protocol 0.2.0) — protocol-side guardrail (b) shipped: SPEC.md *Consumer support for `interface`* matrix exposes which schema values which consumer supports per version, so adopters can no longer hit a silent stub. Consumer-side cure (a, TCP probe in `infra-portal`) tracked in that repo's HANDOFF *Pending work* item 1.
+- Status: implemented (protocol 0.2.0 + infra-portal 0.8.0) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` 0.8.0: `tcpProbe` via `node:net` `Socket`. Production currently runs `infra-portal:0.7.2`; the matrix row reflects the repo HEAD because the deploy is a separate operator session.
 - Related: DF-001
 
 ### Observation

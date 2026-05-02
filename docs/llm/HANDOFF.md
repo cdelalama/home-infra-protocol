@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.0 -->
+<!-- doc-version: 0.2.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,45 +7,45 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-02 - Claude Opus 4.7 (1M context)
-- Session Focus: Minor 0.2.0 — execute
-  `docs/SERVICE_INTERFACE_PROPOSAL.md` end-to-end. First additive
-  schema field since 0.1.0; first concrete result of the
-  `DOWNSTREAM_FEEDBACK.md` channel installed in 0.1.6.
-- Status: 0.2.0 is **schema + SPEC + examples**. The optional
-  `Service.interface` field is now in
-  `schemas/services.schema.json` (string, additive,
-  `additionalProperties: true` preserves backward compatibility);
-  `SPEC.md` *Service* documents the recommended enum
-  `web | api | mqtt | tcp | ssh | none | other` and the rule that
-  `interface` MUST be set explicitly when `url` is not `http(s)://`;
-  `examples/home-infra/catalog/services.yml` shows three values
-  (`web`, `mqtt`, `api`) on sanitized hostnames; SPEC.md gains a
-  *Consumer support for `interface`* matrix as a permanent guardrail
-  against the DF-002 class of failure (schema accepts X, consumer
-  does not implement X). DF-001 status moves from `accepted` to
-  `implemented (0.2.0)`. DF-002 moves from `open` to
-  `partially implemented (protocol 0.2.0)` — the matrix is the (b)
-  guardrail; the (a) consumer-side cure (TCP probe in
-  `infra-portal`) lands in the portal next.
+- Session Focus: Patch 0.2.1 — matrix-only follow-up after
+  `infra-portal` 0.8.0 shipped both the consumer-side render-by-
+  `interface` and the `node:net` TCP probe. *Consumer support for
+  `interface`* in SPEC.md now records `infra-portal 0.8.0` with
+  `Renders: yes` and `TCP probe: yes`; DF-002 moves from
+  `partially implemented (protocol 0.2.0)` to
+  `implemented (protocol 0.2.0 + infra-portal 0.8.0)`. DF-001 was
+  already `implemented (0.2.0)`.
+- Status: 0.2.1 is **doc-only** — single SPEC table edit + DF-002
+  status edit. No schema change, no example change. The matrix row
+  reflects the repo HEAD of `infra-portal` (0.8.0); production
+  still runs `infra-portal:0.7.2` until the operator promotes the
+  image — that distinction is called out in the matrix Notes
+  column so adopters do not infer that production already
+  supports the new values.
 
 ## Pending Proposals (for the next session)
 
-No structural protocol proposals are open. The next protocol patch
-will be a small follow-up updating *Consumer support for `interface`*
-in SPEC.md once `infra-portal` ships the consumer-side render +
-TCP probe. That is a matrix-only update and does not need its own
-PROPOSAL document.
+No open structural proposals.
 
 ## Open DF entries
 
-- **DF-002** — `status.type: "tcp"` consumer drift. Status:
-  `partially implemented (protocol 0.2.0)`. The protocol-side
-  guardrail (Consumer support matrix in SPEC.md) is in. The
-  consumer-side cure — implement `net.connect` TCP probe in
-  `infra-portal/src/server/health.ts` — is tracked in that repo's
-  HANDOFF *Pending work* item 1. When the portal ships, the
-  protocol matrix will be updated and DF-002 moves to
-  `implemented`.
+No open DF entries. DF-001 and DF-002 are both `implemented`. The
+audit trail stays in `docs/DOWNSTREAM_FEEDBACK.md` for future
+adopters.
+
+## Patch 0.2.1 Outcome
+
+- `SPEC.md`: *Consumer support for `interface`* matrix updated to
+  reflect `infra-portal 0.8.0` (commit `717f468` in that repo).
+  `Renders by interface`: yes. `TCP probe`: yes. Notes spell out
+  the dispatch rules (`web` → open in tab; `none` → silent no-op;
+  `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast) and
+  the production-vs-repo gap (production still runs 0.7.2).
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-002 moved from
+  `partially implemented (protocol 0.2.0)` to
+  `implemented (protocol 0.2.0 + infra-portal 0.8.0)`. DF-001 was
+  already `implemented (0.2.0)`.
+- 27 doc-version targets synced via `scripts/bump-version.sh 0.2.1`.
 
 ## Minor 0.2.0 Outcome
 

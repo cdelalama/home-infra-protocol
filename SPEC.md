@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.0 -->
+<!-- doc-version: 0.2.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -104,7 +104,7 @@ when a consumer ships a new capability is part of the consumer's release.
 
 | Consumer | Version | Renders by `interface` | TCP probe | Notes |
 |----------|---------|------------------------|-----------|-------|
-| infra-portal | (pending) | (pending) | (pending) | Tracked in `infra-portal/docs/llm/HANDOFF.md` *Pending work*; updated when the portal ships the consumer-side change. |
+| infra-portal | 0.8.0 | yes | yes | `web` → open in new tab; `none` → silent no-op; `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast. TCP probe via `node:net` `Socket` connect; missing host or port yields `unknown` rather than crashing the loop. Production deploy is gated to a separate operator session; production currently runs `infra-portal:0.7.2` which still treats `tcp` as a stub. |
 
 ### Project Contract
 

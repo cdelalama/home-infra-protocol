@@ -3,6 +3,27 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.2.1] - 2026-05-02
+
+### Changed
+
+- `SPEC.md` *Consumer support for `interface`* matrix: row for
+  `infra-portal` updated from `(pending)/(pending)/(pending)` to
+  `0.8.0 / yes / yes` after the consumer-side change shipped in
+  `infra-portal` commit `717f468`. Notes column documents the
+  dispatch rules (`web` → open in tab; `none` → silent no-op +
+  toast; `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast)
+  and explicitly calls out that production still runs
+  `infra-portal:0.7.2` until the operator promotes the image — so
+  adopters reading the matrix do not infer that production already
+  supports the new values.
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-002 moves from
+  `partially implemented (protocol 0.2.0)` to
+  `implemented (protocol 0.2.0 + infra-portal 0.8.0)`. DF-001 was
+  already `implemented (0.2.0)` since the previous bump. The two
+  inaugural DF entries are now both closed and stay in place as an
+  audit trail for future adopters.
+
 ## [0.2.0] - 2026-05-02
 
 ### Added
