@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.6 -->
+<!-- doc-version: 0.2.0 -->
 # Proposal: `Service.interface` field for non-web services
 
 > Status: **Draft — Ready for Implementation**

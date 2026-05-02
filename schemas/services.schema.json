@@ -19,6 +19,11 @@
           "name": { "type": "string", "minLength": 1 },
           "category": { "type": "string", "minLength": 1 },
           "url": { "type": "string", "minLength": 1 },
+          "interface": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Kind of interface the service exposes. Recommended values: web, api, mqtt, tcp, ssh, none, other. Optional; defaults to 'web' for backward compatibility. SHOULD be set explicitly when url does not start with http:// or https://."
+          },
           "fallback_url": { "type": "string" },
           "host_id": { "type": "string" },
           "runtime": { "type": "string" },

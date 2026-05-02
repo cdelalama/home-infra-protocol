@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.6 -->
+<!-- doc-version: 0.2.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -62,6 +62,7 @@ Minimum fields:
 
 Recommended fields:
 
+- `interface`
 - `host_id`
 - `runtime`
 - `image`
@@ -70,6 +71,40 @@ Recommended fields:
 - `status`
 - `deps`
 - `runbook`
+
+#### `interface`
+
+`interface` declares what kind of interface the service exposes so consumers
+can render and probe it correctly. The protocol RECOMMENDS the values
+`web | api | mqtt | tcp | ssh | none | other`; the schema does not enforce a
+closed enum so adopters and consumers can extend the list as new interface
+kinds are needed. Future closed-enum candidates start in `other`.
+
+When `interface` is omitted, consumers MUST treat the service as having a web
+UI (`interface: web`) for backward compatibility with v0.1.x catalogs. When
+`url` does not start with `http://` or `https://`, the service MUST declare
+`interface` explicitly so consumers can render and probe it correctly.
+
+| Value | When to use | Consumer behaviour expectation |
+|-------|-------------|--------------------------------|
+| `web` | Service has a navigable HTML UI | Render an "open" affordance pointing at `url` |
+| `api` | HTTP/HTTPS but no HTML UI (REST/GraphQL/MCP/etc.) | Render endpoint info; status probe still applies |
+| `mqtt` | MQTT broker | Render a connection-string copy; topology edges to clients |
+| `tcp` | Raw TCP service (database, custom protocol) | Render connection info; no clickable open |
+| `ssh` | Operator-only SSH endpoint | Render `ssh user@host` copy; no clickable open |
+| `none` | Service has no operator interface (background daemon, sync agent) | List the service but offer no interaction |
+| `other` | Anything not in the recommended list | Render connection info; specific behaviour undefined |
+
+#### Consumer support for `interface`
+
+This matrix records which catalog-side values which known consumer supports
+as of which version. Adopters consult it before designing around a value
+that has not yet landed in their consumer of choice. Updating this matrix
+when a consumer ships a new capability is part of the consumer's release.
+
+| Consumer | Version | Renders by `interface` | TCP probe | Notes |
+|----------|---------|------------------------|-----------|-------|
+| infra-portal | (pending) | (pending) | (pending) | Tracked in `infra-portal/docs/llm/HANDOFF.md` *Pending work*; updated when the portal ships the consumer-side change. |
 
 ### Project Contract
 

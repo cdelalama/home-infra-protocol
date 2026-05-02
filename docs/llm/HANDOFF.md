@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.6 -->
+<!-- doc-version: 0.2.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,45 +7,81 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-02 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.1.6 — install the missing protocol-evolution
-  feedback channel after the first real-adopter session
-  (`tomatic` v0.1.3) hit two protocol gaps in one go.
-- Status: 0.1.6 is **doc-only**. No SPEC change, no schema change. It
-  introduces the *channel* through which structural changes will land
-  in subsequent versions: `docs/DOWNSTREAM_FEEDBACK.md` (living DF-NNN
-  log) plus the first `docs/*_PROPOSAL.md` (the
-  `Service.interface` field, accepted but not yet implemented).
-  The actual schema/SPEC change will come in 0.2.0 when the next
-  session reads `docs/SERVICE_INTERFACE_PROPOSAL.md` end-to-end and
-  executes its acceptance checklist.
+- Session Focus: Minor 0.2.0 — execute
+  `docs/SERVICE_INTERFACE_PROPOSAL.md` end-to-end. First additive
+  schema field since 0.1.0; first concrete result of the
+  `DOWNSTREAM_FEEDBACK.md` channel installed in 0.1.6.
+- Status: 0.2.0 is **schema + SPEC + examples**. The optional
+  `Service.interface` field is now in
+  `schemas/services.schema.json` (string, additive,
+  `additionalProperties: true` preserves backward compatibility);
+  `SPEC.md` *Service* documents the recommended enum
+  `web | api | mqtt | tcp | ssh | none | other` and the rule that
+  `interface` MUST be set explicitly when `url` is not `http(s)://`;
+  `examples/home-infra/catalog/services.yml` shows three values
+  (`web`, `mqtt`, `api`) on sanitized hostnames; SPEC.md gains a
+  *Consumer support for `interface`* matrix as a permanent guardrail
+  against the DF-002 class of failure (schema accepts X, consumer
+  does not implement X). DF-001 status moves from `accepted` to
+  `implemented (0.2.0)`. DF-002 moves from `open` to
+  `partially implemented (protocol 0.2.0)` — the matrix is the (b)
+  guardrail; the (a) consumer-side cure (TCP probe in
+  `infra-portal`) lands in the portal next.
 
 ## Pending Proposals (for the next session)
 
-These are accepted directions, captured in self-contained proposal
-documents. The next session reading this should pick one and execute
-its "Concrete changes required" section + acceptance checklist.
+No structural protocol proposals are open. The next protocol patch
+will be a small follow-up updating *Consumer support for `interface`*
+in SPEC.md once `infra-portal` ships the consumer-side render +
+TCP probe. That is a matrix-only update and does not need its own
+PROPOSAL document.
 
-1. **`docs/SERVICE_INTERFACE_PROPOSAL.md`** — adds an optional
-   `interface` field to `Service` (recommended values:
-   `web | api | mqtt | tcp | ssh | none | other`). Resolves DF-001.
-   Bumps to 0.2.0 (additive schema field). Self-contained: motivation,
-   options considered, file-by-file edits, migration path, and
-   acceptance criteria are all in the proposal. The implementing
-   session does not need this conversation to ship it.
+## Open DF entries
 
-After implementation, `docs/DOWNSTREAM_FEEDBACK.md` DF-001 status moves
-from `accepted` to `implemented (0.2.0)`.
+- **DF-002** — `status.type: "tcp"` consumer drift. Status:
+  `partially implemented (protocol 0.2.0)`. The protocol-side
+  guardrail (Consumer support matrix in SPEC.md) is in. The
+  consumer-side cure — implement `net.connect` TCP probe in
+  `infra-portal/src/server/health.ts` — is tracked in that repo's
+  HANDOFF *Pending work* item 1. When the portal ships, the
+  protocol matrix will be updated and DF-002 moves to
+  `implemented`.
 
-## Open DF entries (for future proposals or rejection)
+## Minor 0.2.0 Outcome
 
-- **DF-002** — `status.type: "tcp"` in the schema is unimplemented in
-  the only consumer (`infra-portal` v0.7.2,
-  `src/server/health.ts:82-86`). Recommended cure is consumer-side
-  (implement TCP probe in the portal); tracked in `infra-portal`'s
-  own HANDOFF. The protocol-side cure is to add a "Consumer support
-  matrix" to `SPEC.md` so adopters can see what each consumer
-  supports — captured as part of the `SERVICE_INTERFACE_PROPOSAL.md`
-  acceptance criteria.
+- `schemas/services.schema.json`: added `interface` (string,
+  optional) under each service item. Description names the
+  recommended enum and the rule that the field SHOULD be explicit
+  when the URL is not `http(s)://`. `additionalProperties: true`
+  is preserved at both the service-item and root level, so
+  consumers built against 0.1.x continue to load 0.2.0 catalogs
+  without modification — they simply ignore the new field.
+- `SPEC.md`: *Service* section gains `interface` in Recommended
+  fields, plus a sub-section that documents the seven recommended
+  values, the implicit default (`web`), and the explicit
+  requirement when `url` is not `http(s)://`. A new *Consumer
+  support for `interface`* matrix is the permanent guardrail
+  against the DF-002 class of bug ("schema accepts X, consumer
+  doesn't implement X"). The matrix initially lists `infra-portal`
+  with `(pending)` cells; the portal updates them when the
+  consumer-side change ships.
+- `examples/home-infra/catalog/services.yml`: existing `infra` and
+  `home-dashboard` entries gain `interface: web` to model the
+  explicit-when-already-web pattern. Two new entries added:
+  `example-mqtt` (`mqtt://broker.example.internal:1883`,
+  `interface: mqtt`, `status.type: tcp`) and `example-api`
+  (`https://api.example.internal/v1`, `interface: api`). Examples
+  stay sanitized — no real LAN IPs, hostnames, or domains.
+- `docs/PROJECT_CONTRACTS.md`: notes that when a project lists
+  service objects (rather than just ids), `interface` follows the
+  same convention as `Service.interface`.
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-001 status moves from
+  `accepted` to `implemented (0.2.0)`. DF-002 status moves from
+  `open` to `partially implemented (protocol 0.2.0)`, with the
+  rationale that the matrix is the (b) guardrail and (a) is the
+  consumer-side TCP probe still pending in `infra-portal`.
+- 27 doc-version targets synced via
+  `scripts/bump-version.sh 0.2.0`.
 
 ## Patch 0.1.6 Outcome
 

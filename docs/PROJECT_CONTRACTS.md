@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.6 -->
+<!-- doc-version: 0.2.0 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they
@@ -24,6 +24,12 @@ repo remains the authority after ingesting, copying, or validating them.
 - `secret_refs`
 
 Secret references name variables and stores only. They never include values.
+
+When a project lists service objects under `services` rather than just ids,
+each object's `interface` field follows the same convention as the catalog's
+`Service.interface` (see `SPEC.md` *Service*): recommended values
+`web | api | mqtt | tcp | ssh | none | other`, optional with default `web`,
+required when `url` is not `http(s)://`.
 
 ## Example
 

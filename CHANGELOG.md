@@ -3,6 +3,44 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.2.0] - 2026-05-02
+
+### Added
+
+- `Service.interface` field (string, optional) on `schemas/services.schema.json`.
+  First additive schema field since 0.1.0; first concrete result of the
+  `DOWNSTREAM_FEEDBACK.md` channel installed in 0.1.6. Recommended enum:
+  `web | api | mqtt | tcp | ssh | none | other`. Schema stays additive
+  (`additionalProperties: true`) so 0.1.x consumers ignore the new field.
+- `SPEC.md` *Service* section documents the seven recommended values, the
+  implicit default (`web`) for backward compatibility, and the rule that
+  `interface` MUST be set explicitly when `url` is not `http(s)://`.
+- `SPEC.md` gains a *Consumer support for `interface`* matrix listing which
+  schema values which known consumer supports as of which version. This is
+  the permanent guardrail against the DF-002 class of failure ("schema
+  accepts X, consumer doesn't implement X"). Initial row for `infra-portal`
+  shows `(pending)` cells; the portal updates them when its consumer-side
+  change ships.
+- `examples/home-infra/catalog/services.yml` shows three values: existing
+  `infra` and `home-dashboard` entries gain `interface: web` (explicit-
+  when-already-web pattern), plus two new sanitized entries `example-mqtt`
+  (`mqtt://broker.example.internal:1883`, `interface: mqtt`,
+  `status.type: tcp`) and `example-api` (`https://api.example.internal/v1`,
+  `interface: api`).
+- `docs/PROJECT_CONTRACTS.md` notes that when a project lists service
+  objects under `services` rather than just ids, each object's `interface`
+  follows the same convention as `Service.interface`.
+
+### Changed
+
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-001 status moves from `accepted` to
+  `implemented (0.2.0)`. DF-002 status moves from `open` to
+  `partially implemented (protocol 0.2.0)` — the SPEC.md matrix is the (b)
+  guardrail; the consumer-side cure (a, TCP probe in `infra-portal`)
+  is tracked in that repo's HANDOFF *Pending work* item 1.
+
+### Fixed
+
 ## [0.1.6] - 2026-05-02
 
 ### Added

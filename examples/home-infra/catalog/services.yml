@@ -14,6 +14,7 @@ services:
     name: Infra Portal
     category: infra
     url: https://infra.example.internal/
+    interface: web
     host_id: nas
     runtime: docker
     image: infra-portal:0.1.0
@@ -29,6 +30,7 @@ services:
     name: Home Dashboard
     category: automation
     url: https://home.example.internal/
+    interface: web
     fallback_url: http://10.0.0.20:8123/
     host_id: home-automation
     runtime: docker
@@ -39,3 +41,40 @@ services:
       type: http
       url: https://home.example.internal/
       timeout_ms: 2000
+
+  - id: example-mqtt
+    name: Example MQTT Broker
+    category: infra
+    url: mqtt://broker.example.internal:1883
+    interface: mqtt
+    host_id: home-automation
+    runtime: docker
+    image: eclipse-mosquitto:2.0
+    tags: [mqtt, broker, shared]
+    description: |
+      Example MQTT broker. Demonstrates a non-web service whose URL is not
+      browser-navigable; consumers MUST honour `interface: mqtt` to render it
+      correctly (connection-string copy instead of an "open" button).
+    status:
+      type: tcp
+      host: broker.example.internal
+      port: 1883
+      timeout_ms: 2000
+
+  - id: example-api
+    name: Example REST API
+    category: tools
+    url: https://api.example.internal/v1
+    interface: api
+    host_id: nas
+    runtime: docker
+    tags: [api, rest]
+    description: |
+      Example HTTP service with no HTML UI. The status probe is still HTTP
+      (e.g. /v1/health), but the service should not render an "open in a tab"
+      affordance because there is no human-facing page at the URL.
+    status:
+      type: http
+      url: https://api.example.internal/v1/health
+      timeout_ms: 2000
+      expect_status: 200

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.6 -->
+<!-- doc-version: 0.2.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -85,7 +85,7 @@ implements; the DF is the empirical record of why.
 - Source: `tomatic` v0.1.3 + `home-infra/catalog/services.yml` (mosquitto entry, `infra-portal` rendering)
 - Date observed: 2026-05-02
 - Category: field-gap
-- Status: accepted (proposal in `docs/SERVICE_INTERFACE_PROPOSAL.md`)
+- Status: implemented (0.2.0) — schema, SPEC, examples, and Consumer support matrix shipped per `docs/SERVICE_INTERFACE_PROPOSAL.md`. Consumer-side rendering tracked in `infra-portal` HANDOFF *Pending work* item 2.
 - Related: DF-002
 
 ### Observation
@@ -153,7 +153,7 @@ is accepted until the proposal lands.
 - Source: `infra-portal` v0.7.2 (`src/server/health.ts:82-86`)
 - Date observed: 2026-05-02
 - Category: semantic-gap, consumer-drift
-- Status: open
+- Status: partially implemented (protocol 0.2.0) — protocol-side guardrail (b) shipped: SPEC.md *Consumer support for `interface`* matrix exposes which schema values which consumer supports per version, so adopters can no longer hit a silent stub. Consumer-side cure (a, TCP probe in `infra-portal`) tracked in that repo's HANDOFF *Pending work* item 1.
 - Related: DF-001
 
 ### Observation
