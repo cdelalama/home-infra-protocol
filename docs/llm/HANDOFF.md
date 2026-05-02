@@ -1,4 +1,4 @@
-<!-- doc-version: 0.1.5 -->
+<!-- doc-version: 0.1.6 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,28 +6,64 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Current Status
 
-- Last Updated: 2026-05-01 - Claude
-- Session Focus: Patch 0.1.5 — three GPT-5-review fixes against the
-  0.1.4 ship.
-- Status: 0.1.5 fixes three real issues found by GPT-5 reviewing the
-  freshly published 0.1.4. (1) `new-homelab-project.sh` was
-  splitting a `--description` with spaces into multiple args to
-  `gh repo create`; rewritten to use POSIX positional parameters so
-  the description survives as a single argv element. (2)
-  `PROJECT_CHECKLIST.md` listed `docker compose restart edge-caddy`
-  or `caddy reload` as equivalent — both wrong on QNAP NAS where
-  `docker compose` is not on PATH and reload alone may not pick up
-  new vhosts; replaced with the full compose-plugin path and an
-  explicit note preferring `restart` for new vhosts. (3)
-  `templates/AGENTS.md` mandated PROJECTS.md updates "whenever a
-  project bumps version" — too aggressive for projects with
-  frequent internal patches; scoped to deployed-reality changes
-  (project created or retired, deployed version on a host changes,
-  status / host / exposure / URL changes). End-to-end smoke test
-  against `/tmp/smoke-homelab` confirmed: branch is `main`, AGENTS.md
-  reflects the new wording, checklist reflects the QNAP path,
-  `set --` quoting verified mechanically with a description
-  containing spaces (argv[7] = the entire description).
+- Last Updated: 2026-05-02 - Claude Opus 4.7 (1M context)
+- Session Focus: Patch 0.1.6 — install the missing protocol-evolution
+  feedback channel after the first real-adopter session
+  (`tomatic` v0.1.3) hit two protocol gaps in one go.
+- Status: 0.1.6 is **doc-only**. No SPEC change, no schema change. It
+  introduces the *channel* through which structural changes will land
+  in subsequent versions: `docs/DOWNSTREAM_FEEDBACK.md` (living DF-NNN
+  log) plus the first `docs/*_PROPOSAL.md` (the
+  `Service.interface` field, accepted but not yet implemented).
+  The actual schema/SPEC change will come in 0.2.0 when the next
+  session reads `docs/SERVICE_INTERFACE_PROPOSAL.md` end-to-end and
+  executes its acceptance checklist.
+
+## Pending Proposals (for the next session)
+
+These are accepted directions, captured in self-contained proposal
+documents. The next session reading this should pick one and execute
+its "Concrete changes required" section + acceptance checklist.
+
+1. **`docs/SERVICE_INTERFACE_PROPOSAL.md`** — adds an optional
+   `interface` field to `Service` (recommended values:
+   `web | api | mqtt | tcp | ssh | none | other`). Resolves DF-001.
+   Bumps to 0.2.0 (additive schema field). Self-contained: motivation,
+   options considered, file-by-file edits, migration path, and
+   acceptance criteria are all in the proposal. The implementing
+   session does not need this conversation to ship it.
+
+After implementation, `docs/DOWNSTREAM_FEEDBACK.md` DF-001 status moves
+from `accepted` to `implemented (0.2.0)`.
+
+## Open DF entries (for future proposals or rejection)
+
+- **DF-002** — `status.type: "tcp"` in the schema is unimplemented in
+  the only consumer (`infra-portal` v0.7.2,
+  `src/server/health.ts:82-86`). Recommended cure is consumer-side
+  (implement TCP probe in the portal); tracked in `infra-portal`'s
+  own HANDOFF. The protocol-side cure is to add a "Consumer support
+  matrix" to `SPEC.md` so adopters can see what each consumer
+  supports — captured as part of the `SERVICE_INTERFACE_PROPOSAL.md`
+  acceptance criteria.
+
+## Patch 0.1.6 Outcome
+
+- `docs/DOWNSTREAM_FEEDBACK.md` created. Format mirrors
+  `LLM-DocKit:docs/DOWNSTREAM_FEEDBACK.md`. Two inaugural entries
+  (DF-001 field-gap, DF-002 semantic-gap / consumer-drift) anchor
+  the channel with real adopter evidence.
+- `docs/SERVICE_INTERFACE_PROPOSAL.md` created. Self-contained
+  implementation brief: problem, decision (option 3 of three),
+  exact files to change, default-and-required rules, recommended
+  enum values, migration path for existing catalogs, consumer-side
+  responsibilities, schema-evolution sanity-check, acceptance
+  criteria. Designed so a future session can read it cold and ship.
+- `docs/version-sync-manifest.yml` extended with the two new
+  documents (27 total markers).
+- 27 doc-version targets synced via `scripts/bump-version.sh 0.1.6`.
+- This patch deliberately changes nothing about SPEC, schemas, or
+  examples — those changes are reserved for 0.2.0.
 
 ## Patch 0.1.5 Outcome
 

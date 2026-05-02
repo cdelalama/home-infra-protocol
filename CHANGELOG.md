@@ -3,6 +3,49 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.1.6] - 2026-05-02
+
+### Added
+
+- `docs/DOWNSTREAM_FEEDBACK.md`: living log of real-adopter observations
+  about protocol gaps, modelled on `LLM-DocKit:docs/DOWNSTREAM_FEEDBACK.md`.
+  Format: `DF-NNN` entries with Source / Date / Category / Status /
+  Observation / Protocol implication. The protocol's `GOVERNANCE.md`
+  *Field Policy* requires real-adopter motivation for every new field;
+  this file is the canonical channel where that motivation gets
+  captured. Two inaugural entries:
+  - **DF-001** — `Service` records a single `url` but adopters need to
+    declare whether the service has a navigable web UI. Surfaced by
+    `tomatic` choosing to expose Mosquitto (a non-web service) in the
+    catalog and `infra-portal` rendering an "open" button that fails
+    silently. Status: `accepted`.
+  - **DF-002** — `status.type: "tcp"` is in the schema enum but
+    `infra-portal` v0.7.2 doesn't implement it (`health.ts:82-86`
+    returns "not implemented"). The schema and consumer have drifted.
+    Status: `open`.
+- `docs/SERVICE_INTERFACE_PROPOSAL.md`: self-contained implementation
+  proposal addressing DF-001. Adds an optional `interface` field to
+  `Service` (recommended values: `web | api | mqtt | tcp | ssh | none |
+  other`). Default is `web` for backward compatibility; explicit value
+  required when `url` is not `http(s)://`. Schema stays additive
+  (`additionalProperties: true`). Includes concrete file-by-file edits,
+  acceptance checklist, and migration path for the next session to
+  execute. The proposal also recommends adding a "Consumer support
+  matrix" to SPEC.md as a permanent guardrail against the DF-002 class
+  of failure (schema accepts X, consumer doesn't implement X).
+- Both new docs added to `docs/version-sync-manifest.yml` (27 targets
+  total).
+
+### Changed
+
+- The protocol now has a documented mechanism for evolving from real
+  adopter signals: adopters file `DF-NNN` entries; structural changes
+  go through `docs/*_PROPOSAL.md` documents; the audit trail stays
+  visible. This closes the previously implicit gap where the
+  GOVERNANCE field-policy rule existed but no canonical channel did.
+
+### Fixed
+
 ## [0.1.5] - 2026-05-01
 
 ### Fixed
