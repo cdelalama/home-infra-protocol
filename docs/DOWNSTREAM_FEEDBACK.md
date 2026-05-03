@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.2 -->
+<!-- doc-version: 0.2.3 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -153,7 +153,7 @@ is accepted until the proposal lands.
 - Source: `infra-portal` v0.7.2 (`src/server/health.ts:82-86`)
 - Date observed: 2026-05-02
 - Category: semantic-gap, consumer-drift
-- Status: implemented (protocol 0.2.0 + infra-portal 0.8.0) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` 0.8.0: `tcpProbe` via `node:net` `Socket`. Production currently runs `infra-portal:0.7.2`; the matrix row reflects the repo HEAD because the deploy is a separate operator session.
+- Status: partially implemented (protocol 0.2.0 + infra-portal repo 0.8.0; deployment to production pending) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` **repo** 0.8.0: `tcpProbe` via `node:net` `Socket`. **Production currently runs `infra-portal:0.7.2`; until the operator promotes the image, this DF cannot be `implemented` per the new ontology in `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`** ("operationally deployed" requires `running` and `serving` confirmed by runtime evidence; today only `implemented in repo` is true). The DF moves to `implemented` when production reports the new version.
 - Related: DF-001
 
 ### Observation

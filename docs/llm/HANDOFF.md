@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.2 -->
+<!-- doc-version: 0.2.3 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,9 +7,14 @@ This file is the current operational snapshot. Durable decisions live in
 ## Current Status
 
 - Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.2.2 — capture the deliberation that produced
-  the Deployment Evidence Contract as auditable artefacts before the
-  deliberation context is lost. Doc-only patch; no schema change.
+- Session Focus: Patch 0.2.3 — mechanical fix-forward after a GPT-5
+  audit caught two status-string drifts introduced by 0.2.2: DF-002
+  was marked `implemented` but the new "operationally deployed"
+  ontology requires production evidence (only repo evidence exists),
+  and DF-029 in LLM-DocKit used the non-legend status
+  `partially accepted`. Both corrected. No schema change. The earlier
+  0.2.2 work — the `DEPLOYMENT_EVIDENCE_PROPOSAL.md` and the
+  consensus REVIEWS entry — stands.
 - Status: 0.2.2 ships:
   (1) `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` — self-contained proposal
       for the next session to implement (six lifecycle states,

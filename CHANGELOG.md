@@ -3,6 +3,32 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.2.3] - 2026-05-03
+
+### Fixed
+
+- **DF-002 status corrected** to match the new ontology in
+  `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`. Previous status read
+  `implemented (protocol 0.2.0 + infra-portal 0.8.0)`, but the new
+  rule on "operationally deployed" requires `running` and `serving`
+  to be confirmed by runtime evidence — and `infra-portal` 0.8.0
+  only exists in repo, not in production (production runs `0.7.2`).
+  The status is now `partially implemented (protocol 0.2.0 +
+  infra-portal repo 0.8.0; deployment to production pending)`.
+  Found by GPT-5 audit: the proposal's first ejemplar would have
+  contradicted itself.
+- **DF-029 status normalised in LLM-DocKit** (cross-repo follow-up
+  of the same audit): the previous draft used the non-legend
+  status `partially accepted`. Corrected to `accepted` in
+  `~/src/LLM-DocKit/docs/DOWNSTREAM_FEEDBACK.md`, with a note
+  clarifying that the DF moves to `partially implemented (X.Y.Z)`
+  only when an actual template change ships in a release. Tracked
+  in the LLM-DocKit commit of the same date.
+- This patch is itself an instance of the Consensus Protocol's
+  failure mode "decision later overturned" applied to documentation
+  drift, captured here without a new REVIEWS entry because the
+  change is mechanical (status text alignment), not deliberative.
+
 ## [0.2.2] - 2026-05-03
 
 ### Added
