@@ -153,7 +153,7 @@ is accepted until the proposal lands.
 - Source: `infra-portal` v0.7.2 (`src/server/health.ts:82-86`)
 - Date observed: 2026-05-02
 - Category: semantic-gap, consumer-drift
-- Status: implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-03) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` 0.8.0: `tcpProbe` via `node:net` `Socket`. **Promoted to NAS production on 2026-05-03** following the six-step evidence plan in `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md` §8. Runtime evidence confirmed: `docker ps` reports `infra-portal:0.8.0` healthy; `/api/health` returns `{"ok":true,"version":"0.8.0"}`; `/api/status` reports `mosquitto: up` with message `TCP 10.0.0.139:1883 connected` (was `unknown / "tcp probes not implemented yet"` under 0.7.2); `/api/catalog` exposes the `interface` field for declared services (`mosquitto: mqtt`, `esphome-builder: web`). The "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is satisfied: `running` and `serving` both confirmed with runtime evidence and the `serving` version matches the expected one.
+- Status: implemented — closed by `infra-portal` 0.8.0 (TCP probe + interface-aware render, deployed to NAS 2026-05-03); production reconciled to 0.8.1 the same day after a post-deploy audit surfaced the `expect_status` ground-truth bug (see DF-004 + `infra-portal` CHANGELOG 0.8.1). (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` 0.8.0 (`tcpProbe` via `node:net` `Socket`), extended in 0.8.1 (`decideHttpState` honors `expect_status` outside 2xx-3xx). Promoted to NAS production on 2026-05-03 per the six-step evidence plan in `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md` §8. Runtime evidence at 0.8.1: `docker ps` reports `infra-portal:0.8.1` healthy; `/api/health` returns `0.8.1`; `mosquitto: up` (TCP probe); `unifi-mcp: up` (HTTP 406, expect_status honored); 10 services up + 1 disabled (pentagi by design) + 0 down. The "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is satisfied.
 - Related: DF-001
 
 ### Observation
@@ -324,3 +324,54 @@ status stays `unknown` and `interface`-aware rendering looks identical
 to old `url` behaviour until `infra-portal:0.8.0` is promoted to
 production. No code change in this session; the image promotion is a
 separate operator-driven action.
+
+## DF-004 — Default `interface: web` when omitted is unsafe for HTTP APIs without HTML
+
+- Source: `home-infra/catalog/services.yml` (unifi-mcp entry) + `infra-portal` 0.8.1 in production, 2026-05-03
+- Date observed: 2026-05-03 (surfaced by operator-auditor)
+- Category: field-gap, semantic-gap
+- Status: open
+- Related: DF-001 (where `interface` was introduced), DF-031 (ecosystem prior-art search)
+
+### Observation
+
+`SPEC.md` *Service / `interface`* states:
+
+> When `interface` is omitted, consumers MUST treat the service as having a web UI (`interface: web`) for backward compatibility with v0.1.x catalogs. When `url` does not start with `http://` or `https://`, the service MUST declare `interface` explicitly.
+
+The "MUST declare explicitly" rule only fires for non-HTTP URLs (e.g. `mqtt://`, `tcp://`, `ssh://`). For HTTP APIs **without HTML** — Model Context Protocol endpoints, REST APIs, GraphQL servers, JSON-RPC services — the URL is `https://...`, the rule does not fire, and the default `web` is silently inherited even though the service has no browser UI.
+
+Concrete failure observed with `unifi-mcp` on 2026-05-03:
+
+1. Catalog entry omitted `interface`. The "MUST declare" rule did not fire (URL is HTTPS).
+2. `infra-portal` 0.8.1 read `svc.interface ?? "web"` per the SPEC.
+3. Portal rendered an "↗ Open" button.
+4. Clicking it called `window.open("https://unifi-mcp.lamanoriega.com/")` → tab opens at 404 "Not Found" (root returns 404 by design; actual MCP endpoint is `/mcp` and uses Streamable HTTP, no HTML).
+
+Carlos, as operator-auditor, surfaced this: *"why does the unifi-mcp service show an open button and launch a web page when an MCP server has no web UI? Is our protocol failing?"*
+
+The portal cumple the SPEC. The catalog cumple the SPEC. But the user expectation was violated, and the failure mode is invisible to a content-blind validator: every service with an HTTPS URL and an omitted `interface` is silently scored `web` regardless of whether the URL actually serves HTML. Same family as DF-002 inverted: there the schema accepted a value no consumer implemented; here the schema accepts a *missing* declaration and the consumer applies a permissive default that is wrong for a broad class of services.
+
+### Protocol implication
+
+Three options, increasing strictness:
+
+(a) **SPEC clarification (cheap)**: rewrite the rule so it is broader. Replace *"when `url` does not start with `http(s)://`"* with *"when the service does not serve HTML at the listed `url`"*. Plus explicit guidance: "for HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC), declare `interface: api`." Intent-friendly; unverifiable from catalog alone — adopters can still omit.
+
+(b) **Validator check** (medium cost): a future `dockit-validate-catalog.sh` (or equivalent) that scans `services.yml`, finds any `https://` entry without `interface` declared, and warns. Mechanical, runnable in CI; forces adopters to be explicit on commit. Optional probe of the URL's `Content-Type` to suggest `web` vs `api` is nice-to-have but not required at protocol level.
+
+(c) **Schema-level required** (highest cost): make `interface` REQUIRED on every service in a future major. Backward-compatible default goes away. Most explicit; needs coordinated release across consumers + migration window.
+
+Recommended sequence: (a) immediately in the next SPEC patch as a clarification + adopter guidance; (b) when the second adopter trips on it; (c) reserved for v1.0 of the protocol.
+
+### Mitigation in source projects
+
+`home-infra/catalog/services.yml`: unifi-mcp now has `interface: api`, `url` points at `/mcp` directly. Portal renders "📋 Copy" instead of "↗ Open" — verified after sync.
+
+Sweep of other catalog entries for the same class:
+- `infra`, `zwave`, `ha`, `zigbee2mqtt`, `grafana`, `pgadmin`, `y2t`, `pentagi`: all serve HTML at their listed URL → default `web` is correct.
+- `mosquitto`: already `interface: mqtt`.
+- `esphome-builder`: already `interface: web`.
+- `unifi-mcp`: now `interface: api` (this fix).
+
+The lesson generalises: **when a new field with a permissive default lands, sweep the existing catalog for cases where the default is wrong in the same session as the field's introduction.** We did not pay this cost in 0.2.0 (the default fired silently for unifi-mcp from then until now). This DF closes the residual and proposes the SPEC clarification that prevents the recurrence.
