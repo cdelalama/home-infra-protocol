@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.1 -->
+<!-- doc-version: 0.2.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First

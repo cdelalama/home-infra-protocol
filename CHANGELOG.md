@@ -3,6 +3,40 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.2.2] - 2026-05-03
+
+### Added
+
+- `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`: self-contained proposal for
+  the Deployment Evidence Contract, addressing DF-002 + DF-003 + the
+  cross-protocol DF-029 in LLM-DocKit. Introduces a typed six-state
+  lifecycle vocabulary (`declared / implemented / built / transferred
+  / running / serving`), an explicit intent-vs-evidence rule, and an
+  optional `deployment` block on `Service` with nested `expected.image`
+  and `expected.health` sub-blocks. Severity levels (INFO/WARN/FAIL)
+  are defined as semantics, not enforcement. Five concrete homelab
+  scenarios documented inline as acceptance test for the schema. Five
+  anti-patterns named explicitly. The proposal does not implement the
+  schema change; that is the next session's job, with the acceptance
+  checklist included.
+- `docs/llm/REVIEWS.md`: structured audit-trail entry for the consensus
+  run that produced the proposal. Format follows the new
+  `CONSENSUS_PROTOCOL_PROPOSAL.md` *Recording mechanism* in LLM-DocKit.
+  Captures causality (who proposed what, which objection changed which
+  decision, what risk was accepted) — not transcript. Eight load-bearing
+  decisions documented; three explicit rejections.
+- `docs/version-sync-manifest.yml`: `DEPLOYMENT_EVIDENCE_PROPOSAL.md`
+  added (28 markers total).
+
+### Changed
+
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-003 status moved from `open` to
+  `accepted` with cross-reference to the new proposal. DF-002 narrative
+  updated to reflect the deploy-lag gap (repo `infra-portal` 0.8.0
+  vs production 0.7.2) — the symptom that motivated the run.
+
+### Fixed
+
 ## [0.2.1] - 2026-05-02
 
 ### Changed

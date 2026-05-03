@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.1 -->
+<!-- doc-version: 0.2.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -236,8 +236,9 @@ release should review the open DF list before deciding what to ship next.
 - Source: `infra-portal` v0.8.0 in repo / v0.7.2 in production + `tomatic` v0.1.5 audit
 - Date observed: 2026-05-03
 - Category: semantic-gap, usability
-- Status: open
+- Status: accepted (proposal in `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`)
 - Related: DF-001, DF-002
+- Resolution path: `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` (Deployment Evidence Contract). The proposal goes beyond the matrix-only fix originally suggested here: it introduces a typed six-state vocabulary, an explicit intent-vs-evidence rule, and an optional `deployment` block on `Service`. The implementing session ships those changes and moves this DF to `implemented (X.Y.0)`. The deliberation that produced the proposal is recorded in `docs/llm/REVIEWS.md` 2026-05-03.
 
 ### Observation
 

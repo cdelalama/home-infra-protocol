@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.1 -->
+<!-- doc-version: 0.2.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,32 +6,45 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Current Status
 
-- Last Updated: 2026-05-02 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.2.1 — matrix-only follow-up after
-  `infra-portal` 0.8.0 shipped both the consumer-side render-by-
-  `interface` and the `node:net` TCP probe. *Consumer support for
-  `interface`* in SPEC.md now records `infra-portal 0.8.0` with
-  `Renders: yes` and `TCP probe: yes`; DF-002 moves from
-  `partially implemented (protocol 0.2.0)` to
-  `implemented (protocol 0.2.0 + infra-portal 0.8.0)`. DF-001 was
-  already `implemented (0.2.0)`.
-- Status: 0.2.1 is **doc-only** — single SPEC table edit + DF-002
-  status edit. No schema change, no example change. The matrix row
-  reflects the repo HEAD of `infra-portal` (0.8.0); production
-  still runs `infra-portal:0.7.2` until the operator promotes the
-  image — that distinction is called out in the matrix Notes
-  column so adopters do not infer that production already
-  supports the new values.
+- Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
+- Session Focus: Patch 0.2.2 — capture the deliberation that produced
+  the Deployment Evidence Contract as auditable artefacts before the
+  deliberation context is lost. Doc-only patch; no schema change.
+- Status: 0.2.2 ships:
+  (1) `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` — self-contained proposal
+      for the next session to implement (six lifecycle states,
+      intent-vs-evidence rule, optional `deployment` block on
+      `Service`). Acceptance checklist included.
+  (2) `docs/llm/REVIEWS.md` — structured audit-trail entry for the
+      consensus run that produced the proposal. Format follows
+      `~/src/LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`.
+  (3) `docs/DOWNSTREAM_FEEDBACK.md` DF-003 → `accepted` with
+      cross-reference to the proposal.
+  (4) Manifest extended with the new proposal.
+
+The implementation of `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is the next
+structural task and is **independent**: a fresh session can read the
+proposal cold and ship it. The deliberation history is in
+`REVIEWS.md` for reference, not as required reading.
 
 ## Pending Proposals (for the next session)
 
-No open structural proposals.
+1. **`docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`** — implement the
+   Deployment Evidence Contract. Adds `deployment` block to schema,
+   six-state vocabulary + normative rules to SPEC, three example
+   entries in `examples/home-infra/catalog/services.yml`. Bumps minor
+   to 0.3.0 (additive schema field). Self-contained.
+
+After implementation, DF-003 status moves from `accepted` to
+`implemented (0.3.0)`.
 
 ## Open DF entries
 
-No open DF entries. DF-001 and DF-002 are both `implemented`. The
-audit trail stays in `docs/DOWNSTREAM_FEEDBACK.md` for future
-adopters.
+- **DF-003** — Consumer support matrix conflates repo HEAD with
+  deployed version. Status: `accepted`. Resolution: implement the
+  proposal above. The deliberation produced a deeper response than the
+  matrix-only fix DF-003 originally suggested — a typed vocabulary +
+  schema block — recorded in REVIEWS 2026-05-03.
 
 ## Patch 0.2.1 Outcome
 
