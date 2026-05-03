@@ -4,6 +4,14 @@
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
+## Pending session — Ecosystem Reconciliation
+
+A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AND surfaced a significant prior-art gap: `~/src/llm-council` predates much of `LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`. Reconciliation gated to Session 4 of the roadmap.
+
+**Master roadmap**: `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
+
+**For this repo specifically**: Session 1 (Implement DEPLOYMENT_EVIDENCE_PROPOSAL.md) is **independent** and ready to start. Session 4 is the one that produces `docs/ECOSYSTEM_MAP.md` here. Both are documented with copy-pasteable prompts in the master roadmap.
+
 ## Current Status
 
 - Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
