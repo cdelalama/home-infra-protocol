@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.4 -->
+<!-- doc-version: 0.2.5 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -15,7 +15,9 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 ## Current Status
 
 - Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.2.4 — DF-002 closed in production. The operator promoted `infra-portal:0.8.0` to NAS following the six-step evidence plan; runtime evidence confirmed (`docker ps` healthy, `/api/health` 0.8.0, mosquitto `up`, `interface` field exposed). DF-002 status moves from `partially implemented` to `implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-03)`. First time the "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is fully satisfied in production.
+- Session Focus: Patch 0.2.5 — SPEC matrix row for `infra-portal` synced to 0.8.1 (the `expect_status` ground-truth bug fix shipped in `infra-portal` immediately after 0.8.0 was promoted, when the post-deploy audit surfaced unifi-mcp permanently `down` because of the same logic gap). Doc-only on this side; the bug fix + tests + deploy live in `infra-portal`.
+
+- Previous: Patch 0.2.4 — DF-002 closed in production. The operator promoted `infra-portal:0.8.0` to NAS following the six-step evidence plan; runtime evidence confirmed (`docker ps` healthy, `/api/health` 0.8.0, mosquitto `up`, `interface` field exposed). DF-002 status moves from `partially implemented` to `implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-03)`. First time the "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is fully satisfied in production.
 
 - Previous: Patch 0.2.3 — mechanical fix-forward after a GPT-5
   audit caught two status-string drifts introduced by 0.2.2: DF-002

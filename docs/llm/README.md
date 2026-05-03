@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.4 -->
+<!-- doc-version: 0.2.5 -->
 # LLM Documentation
 
 This directory is working memory for LLM-assisted maintenance.

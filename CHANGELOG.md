@@ -3,6 +3,12 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.2.5] - 2026-05-03
+
+### Changed
+
+- `SPEC.md` *Consumer support for `interface`* matrix: row for `infra-portal` updated from version `0.8.0` to `0.8.1`. Notes column documents the new `expect_status` ground-truth contract (non-2xx codes like `406` from MCP `/mcp` and `404` by-design endpoints can be declared healthy). Bug surfaced by the post-deploy audit on 2026-05-03 — unifi-mcp was permanently `down` despite the operator confirming the MCP is in active use; root cause was `httpProbe` gating `up` behind `acceptable === 2xx-3xx` even when `matches === true`. Fix shipped in `infra-portal` 0.8.1 with 11 unit tests; production updated in the same session. Doc-only patch on this side.
+
 ## [0.2.4] - 2026-05-03
 
 ### Changed

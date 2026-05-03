@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.4 -->
+<!-- doc-version: 0.2.5 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.4 -->
+<!-- doc-version: 0.2.5 -->
 # Completion Rule
 
 An infrastructure change is not complete until the durable source-of-truth repo

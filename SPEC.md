@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.4 -->
+<!-- doc-version: 0.2.5 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -104,7 +104,7 @@ when a consumer ships a new capability is part of the consumer's release.
 
 | Consumer | Version | Renders by `interface` | TCP probe | Notes |
 |----------|---------|------------------------|-----------|-------|
-| infra-portal | 0.8.0 | yes | yes | `web` → open in new tab; `none` → silent no-op; `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast. TCP probe via `node:net` `Socket` connect; missing host or port yields `unknown` rather than crashing the loop. **Promoted to NAS production on 2026-05-03**; `/api/health` returns `0.8.0`, mosquitto status flipped from `unknown` to `up`. DF-002 closed. |
+| infra-portal | 0.8.1 | yes | yes | `web` → open in new tab; `none` → silent no-op; `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast. TCP probe via `node:net` `Socket` connect; missing host or port yields `unknown` rather than crashing the loop. `expect_status` is treated as ground truth when declared (so non-2xx codes like `406` from MCP `/mcp` and `404` by-design endpoints can be marked healthy explicitly — fixed in 0.8.1). Production at 0.8.1 since 2026-05-03. DF-002 closed. |
 
 ### Project Contract
 
