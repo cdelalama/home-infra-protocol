@@ -228,3 +228,98 @@ the absence of a canonical channel for adopter feedback.*
 This file is the canonical channel. Every future adopter is expected to
 file `DF-NNN` entries here when they hit a gap, and every protocol
 release should review the open DF list before deciding what to ship next.
+
+---
+
+## DF-003 — `Consumer support for interface` matrix conflates repo HEAD with deployed version
+
+- Source: `infra-portal` v0.8.0 in repo / v0.7.2 in production + `tomatic` v0.1.5 audit
+- Date observed: 2026-05-03
+- Category: semantic-gap, usability
+- Status: open
+- Related: DF-001, DF-002
+
+### Observation
+
+The `SPEC.md` *Service* section, after 0.2.0, contains a "Consumer
+support for `interface`" matrix shaped like:
+
+```
+| Consumer     | Version | Renders | Probes | Notes |
+|--------------|---------|---------|--------|-------|
+| infra-portal | 0.8.0   | yes     | http+tcp | ... |
+```
+
+The intent was to give adopters one place to check what each consumer
+supports. In practice the `Version` column is **ambiguous**: the only
+reading that closes DF-002 (the modal failure "schema accepts X,
+consumer doesn't implement X") is `Version = deployed version`,
+because adopters experience consumers through their deployment, not
+through repo HEAD. But every entry written so far has been populated
+from repo HEAD because that is what the implementing session sees.
+
+The audit on 2026-05-03 surfaced the gap concretely:
+
+- `infra-portal` repo at `0.8.0` implements `Service.interface`
+  rendering and `status.type: tcp` probing.
+- `infra.lamanoriega.com/api/health` returns `{"version":"0.7.2"}`.
+  The deployed portal does NOT yet read `interface` and still answers
+  `tcp probes not implemented yet` for the `mosquitto` entry, which
+  remains in `state: unknown`.
+- A reader who declares `interface: mqtt` on a new catalog entry
+  expects the portal to render a "copy connection string" button. They
+  get the old `window.open` behaviour (silent failure on `mqtt://`
+  URLs) until the operator rebuilds the image, transfers it to NAS,
+  and restarts the compose.
+
+The repo column tells one truth, the deployment tells another, and the
+matrix names neither explicitly.
+
+### Protocol implication
+
+Three options, in increasing structural cost:
+
+(a) **Doc-only fix (cheap, narrow).** Rename the `Version` column to
+   `Repo Version` and add a sentence above the matrix: *"This matrix
+   describes what each consumer's repo HEAD implements. Deployment
+   lag is tracked separately in `home-infra/docs/INVENTORY.md`."*
+   Closes the ambiguity for the reader without adding a field.
+
+(b) **Add a `Deployed Version` column.** Each row gains a second
+   version field, populated by the operator (or a script) reading the
+   live `/api/health` of each consumer. Catches the `0.8.0 / 0.7.2`
+   drift visibly. Cost: someone has to maintain it; without
+   automation, the column will rot.
+
+(c) **Add `expected_version` / `deployed_version` to `Service`.**
+   Schema change. The catalog declares the version it expects;
+   `infra-portal` (or another consumer) reads the live `image_tag`
+   and warns when they diverge. Most powerful, most work. Probably
+   premature — file as a follow-up DF if (a) and (b) prove
+   insufficient.
+
+Recommended sequence: (a) in the next SPEC.md patch (cheap, immediate
+clarity), (b) when there is a second consumer with `interface`
+support, (c) only if drift becomes a recurring incident worth
+automating away.
+
+### Cross-protocol relationship
+
+This DF is the home-infra-protocol-side counterpart of an LLM-DocKit
+DF filed in the same audit session
+(`~/src/LLM-DocKit/docs/DOWNSTREAM_FEEDBACK.md` DF-029). LLM-DocKit's
+DF describes the same "repo VERSION ≠ deployed version" class as a
+generic validator gap; this DF describes the specific shape it takes
+inside our matrix. LLM-DocKit could add an optional `deployed-version`
+check any DocKit-scaffolded project opts into; home-infra-protocol
+needs to fix the SPEC matrix regardless because it is a documentation
+artifact that already exists.
+
+### Mitigation in the audit session
+
+The audit (tomatic v0.1.5) recorded the deploy lag in
+`home-infra/docs/{INVENTORY,SERVICES}.md` and noted that `mosquitto`
+status stays `unknown` and `interface`-aware rendering looks identical
+to old `url` behaviour until `infra-portal:0.8.0` is promoted to
+production. No code change in this session; the image promotion is a
+separate operator-driven action.
