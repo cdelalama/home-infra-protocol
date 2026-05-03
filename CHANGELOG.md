@@ -3,14 +3,14 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
-## [0.2.4] - 2026-05-04
+## [0.2.4] - 2026-05-03
 
 ### Changed
 
 - **DF-002 closed in production**: status moves from `partially
   implemented (protocol 0.2.0 + infra-portal repo 0.8.0; deployment
   to production pending)` to `implemented (protocol 0.2.0 +
-  infra-portal 0.8.0 in production from 2026-05-04)` after the
+  infra-portal 0.8.0 in production from 2026-05-03)` after the
   operator promoted `infra-portal:0.8.0` to NAS following the
   six-step evidence plan in `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
   §8. Runtime evidence: `docker ps` healthy, `/api/health` returns
