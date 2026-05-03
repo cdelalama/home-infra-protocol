@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.3 -->
+<!-- doc-version: 0.2.4 -->
 # How To Use This Repository
 
 Home Infra Protocol is currently a draft specification repository.

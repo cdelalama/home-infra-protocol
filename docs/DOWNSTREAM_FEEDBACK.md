@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.3 -->
+<!-- doc-version: 0.2.4 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -153,7 +153,7 @@ is accepted until the proposal lands.
 - Source: `infra-portal` v0.7.2 (`src/server/health.ts:82-86`)
 - Date observed: 2026-05-02
 - Category: semantic-gap, consumer-drift
-- Status: partially implemented (protocol 0.2.0 + infra-portal repo 0.8.0; deployment to production pending) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` **repo** 0.8.0: `tcpProbe` via `node:net` `Socket`. **Production currently runs `infra-portal:0.7.2`; until the operator promotes the image, this DF cannot be `implemented` per the new ontology in `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`** ("operationally deployed" requires `running` and `serving` confirmed by runtime evidence; today only `implemented in repo` is true). The DF moves to `implemented` when production reports the new version.
+- Status: implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-04) — (b) protocol-side guardrail in protocol 0.2.0: SPEC.md *Consumer support for `interface`* matrix. (a) consumer-side cure in `infra-portal` 0.8.0: `tcpProbe` via `node:net` `Socket`. **Promoted to NAS production on 2026-05-04** following the six-step evidence plan in `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md` §8. Runtime evidence confirmed: `docker ps` reports `infra-portal:0.8.0` healthy; `/api/health` returns `{"ok":true,"version":"0.8.0"}`; `/api/status` reports `mosquitto: up` with message `TCP 10.0.0.139:1883 connected` (was `unknown / "tcp probes not implemented yet"` under 0.7.2); `/api/catalog` exposes the `interface` field for declared services (`mosquitto: mqtt`, `esphome-builder: web`). The "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is satisfied: `running` and `serving` both confirmed with runtime evidence and the `serving` version matches the expected one.
 - Related: DF-001
 
 ### Observation

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.3 -->
+<!-- doc-version: 0.2.4 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -14,8 +14,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.2.3 — mechanical fix-forward after a GPT-5
+- Last Updated: 2026-05-04 - Claude Opus 4.7 (1M context)
+- Session Focus: Patch 0.2.4 — DF-002 closed in production. The operator promoted `infra-portal:0.8.0` to NAS following the six-step evidence plan; runtime evidence confirmed (`docker ps` healthy, `/api/health` 0.8.0, mosquitto `up`, `interface` field exposed). DF-002 status moves from `partially implemented` to `implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-04)`. First time the "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is fully satisfied in production.
+
+- Previous: Patch 0.2.3 — mechanical fix-forward after a GPT-5
   audit caught two status-string drifts introduced by 0.2.2: DF-002
   was marked `implemented` but the new "operationally deployed"
   ontology requires production evidence (only repo evidence exists),
