@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.5 -->
+<!-- doc-version: 0.3.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -10,12 +10,14 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 **Master roadmap**: `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
 
-**For this repo specifically**: Session 1 (Implement DEPLOYMENT_EVIDENCE_PROPOSAL.md) is **independent** and ready to start. Session 4 is the one that produces `docs/ECOSYSTEM_MAP.md` here. Both are documented with copy-pasteable prompts in the master roadmap.
+**For this repo specifically**: Session 1 (Implement DEPLOYMENT_EVIDENCE_PROPOSAL.md) **shipped in 0.3.0** (this session). Session 4 is the one that produces `docs/ECOSYSTEM_MAP.md` here. Remaining sessions documented with copy-pasteable prompts in the master roadmap.
 
 ## Current Status
 
-- Last Updated: 2026-05-03 - Claude Opus 4.7 (1M context)
-- Session Focus: Patch 0.2.5 — SPEC matrix row for `infra-portal` synced to 0.8.1 (the `expect_status` ground-truth bug fix shipped in `infra-portal` immediately after 0.8.0 was promoted, when the post-deploy audit surfaced unifi-mcp permanently `down` because of the same logic gap). Doc-only on this side; the bug fix + tests + deploy live in `infra-portal`.
+- Last Updated: 2026-05-04 - Claude Opus 4.7 (1M context) (DocKit gate close + push)
+- Session Focus: Minor 0.3.0 — Deployment Evidence Contract shipped end-to-end per `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` *Acceptance criteria*. `schemas/services.schema.json` gains the optional `deployment` block (`expected.image` + `expected.health` with `url`/`version_json_path`/`version`); `SPEC.md` *Service* gains the six-state vocabulary, the "operationally deployed" rule, the intent-vs-evidence rule, and a brief description of the `deployment` block; `examples/home-infra/catalog/services.yml` shows three of the five proposal scenarios on sanitized hostnames; `docs/PROJECT_CONTRACTS.md` notes the same block applies to project-level service objects. `docs/DOWNSTREAM_FEEDBACK.md` DF-003 → `implemented (0.3.0)`. Schema validates the example with `jsonschema`; `scripts/check-version-sync.sh` reports 28/28 in sync. No new consensus run — the proposal closed its consensus on 2026-05-03 and this session implements it.
+
+- Previous: Patch 0.2.5 — SPEC matrix row for `infra-portal` synced to 0.8.1 (the `expect_status` ground-truth bug fix shipped in `infra-portal` immediately after 0.8.0 was promoted, when the post-deploy audit surfaced unifi-mcp permanently `down` because of the same logic gap). Doc-only on this side; the bug fix + tests + deploy live in `infra-portal`.
 
 - Previous: Patch 0.2.4 — DF-002 closed in production. The operator promoted `infra-portal:0.8.0` to NAS following the six-step evidence plan; runtime evidence confirmed (`docker ps` healthy, `/api/health` 0.8.0, mosquitto `up`, `interface` field exposed). DF-002 status moves from `partially implemented` to `implemented (protocol 0.2.0 + infra-portal 0.8.0 in production from 2026-05-03)`. First time the "operationally deployed" rule from `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is fully satisfied in production.
 
@@ -27,41 +29,34 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
   `partially accepted`. Both corrected. No schema change. The earlier
   0.2.2 work — the `DEPLOYMENT_EVIDENCE_PROPOSAL.md` and the
   consensus REVIEWS entry — stands.
-- Status: 0.2.2 ships:
-  (1) `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` — self-contained proposal
-      for the next session to implement (six lifecycle states,
-      intent-vs-evidence rule, optional `deployment` block on
-      `Service`). Acceptance checklist included.
-  (2) `docs/llm/REVIEWS.md` — structured audit-trail entry for the
-      consensus run that produced the proposal. Format follows
-      `~/src/LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`.
-  (3) `docs/DOWNSTREAM_FEEDBACK.md` DF-003 → `accepted` with
-      cross-reference to the proposal.
-  (4) Manifest extended with the new proposal.
-
-The implementation of `DEPLOYMENT_EVIDENCE_PROPOSAL.md` is the next
-structural task and is **independent**: a fresh session can read the
-proposal cold and ship it. The deliberation history is in
-`REVIEWS.md` for reference, not as required reading.
+- Previous: Patch 0.2.2 — Deployment Evidence Contract proposal +
+  REVIEWS audit trail filed. (1) `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`
+  introduced the six lifecycle states, the intent-vs-evidence rule,
+  and the optional `deployment` block on `Service`, with acceptance
+  checklist. (2) `docs/llm/REVIEWS.md` recorded the consensus run that
+  produced the proposal. (3) `docs/DOWNSTREAM_FEEDBACK.md` DF-003 →
+  `accepted` with cross-reference. (4) Manifest extended. The
+  proposal was self-contained so a future session could read it cold;
+  that future session shipped in 0.3.0 (this entry's *Session Focus*
+  above).
 
 ## Pending Proposals (for the next session)
 
-1. **`docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`** — implement the
-   Deployment Evidence Contract. Adds `deployment` block to schema,
-   six-state vocabulary + normative rules to SPEC, three example
-   entries in `examples/home-infra/catalog/services.yml`. Bumps minor
-   to 0.3.0 (additive schema field). Self-contained.
+(none — `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` shipped in 0.3.0.)
 
-After implementation, DF-003 status moves from `accepted` to
-`implemented (0.3.0)`.
+The next structural extension surfaced by the new contract is
+consumer-side: `infra-portal` (or a future `infra-agent`) reads
+`deployment.expected.health.version` and reports drift in
+`INFO/WARN/FAIL` terms. That work lives in the consumer repos, not
+here.
 
 ## Open DF entries
 
-- **DF-003** — Consumer support matrix conflates repo HEAD with
-  deployed version. Status: `accepted`. Resolution: implement the
-  proposal above. The deliberation produced a deeper response than the
-  matrix-only fix DF-003 originally suggested — a typed vocabulary +
-  schema block — recorded in REVIEWS 2026-05-03.
+- **DF-004** — Default `interface: web` when omitted is unsafe for
+  HTTP APIs without HTML. Status: `open`. Mitigated in source projects
+  (catalog now declares `interface: api` for the affected services).
+  Three options (SPEC clarification → validator check → schema-required
+  in v1.0) named in the entry; sequence (a)→(b)→(c).
 
 ## Patch 0.2.1 Outcome
 

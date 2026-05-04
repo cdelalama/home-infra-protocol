@@ -3,6 +3,60 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.3.0] - 2026-05-03
+
+### Added
+
+- **Deployment Evidence Contract** (additive minor) — implements
+  `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` end-to-end. Cleared the
+  acceptance checklist in the proposal; closes DF-003.
+- `schemas/services.schema.json`: optional `deployment` block on each
+  service item. Shape:
+  `deployment.expected.image` (string, optional) +
+  `deployment.expected.health` sub-block with required
+  `url` / `version_json_path` / `version` (each is a non-empty string).
+  Every level is independently optional; a service that omits
+  `deployment` gracefully falls out of any drift-detection consumer
+  logic. `additionalProperties: true` is preserved at every level so
+  0.2.x consumers continue to load 0.3.0 catalogs without modification
+  (they ignore the new field).
+- `SPEC.md` *Service* section grows four normative sub-sections:
+  - *Deployment lifecycle vocabulary* — six independently-verifiable
+    states (`declared / implemented / built / transferred / running /
+    serving`) replace the overloaded word "deployed".
+  - *Rule: "operationally deployed"* — the claim is valid only when
+    `running` and `serving` are confirmed by runtime evidence; for
+    services with a version-bearing endpoint, `serving` MUST confirm
+    the expected version.
+  - *Rule: intent vs evidence* — catalog fields express intent;
+    runtime observation never lives in the catalog. Hand-maintained
+    `observed_*` / `actual_*` fields are forbidden because they rot.
+  - *`deployment`* — describes the new block (shape, fields, drift
+    severity vocabulary INFO/WARN/FAIL as semantics-not-enforcement)
+    and points at the JSON schema for the formal contract.
+  - `deployment` added to *Recommended fields*.
+- `examples/home-infra/catalog/services.yml`: three of the five
+  proposal scenarios now have `deployment` blocks on sanitized
+  hostnames — `infra` (own app + endpoint, image + health),
+  `home-dashboard` (third-party with HTTP UI, image only with `latest`
+  tag to model digest-as-evidence), and `example-mqtt` (third-party
+  TCP only, image only). Inline comments explain the scenario and
+  cross-reference the proposal anti-patterns.
+- `docs/PROJECT_CONTRACTS.md`: notes that project-level service
+  objects, when used, may include the same `deployment` block with
+  the same semantics — intent declared in the project repo, evidence
+  read by consumers, never edited to match observed reality.
+
+### Changed
+
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-003 status moves from `accepted`
+  (proposal in flight) to `implemented (0.3.0)` with the resolution
+  summary inline. DF-002 stays `implemented` (consumer-side TCP probe
+  shipped in `infra-portal` 0.8.0/0.8.1 and is in production); the
+  new contract gives that work a vocabulary and an extension path
+  (e.g. wiring a `deployment.expected.health.version` comparison in
+  the portal as a follow-up consumer-side patch).
+
 ## [0.2.5] - 2026-05-03
 
 ### Changed

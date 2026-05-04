@@ -25,6 +25,20 @@ services:
       url: https://infra.example.internal/api/health
       timeout_ms: 2000
       expect_status: 200
+    # Deployment evidence — Scenario "own app + endpoint" (see
+    # docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md). Image tag drift detected by
+    # comparing `expected.image` to the running container's image; version
+    # drift detected by GETting `expected.health.url` and reading the
+    # `expected.health.version_json_path` value. Catalog expresses intent;
+    # the consumer reads evidence. Never edit this block to match observed
+    # reality (anti-pattern #1 in the proposal).
+    deployment:
+      expected:
+        image: infra-portal:0.1.0
+        health:
+          url: https://infra.example.internal/api/health
+          version_json_path: $.version
+          version: 0.1.0
 
   - id: home-dashboard
     name: Home Dashboard
@@ -34,6 +48,7 @@ services:
     fallback_url: http://10.0.0.20:8123/
     host_id: home-automation
     runtime: docker
+    image: ghcr.io/example/home-dashboard:latest
     tags: [home, automation]
     deps: [infra]
     description: Example home automation dashboard.
@@ -41,6 +56,15 @@ services:
       type: http
       url: https://home.example.internal/
       timeout_ms: 2000
+    # Deployment evidence — Scenario "third-party with HTTP UI". The
+    # service has no version-bearing endpoint, so `expected.health` is
+    # omitted; only `expected.image` is declared and a consumer can warn
+    # if the running container's image digest drifts from the expected
+    # tag. `latest` is used here on purpose to model the case where a
+    # tag is mutable and the only reliable evidence is the digest.
+    deployment:
+      expected:
+        image: ghcr.io/example/home-dashboard:latest
 
   - id: example-mqtt
     name: Example MQTT Broker
@@ -60,6 +84,13 @@ services:
       host: broker.example.internal
       port: 1883
       timeout_ms: 2000
+    # Deployment evidence — Scenario "third-party, TCP only". Brokers
+    # have no HTTP version endpoint, so `expected.health` is omitted.
+    # Only `expected.image` is declared; a consumer can detect drift if
+    # the running container's image differs from the expected tag.
+    deployment:
+      expected:
+        image: eclipse-mosquitto:2.0
 
   - id: example-api
     name: Example REST API

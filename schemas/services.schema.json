@@ -55,6 +55,48 @@
               "timeout_ms": { "type": "integer", "minimum": 1 },
               "expect_status": { "type": "integer" }
             }
+          },
+          "deployment": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Optional declaration of the operator's intent for what should be running. Catalog declares intent only; evidence about runtime state is read by consumers from the live system, never edited into the catalog. See SPEC.md *Service / deployment* (and the adjacent *Deployment lifecycle vocabulary*, *Rule: \"operationally deployed\"*, *Rule: intent vs evidence* sub-sections) and docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md for the contract.",
+            "properties": {
+              "expected": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "What the operator expects to be deployed. Sub-blocks are independent: a service may declare `image` only, `health` only, both, or neither.",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Image tag (or other artefact reference) the operator expects to be running. Omit for services without a controllable image (Cloudflare tunnels, third-party SaaS)."
+                  },
+                  "health": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "How a consumer reaches a version-bearing endpoint. Omit for services without one (e.g. mosquitto, vaultwarden).",
+                    "required": ["url", "version_json_path", "version"],
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Endpoint URL the consumer probes for the running version."
+                      },
+                      "version_json_path": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "JSONPath into the response body that yields the running version string (e.g. $.version)."
+                      },
+                      "version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Expected value at the JSONPath. Drift is reported when the live response yields a different value."
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

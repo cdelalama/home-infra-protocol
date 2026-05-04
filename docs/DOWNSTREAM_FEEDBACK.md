@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.5 -->
+<!-- doc-version: 0.3.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -236,9 +236,9 @@ release should review the open DF list before deciding what to ship next.
 - Source: `infra-portal` v0.8.0 in repo / v0.7.2 in production + `tomatic` v0.1.5 audit
 - Date observed: 2026-05-03
 - Category: semantic-gap, usability
-- Status: accepted (proposal in `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md`)
+- Status: implemented (0.3.0) — Deployment Evidence Contract shipped: schema gains optional `deployment` block (`expected.image` + `expected.health` with `url`/`version_json_path`/`version`); SPEC.md *Service* gains the six-state vocabulary, the "operationally deployed" rule, the intent-vs-evidence rule, and a brief description of the `deployment` block; `examples/home-infra/catalog/services.yml` shows three of the five proposal scenarios on sanitized hostnames (own app + endpoint, third-party with HTTP UI, third-party TCP-only); `docs/PROJECT_CONTRACTS.md` notes the same `deployment` block applies to project-level service objects with the same semantics. DF-002 stays `implemented` (consumer-side TCP probe shipped in `infra-portal` 0.8.0/0.8.1 and is in production); the new contract gives that work a vocabulary and an extension path (e.g. wiring a `deployment.expected.health.version` comparison in the portal as a follow-up consumer-side patch).
 - Related: DF-001, DF-002
-- Resolution path: `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` (Deployment Evidence Contract). The proposal goes beyond the matrix-only fix originally suggested here: it introduces a typed six-state vocabulary, an explicit intent-vs-evidence rule, and an optional `deployment` block on `Service`. The implementing session ships those changes and moves this DF to `implemented (X.Y.0)`. The deliberation that produced the proposal is recorded in `docs/llm/REVIEWS.md` 2026-05-03.
+- Resolution path: `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` (Deployment Evidence Contract). The proposal goes beyond the matrix-only fix originally suggested here: it introduces a typed six-state vocabulary, an explicit intent-vs-evidence rule, and an optional `deployment` block on `Service`. The implementing session shipped those changes in protocol 0.3.0. The deliberation that produced the proposal is recorded in `docs/llm/REVIEWS.md` 2026-05-03.
 
 ### Observation
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.2.5 -->
+<!-- doc-version: 0.3.0 -->
 # Operations
 
 No runtime operations exist yet. This repository is currently a specification
