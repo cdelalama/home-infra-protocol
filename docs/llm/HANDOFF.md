@@ -4,6 +4,20 @@
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
+## Open work — next concrete step
+
+**DF-004 closure** (option (a), patch **0.3.1**). The DF entry's
+*Implementation hints (option (a))* block lists the exact files to touch,
+the version bump, and the read-only cross-repo sweep. No proposal needed,
+no Consensus run needed — the recommended option is already named in the
+DF and the closure is a routine clarification + adopter guidance.
+
+A fresh Claude Code session opening this repo should be able to read
+`docs/DOWNSTREAM_FEEDBACK.md` DF-004 and `docs/LLM_WORKFLOW.md` and ship
+0.3.1 without bespoke context. The master roadmap at
+`~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
+§3 *Session 6* points at this same task with the short prompt.
+
 ## Pending session — Ecosystem Reconciliation
 
 A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AND surfaced a significant prior-art gap: `~/src/llm-council` predates much of `LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`. Reconciliation gated to Session 4 of the roadmap.
@@ -14,8 +28,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-06 - Claude Opus 4.7 (1M context) (advisory turn — no code change)
-- Session Focus: Advisory turn — no code change. Two activities: (1) ecosystem-map summary requested by operator (four protocols: home-infra-protocol, LLM-DocKit, Consensus Protocol in flight, llm-council prior-art); (2) review of dispatch prompt for the next session that closes DF-004 (option (a) — SPEC clarification + schema description update + catalog re-sweep + patch 0.3.1). No version bump, no schema change, no SPEC change in this turn. Hook fired requiring HANDOFF/HISTORY refresh; this entry is the receipt.
+- Last Updated: 2026-05-06 - Claude Opus 4.7 (1M context) (meta cleanup — no code change, no schema change)
+- Session Focus: Meta cleanup — close the gaps that were forcing bespoke prompts for routine DF closures. Three doc additions: (1) `docs/llm/HANDOFF.md` gains an *Open work — next concrete step* block at the top so a fresh session sees what to ship without conversational context; (2) `docs/LLM_WORKFLOW.md` gains a *When Changing Field Semantics* section formalising the read-only adopter-catalog sweep convention (the lesson DF-004 itself teaches at its tail); (3) `docs/DOWNSTREAM_FEEDBACK.md` template gains an *Implementation hints* block — actionable file-by-file translation of the chosen option — and DF-004 is retroactively populated with the block for option (a). Net effect: the dispatch prompt for closing DF-004 (Session 6 in the master roadmap) drops from ~100 lines of bespoke context to ~4 lines pointing at this repo's own docs. No version bump, no schema/SPEC contract change.
+
+- Previous: Advisory turn 2026-05-06 (commit `20c2a1a`) — ecosystem-map summary + dispatch-prompt critique. No code change in that turn either. The current meta cleanup supersedes the bespoke-prompt approach implied by that advisory turn.
 
 - Previous: Minor 0.3.0 — Deployment Evidence Contract shipped end-to-end per `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` *Acceptance criteria*. `schemas/services.schema.json` gains the optional `deployment` block (`expected.image` + `expected.health` with `url`/`version_json_path`/`version`); `SPEC.md` *Service* gains the six-state vocabulary, the "operationally deployed" rule, the intent-vs-evidence rule, and a brief description of the `deployment` block; `examples/home-infra/catalog/services.yml` shows three of the five proposal scenarios on sanitized hostnames; `docs/PROJECT_CONTRACTS.md` notes the same block applies to project-level service objects. `docs/DOWNSTREAM_FEEDBACK.md` DF-003 → `implemented (0.3.0)`. Implementation 2026-05-03; commit + push 2026-05-04.
 

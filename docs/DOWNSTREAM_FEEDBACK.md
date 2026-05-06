@@ -66,6 +66,20 @@ Protocol implication: what the protocol should change (new field, schema
 update, validator check, doc rule). Be specific. If multiple options exist,
 list them with tradeoffs.
 
+Implementation hints (when the recommended option is decided): an actionable
+checklist that translates the chosen option into concrete changes, so a
+fresh session can ship without bespoke prompting. Format:
+
+  Files to touch:
+    - <path>: <what changes>
+    - <path>: <what changes>
+  Version bump: <patch|minor|major> per docs/VERSIONING_RULES.md
+  Cross-repo touches required: <none | list, read-only by default>
+
+This block is OPTIONAL when the DF is filed but SHOULD be added before the
+DF moves out of `open`. It is the difference between "DF describes a
+problem" (open) and "DF is dispatchable as a closure session" (accepted).
+
 Mitigation in source project (optional): how the downstream project worked
 around the gap in the meantime, if relevant.
 ```
@@ -363,6 +377,18 @@ Three options, increasing strictness:
 (c) **Schema-level required** (highest cost): make `interface` REQUIRED on every service in a future major. Backward-compatible default goes away. Most explicit; needs coordinated release across consumers + migration window.
 
 Recommended sequence: (a) immediately in the next SPEC patch as a clarification + adopter guidance; (b) when the second adopter trips on it; (c) reserved for v1.0 of the protocol.
+
+### Implementation hints (option (a))
+
+Files to touch:
+  - `SPEC.md` *Service / interface*: rewrite the "MUST declare explicitly" rule from *"when `url` does not start with `http(s)://`"* to *"when the service does not serve HTML at the listed `url`"*. Add explicit guidance: *"for HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC), declare `interface: api`."*
+  - `schemas/services.schema.json`: update the `description` of the `interface` field to reflect the broader rule. Do **not** change `required`, do **not** close the enum, do **not** change the default.
+  - `examples/home-infra/catalog/services.yml`: ensure `example-api` exists with `interface: api` and a brief comment naming the new rule (HTTP APIs without HTML must declare `interface: api`).
+  - `docs/DOWNSTREAM_FEEDBACK.md`: this DF's status → `implemented (0.3.1)`.
+
+Version bump: **patch (0.3.1)** per `docs/VERSIONING_RULES.md` — clarification + adopter guidance, no breaking change. Use `scripts/bump-version.sh 0.3.1`; do not edit `<!-- doc-version: -->` markers manually.
+
+Cross-repo touches required: read-only sweep of `~/src/home-infra/catalog/services.yml` per `docs/LLM_WORKFLOW.md` *When Changing Field Semantics*. Halt and report drift to the operator; do **not** edit `home-infra` from the closing session.
 
 ### Mitigation in source projects
 
