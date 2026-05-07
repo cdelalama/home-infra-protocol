@@ -1,4 +1,4 @@
-<!-- doc-version: 0.3.0 -->
+<!-- doc-version: 0.3.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -83,8 +83,14 @@ kinds are needed. Future closed-enum candidates start in `other`.
 
 When `interface` is omitted, consumers MUST treat the service as having a web
 UI (`interface: web`) for backward compatibility with v0.1.x catalogs. When
-`url` does not start with `http://` or `https://`, the service MUST declare
-`interface` explicitly so consumers can render and probe it correctly.
+the service does not serve HTML at the listed `url`, the service MUST declare
+`interface` explicitly so consumers can render and probe it correctly. For
+HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC), declare
+`interface: api`. The earlier formulation of this rule (added in 0.2.0) only
+covered URLs whose scheme was not `http(s)://`, which left HTTPS APIs without
+HTML on the wrong side of the line and produced the failure mode recorded in
+`docs/DOWNSTREAM_FEEDBACK.md` DF-004; the broader formulation above replaced
+it in 0.3.1.
 
 | Value | When to use | Consumer behaviour expectation |
 |-------|-------------|--------------------------------|

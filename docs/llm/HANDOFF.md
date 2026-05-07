@@ -1,4 +1,4 @@
-<!-- doc-version: 0.3.0 -->
+<!-- doc-version: 0.3.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,17 +6,16 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-**DF-004 closure** (option (a), patch **0.3.1**). The DF entry's
-*Implementation hints (option (a))* block lists the exact files to touch,
-the version bump, and the read-only cross-repo sweep. No proposal needed,
-no Consensus run needed — the recommended option is already named in the
-DF and the closure is a routine clarification + adopter guidance.
+(none — DF-004 closed in 0.3.1 on 2026-05-07.) The next dispatchable
+work item is gated on Session 4 of the master roadmap (Ecosystem
+Reconciliation), which produces `docs/ECOSYSTEM_MAP.md` here. That
+session is gated on a non-Claude LLM. Until then, the only protocol
+work that surfaces from this repo's own docs is whatever new DF
+entries adopters file in `docs/DOWNSTREAM_FEEDBACK.md`.
 
-A fresh Claude Code session opening this repo should be able to read
-`docs/DOWNSTREAM_FEEDBACK.md` DF-004 and `docs/LLM_WORKFLOW.md` and ship
-0.3.1 without bespoke context. The master roadmap at
-`~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
-§3 *Session 6* points at this same task with the short prompt.
+If a fresh session opens the repo and finds this block empty, the
+correct response is *not* to invent work — it is to confirm with the
+operator what the priority is.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -28,10 +27,12 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-07 - Claude Opus 4.7 (1M context) (advisory turn — no code change)
-- Session Focus: Operator asked "qué hay que hacer aquí?" cold. Answered by reading the existing *Open work — next concrete step* block (added 2026-05-06): the next concrete step is closing DF-004 with patch 0.3.1, option (a), with files-to-touch already enumerated in the DF's *Implementation hints* block. No bespoke prompt needed — exactly the property the 2026-05-06 meta cleanup was designed to deliver. Operator received the summary; awaiting approval to execute 0.3.1 in a follow-up session. No SPEC, schema, examples, CHANGELOG, or VERSION change in this turn. This entry exists because the project's `Stop` hook validates HANDOFF/HISTORY freshness on every session close regardless of whether the turn was implementation or advisory (same rationale as the 2026-05-06 advisory entry below).
+- Last Updated: 2026-05-07 - Claude Opus 4.7 (1M context) (patch 0.3.1 — DF-004 closure, option (a))
+- Session Focus: **Patch 0.3.1 — DF-004 closure (option (a)).** Broadened the `interface` default rule in `SPEC.md` *Service / interface* from *"when `url` does not start with `http(s)://`"* to *"when the service does not serve HTML at the listed `url`"*, with explicit guidance that HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC) MUST declare `interface: api`. `schemas/services.schema.json` `interface` `description` updated to match (no change to `required`, enum, or default). `examples/home-infra/catalog/services.yml` `example-api` gains an explanatory comment naming the rule clarified in 0.3.1. `docs/DOWNSTREAM_FEEDBACK.md` DF-004 status → `implemented (0.3.1)` with resolution summary. CHANGELOG entry added. Cross-repo read-only sweep of `~/src/home-infra/catalog/services.yml` per `docs/LLM_WORKFLOW.md` *When Changing Field Semantics*: no drift across the 11 services. 28 doc-version targets synced via `scripts/bump-version.sh 0.3.1`. This is the first patch shipped via the 2026-05-06 meta-cleanup property: a fresh, cold session closed a DF without a bespoke dispatch prompt, reading only the *Open work — next concrete step* block + DF-004 *Implementation hints* block.
 
-- Previous: Meta cleanup 2026-05-06 (commit `5dd8301`) — three doc additions to close the gaps that were forcing bespoke prompts for routine DF closures: (1) `docs/llm/HANDOFF.md` *Open work — next concrete step* block at the top so a fresh session sees what to ship without conversational context; (2) `docs/LLM_WORKFLOW.md` *When Changing Field Semantics* section formalising the read-only adopter-catalog sweep convention; (3) `docs/DOWNSTREAM_FEEDBACK.md` template *Implementation hints* block + DF-004 retroactively populated for option (a). Net effect: the DF-004 closure dispatch prompt drops from ~100 lines of bespoke context to ~4 lines pointing at this repo's own docs. The 2026-05-07 advisory turn above is the first session to validate that property end-to-end.
+- Previous: Cold-orientation advisory turn 2026-05-07 (commit `334795c`) — operator asked "qué hay que hacer aquí?" cold. Session answered by reading the existing *Open work* block + DF-004 *Implementation hints* block, no bespoke context required. That advisory turn produced no code change; the implementation turn above is the immediate follow-up that ships 0.3.1.
+
+- Previous: Meta cleanup 2026-05-06 (commit `5dd8301`) — three doc additions to close the gaps that were forcing bespoke prompts for routine DF closures: (1) `docs/llm/HANDOFF.md` *Open work — next concrete step* block at the top so a fresh session sees what to ship without conversational context; (2) `docs/LLM_WORKFLOW.md` *When Changing Field Semantics* section formalising the read-only adopter-catalog sweep convention; (3) `docs/DOWNSTREAM_FEEDBACK.md` template *Implementation hints* block + DF-004 retroactively populated for option (a). Net effect: the DF-004 closure dispatch prompt drops from ~100 lines of bespoke context to ~4 lines pointing at this repo's own docs. The 0.3.1 implementation above is the first patch to validate this property end-to-end.
 
 - Previous: Advisory turn 2026-05-06 (commit `20c2a1a`) — ecosystem-map summary + dispatch-prompt critique. No code change in that turn either. Superseded by the 2026-05-06 meta cleanup that made bespoke prompts unnecessary.
 
@@ -72,11 +73,11 @@ here.
 
 ## Open DF entries
 
-- **DF-004** — Default `interface: web` when omitted is unsafe for
-  HTTP APIs without HTML. Status: `open`. Mitigated in source projects
-  (catalog now declares `interface: api` for the affected services).
-  Three options (SPEC clarification → validator check → schema-required
-  in v1.0) named in the entry; sequence (a)→(b)→(c).
+(none — DF-004 closed in 0.3.1 on 2026-05-07. Options (b) validator
+check and (c) schema-required remain queued in DF-004 itself for a
+future session, but not currently dispatchable: (b) is gated on a
+`dockit-validate-catalog.sh` adopter-side script that does not yet
+exist; (c) is reserved for protocol v1.0.)
 
 ## Patch 0.2.1 Outcome
 

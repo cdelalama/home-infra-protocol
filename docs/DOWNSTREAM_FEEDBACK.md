@@ -1,4 +1,4 @@
-<!-- doc-version: 0.3.0 -->
+<!-- doc-version: 0.3.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -344,7 +344,7 @@ separate operator-driven action.
 - Source: `home-infra/catalog/services.yml` (unifi-mcp entry) + `infra-portal` 0.8.1 in production, 2026-05-03
 - Date observed: 2026-05-03 (surfaced by operator-auditor)
 - Category: field-gap, semantic-gap
-- Status: open
+- Status: implemented (0.3.1) — option (a) shipped: SPEC.md *Service / interface* rule rewritten to fire on "service does not serve HTML at the listed `url`" (covers HTTPS APIs without HTML, the original gap), plus explicit guidance to declare `interface: api` for HTTP APIs without HTML; `schemas/services.schema.json` description updated to match; `examples/home-infra/catalog/services.yml` `example-api` entry gains an explanatory comment naming the new rule. Cross-repo read-only sweep of `~/src/home-infra/catalog/services.yml` performed in the same session: no drift — all 11 services either correctly declare a non-`web` interface (`mosquitto: mqtt`, `unifi-mcp: api`, `esphome-builder: web` explicit) or omit the field and genuinely serve HTML at the listed URL. Options (b) validator check and (c) schema-required remain queued (a)→(b)→(c) as originally sequenced.
 - Related: DF-001 (where `interface` was introduced), DF-031 (ecosystem prior-art search)
 
 ### Observation

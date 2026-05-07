@@ -22,7 +22,7 @@
           "interface": {
             "type": "string",
             "minLength": 1,
-            "description": "Kind of interface the service exposes. Recommended values: web, api, mqtt, tcp, ssh, none, other. Optional; defaults to 'web' for backward compatibility. SHOULD be set explicitly when url does not start with http:// or https://."
+            "description": "Kind of interface the service exposes. Recommended values: web, api, mqtt, tcp, ssh, none, other. Optional; defaults to 'web' for backward compatibility. SHOULD be set explicitly when the service does not serve HTML at the listed url — including HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC), which should declare 'api'. The earlier wording of this rule (0.2.0) covered only non-http(s) URLs and missed HTTPS APIs without HTML; broadened in 0.3.1 (see SPEC.md and DOWNSTREAM_FEEDBACK.md DF-004)."
           },
           "fallback_url": { "type": "string" },
           "host_id": { "type": "string" },

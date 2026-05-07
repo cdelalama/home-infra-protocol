@@ -95,6 +95,11 @@ services:
   - id: example-api
     name: Example REST API
     category: tools
+    # `interface: api` is REQUIRED here per SPEC.md *Service / interface*: the
+    # URL is HTTPS but the service does not serve HTML, so the implicit `web`
+    # default would be wrong. This is the rule clarified in 0.3.1 to close
+    # DF-004 — HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC) MUST
+    # declare `interface: api`.
     url: https://api.example.internal/v1
     interface: api
     host_id: nas

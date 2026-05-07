@@ -3,6 +3,55 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.3.1] - 2026-05-07
+
+### Changed
+
+- **DF-004 closed (option (a)) — `interface` default rule broadened.** The
+  rule that forces explicit `interface` declaration in `SPEC.md`
+  *Service / interface* previously fired only when `url` did not start with
+  `http://` or `https://`. That formulation left HTTPS APIs without HTML
+  (MCP, REST, GraphQL, JSON-RPC) on the wrong side of the line: the schema
+  accepted a missing declaration, the catalog complied, the consumer
+  applied the permissive `web` default, and the user saw a broken "open"
+  button on `unifi-mcp` (the failure mode recorded in
+  `docs/DOWNSTREAM_FEEDBACK.md` DF-004). Rule rewritten to fire on
+  *"service does not serve HTML at the listed `url`"*, with explicit
+  guidance: HTTP APIs without HTML MUST declare `interface: api`.
+- `schemas/services.schema.json`: `interface` field `description` updated
+  to reflect the broader rule and name the API-without-HTML case
+  explicitly. `required`, enum (none — open list), and default (`web`)
+  unchanged. The schema does not enforce the new rule mechanically (it
+  cannot inspect the URL's `Content-Type`); a future validator check is
+  option (b) of the DF, deferred.
+- `examples/home-infra/catalog/services.yml`: `example-api` gains an
+  explanatory comment naming the rule clarified in 0.3.1 — adopters
+  reading the example see the rule alongside the canonical case it
+  applies to.
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-004 status moves from `open` to
+  `implemented (0.3.1)` with the resolution summary inline. The DF
+  entry's *Implementation hints (option (a))* block is now historical
+  (closed), but stays in place as the reference for how this kind of
+  closure was structured. Options (b) and (c) remain queued.
+
+### Notes
+
+- Cross-repo: read-only sweep of `~/src/home-infra/catalog/services.yml`
+  performed per `docs/LLM_WORKFLOW.md` *When Changing Field Semantics*.
+  No drift: 11 services audited, all either correctly declare a non-`web`
+  interface (`mosquitto: mqtt`, `unifi-mcp: api`, `esphome-builder: web`)
+  or omit the field and genuinely serve HTML at the listed URL. The
+  catalog needs no follow-up commit for this protocol patch — the
+  unifi-mcp mitigation that originally surfaced DF-004 already added the
+  correct declaration on 2026-05-03.
+- Patch (not minor): clarification + adopter guidance, no schema
+  contract change. Per `docs/VERSIONING_RULES.md` patch criteria.
+- This patch validates the property the 2026-05-06 meta cleanup was
+  designed to deliver: a fresh, context-less session opening this repo
+  closed DF-004 by reading the existing *Open work — next concrete
+  step* block + DF-004 *Implementation hints* block, no bespoke
+  dispatch prompt required.
+
 ## [0.3.0] - 2026-05-03
 
 ### Added
