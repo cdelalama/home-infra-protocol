@@ -6,16 +6,33 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-(none — DF-004 closed in 0.3.1 on 2026-05-07.) The next dispatchable
-work item is gated on Session 4 of the master roadmap (Ecosystem
-Reconciliation), which produces `docs/ECOSYSTEM_MAP.md` here. That
-session is gated on a non-Claude LLM. Until then, the only protocol
-work that surfaces from this repo's own docs is whatever new DF
-entries adopters file in `docs/DOWNSTREAM_FEEDBACK.md`.
+Author `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` for
+DF-005 (filed 2026-05-08). DF-005 carries enough scope — cross-repo
+coordination for option A1 (LLM-DocKit STRUCTURE.md template path
+change), skill input contract change for option B1 (`/new-homelab-project`
+gets a `--brainstorm` input), brainstorm format contract decision —
+that a `*_PROPOSAL.md` is the right next artefact before any
+implementation session. The DF entry itself contains the option
+taxonomy (A1/A2/A3 for runbooks-path collision; B1/B2/B3 for
+orchestrator HANDOFF population) and the recommended sequence; the
+PROPOSAL scopes those options into a dispatchable implementation
+session.
 
-If a fresh session opens the repo and finds this block empty, the
-correct response is *not* to invent work — it is to confirm with the
-operator what the priority is.
+Empirical motivator: pi-fleet 0.1.1 (2026-05-08) was the first
+homelab-profile project scaffolded end-to-end via
+`integrations/dockit/new-homelab-project.sh`, and surfaced both gaps
+in one Codex audit — the runbooks-path collision and the orchestrator's
+missing HANDOFF *Open work* population step share a single root cause
+(scaffold step does not propagate context from brainstorm to new repo's
+docs). DF-005 is the first DF in this repo filed as an *aggregation* of
+two findings into one systemic entry; the aggregation itself relies on
+an arbiter session with multi-repo context, which is the cross-LLM
+protocol gap recorded in `forgeos/docs/llm/HANDOFF.md` *Open work*
+item #8 (companion recognition missing from proto-`/consensus`).
+
+If a fresh session opens the repo and finds this block empty (after
+DF-005 ships), the correct response is *not* to invent work — it is
+to confirm with the operator what the priority is.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -27,8 +44,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-08 - Claude Opus 4.7 (1M context) (recap turn — no code change)
-- Session Focus: Operator asked for an after-the-fact recap of what the previous-day session shipped (the 2026-05-07 0.3.1 patch). Session restated: (1) cold-orientation advisory turn that produced commit `334795c`, (2) the 0.3.1 implementation that produced commit `f002f48` closing DF-004 via option (a). No SPEC, schema, examples, CHANGELOG, or VERSION change in this turn. Recorded here because the project's `Stop` hook validates HANDOFF/HISTORY freshness on every session close regardless of whether the turn was implementation, advisory, or recap.
+- Last Updated: 2026-05-08 - Claude Opus 4.7 (1M context) (DF filing + HANDOFF refresh — no code change)
+- Session Focus: Lodged **DF-005** — homelab profile / runbooks-path collision + `/new-homelab-project` HANDOFF *Open work* population gap. Cross-LLM protocol exercise: arbiter session in `home-infra` with multi-repo context, after Codex audit of pi-fleet 0.1.1 cazó four template-residue findings (sister DF-035 in LLM-DocKit, commit `9f2c632`) plus two homelab-profile-specific findings filed here. Both DFs filed in their respective repos in coordinated fashion to make the upstream-recognition step durable; the missing arbiter step itself is recorded as `forgeos/docs/llm/HANDOFF.md` *Open work* item #8. No SPEC, schema, examples, CHANGELOG, or VERSION change in this turn. *Open work*, *Pending Proposals*, and *Open DF entries* blocks updated to reflect DF-005 as the next dispatchable artefact.
+
+- Previous: Recap turn 2026-05-08 - Operator asked for an after-the-fact recap of what the previous-day session shipped (the 2026-05-07 0.3.1 patch). Session restated: (1) cold-orientation advisory turn that produced commit `334795c`, (2) the 0.3.1 implementation that produced commit `f002f48` closing DF-004 via option (a). No SPEC, schema, examples, CHANGELOG, or VERSION change in that turn. Recorded because the project's `Stop` hook validates HANDOFF/HISTORY freshness on every session close regardless of whether the turn was implementation, advisory, or recap.
 
 - Previous: Patch 0.3.1 2026-05-07 (commit `f002f48`) — DF-004 closure (option (a)). Broadened the `interface` default rule in `SPEC.md` *Service / interface* from *"when `url` does not start with `http(s)://`"* to *"when the service does not serve HTML at the listed `url`"*, with explicit guidance that HTTP APIs without HTML (MCP, REST, GraphQL, JSON-RPC) MUST declare `interface: api`. Schema `description` mirrored, example comment added, DF-004 → `implemented (0.3.1)`, CHANGELOG [0.3.1] entry. Cross-repo read-only sweep of `~/src/home-infra/catalog/services.yml`: no drift across 11 services. 28 doc-version targets synced. First patch shipped via the 2026-05-06 meta-cleanup property — a fresh, cold session closed a DF without a bespoke dispatch prompt.
 
@@ -65,17 +84,26 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Pending Proposals (for the next session)
 
-(none — `docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` shipped in 0.3.0.)
+`docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (DF-005) —
+not yet authored. See *Open work* block above for scope and rationale.
 
-The next structural extension surfaced by the new contract is
-consumer-side: `infra-portal` (or a future `infra-agent`) reads
-`deployment.expected.health.version` and reports drift in
-`INFO/WARN/FAIL` terms. That work lives in the consumer repos, not
-here.
+(`docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` shipped in 0.3.0; the
+consumer-side extension it surfaces — `infra-portal` reading
+`deployment.expected.health.version` and reporting drift in
+`INFO/WARN/FAIL` terms — lives in the consumer repos, not here.)
 
 ## Open DF entries
 
-(none — DF-004 closed in 0.3.1 on 2026-05-07. Options (b) validator
+- **DF-005** — Homelab profile collides with LLM-DocKit on runbooks
+  path AND `/new-homelab-project` does not populate new repo's HANDOFF
+  *Open work* from brainstorm artefact. Filed 2026-05-08 from pi-fleet
+  0.1.1. Status: `open`. Next dispatchable artefact:
+  `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (see *Open
+  work* block above).
+
+(DF-001 through DF-004 closed: DF-001 + DF-002 implemented in production
+via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
+DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a
 future session, but not currently dispatchable: (b) is gated on a
 `dockit-validate-catalog.sh` adopter-side script that does not yet

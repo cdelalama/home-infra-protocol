@@ -401,3 +401,85 @@ Sweep of other catalog entries for the same class:
 - `unifi-mcp`: now `interface: api` (this fix).
 
 The lesson generalises: **when a new field with a permissive default lands, sweep the existing catalog for cases where the default is wrong in the same session as the field's introduction.** We did not pay this cost in 0.2.0 (the default fired silently for unifi-mcp from then until now). This DF closes the residual and proposes the SPEC clarification that prevents the recurrence.
+
+## DF-005 — Homelab profile collides with LLM-DocKit on runbooks path AND `/new-homelab-project` does not populate new repo's HANDOFF *Open work* from brainstorm artefact
+
+- Source: pi-fleet (0.1.1, 2026-05-08) — first homelab-profile project scaffolded via `integrations/dockit/new-homelab-project.sh` end-to-end. **Honesty note**: this DF was filed by an arbiter session in `home-infra` with multi-repo context, after a Codex audit of pi-fleet 0.1.1 surfaced both gaps in one pass. Both findings are anchored in `pi-fleet@a3eaf8d` + `home-infra-protocol/integrations/dockit/templates/infra.contract.yml` line 34 + `LLM-DocKit/docs/STRUCTURE.md` lines 23/51/53 (verifiable evidence).
+- Date observed: 2026-05-08
+- Category: process, usability
+- Status: open
+- Related: LLM-DocKit DF-035 (template-residue — same scaffold step leaves four other residue traces; the runbooks-path collision below is one specific instance of "scaffold and profile templates collide"), LLM-DocKit DF-034 (auto-orientation contract — a populated HANDOFF *Open work* is the foundation that contract assumes; gap (B) below means new homelab projects ship with that foundation as template stub).
+
+### Observation
+
+Two distinct gaps in `integrations/dockit/new-homelab-project.sh` and the homelab profile it applies, surfaced together by the same audit and sharing a single root cause: **the scaffold step does not propagate context from the project's brainstorm to the new repo's docs**.
+
+**Gap (A) — runbooks path collision between homelab profile and LLM-DocKit scaffold.** The homelab profile's contract template at `integrations/dockit/templates/infra.contract.yml` line 34 declares a `runbooks:` block whose values resolve under `docs/runbooks/...`. LLM-DocKit's `docs/STRUCTURE.md` template (lines 23, 51, 53) documents `docs/operations/` as the runbooks directory and lists no `docs/runbooks/`. New homelab projects scaffolded via `/new-homelab-project` therefore inherit:
+
+- A contract pointing at runbooks under `docs/runbooks/`.
+- A `STRUCTURE.md` describing `docs/operations/` as where runbooks live.
+- A scaffold that creates `docs/operations/` (DocKit default) but not `docs/runbooks/`.
+
+The populate step in pi-fleet 0.1.1 created `docs/runbooks/` (per the contract) without removing `docs/operations/` or updating `STRUCTURE.md`. Result: pi-fleet 0.1.1 had both directories, two conflicting conventions in tree, and a `STRUCTURE.md` referencing the wrong one. The collision is silently inheritable; every new homelab project will hit the same fork in the road.
+
+**Gap (B) — `/new-homelab-project` orchestrator does not populate the new repo's `docs/llm/HANDOFF.md` *Open work* block from the project's brainstorm artefact.** The orchestrator script (`integrations/dockit/new-homelab-project.sh`) currently:
+
+1. Calls `LLM-DocKit/scripts/dockit-init-project.sh` (creates scaffold).
+2. Calls `home-infra-protocol/integrations/dockit/apply-profile.sh` (applies homelab profile: AGENTS.md, CLAUDE.md symlink, `infra.contract.yml` template, PROJECT_CHECKLIST).
+3. (Optional) Calls `gh repo create` + push.
+4. Suggests a row for `home-infra/docs/PROJECTS.md` (the calling skill commits this).
+
+**It does NOT touch the new repo's `docs/llm/HANDOFF.md` *Open work* block.** That block stays as LLM-DocKit's generic template stub (`Initial scaffold. No application code yet.` etc.) even when the project was born from a structured brainstorm artefact in ForgeOS — pi-fleet's brainstorm `forgeos/docs/brainstorms/2026-05-08-pi-fleet-multi-role-resilient-fleet.md` contains §6 (canonical content for HANDOFF *Open work*) and §11 (the 5 inputs the skill was already given). The orchestrator already had the inputs; it lacked a step.
+
+Concrete failure observed in pi-fleet on 2026-05-08: a fresh Claude Code session opening pi-fleet ran `/brief` and correctly identified the inconsistency before any human did — the local HANDOFF *Open work* was a template stub while the concrete plan lived in `forgeos/docs/brainstorms/...md` §6 and `home-infra/docs/PROJECTS.md`. The `/brief` output flagged the staleness explicitly: *"Inconsistencia a señalar: docs/llm/HANDOFF.md dice 'Initial scaffold. No application code yet' con Next Steps genéricos de plantilla, mientras que home-infra/docs/PROJECTS.md ya tiene un plan concreto."* The first commit of the populate-docs session in pi-fleet was therefore "fix something the scaffold should have done" — a recurring tax that every new homelab project will pay until the orchestrator absorbs the step.
+
+Both gaps share a common root cause and a common consumer impact: a fresh `/brief` in the new homelab project cannot orient locally on day one. For (A) the orientation lands at a path that does not exist or coexists with a stale alternative; for (B) the orientation sees a template stub instead of the project's actual next concrete step. The auto-orientation contract that LLM-DocKit DF-034's option (a) checks (HANDOFF *Open work* exists, names valid paths) **passes** in pi-fleet 0.1.1 only because pi-fleet's populate-docs session did the orchestrator's job by hand. A skill whose contract requires *its caller to fix its output before the contract is satisfied* is the gap this DF attacks.
+
+### Protocol implication
+
+(A) and (B) are independently shippable; the recommendation is to address both in the same `*_PROPOSAL.md` because they share scope (homelab profile + orchestrator) and a single coordinated change is cheaper than two scattered ones.
+
+**For (A) — runbooks path collision.** Three options:
+
+(A1) **Bump LLM-DocKit's STRUCTURE.md template to use `docs/runbooks/` instead of `docs/operations/`.** Cross-repo touch (LLM-DocKit minor). `runbooks` is more semantically specific than `operations` (a runbook is a procedure with verifiable steps; "operations" is a category that admits non-runbook content). After the DocKit bump, the homelab profile's contract template stays as-is and the collision dissolves. **Prerequisite**: read-only sweep of LLM-DocKit downstream adopters (`plaud-mirror`, `tomatic`, `infra-portal`, `forgeos`, `home-infra-protocol` itself) for `docs/operations/` content with runbooks. Many likely exist (plaud-mirror has runbooks under `docs/operations/`); each adopter would need to either rename or accept ongoing dual convention. Highest blast radius, cleanest outcome.
+
+(A2) **Update homelab profile's `templates/infra.contract.yml` to use `docs/operations/` paths instead of `docs/runbooks/`.** Lower-blast-radius (only this repo's profile changes); loses the semantic specificity of "runbook" but follows DocKit's existing convention. New homelab projects then ship with `docs/operations/` per DocKit and the contract points there.
+
+(A3) **Document the collision in homelab profile's `INTEGRATION.md`.** *"This profile uses `docs/runbooks/` instead of DocKit's default `docs/operations/`. After scaffold + profile apply, edit `docs/STRUCTURE.md` to match."* Cheapest, but pushes the burden to every new project — same failure mode as today, just documented. Reject as a sufficient fix; acceptable only as interim before (A1) or (A2) ships.
+
+Recommend (A1). Cross-coordinate with LLM-DocKit DF-035's option (b) (template edits) — both involve STRUCTURE.md and could ship in a single LLM-DocKit minor. (A2) is the fallback if cross-repo coordination is undesirable.
+
+**For (B) — orchestrator does not populate HANDOFF *Open work*.** Three options:
+
+(B1) **Pass the brainstorm path as a new input to `/new-homelab-project`.** Skill currently asks 5 questions (name, description, host, exposes-ui, github); add a 6th `--brainstorm <path>` (or "Path to brainstorm artefact in ForgeOS, optional"). When provided, the orchestrator reads §6 (or operator-named-section equivalent) and §11 of the brainstorm and writes a HANDOFF *Open work* block in the new repo before the final commit. When omitted, the orchestrator keeps current behaviour (template stub). Most direct fix. Risk: brainstorm format not stable enough — §6 today is operator convention, not a specified contract; skill needs a documented section name or a fallback ("if §6 is not present, look for *Brainstorm summary*; if neither, prompt operator inline").
+
+(B2) **Standalone skill `/handoff-from-brainstorm`** that the operator invokes manually after `/new-homelab-project` finishes, before the first development session. Decouples from `/new-homelab-project` (which stays narrow on scaffold + GitHub + registry). Slightly more friction (two skill invocations instead of one) but cleaner separation of concerns. Pairs well with future ForgeOS automation that orchestrates Stage A → Stage B (brainstorm → handoff) as a single operator-journey step.
+
+(B3) **Document the gap in the skill's prompt and operator-facing output.** *"Post-scaffold, populate `docs/llm/HANDOFF.md` *Open work* manually from the brainstorm artefact before opening a new development session."* Cheapest, no code change. Same problem as today (depends on operator/LLM discipline, not enforcement).
+
+Recommend (B1) if the brainstorm format stabilises into a contract this DF can name (e.g., a `## §6` anchor or a YAML frontmatter `handoff_open_work:` section). Recommend (B2) if the brainstorm format varies per project. Reject (B3) as sufficient; acceptable only as interim.
+
+### Implementation hints (deferred to PROPOSAL)
+
+This DF carries enough scope (cross-repo coordination for A1, skill input contract change for B1, brainstorm format contract decision) that a `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` is the right next artefact before any implementation session. Ship the PROPOSAL first, ship the implementation after.
+
+Files the PROPOSAL should touch when authored:
+  - `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (new): scope decisions for (A) and (B), chosen options, cross-repo touches, version bumps.
+  - `integrations/dockit/templates/infra.contract.yml` (line 34): updated path per (A1)/(A2) decision.
+  - `integrations/dockit/new-homelab-project.sh`: new orchestrator step per (B1) or (B2) decision; if (B1), add input parsing and brainstorm-section reader.
+  - `integrations/dockit/skills/new-homelab-project/SKILL.md`: update questions + plan template per (B1) decision.
+  - `integrations/dockit/INTEGRATION.md`: document the now-aligned runbooks convention; document the new HANDOFF *Open work* population step.
+  - Cross-repo for (A1): `LLM-DocKit/docs/STRUCTURE.md` template, `LLM-DocKit/scripts/dockit-init-project.sh` if it materialises the runbooks dir at init.
+
+Version bump: at least patch for the homelab profile change; coordinated minor with LLM-DocKit if (A1) is chosen.
+
+Cross-repo touches required: (A1) requires LLM-DocKit minor + downstream adopter sweep. (B1) requires test against pi-fleet 0.2.0 brainstorm to confirm the orchestrator extracts the right §6 content. Halt and report drift; do **not** edit cross-repo from the implementing session — file local follow-ups per project.
+
+### Mitigation in source projects
+
+pi-fleet 0.1.1 → 0.2.0 cleanup (in flight as of 2026-05-08) addresses both symptoms locally:
+
+- Gap (A): `docs/operations/` removed; convention unified under `docs/runbooks/` per the contract; STRUCTURE.md and LLM_START_HERE.md updated to match.
+- Gap (B): HANDOFF *Open work* populated by hand in the populate-docs session from `forgeos/docs/brainstorms/2026-05-08-pi-fleet-multi-role-resilient-fleet.md` §6.
+
+Both fixes are one-off, by hand, after the residue had already shipped to GitHub. The protocol-level cure proposed here is the same idea structurally enforced for every future homelab project. Without it, every new homelab project will pay the same tax pi-fleet paid on 2026-05-08 — and the cleanup quality depends on whether that project's first session has the multi-repo context to recognise the gaps as systemic rather than local. (See companion DF in LLM-DocKit DF-035 *Mitigation* section + `forgeos/docs/llm/HANDOFF.md` *Open work* item #8 for the cross-LLM protocol gap that today's exercise surfaced.)
