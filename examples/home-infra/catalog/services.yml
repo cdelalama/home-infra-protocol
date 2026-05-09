@@ -15,6 +15,10 @@ services:
     category: infra
     url: https://infra.example.internal/
     interface: web
+    exposure:
+      visibility: operator
+      canonical: true
+      backend_url: http://127.0.0.1:8080
     host_id: nas
     runtime: docker
     image: infra-portal:0.1.0
@@ -33,6 +37,8 @@ services:
     # the consumer reads evidence. Never edit this block to match observed
     # reality (anti-pattern #1 in the proposal).
     deployment:
+      pattern: custom-image
+      deviations: []
       expected:
         image: infra-portal:0.1.0
         health:
@@ -45,6 +51,10 @@ services:
     category: automation
     url: https://home.example.internal/
     interface: web
+    exposure:
+      visibility: operator
+      canonical: true
+      backend_url: http://10.0.0.20:8123
     fallback_url: http://10.0.0.20:8123/
     host_id: home-automation
     runtime: docker
@@ -63,6 +73,8 @@ services:
     # tag. `latest` is used here on purpose to model the case where a
     # tag is mutable and the only reliable evidence is the digest.
     deployment:
+      pattern: upstream-docker
+      deviations: []
       expected:
         image: ghcr.io/example/home-dashboard:latest
 
@@ -71,6 +83,9 @@ services:
     category: infra
     url: mqtt://broker.example.internal:1883
     interface: mqtt
+    exposure:
+      visibility: operator
+      canonical: true
     host_id: home-automation
     runtime: docker
     image: eclipse-mosquitto:2.0
@@ -89,6 +104,8 @@ services:
     # Only `expected.image` is declared; a consumer can detect drift if
     # the running container's image differs from the expected tag.
     deployment:
+      pattern: upstream-docker
+      deviations: []
       expected:
         image: eclipse-mosquitto:2.0
 
@@ -102,9 +119,18 @@ services:
     # declare `interface: api`.
     url: https://api.example.internal/v1
     interface: api
+    exposure:
+      visibility: operator
+      canonical: true
+      backend_url: http://127.0.0.1:9000
     host_id: nas
     runtime: docker
     tags: [api, rest]
+    secrets_source:
+      kind: doppler
+      project: example-api
+      config: prd
+      variables: [EXAMPLE_API_TOKEN]
     description: |
       Example HTTP service with no HTML UI. The status probe is still HTTP
       (e.g. /v1/health), but the service should not render an "open in a tab"

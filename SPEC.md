@@ -1,4 +1,4 @@
-<!-- doc-version: 0.3.1 -->
+<!-- doc-version: 0.4.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -63,6 +63,7 @@ Minimum fields:
 Recommended fields:
 
 - `interface`
+- `exposure`
 - `host_id`
 - `runtime`
 - `image`
@@ -71,6 +72,7 @@ Recommended fields:
 - `status`
 - `deps`
 - `runbook`
+- `secrets_source`
 - `deployment`
 
 #### `interface`
@@ -101,6 +103,50 @@ it in 0.3.1.
 | `ssh` | Operator-only SSH endpoint | Render `ssh user@host` copy; no clickable open |
 | `none` | Service has no operator interface (background daemon, sync agent) | List the service but offer no interaction |
 | `other` | Anything not in the recommended list | Render connection info; specific behaviour undefined |
+
+#### `exposure`
+
+`exposure` declares how the service is meant to be reached. It separates the
+operator-facing address from implementation details such as a proxy backend.
+The service's top-level `url` remains the primary address consumers display,
+probe, or copy.
+
+Shape:
+
+```yaml
+url: https://service.example.internal/
+interface: web
+exposure:
+  visibility: operator
+  canonical: true
+  backend_url: http://127.0.0.1:8080
+```
+
+Fields:
+
+- `visibility` — one of `operator | local | hidden`.
+  - `operator`: `url` is meant to work from a real operator client.
+  - `local`: `url` may be loopback, host-local, tunnel-only, or otherwise not
+    generally operator-resolvable.
+  - `hidden`: consumers may keep the service out of navigation surfaces.
+- `canonical` — whether the top-level `url` is the canonical address for this
+  service.
+- `backend_url` — optional implementation address used by a proxy or runbook.
+  Loopback/private backend addresses belong here, not in the operator-facing
+  `url`.
+
+For `interface: web` with `exposure.visibility: operator`, catalogs SHOULD use
+an operator-resolvable hostname in `url`, not a host-local implementation
+address. Validators SHOULD flag literal loopback or private IP hosts in that
+case (`127.0.0.1`, `localhost`, `0.0.0.0`, RFC1918 literals). Validators SHOULD
+apply this rule to the literal `url` host only, not to DNS resolution: a
+canonical hostname that resolves to a private LAN IP is valid in a split-horizon
+homelab; a literal private IP in the catalog is not.
+
+The protocol deliberately does not name a DNS provider, reverse proxy, or
+certificate mechanism. Adopters may layer a local profile on top, such as
+"operator web URLs must be `https://*.example.internal/` and route through
+edge-caddy".
 
 #### Consumer support for `interface`
 
@@ -178,6 +224,8 @@ gracefully falls out of any drift-detection consumer logic):
 
 ```yaml
 deployment:
+  pattern: upstream-docker
+  deviations: []
   expected:
     image: infra-portal:0.8.0
     health:
@@ -188,6 +236,13 @@ deployment:
 
 Fields:
 
+- `deployment.pattern` — the declared deployment pattern or provenance, such
+  as `upstream-docker`, `custom-image`, or an adopter-defined profile.
+- `deployment.deviations` — documented intentional deviations from that
+  pattern. If a service overrides an upstream entrypoint, changes the upstream
+  process model, or splits an upstream single-container topology into multiple
+  services, the catalog should record the field changed, reason, date, and
+  decision authority. An empty array means no known intentional deviations.
 - `deployment.expected.image` — image tag (or other artefact reference)
   the operator expects to be running. Omit for services without a
   controllable image (Cloudflare tunnels, third-party SaaS).
@@ -213,6 +268,34 @@ The names are normative. The action each level triggers is **left to
 the consumer**: a portal might paint the service red; an agent might
 publish to a notification channel; a CI pipeline might gate a release.
 The protocol defines vocabulary, not policy.
+
+#### `secrets_source`
+
+`secrets_source` declares where secret values for a service come from, without
+including the values. It operationalizes the principle "Secrets are references
+only" for service catalogs and project contracts.
+
+Shape:
+
+```yaml
+secrets_source:
+  kind: doppler
+  project: service-name
+  config: prd
+  variables:
+    - API_TOKEN
+```
+
+Only `kind` is universal. `project`, `config`, `path`, and `variables` are
+portable reference fields that adopters may interpret for their chosen secret
+store. The protocol does not require Doppler, Vault, SOPS, 1Password, or any
+other specific product.
+
+If a service has runtime secret material, adopters SHOULD declare
+`secrets_source`. A local `.env` file may exist as generated runtime output, but
+it should not become an invisible source of truth. Validators MAY warn when a
+service description or runbook mentions secret-bearing `.env` files while no
+`secrets_source` is declared.
 
 ### Project Contract
 

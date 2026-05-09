@@ -1,4 +1,4 @@
-<!-- doc-version: 0.3.1 -->
+<!-- doc-version: 0.4.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -44,8 +44,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-08 - Claude Opus 4.7 (1M context) (DF filing + HANDOFF refresh — no code change)
-- Session Focus: Lodged **DF-005** — homelab profile / runbooks-path collision + `/new-homelab-project` HANDOFF *Open work* population gap. Cross-LLM protocol exercise: arbiter session in `home-infra` with multi-repo context, after Codex audit of pi-fleet 0.1.1 cazó four template-residue findings (sister DF-035 in LLM-DocKit, commit `9f2c632`) plus two homelab-profile-specific findings filed here. Both DFs filed in their respective repos in coordinated fashion to make the upstream-recognition step durable; the missing arbiter step itself is recorded as `forgeos/docs/llm/HANDOFF.md` *Open work* item #8. No SPEC, schema, examples, CHANGELOG, or VERSION change in this turn. *Open work*, *Pending Proposals*, and *Open DF entries* blocks updated to reflect DF-005 as the next dispatchable artefact.
+- Last Updated: 2026-05-09 - Codex (DF-006 implementation, 0.4.0)
+- Session Focus: **Minor 0.4.0 shipped for DF-006** after the real Hermes NAS activation exposed that the protocol accepted an operator-visible web URL pointing at `127.0.0.1`. Added additive `Service.exposure` (`visibility`, `canonical`, `backend_url`), `Service.secrets_source`, and `deployment.pattern` / `deployment.deviations` fields; SPEC now states that validators should reject literal loopback/private-IP `url` hosts for `interface: web` + `exposure.visibility: operator`, while allowing split-horizon DNS names that resolve to private LAN IPs. Examples updated with exposure/backend URL and generic secrets-source references. DF-006 recorded and moved to implemented. Cross-repo adopter action in `home-infra`: local `scripts/audit-catalog.py`, Hermes and ESPHome catalog URLs fixed to `*.lamanoriega.com`, and Hermes Doppler source declared. DF-005 remains the next dispatchable protocol work.
+
+- Previous: 2026-05-08 - Claude Opus 4.7 (1M context) (DF filing + HANDOFF refresh — no code change) - Lodged **DF-005** — homelab profile / runbooks-path collision + `/new-homelab-project` HANDOFF *Open work* population gap. Cross-LLM protocol exercise: arbiter session in `home-infra` with multi-repo context, after Codex audit of pi-fleet 0.1.1 cazó four template-residue findings (sister DF-035 in LLM-DocKit, commit `9f2c632`) plus two homelab-profile-specific findings filed here. Both DFs filed in their respective repos in coordinated fashion to make the upstream-recognition step durable; the missing arbiter step itself is recorded as `forgeos/docs/llm/HANDOFF.md` *Open work* item #8. No SPEC, schema, examples, CHANGELOG, or VERSION change in that turn. *Open work*, *Pending Proposals*, and *Open DF entries* blocks updated to reflect DF-005 as the next dispatchable artefact.
 
 - Previous: Recap turn 2026-05-08 - Operator asked for an after-the-fact recap of what the previous-day session shipped (the 2026-05-07 0.3.1 patch). Session restated: (1) cold-orientation advisory turn that produced commit `334795c`, (2) the 0.3.1 implementation that produced commit `f002f48` closing DF-004 via option (a). No SPEC, schema, examples, CHANGELOG, or VERSION change in that turn. Recorded because the project's `Stop` hook validates HANDOFF/HISTORY freshness on every session close regardless of whether the turn was implementation, advisory, or recap.
 
@@ -101,13 +103,14 @@ consumer-side extension it surfaces — `infra-portal` reading
   `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (see *Open
   work* block above).
 
-(DF-001 through DF-004 closed: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005 are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a
 future session, but not currently dispatchable: (b) is gated on a
 `dockit-validate-catalog.sh` adopter-side script that does not yet
-exist; (c) is reserved for protocol v1.0.)
+exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
+with schema/SPEC/examples plus adopter-side `home-infra` auditor.)
 
 ## Patch 0.2.1 Outcome
 

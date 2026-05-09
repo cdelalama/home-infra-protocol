@@ -3,6 +3,41 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.4.0] - 2026-05-09
+
+### Added
+
+- **DF-006 closed — exposure, secrets source, and deployment deviation intent.**
+  The Hermes NAS activation in `home-infra` exposed a catalog hole: an
+  operator-visible web service accepted `url: http://127.0.0.1:9119/` as its
+  primary portal URL because the protocol did not distinguish canonical
+  operator URL from proxy backend URL. The same incident showed that upstream
+  Docker pattern deviations and local `.env` secret sources were not modeled.
+- `schemas/services.schema.json`: additive optional `exposure` block with
+  `visibility: operator | local | hidden`, `canonical`, and `backend_url`.
+  `url` remains the top-level primary address; `backend_url` is where loopback
+  or implementation-local proxy targets belong.
+- `schemas/services.schema.json`: additive optional `secrets_source` block
+  with generic reference fields (`kind`, `project`, `config`, `path`,
+  `variables`). The protocol stays store-neutral; adopters may constrain this
+  to Doppler, SOPS, Vault, 1Password, etc.
+- `schemas/services.schema.json`: additive optional `deployment.pattern` and
+  `deployment.deviations[]` fields so upstream Docker patterns, entrypoint
+  overrides, custom images, and topology changes can be recorded as intent
+  rather than inferred after failure.
+- `SPEC.md`: new `exposure` and `secrets_source` sections, plus deployment
+  deviation prose. Validators SHOULD flag literal loopback/private-IP hosts in
+  `url` for `interface: web` + `exposure.visibility: operator`; this applies to
+  the literal catalog URL host, not DNS resolution. Split-horizon hostnames that
+  resolve to private LAN IPs remain valid.
+- `examples/home-infra/catalog/services.yml`: examples now demonstrate
+  operator-visible exposure, backend URLs, deployment patterns, and generic
+  secret-source references.
+- `docs/DOWNSTREAM_FEEDBACK.md`: DF-006 records the Hermes incident and the
+  rejected overreach explicitly: no universal Doppler/Caddy/UniFi/Cloudflare
+  requirement, and no universal ban on entrypoint overrides or multi-container
+  topologies.
+
 ## [0.3.1] - 2026-05-07
 
 ### Changed

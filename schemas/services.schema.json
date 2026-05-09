@@ -19,6 +19,26 @@
           "name": { "type": "string", "minLength": 1 },
           "category": { "type": "string", "minLength": 1 },
           "url": { "type": "string", "minLength": 1 },
+          "exposure": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "How the service is meant to be reached by an operator or consumer. `url` remains the primary canonical URL; `exposure` adds intent so adopters can validate that operator-visible URLs are not local implementation details. Protocol-level fields stay vendor-neutral; adopter-specific resolver/proxy names belong in downstream profiles.",
+            "properties": {
+              "visibility": {
+                "type": "string",
+                "enum": ["operator", "local", "hidden"],
+                "description": "`operator` means the `url` is meant for a real client/operator; `local` means loopback or host-local access only; `hidden` means consumers may keep the service out of launch/navigation surfaces."
+              },
+              "canonical": {
+                "type": "boolean",
+                "description": "Whether `url` is the canonical operator-facing address for this service."
+              },
+              "backend_url": {
+                "type": "string",
+                "description": "Optional implementation/backend address used by a proxy or runbook. This may be loopback; it is not the operator-facing URL."
+              }
+            }
+          },
           "interface": {
             "type": "string",
             "minLength": 1,
@@ -41,6 +61,22 @@
             "default": []
           },
           "runbook": { "type": "string" },
+          "secrets_source": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Reference to the external source of secret values for this service. Secret values themselves are forbidden. The protocol names a generic source shape; adopters may constrain `kind` to their approved store (for example Doppler, SOPS, 1Password, Vault).",
+            "required": ["kind"],
+            "properties": {
+              "kind": { "type": "string", "minLength": 1 },
+              "project": { "type": "string", "minLength": 1 },
+              "config": { "type": "string", "minLength": 1 },
+              "path": { "type": "string", "minLength": 1 },
+              "variables": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
           "hidden": { "type": "boolean", "default": false },
           "disabled": { "type": "boolean", "default": false },
           "status": {
@@ -61,6 +97,26 @@
             "additionalProperties": true,
             "description": "Optional declaration of the operator's intent for what should be running. Catalog declares intent only; evidence about runtime state is read by consumers from the live system, never edited into the catalog. See SPEC.md *Service / deployment* (and the adjacent *Deployment lifecycle vocabulary*, *Rule: \"operationally deployed\"*, *Rule: intent vs evidence* sub-sections) and docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md for the contract.",
             "properties": {
+              "pattern": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Optional declaration of the deployment pattern the service follows, such as `upstream-docker`, `custom-image`, or an adopter-defined profile. This records intent; runtime evidence still comes from consumers."
+              },
+              "deviations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": ["field", "reason"],
+                  "properties": {
+                    "field": { "type": "string", "minLength": 1 },
+                    "reason": { "type": "string", "minLength": 1 },
+                    "decided_by": { "type": "string", "minLength": 1 },
+                    "date": { "type": "string", "minLength": 1 }
+                  }
+                },
+                "description": "Documented deviations from the declared deployment pattern, for example overriding an upstream entrypoint. Empty array means no known intentional deviations."
+              },
               "expected": {
                 "type": "object",
                 "additionalProperties": true,
