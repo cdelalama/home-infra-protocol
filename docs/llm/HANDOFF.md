@@ -44,8 +44,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-10 - Claude Opus 4.7 (1M context) (cross-LLM reconciliation /brief — no code change)
-- Session Focus: Operator opened the repo cold and ran `/brief` after a pause. The previous Claude `/brief` (2026-05-08) was stale because it predated DF-005 filing (2026-05-08, commit `0ec1f86`) and Codex's 0.4.0 implementation closing DF-006 (2026-05-09, commit `8ddff80`). Operator surfaced the staleness by contrasting a GPT/Codex summary with what Claude had said two days ago. Session reconciled by reading current HEAD + this HANDOFF *Open work* block, confirmed GPT's view as correct (current state is 0.4.0, DF-005 is the next dispatchable artefact), and re-emitted a fresh `/brief` aligned with HANDOFF. Validates the same property the 2026-05-06 meta cleanup targets: when a non-Claude LLM (Codex) ships work between Claude sessions, the Claude session that re-opens the repo MUST defer to HANDOFF + git HEAD over its own residual memory. The brief itself is read-only; this entry exists only to satisfy the `Stop` hook's daily-freshness validator.
+- Last Updated: 2026-05-12 - GPT-5 Codex (doc-debt cleanup after ForgeOS relocation)
+- Session Focus: Closed documentation debt from the 2026-05-12 framework refactor that moved `/new-homelab-project` orchestration to ForgeOS. Commit `97fae4c` removed `integrations/dockit/new-homelab-project.sh` and `integrations/dockit/skills/new-homelab-project/`, and updated `integrations/dockit/INTEGRATION.md`, but this HANDOFF still had the 2026-05-10 freshness marker and the old one-time setup symlink path. This cleanup records the refactor in HANDOFF/HISTORY and points the operator setup snippet at `~/src/forgeos/skills/new-homelab-project`. No SPEC/schema/profile behaviour changes; `apply-profile.sh`, templates, and checklists remain here as the homelab contract layer.
+
+- Previous: 2026-05-10 - Claude Opus 4.7 (1M context) (cross-LLM reconciliation /brief — no code change) - Operator opened the repo cold and ran `/brief` after a pause. The previous Claude `/brief` (2026-05-08) was stale because it predated DF-005 filing (2026-05-08, commit `0ec1f86`) and Codex's 0.4.0 implementation closing DF-006 (2026-05-09, commit `8ddff80`). Operator surfaced the staleness by contrasting a GPT/Codex summary with what Claude had said two days ago. Session reconciled by reading current HEAD + this HANDOFF *Open work* block, confirmed GPT's view as correct (current state is 0.4.0, DF-005 is the next dispatchable artefact), and re-emitted a fresh `/brief` aligned with HANDOFF. Validates the same property the 2026-05-06 meta cleanup targets: when a non-Claude LLM (Codex) ships work between Claude sessions, the Claude session that re-opens the repo MUST defer to HANDOFF + git HEAD over its own residual memory. The brief itself is read-only; this entry exists only to satisfy the `Stop` hook's daily-freshness validator.
 
 - Previous: 2026-05-09 - Codex (DF-006 implementation, 0.4.0) - **Minor 0.4.0 shipped for DF-006** after the real Hermes NAS activation exposed that the protocol accepted an operator-visible web URL pointing at `127.0.0.1`. Added additive `Service.exposure` (`visibility`, `canonical`, `backend_url`), `Service.secrets_source`, and `deployment.pattern` / `deployment.deviations` fields; SPEC now states that validators should reject literal loopback/private-IP `url` hosts for `interface: web` + `exposure.visibility: operator`, while allowing split-horizon DNS names that resolve to private LAN IPs. Examples updated with exposure/backend URL and generic secrets-source references. DF-006 recorded and moved to implemented. Cross-repo adopter action in `home-infra`: local `scripts/audit-catalog.py`, Hermes and ESPHome catalog URLs fixed to `*.lamanoriega.com`, and Hermes Doppler source declared. DF-005 remains the next dispatchable protocol work.
 
@@ -248,7 +250,7 @@ To make `/new-homelab-project` discoverable from any Claude Code
 session, create a single symlink:
 
 ```sh
-ln -s ~/src/home-infra-protocol/integrations/dockit/skills/new-homelab-project \
+ln -s ~/src/forgeos/skills/new-homelab-project \
       ~/.claude/skills/new-homelab-project
 ```
 
