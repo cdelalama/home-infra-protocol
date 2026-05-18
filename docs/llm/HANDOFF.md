@@ -1,4 +1,4 @@
-<!-- doc-version: 0.4.0 -->
+<!-- doc-version: 0.4.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -44,8 +44,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-12 - GPT-5 Codex (doc-debt cleanup after ForgeOS relocation)
-- Session Focus: Closed documentation debt from the 2026-05-12 framework refactor that moved `/new-homelab-project` orchestration to ForgeOS. Commit `97fae4c` removed `integrations/dockit/new-homelab-project.sh` and `integrations/dockit/skills/new-homelab-project/`, and updated `integrations/dockit/INTEGRATION.md`, but this HANDOFF still had the 2026-05-10 freshness marker and the old one-time setup symlink path. This cleanup records the refactor in HANDOFF/HISTORY and points the operator setup snippet at `~/src/forgeos/skills/new-homelab-project`. No SPEC/schema/profile behaviour changes; `apply-profile.sh`, templates, and checklists remain here as the homelab contract layer.
+- Last Updated: 2026-05-18 - GPT-5 Codex (DF-007 registry-first checklist drift)
+- Session Focus: Filed **DF-007** from `msgvault-lab` pre-F2 NAS deploy hardening: the reusable homelab checklist still treats `docker save | ssh docker load` as the normal image-transfer path, while `home-infra/docs/CONVENTIONS.md` now prefers `registry.lamanoriega.com/<image>:<tag>` for first-party images and leaves save/load as fallback. This is a protocol/profile feedback entry only: no checklist implementation, no SPEC/schema change, no home-infra edit, and no deployed reality change. DF-005 remains the next dispatchable artefact.
+
+- Previous: 2026-05-12 - GPT-5 Codex (doc-debt cleanup after ForgeOS relocation) - Closed documentation debt from the 2026-05-12 framework refactor that moved `/new-homelab-project` orchestration to ForgeOS. Commit `97fae4c` removed `integrations/dockit/new-homelab-project.sh` and `integrations/dockit/skills/new-homelab-project/`, and updated `integrations/dockit/INTEGRATION.md`, but this HANDOFF still had the 2026-05-10 freshness marker and the old one-time setup symlink path. This cleanup records the refactor in HANDOFF/HISTORY and points the operator setup snippet at `~/src/forgeos/skills/new-homelab-project`. No SPEC/schema/profile behaviour changes; `apply-profile.sh`, templates, and checklists remain here as the homelab contract layer.
 
 - Previous: 2026-05-10 - Claude Opus 4.7 (1M context) (cross-LLM reconciliation /brief — no code change) - Operator opened the repo cold and ran `/brief` after a pause. The previous Claude `/brief` (2026-05-08) was stale because it predated DF-005 filing (2026-05-08, commit `0ec1f86`) and Codex's 0.4.0 implementation closing DF-006 (2026-05-09, commit `8ddff80`). Operator surfaced the staleness by contrasting a GPT/Codex summary with what Claude had said two days ago. Session reconciled by reading current HEAD + this HANDOFF *Open work* block, confirmed GPT's view as correct (current state is 0.4.0, DF-005 is the next dispatchable artefact), and re-emitted a fresh `/brief` aligned with HANDOFF. Validates the same property the 2026-05-06 meta cleanup targets: when a non-Claude LLM (Codex) ships work between Claude sessions, the Claude session that re-opens the repo MUST defer to HANDOFF + git HEAD over its own residual memory. The brief itself is read-only; this entry exists only to satisfy the `Stop` hook's daily-freshness validator.
 
@@ -106,6 +108,11 @@ consumer-side extension it surfaces — `infra-portal` reading
   0.1.1. Status: `open`. Next dispatchable artefact:
   `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (see *Open
   work* block above).
+- **DF-007** — Homelab deploy checklist still assumes save/load instead
+  of registry-first image transfer. Filed 2026-05-18 from `msgvault-lab`
+  F2 preparation. Status: `open`. Not currently dispatchable ahead of
+  DF-005; closure is a patch to the homelab profile checklist after
+  reading current `home-infra/docs/CONVENTIONS.md`.
 
 (DF-001 through DF-006 except DF-005 are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
@@ -114,7 +121,8 @@ check and (c) schema-required remain queued in DF-004 itself for a
 future session, but not currently dispatchable: (b) is gated on a
 `dockit-validate-catalog.sh` adopter-side script that does not yet
 exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
-with schema/SPEC/examples plus adopter-side `home-infra` auditor.)
+with schema/SPEC/examples plus adopter-side `home-infra` auditor. DF-007
+is open profile-maintenance feedback.)
 
 ## Patch 0.2.1 Outcome
 

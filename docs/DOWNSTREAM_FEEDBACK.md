@@ -1,4 +1,4 @@
-<!-- doc-version: 0.4.0 -->
+<!-- doc-version: 0.4.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -564,3 +564,71 @@ Rejected overreach:
 The real adopter profile remains in `home-infra`: canonical web URLs use
 `https://*.lamanoriega.com/`, UniFi provides split-horizon DNS, edge-caddy
 proxies backend URLs, and Doppler is the approved secret store.
+
+## DF-007 — Homelab deploy checklist still assumes save/load instead of registry-first image transfer
+
+- Source: `msgvault-lab` pre-F2 NAS deploy hardening (`f0ca20e`,
+  `00cf145`, 2026-05-18)
+- Date observed: 2026-05-18
+- Category: process, usability
+- Status: open
+- Related: DF-005
+
+### Observation
+
+The homelab profile installs
+`.claude/checklists/homelab-project.md` from
+`integrations/dockit/checklists/PROJECT_CHECKLIST.md`. Its build and
+image-transfer section still treats `docker save <image> | ssh <host>
+docker load` as the normal path for moving first-party images to the
+NAS.
+
+That no longer matches the current homelab convention. `home-infra`
+`docs/CONVENTIONS.md` *Docker Image Management* was updated on
+2026-05-14 to prefer `registry.lamanoriega.com/<image>:<tag>` for
+first-party images that have adopted the private-registry flow. The
+save/load path is now fallback for services not yet migrated.
+
+`msgvault-lab` F2 exposed the drift before deploy: its brief had to
+instruct the operator to mark the save/load checklist item N/A and use
+registry push/pull instead. That local mitigation is correct for
+`msgvault-lab`, but it does not fix the reusable profile. Every new
+homelab project that receives this checklist can inherit stale transfer
+instructions.
+
+### Protocol implication
+
+The reusable homelab profile should delegate image-transfer policy to
+the current `home-infra` convention and express registry-first as the
+primary path for first-party images. `docker save | ssh docker load`
+should remain available as an explicit fallback for services not yet
+migrated to the private registry.
+
+Because the profile checklist is copied into downstream projects at
+scaffold/profile-apply time, stale operational instructions propagate
+silently. This is a profile-maintenance issue, not a `msgvault-lab`
+runtime issue.
+
+### Implementation hints (when accepted)
+
+Files to touch:
+  - `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: rewrite the
+    build/image-transfer section so registry push/pull is primary for
+    first-party images and save/load is explicitly fallback.
+  - `integrations/dockit/INTEGRATION.md`: state that the profile
+    checklist follows `home-infra/docs/CONVENTIONS.md` for current
+    image-transfer policy.
+  - `docs/DOWNSTREAM_FEEDBACK.md`: update DF-007 status when the
+    profile checklist change ships.
+
+Version bump: patch.
+
+Cross-repo touches required: read-only check of
+`~/src/home-infra/docs/CONVENTIONS.md`; no `home-infra` edit unless the
+convention itself changes.
+
+### Mitigation in source project
+
+`msgvault-lab@f0ca20e` and `msgvault-lab@00cf145` document the F2
+workaround: mark the stale save/load checklist item N/A and use the
+registry-first flow for the NAS image.

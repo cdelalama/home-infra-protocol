@@ -3,6 +3,22 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.4.1] - 2026-05-18
+
+### Added
+
+- **DF-007 filed — homelab checklist registry-first drift.**
+  `msgvault-lab` pre-F2 NAS deploy hardening exposed that the reusable
+  homelab deploy checklist still treats `docker save | ssh docker load`
+  as the normal first-party image-transfer path, while current
+  `home-infra/docs/CONVENTIONS.md` prefers the private registry and
+  leaves save/load as fallback.
+- `docs/DOWNSTREAM_FEEDBACK.md`: new open DF-007 captures the profile
+  maintenance follow-up, implementation hints, and the local mitigation
+  already recorded in `msgvault-lab@f0ca20e` / `00cf145`.
+- `docs/llm/HANDOFF.md`: current status and open-DF list updated while
+  preserving DF-005 as the next dispatchable artefact.
+
 ## [0.4.0] - 2026-05-09
 
 ### Added
