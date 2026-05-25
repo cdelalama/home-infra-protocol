@@ -1,4 +1,4 @@
-<!-- doc-version: 0.4.1 -->
+<!-- doc-version: 0.4.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -632,3 +632,104 @@ convention itself changes.
 `msgvault-lab@f0ca20e` and `msgvault-lab@00cf145` document the F2
 workaround: mark the stale save/load checklist item N/A and use the
 registry-first flow for the NAS image.
+
+## DF-008 — Development previews need typed catalog semantics distinct from production services
+
+- Source: `msgvault-panel` v0.4.0 dev preview +
+  `home-infra/catalog/services.yml` `msgvault-panel-dev` +
+  `infra-portal` 0.10.0
+- Date observed: 2026-05-24
+- Category: field-gap, semantic-gap, usability
+- Status: open
+- Related: DF-003, DF-006
+
+### Observation
+
+`msgvault-panel` needed to be opened from infra-portal while still running
+manually on `dev-vm`, before NAS deployment. The current catalog can express
+that the service is operator-visible (`exposure.visibility: operator`) and that
+its category is `data`, but it cannot express that the entry is a development
+preview rather than deployed production reality.
+
+The initial stopgap used a free-form `development` tag and an HTTP health probe
+against `http://dev.lamanoriega.com:8788/api/health`. That made the tile
+visible, but it overloaded conventions and produced a false incident whenever
+the manual preview was stopped. For a development preview, "down" often means
+"dormant"; for a production service, "down" means degraded runtime. Those are
+different states, but the protocol has no typed field for the difference.
+
+Using `category: development` would be the wrong cure: `category` is the
+service's domain taxonomy (`data`, `network`, `media`, etc.), not lifecycle or
+environment. `visibility` is also the wrong axis: a development preview can
+still be operator-visible while remaining non-production.
+
+### Protocol implication
+
+Add an optional `Service.environment` field with the initial recommended values
+`production | development`, defaulting to `production` for backward
+compatibility. Do not add `staging`, `preview`, `experimental`, or other values
+until a real adopter needs them. The field is orthogonal to:
+
+- `category`: what kind of service this is.
+- `interface`: how a consumer opens or copies it.
+- `exposure.visibility`: who should be able to reach it.
+- deployment lifecycle states: how far a production deployment has progressed.
+
+Semantics for `environment: development`:
+
+- It is not operational deployment evidence and MUST NOT be used as a claim
+  that the project is deployed to its target host.
+- It does not update `PROJECTS.md` as production reality, though it may be
+  documented as temporary development visibility.
+- It does not support a protocol compliance claim until a real consumer reads
+  and renders the field.
+- It MUST remain inside the operator/private boundary. A portal link to a
+  development preview must not imply public internet exposure.
+
+Consumer contract for infra-portal:
+
+- Render development entries with an explicit DEV treatment (badge, grouping,
+  or equivalent), not just a free-form tag.
+- Treat development health as informational. A live preview may show healthy,
+  but a stopped preview should render neutral/dormant rather than production
+  down.
+- Keep production service health semantics unchanged.
+
+Anti-rot must have an enforcer, not just passive YAML. A future proposal should
+choose one of:
+
+- Add `owner`, `last_confirmed`, and optionally `expires_at` metadata, then
+  have infra-portal grey or warn on stale development entries.
+- Add a `home-infra` catalog audit/check that warns or fails when development
+  entries pass their freshness window.
+
+### Implementation hints (when accepted)
+
+Files to touch:
+  - `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md` (new): specify
+    `Service.environment`, no-evidence semantics, security boundary,
+    infra-portal render/health contract, and anti-rot enforcement choice.
+  - `schemas/services.schema.json`: add optional `environment` with recommended
+    values `production | development` and default `production`.
+  - `SPEC.md`: document `environment`, its orthogonality to `category`,
+    `visibility`, and deployment lifecycle, and the no-evidence rule.
+  - `examples/home-infra/catalog/services.yml`: include one sanitized
+    development preview example.
+  - `docs/DOWNSTREAM_FEEDBACK.md`: update DF-008 status when the proposal or
+    implementation ships.
+
+Version bump: minor for the schema/SPEC implementation. A proposal-only filing
+is patch.
+
+Cross-repo touches required: coordinate with `infra-portal` for render and
+health semantics before claiming support; migrate `home-infra` catalog entries
+from the stopgap convention to `environment: development` only after the
+consumer supports the field.
+
+### Mitigation in source project
+
+`home-infra` currently uses an explicit stopgap for `msgvault-panel-dev`:
+`name: DEV - msgvault-panel`, `category: data`, `tags: [development, ...]`,
+`exposure.canonical: false`, and `status.type: none`. This keeps the panel
+discoverable from infra-portal without presenting a stopped manual preview as a
+production outage.

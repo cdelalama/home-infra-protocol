@@ -3,6 +3,28 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.4.2] - 2026-05-24
+
+### Added
+
+- **DF-008 filed — development-preview environment semantics.**
+  `msgvault-panel` v0.4.0 needed a dev-vm panel link in infra-portal before
+  NAS deployment, exposing that the catalog has `category` and `visibility`
+  but no typed way to say "operator-visible development preview, not
+  production deployment evidence."
+- `docs/DOWNSTREAM_FEEDBACK.md`: new open DF-008 proposes an optional
+  `Service.environment` field with initial values `production | development`,
+  default `production`, plus no-evidence semantics, no-public-exposure
+  semantics, infra-portal render/health expectations, and an anti-rot enforcer.
+
+### Changed
+
+- Documented the `home-infra` stopgap for `msgvault-panel-dev`: keep
+  `category: data`, label the tile as DEV, and use `status.type: none` until
+  infra-portal consumes typed development-preview semantics.
+
+### Fixed
+
 ## [0.4.1] - 2026-05-18
 
 ### Added

@@ -1,10 +1,27 @@
-<!-- doc-version: 0.4.1 -->
+<!-- doc-version: 0.4.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
 ## Open work — next concrete step
+
+DF-008 is the newest real-adopter feedback: `msgvault-panel` v0.4.0 needed a
+dev-vm panel link in infra-portal before NAS deployment, and the current
+catalog lacks typed `environment: development` semantics. The DF is filed and
+captures the desired shape, but it is not yet implemented. The dispatchable
+next step, when the operator prioritises this track, is to author
+`docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md` covering `Service.environment`,
+no-evidence/no-public-exposure semantics, infra-portal render + health
+semantics, and a named anti-rot enforcer.
+
+Until that ships, `home-infra` uses the stopgap convention for
+`msgvault-panel-dev`: `name: DEV - msgvault-panel`, `category: data`,
+`tags: [development, ...]`, `exposure.canonical: false`, and
+`status.type: none`. Do not claim "protocol supports development previews"
+until infra-portal consumes a typed field.
+
+Existing profile-maintenance work remains queued:
 
 Author `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` for
 DF-005 (filed 2026-05-08). DF-005 carries enough scope — cross-repo
@@ -44,8 +61,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-18 - GPT-5 Codex (DF-007 registry-first checklist drift)
-- Session Focus: Filed **DF-007** from `msgvault-lab` pre-F2 NAS deploy hardening: the reusable homelab checklist still treats `docker save | ssh docker load` as the normal image-transfer path, while `home-infra/docs/CONVENTIONS.md` now prefers `registry.lamanoriega.com/<image>:<tag>` for first-party images and leaves save/load as fallback. This is a protocol/profile feedback entry only: no checklist implementation, no SPEC/schema change, no home-infra edit, and no deployed reality change. DF-005 remains the next dispatchable artefact.
+- Last Updated: 2026-05-25 - GPT-5 Codex (DF-008 closure bookkeeping)
+- Session Focus: Filed **DF-008** from the `msgvault-panel` dev-vm preview registered in `home-infra` and rendered by `infra-portal`. The feedback captures the missing typed `Service.environment` axis, explicitly rejects `category: development`, defines development-preview no-evidence and no-public-exposure semantics, names the infra-portal render/health expectations, and requires an anti-rot enforcer. This is a feedback/proposal-prep patch only: no schema/SPEC change yet, no compliance claim, and no claim that infra-portal supports typed dev previews. `home-infra` uses a temporary neutral-health convention for `msgvault-panel-dev`. The 2026-05-25 update is bookkeeping before commit/push after the 2026-05-24 implementation crossed UTC midnight.
+
+- Previous: 2026-05-18 - GPT-5 Codex (DF-007 registry-first checklist drift) - Filed **DF-007** from `msgvault-lab` pre-F2 NAS deploy hardening: the reusable homelab checklist still treats `docker save | ssh docker load` as the normal image-transfer path, while `home-infra/docs/CONVENTIONS.md` now prefers `registry.lamanoriega.com/<image>:<tag>` for first-party images and leaves save/load as fallback. This is a protocol/profile feedback entry only: no checklist implementation, no SPEC/schema change, no home-infra edit, and no deployed reality change. DF-005 remains the next dispatchable artefact.
 
 - Previous: 2026-05-12 - GPT-5 Codex (doc-debt cleanup after ForgeOS relocation) - Closed documentation debt from the 2026-05-12 framework refactor that moved `/new-homelab-project` orchestration to ForgeOS. Commit `97fae4c` removed `integrations/dockit/new-homelab-project.sh` and `integrations/dockit/skills/new-homelab-project/`, and updated `integrations/dockit/INTEGRATION.md`, but this HANDOFF still had the 2026-05-10 freshness marker and the old one-time setup symlink path. This cleanup records the refactor in HANDOFF/HISTORY and points the operator setup snippet at `~/src/forgeos/skills/new-homelab-project`. No SPEC/schema/profile behaviour changes; `apply-profile.sh`, templates, and checklists remain here as the homelab contract layer.
 
@@ -113,6 +132,11 @@ consumer-side extension it surfaces — `infra-portal` reading
   F2 preparation. Status: `open`. Not currently dispatchable ahead of
   DF-005; closure is a patch to the homelab profile checklist after
   reading current `home-infra/docs/CONVENTIONS.md`.
+- **DF-008** — Development previews need typed catalog semantics distinct
+  from production services. Filed 2026-05-24 from `msgvault-panel` v0.4.0
+  dev-vm preview + `home-infra` catalog + `infra-portal` rendering. Status:
+  `open`. Next dispatchable artefact, if prioritised:
+  `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`.
 
 (DF-001 through DF-006 except DF-005 are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
@@ -122,7 +146,7 @@ future session, but not currently dispatchable: (b) is gated on a
 `dockit-validate-catalog.sh` adopter-side script that does not yet
 exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
 with schema/SPEC/examples plus adopter-side `home-infra` auditor. DF-007
-is open profile-maintenance feedback.)
+and DF-008 are open feedback.)
 
 ## Patch 0.2.1 Outcome
 
