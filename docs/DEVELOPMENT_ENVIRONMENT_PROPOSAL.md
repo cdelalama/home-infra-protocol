@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.0 -->
+<!-- doc-version: 0.5.1 -->
 # Development Environment Proposal
 
 ## Status
@@ -73,8 +73,9 @@ development previews to use operator-only DNS names or private network access.
 ## Anti-Rot
 
 This release defines the field and consumer semantics. It does not add
-freshness metadata yet. The next adopter-driven extension should choose one
-anti-rot mechanism before development previews become numerous:
+freshness metadata yet. DF-009 tracks the next adopter-driven extension, which
+should choose one anti-rot mechanism before development previews become
+numerous:
 
 - Add metadata such as `owner`, `last_confirmed`, and optional `expires_at`.
 - Add a profile-level catalog audit that warns on old development entries.

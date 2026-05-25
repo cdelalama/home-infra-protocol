@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.0 -->
+<!-- doc-version: 0.5.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -10,8 +10,10 @@ DF-008 is closed in protocol 0.5.0. `Service.environment` is now a formal
 optional field with closed `production | development` schema values, SPEC
 semantics, `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`, a sanitized example,
 and `infra-portal` 0.11.0 recorded as the first consumer. `home-infra` commit
-`1c2d276` has migrated `msgvault-panel-dev` from the old stopgap convention to
-`environment: development`.
+`1c2d276` migrated `msgvault-panel-dev` from the old stopgap convention to
+`environment: development`; later `home-infra` commit `e0fa478` proved the
+need for DF-009 by adding profile-local schema validation, a real development
+preview HTTP probe, and a temporary `http-stopgap` warning.
 
 The next dispatchable protocol work returns to existing profile-maintenance
 backlog:
@@ -54,14 +56,12 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-25 - GPT-5 Codex (DF-008 implementation, 0.5.0)
-- Session Focus: Closed **DF-008** after `infra-portal` 0.11.0 and
-  `home-infra` commit `1c2d276` created a real consumer/source-of-truth need.
-  Protocol 0.5.0 adds optional `Service.environment` with closed
-  `production | development` schema values, default production semantics,
-  SPEC rules for no-evidence/private-boundary/dormant-not-down behavior, a
-  sanitized development-preview example, and a consumer support matrix naming
-  `infra-portal` 0.11.0 as the first consumer.
+- Last Updated: 2026-05-25 - GPT-5 Codex (DF-009 filing, 0.5.1)
+- Session Focus: Filed **DF-009** as the anti-rot follow-up to DF-008 after
+  `home-infra` implemented local catalog checks for `environment: development`
+  and marked the first HTTP development preview as a temporary stopgap. No
+  schema change yet; DF-009 is the dispatch point for owner/freshness/expiry
+  metadata and consumer rendering of stale development previews.
 
 - Previous: 2026-05-18 - GPT-5 Codex (DF-007 registry-first checklist drift) - Filed **DF-007** from `msgvault-lab` pre-F2 NAS deploy hardening: the reusable homelab checklist still treats `docker save | ssh docker load` as the normal image-transfer path, while `home-infra/docs/CONVENTIONS.md` now prefers `registry.lamanoriega.com/<image>:<tag>` for first-party images and leaves save/load as fallback. This is a protocol/profile feedback entry only: no checklist implementation, no SPEC/schema change, no home-infra edit, and no deployed reality change. DF-005 remains the next dispatchable artefact.
 
@@ -135,6 +135,12 @@ consumer-side extension it surfaces — `infra-portal` reading
   from production services. Filed 2026-05-24 from `msgvault-panel` v0.4.0
   dev-vm preview + `home-infra` catalog + `infra-portal` rendering. Status:
   `implemented (0.5.0)`.
+- **DF-009** — Development previews need anti-rot metadata and checks. Filed
+  2026-05-25 from the first `environment: development` adopter after
+  `home-infra` added profile-local schema validation, a real preview probe, and
+  a temporary HTTP stopgap warning. Status: `open`. Not currently dispatchable
+  ahead of DF-005 unless the operator prioritizes development preview lifecycle
+  hygiene.
 
 (DF-001 through DF-006 except DF-005, plus DF-008, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
@@ -145,7 +151,7 @@ future session, but not currently dispatchable: (b) is gated on a
 exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
 with schema/SPEC/examples plus adopter-side `home-infra` auditor. DF-008
 implemented in 0.5.0 with schema/SPEC/proposal/example plus `infra-portal`
-0.11.0 consumer evidence. DF-007 remains open feedback.)
+0.11.0 consumer evidence. DF-007 and DF-009 remain open feedback.)
 
 ## Patch 0.2.1 Outcome
 

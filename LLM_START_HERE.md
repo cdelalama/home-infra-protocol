@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.0 -->
+<!-- doc-version: 0.5.1 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -80,10 +80,9 @@ Recommended reading order:
 Source of truth: `docs/llm/HANDOFF.md`.
 
 - Last Updated: 2026-05-25 - Codex.
-- Working on: protocol 0.5.0 closure for DF-008 development previews.
-- Status: `Service.environment` is now formal protocol in 0.5.0 with closed
-  `production | development` schema values, SPEC semantics, sanitized example,
-  and `infra-portal` 0.11.0 recorded as the first consumer.
+- Working on: protocol 0.5.1 filing for DF-009 development-preview anti-rot.
+- Status: `Service.environment` is formal protocol in 0.5.0; 0.5.1 records the
+  next follow-up for owner/freshness/expiry metadata and stale-preview checks.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

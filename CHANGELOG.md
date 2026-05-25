@@ -3,6 +3,22 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.5.1] - 2026-05-25
+
+### Added
+
+- **DF-009 filed - development-preview anti-rot enforcement.**
+  Follow-up to DF-008 after the first real `environment: development` adopter
+  showed that typed environment semantics need freshness metadata and profile
+  checks before development previews become numerous.
+
+### Changed
+
+- `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`: links the anti-rot follow-up to
+  DF-009 instead of leaving it as a passive note.
+
+### Fixed
+
 ## [0.5.0] - 2026-05-25
 
 ### Added
@@ -31,6 +47,7 @@ All notable changes to Home Infra Protocol are tracked here.
 
 - `schemas/services.schema.json`: now rejects invalid `environment` values
   instead of letting misspelled lifecycle values survive as untyped convention.
+
 ## [0.4.2] - 2026-05-24
 
 ### Added

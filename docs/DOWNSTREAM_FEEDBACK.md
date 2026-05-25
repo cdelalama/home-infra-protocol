@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.0 -->
+<!-- doc-version: 0.5.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -738,3 +738,79 @@ consumer supports the field.
 `exposure.canonical: false`, and `status.type: none`. After
 `infra-portal` 0.11.0 shipped consumer support, `home-infra` migrated the entry
 to `name: msgvault-panel` plus `environment: development` in commit `1c2d276`.
+
+## DF-009 — Development previews need anti-rot metadata and checks
+
+- Source: `msgvault-panel` dev preview after DF-008 implementation +
+  `home-infra/catalog/services.yml` `msgvault-panel-dev` +
+  `home-infra/scripts/audit-catalog.py`
+- Date observed: 2026-05-25
+- Category: drift-control, validator-gap, lifecycle-hygiene
+- Status: open
+- Related: DF-006, DF-008
+
+### Observation
+
+DF-008 correctly added typed `Service.environment` semantics and the first
+consumer implementation maps unavailable development previews to `dormant`
+instead of production `down`. The first real adopter then exposed the follow-up
+gap that DF-008 intentionally deferred: nothing in the protocol gives a
+development preview an owner, a freshness window, or an expiry rule.
+
+The private `home-infra` profile now has a local stopgap: its catalog auditor
+loads this protocol's `schemas/services.schema.json`, rejects invalid
+`environment` values, and warns when an operator-visible development preview
+uses an HTTP URL marked by the structured `http-stopgap` tag. That is useful
+profile enforcement, but it is not a reusable protocol field. A future protocol
+extension should define the portable anti-rot shape instead of letting each
+profile invent incompatible tags or prose conventions.
+
+### Protocol implication
+
+Add optional development-preview freshness metadata without changing the
+meaning of `Service.environment`.
+
+Candidate shape:
+
+```yaml
+environment: development
+development:
+  owner: operator
+  last_confirmed: 2026-05-25
+  expires_at: 2026-06-24
+  insecure_transport: temporary-http
+```
+
+Open details for the proposal:
+
+- Whether the metadata block should be named `development`, `lifecycle`, or
+  something more general.
+- Whether `owner` is required for `environment: development`.
+- Whether `last_confirmed` or `expires_at` is required, and what date format is
+  normative.
+- Whether transport exceptions such as temporary HTTP previews belong in the
+  protocol or stay as adopter-profile policy.
+- Whether consumers only render stale state, or validators should fail stale
+  entries after a grace period.
+
+### Implementation hints (when accepted)
+
+Files to touch:
+  - `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`: move the anti-rot note from
+    follow-up text to the accepted mechanism.
+  - `schemas/services.schema.json`: add the optional metadata block if the
+    chosen shape belongs in the protocol.
+  - `SPEC.md`: document freshness semantics and which checks are warnings vs.
+    failures.
+  - `examples/home-infra/catalog/services.yml`: show a sanitized development
+    preview with freshness metadata.
+  - `docs/DOWNSTREAM_FEEDBACK.md`: update DF-009 status when a proposal or
+    implementation ships.
+
+Version bump: patch for proposal-only text; minor if the schema or SPEC gains
+new optional fields.
+
+Cross-repo touches required: coordinate with `home-infra` so
+`scripts/audit-catalog.py` can consume the accepted metadata, then coordinate
+with `infra-portal` if the portal should render stale/expired development
+previews differently.
