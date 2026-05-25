@@ -1,4 +1,4 @@
-<!-- doc-version: 0.4.2 -->
+<!-- doc-version: 0.5.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -63,6 +63,7 @@ Minimum fields:
 Recommended fields:
 
 - `interface`
+- `environment`
 - `exposure`
 - `host_id`
 - `runtime`
@@ -103,6 +104,46 @@ it in 0.3.1.
 | `ssh` | Operator-only SSH endpoint | Render `ssh user@host` copy; no clickable open |
 | `none` | Service has no operator interface (background daemon, sync agent) | List the service but offer no interaction |
 | `other` | Anything not in the recommended list | Render connection info; specific behaviour undefined |
+
+#### `environment`
+
+`environment` declares the lifecycle environment of the service record. The
+protocol defines a closed initial vocabulary:
+
+- `production` - the default when the field is omitted. Consumers MUST preserve
+  existing production semantics for all v0.1.x-v0.4.x catalogs that do not
+  declare the field.
+- `development` - an operator-visible, private development preview. It may be
+  useful to open from a portal before the project reaches its target production
+  host, but it is not production deployment evidence.
+
+Do not add `staging`, `preview`, `experimental`, or other values until a real
+adopter needs them. Validators MUST reject unknown `environment` values so a
+typo such as `environment: develpoment` cannot pass as a silent convention.
+
+`environment` is orthogonal to the rest of the service taxonomy:
+
+- It does not replace `category`. A data service remains `category: data` even
+  when a temporary development preview exists.
+- It does not replace `interface`. A development preview can still be `web`,
+  `api`, `none`, or another interface kind.
+- It does not replace `exposure.visibility`. A development preview can be
+  operator-visible while still being non-production.
+- It does not replace `deployment`. Production deployment intent and evidence
+  remain modeled by the deployment lifecycle vocabulary and the optional
+  `deployment` block.
+
+Semantics for `environment: development`:
+
+- A development entry MUST remain inside the operator/private boundary. A
+  catalog link to a development preview must not imply public internet
+  exposure or relaxed authentication.
+- A development entry MUST NOT be used to claim that the project is
+  operationally deployed to its production target.
+- A stopped development preview SHOULD be rendered as dormant, neutral, or
+  informational by consumers rather than as a production incident.
+- A live development preview may show healthy runtime status, but that status
+  is evidence only for the preview, not for production deployment completion.
 
 #### `exposure`
 
@@ -158,6 +199,15 @@ when a consumer ships a new capability is part of the consumer's release.
 | Consumer | Version | Renders by `interface` | TCP probe | Notes |
 |----------|---------|------------------------|-----------|-------|
 | infra-portal | 0.8.1 | yes | yes | `web` → open in new tab; `none` → silent no-op; `api`/`mqtt`/`tcp`/`ssh`/`other` → clipboard copy + toast. TCP probe via `node:net` `Socket` connect; missing host or port yields `unknown` rather than crashing the loop. `expect_status` is treated as ground truth when declared (so non-2xx codes like `406` from MCP `/mcp` and `404` by-design endpoints can be marked healthy explicitly — fixed in 0.8.1). Production at 0.8.1 since 2026-05-03. DF-002 closed. |
+
+#### Consumer support for `environment`
+
+This matrix records which known consumers understand `Service.environment`.
+Consumers that do not appear here must be treated as ignoring the field.
+
+| Consumer | Version | Reads `environment` | Development health semantics | Notes |
+|----------|---------|---------------------|------------------------------|-------|
+| infra-portal | 0.11.0 | yes | stopped or failed development previews render as `dormant`, not production `down` | Production health behavior is unchanged. Development services render a neutral DEV treatment, are excluded from active production incidents, and keep the field visible in service details. Production at 0.11.0 since 2026-05-25. DF-008 closed in protocol 0.5.0. |
 
 #### Deployment lifecycle vocabulary
 

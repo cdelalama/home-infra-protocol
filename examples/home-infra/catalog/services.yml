@@ -140,3 +140,23 @@ services:
       url: https://api.example.internal/v1/health
       timeout_ms: 2000
       expect_status: 200
+
+  - id: example-panel-dev
+    name: Example Panel
+    category: tools
+    url: https://dev.example.internal/example-panel/
+    interface: web
+    environment: development
+    exposure:
+      visibility: operator
+      canonical: false
+    host_id: nas
+    runtime: docker
+    tags: [panel, preview]
+    description: |
+      Sanitized development preview. The `environment: development` marker
+      makes this entry visible to operators without claiming production
+      deployment evidence. A stopped preview should render as dormant or
+      informational, not as a production incident.
+    status:
+      type: none

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.4.2 -->
+<!-- doc-version: 0.5.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -640,7 +640,12 @@ registry-first flow for the NAS image.
   `infra-portal` 0.10.0
 - Date observed: 2026-05-24
 - Category: field-gap, semantic-gap, usability
-- Status: open
+- Status: implemented (0.5.0) - schema, SPEC, proposal, sanitized example,
+  and consumer support matrix shipped. `Service.environment` is now a closed
+  `production | development` enum in `schemas/services.schema.json`; SPEC.md
+  defines the default, orthogonality, private-boundary rule, no-evidence rule,
+  and dormant-not-down consumer semantics. `infra-portal` 0.11.0 is the first
+  recorded consumer.
 - Related: DF-003, DF-006
 
 ### Observation
@@ -728,8 +733,8 @@ consumer supports the field.
 
 ### Mitigation in source project
 
-`home-infra` currently uses an explicit stopgap for `msgvault-panel-dev`:
+`home-infra` originally used an explicit stopgap for `msgvault-panel-dev`:
 `name: DEV - msgvault-panel`, `category: data`, `tags: [development, ...]`,
-`exposure.canonical: false`, and `status.type: none`. This keeps the panel
-discoverable from infra-portal without presenting a stopped manual preview as a
-production outage.
+`exposure.canonical: false`, and `status.type: none`. After
+`infra-portal` 0.11.0 shipped consumer support, `home-infra` migrated the entry
+to `name: msgvault-panel` plus `environment: development` in commit `1c2d276`.

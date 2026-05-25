@@ -1,8 +1,36 @@
-<!-- doc-version: 0.1.4 -->
+<!-- doc-version: 0.5.0 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.5.0] - 2026-05-25
+
+### Added
+
+- **DF-008 closed - `Service.environment` development-preview semantics.**
+  The protocol now defines optional `Service.environment` with a closed
+  `production | development` enum and default production semantics when omitted.
+- `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`: records the real-adopter
+  motivation, no-evidence rule, security boundary, consumer behavior, and
+  anti-rot follow-up for development previews.
+- `examples/home-infra/catalog/services.yml`: includes a sanitized
+  `environment: development` preview entry.
+
+### Changed
+
+- `SPEC.md`: documents `environment` as orthogonal to `category`,
+  `interface`, `exposure`, and `deployment`; development previews are private
+  operator visibility, not production deployment evidence.
+- `SPEC.md`: adds the consumer support matrix for `environment`, recording
+  `infra-portal` 0.11.0 as the first consumer.
+- `docs/DOWNSTREAM_FEEDBACK.md`: marks DF-008 implemented in 0.5.0 and records
+  the `home-infra` migration from the stopgap tag/name convention to the typed
+  field.
+
+### Fixed
+
+- `schemas/services.schema.json`: now rejects invalid `environment` values
+  instead of letting misspelled lifecycle values survive as untyped convention.
 ## [0.4.2] - 2026-05-24
 
 ### Added
