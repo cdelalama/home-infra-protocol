@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,8 +6,8 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-The next dispatchable protocol work is the **status-snapshot +
-sync/telemetry jobs contract** agreed with the operator on 2026-06-18.
+The **status-snapshot + sync/telemetry jobs contract** shipped in protocol
+0.6.0 on 2026-06-18.
 
 Why: `msgvault-lab`, `forumvault-lab`, `plaud-mirror`, future Telegram
 archive work, and `home-infra` host-capacity monitoring all need the same
@@ -15,18 +15,19 @@ pattern: a project-owned runtime loop publishes sanitized telemetry, while
 consumers such as Infra Portal and Hermes read it, derive freshness, and warn
 without authoring truth.
 
-Implementation order:
+What shipped:
 
-1. Add a shared status snapshot schema for Telemetry Source outputs.
-2. Extend `schemas/project-contract.schema.json` with additive
-   `sync_jobs[]` and `telemetry_jobs[]` sections. `sync_jobs[]` requires a
-   source; `telemetry_jobs[]` must not accept one.
-3. Document the contract in `docs/PROJECT_CONTRACTS.md` and `SPEC.md`.
-4. Update `examples/project/infra.contract.yml` with sanitized examples.
-5. Record the protocol roadmap here so a future session can continue from the
-   schema and proposal files without relying on this chat.
+- `schemas/status-snapshot.schema.json` defines the shared Telemetry Source
+  output.
+- `schemas/project-contract.schema.json` now has additive `sync_jobs[]` and
+  `telemetry_jobs[]`.
+- `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md` and
+  `docs/SYNC_JOB_CONTRACT_PROPOSAL.md` contain the full design rationale.
+- `docs/PROJECT_CONTRACTS.md` and `SPEC.md` document the normative shape.
+- `examples/project/infra.contract.yml` includes sanitized sync and telemetry
+  examples.
 
-Important frozen model points:
+Frozen model points:
 
 - Producers write `observed_at`, `condition`, `severity`, `summary`, and
   optional shaped `checks[]`.
@@ -42,6 +43,24 @@ Important frozen model points:
   (`disabled` services and `environment: development` are not production
   incidents) before acting on producer severity or derived freshness.
 
+Next roadmap:
+
+1. **First adopter: `msgvault-lab`.** Add `sync_jobs[]` to its
+   project contract, then converge its published status snapshot toward
+   `schemas/status-snapshot.schema.json`
+   without breaking the existing panel until the consumer is ready.
+2. **Host capacity telemetry.** Use `telemetry_jobs[]` for the dev-vm
+   disk-pressure publisher. The status URL serving path is still a deployment
+   decision in `home-infra`; do not pretend it is settled here.
+3. **Infra Portal consumer.** Teach the portal to read declared jobs plus
+   status snapshots generically, derive freshness, and render stale versus
+   severe states consistently.
+4. **Hermes alerts.** Hermes consumes the same declarations/snapshots after
+   the producer and portal paths prove the contract. It should alert only after
+   disabled/development gates, dedupe, and escalation policy.
+5. **Protocol feedback.** Do not extend the schema again until at least one
+   real adopter (`msgvault-lab` or host-capacity) exposes a concrete gap.
+
 ## Pending session — Ecosystem Reconciliation
 
 A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AND surfaced a significant prior-art gap: `~/src/llm-council` predates much of `LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`. Reconciliation gated to Session 4 of the roadmap.
@@ -52,12 +71,19 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-06-18 - GPT-5 Codex (LLM-DocKit sync close, 0.5.2)
-- Session Focus: Closed the pending LLM-DocKit tooling sync as patch 0.5.2:
+- Last Updated: 2026-06-18 - GPT-5 Codex (status/sync contract, 0.6.0)
+- Session Focus: Shipped **protocol 0.6.0**: DF-010, status snapshot schema,
+  status snapshot proposal, sync/telemetry job proposal, additive
+  `sync_jobs[]` / `telemetry_jobs[]` in project contracts, SPEC/project-contract
+  prose, and sanitized examples. The next valuable work is adoption, not more
+  protocol design: start with `msgvault-lab`, then host-capacity telemetry,
+  then Infra Portal/Hermes consumers.
+
+- Previous: 2026-06-18 - GPT-5 Codex (LLM-DocKit sync close, 0.5.2) - Closed the pending LLM-DocKit tooling sync as patch 0.5.2:
   SessionStart onboarding hook, read-only validator skip, orientation and
   template-residue checks, optional Trace Protocol validation, and validator
-  smoke tests. The next commit in this same operator thread should implement
-  the status-snapshot + sync/telemetry jobs contract described in Open work.
+  smoke tests. Reoriented Open work to the status-snapshot + sync/telemetry
+  jobs contract before implementing it in 0.6.0.
 
 - Previous: 2026-05-25 - GPT-5 Codex (DF-009 filing, 0.5.1) - Filed **DF-009** as the anti-rot follow-up to DF-008 after
   `home-infra` implemented local catalog checks for `environment: development`
@@ -112,11 +138,14 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Pending Proposals (for the next session)
 
-Status-snapshot + sync/telemetry jobs contract — active 2026-06-18 operator
-priority. Expected files: status snapshot proposal, sync job proposal,
-`schemas/status-snapshot.schema.json`, additive `sync_jobs[]` /
-`telemetry_jobs[]` fields in `schemas/project-contract.schema.json`, and
-sanitized examples.
+None immediately dispatchable inside this repo after 0.6.0. The status
+snapshot and sync/telemetry job proposals have shipped:
+`docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md` and
+`docs/SYNC_JOB_CONTRACT_PROPOSAL.md`.
+
+The next valuable work is adopter-driven, not more protocol design:
+`msgvault-lab` first, then `home-infra` host-capacity telemetry, then
+Infra Portal and Hermes consumers.
 
 `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (DF-005) —
 not yet authored. Still valid backlog, but superseded as immediate priority by
@@ -150,8 +179,12 @@ consumer-side extension it surfaces — `infra-portal` reading
   a temporary HTTP stopgap warning. Status: `open`. Not currently dispatchable
   ahead of DF-005 unless the operator prioritizes development preview lifecycle
   hygiene.
+- **DF-010** — Project-owned sync and telemetry loops need a shared status
+  contract. Filed 2026-06-18 from `msgvault-lab`, `forumvault-lab`,
+  `plaud-mirror`, `home-infra` host-capacity, and future Telegram archive
+  needs. Status: `implemented (0.6.0)`.
 
-(DF-001 through DF-006 except DF-005, plus DF-008, are closed: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005, plus DF-008 and DF-010, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a
@@ -160,7 +193,9 @@ future session, but not currently dispatchable: (b) is gated on a
 exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
 with schema/SPEC/examples plus adopter-side `home-infra` auditor. DF-008
 implemented in 0.5.0 with schema/SPEC/proposal/example plus `infra-portal`
-0.11.0 consumer evidence. DF-007 and DF-009 remain open feedback.)
+0.11.0 consumer evidence. DF-010 implemented in 0.6.0 with the status snapshot
+schema, project-contract job declarations, proposals, and examples. DF-007 and
+DF-009 remain open feedback.)
 
 ## Patch 0.2.1 Outcome
 

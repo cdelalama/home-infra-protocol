@@ -5,6 +5,39 @@ repository: https://github.com/example/example-app
 services:
   - example-app
 
+sync_jobs:
+  - id: example-email-sync
+    source:
+      kind: gmail
+      authority: external
+    schedule:
+      mode: internal-loop
+      cadence: PT15M
+    stale_after: PT45M
+    runtime:
+      host_id: nas
+      service_id: example-app
+    status_url: https://example-app.example.internal/status.json
+    safety:
+      idempotent: true
+      lock: sqlite
+      max_runtime: PT30M
+      backoff: exponential
+
+telemetry_jobs:
+  - id: example-host-capacity
+    schedule:
+      mode: cron
+      cadence: PT5M
+    stale_after: PT15M
+    runtime:
+      host_id: nas
+    status_url: https://status.example.internal/host-capacity.json
+    safety:
+      idempotent: true
+      max_runtime: PT1M
+      backoff: fixed
+
 runbooks:
   deploy: docs/DEPLOY.md
   restore: docs/RESTORE.md

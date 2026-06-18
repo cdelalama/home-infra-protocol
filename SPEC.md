@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -353,6 +353,66 @@ A project repo can describe how it participates in the infrastructure. These
 contracts are upstream inputs to a source-of-truth repo; they are not direct
 portal inputs unless the source-of-truth repo chooses to ingest them.
 
+Project contracts may declare project-owned status producers:
+
+- `sync_jobs[]`: loops that synchronize local state from an external source of
+  truth. Each sync job requires `source`.
+- `telemetry_jobs[]`: loops that observe local runtime or host state. Telemetry
+  jobs must not declare `source`.
+
+Both arrays use the same scheduled publisher shape:
+
+- `schedule.mode`: `cron | internal-loop | webhook | manual`.
+- `schedule.cadence`: required for `cron` and `internal-loop`, forbidden for
+  `webhook` and `manual`.
+- `stale_after`: required for periodic modes; optional silence budget for
+  `webhook` and `manual`. If omitted for non-periodic jobs, the job does not
+  become stale by time.
+- `runtime.host_id`: required host where the producer runs.
+- `runtime.service_id`: optional service/container/daemon identity.
+- `status_url`: URL that serves a status snapshot.
+- `safety`: optional idempotence, lock, maximum-runtime, and backoff hints.
+
+For periodic jobs, validators SHOULD enforce `stale_after > cadence`. If
+`safety.max_runtime` is present, validators SHOULD recommend
+`stale_after >= cadence + max_runtime`.
+
+### Status Snapshot
+
+A status snapshot is the standard machine-readable output of a Telemetry
+Source. The formal schema is `schemas/status-snapshot.schema.json`; the prose
+contract is `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md`.
+
+Required fields:
+
+- `observed_at`: UTC RFC3339 timestamp ending in `Z`.
+- `condition`: producer-emitted aggregate condition, `ok | degraded`.
+- `severity`: producer-recommended ordered severity.
+- `summary`: display-only human summary.
+
+`severity` is ordered:
+
+| Value | Ordinal |
+|-------|---------|
+| `none` | 0 |
+| `info` | 1 |
+| `watch` | 2 |
+| `warning` | 3 |
+| `critical` | 4 |
+
+The producer proposes severity; consumers apply policy. A consumer may alert
+on `warning` and above, suppress development previews, suppress disabled
+services, deduplicate repeated alerts, or escalate persistent failures.
+
+Snapshots do not contain freshness. Freshness is derived by the consumer:
+
+```text
+freshness = now - snapshot.observed_at <= declaration.stale_after ? fresh : stale
+```
+
+This requires a join between the status snapshot and the job declaration.
+`stale_after` belongs in the declaration, not in runtime output.
+
 ### Consumer
 
 A tool that reads protocol data. Examples: portal, MCP server, validator, search
@@ -363,6 +423,9 @@ index, recovery planner.
 A system that measures runtime state, such as health probes or a host stats
 agent. Telemetry can be displayed and stored, but it is not an inventory source
 unless explicitly promoted through the source-of-truth repo.
+
+Telemetry Sources SHOULD publish status snapshots when their output needs to be
+read by consumers such as Infra Portal, Hermes, MCP servers, or validators.
 
 ## Required Behaviors
 

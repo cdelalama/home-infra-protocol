@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # How To Use This Repository
 
 Home Infra Protocol is currently a draft specification repository.
@@ -12,7 +12,9 @@ Home Infra Protocol is currently a draft specification repository.
 5. `docs/GOVERNANCE.md`
 6. `docs/COMPLETION_RULE.md`
 7. `docs/PROJECT_CONTRACTS.md`
-8. `docs/llm/HANDOFF.md`
+8. `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md`
+9. `docs/SYNC_JOB_CONTRACT_PROPOSAL.md`
+10. `docs/llm/HANDOFF.md`
 
 ## Intended Build Path
 

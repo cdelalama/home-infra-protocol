@@ -17,6 +17,18 @@
       "items": { "type": "string" },
       "default": []
     },
+    "sync_jobs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sync_job" },
+      "default": [],
+      "description": "Project-owned loops that synchronize local state from an external source of truth. A sync job requires `source`."
+    },
+    "telemetry_jobs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/telemetry_job" },
+      "default": [],
+      "description": "Project-owned loops that publish self-observation or host/runtime telemetry. A telemetry job must not declare `source`."
+    },
     "runbooks": {
       "type": "object",
       "additionalProperties": { "type": "string" }
@@ -33,6 +45,145 @@
           "notes": { "type": "string" }
         }
       }
+    }
+  },
+  "$defs": {
+    "duration": {
+      "type": "string",
+      "format": "duration",
+      "pattern": "^P",
+      "description": "ISO 8601 duration such as PT5M, PT1H, or P1D."
+    },
+    "periodic_schedule": {
+      "type": "object",
+      "required": ["mode", "cadence"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": { "enum": ["cron", "internal-loop"] },
+        "cadence": {
+          "$ref": "#/$defs/duration",
+          "description": "Expected interval between successful producer runs."
+        }
+      }
+    },
+    "event_schedule": {
+      "type": "object",
+      "required": ["mode"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": { "enum": ["webhook", "manual"] },
+        "cadence": false
+      }
+    },
+    "schedule": {
+      "oneOf": [
+        { "$ref": "#/$defs/periodic_schedule" },
+        { "$ref": "#/$defs/event_schedule" }
+      ]
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["host_id"],
+      "additionalProperties": true,
+      "properties": {
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "service_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["kind", "authority"],
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The external authority being synchronized from, for example external, upstream, provider, or operator."
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "idempotent": { "type": "boolean" },
+        "lock": { "type": "string", "minLength": 1 },
+        "max_runtime": { "$ref": "#/$defs/duration" },
+        "backoff": {
+          "type": "string",
+          "enum": ["none", "fixed", "linear", "exponential"]
+        }
+      }
+    },
+    "scheduled_status_publisher": {
+      "type": "object",
+      "required": ["id", "schedule", "runtime", "status_url"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "schedule": { "$ref": "#/$defs/schedule" },
+        "stale_after": {
+          "$ref": "#/$defs/duration",
+          "description": "Freshness window for consumer derivation. Required for periodic schedules. Optional for webhook/manual schedules, where it means silence budget; if omitted, the job never becomes stale by time."
+        },
+        "runtime": { "$ref": "#/$defs/runtime" },
+        "status_url": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1,
+          "description": "URL where the producer publishes a status snapshot conforming to schemas/status-snapshot.schema.json."
+        },
+        "safety": { "$ref": "#/$defs/safety" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schedule": { "$ref": "#/$defs/periodic_schedule" }
+            },
+            "required": ["schedule"]
+          },
+          "then": {
+            "required": ["stale_after"]
+          }
+        }
+      ]
+    },
+    "sync_job": {
+      "allOf": [
+        { "$ref": "#/$defs/scheduled_status_publisher" },
+        {
+          "type": "object",
+          "required": ["source"],
+          "properties": {
+            "source": { "$ref": "#/$defs/source" }
+          }
+        }
+      ]
+    },
+    "telemetry_job": {
+      "allOf": [
+        { "$ref": "#/$defs/scheduled_status_publisher" },
+        {
+          "type": "object",
+          "properties": {
+            "source": false
+          }
+        }
+      ]
     }
   }
 }

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they
@@ -20,6 +20,8 @@ repo remains the authority after ingesting, copying, or validating them.
 - `services`
 - `runtime`
 - `deploy`
+- `sync_jobs`
+- `telemetry_jobs`
 - `runbooks`
 - `secret_refs`
 
@@ -39,6 +41,43 @@ running, and the intent-vs-evidence rule applies — the project repo declares
 intent, consumers read evidence at probe time, and the block is never edited
 to match observed reality. A project that does not own the deployment of its
 declared services may omit the block entirely.
+
+## Sync And Telemetry Jobs
+
+Project contracts may declare status-producing runtime loops.
+
+Use `sync_jobs[]` when the project synchronizes local state from an external
+source of truth. Examples: Gmail archive sync, Telegram archive sync, Plaud
+recording sync, forum archive sync. `sync_jobs[]` entries require `source`.
+
+Use `telemetry_jobs[]` when the project observes local runtime or host state.
+Examples: host capacity, disk pressure, UPS telemetry, hardware temperature.
+`telemetry_jobs[]` entries must not declare `source`.
+
+Both arrays publish the same status snapshot shape at `status_url`. The
+snapshot schema is `schemas/status-snapshot.schema.json`.
+
+Freshness is never self-declared inside the snapshot. The producer writes
+`observed_at`; the declaration writes `stale_after`; consumers derive freshness
+by joining the two.
+
+Schedule rules:
+
+- `cron` and `internal-loop` are periodic. They require `cadence` and
+  `stale_after`.
+- `webhook` and `manual` are non-periodic. They forbid `cadence`.
+  `stale_after` is optional and means silence budget when present.
+- Validators should enforce `stale_after > cadence` for periodic jobs.
+- `runtime.host_id` is required. `runtime.service_id` is optional because a
+  host-level cron may not map to a service record.
+
+Consumer policy:
+
+- Infra Portal may render the latest snapshot and derived freshness.
+- Hermes may alert when producer severity is at least `warning` or derived
+  freshness is stale.
+- Consumers must gate alertability by intent: disabled production services and
+  `environment: development` previews are not production incidents.
 
 ## Example
 

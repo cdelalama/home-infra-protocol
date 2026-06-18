@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -814,3 +814,62 @@ Cross-repo touches required: coordinate with `home-infra` so
 `scripts/audit-catalog.py` can consume the accepted metadata, then coordinate
 with `infra-portal` if the portal should render stale/expired development
 previews differently.
+
+## DF-010 — Project-owned sync and telemetry loops need a shared status contract
+
+- Source: `msgvault-lab` 0.22.0 status publisher and verify-cache loop,
+  `forumvault-lab` 0.13.1 scheduler/status snapshot, `plaud-mirror` 0.9.3
+  sync state, `home-infra` host-capacity proposal, future Telegram archive work
+- Date observed: 2026-06-18
+- Category: field-gap, semantic-gap
+- Status: implemented (0.6.0)
+- Related: DF-003, DF-008, DF-009
+
+### Observation
+
+Multiple projects now need the same pattern:
+
+1. A project-owned loop synchronizes or observes runtime state.
+2. The project publishes a sanitized machine-readable status snapshot.
+3. Infra Portal displays that state.
+4. Hermes or another agent may alert when the state is stale or severe.
+
+Without a protocol contract, each project invents its own status shape and
+freshness semantics. That creates the same consumer-drift risk that earlier
+DFs exposed for `interface`, TCP probes, deployment evidence, and development
+previews.
+
+Two distinct loop families appeared during the design discussion:
+
+- Source sync: local state should keep up with an external authority such as
+  Gmail, Telegram, Plaud, or a forum.
+- Telemetry publishing: local state is observed and published, such as host
+  disk pressure. There is no external source of truth; stale means the
+  collector stopped publishing.
+
+Collapsing both into one loose "job" concept would lose the distinction. A
+sync job needs `source`; a telemetry job must not declare one.
+
+### Protocol implication
+
+Protocol 0.6.0 implements the shared contract:
+
+- `schemas/status-snapshot.schema.json`: canonical Telemetry Source output.
+- `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md`: prose contract for condition,
+  severity, checks, display-only summary, and consumer-derived freshness.
+- `schemas/project-contract.schema.json`: additive `sync_jobs[]` and
+  `telemetry_jobs[]`.
+- `docs/SYNC_JOB_CONTRACT_PROPOSAL.md`: schedule modes, `stale_after`
+  semantics, sync-vs-telemetry split, and consumer responsibilities.
+- `examples/project/infra.contract.yml`: sanitized sync and telemetry examples.
+
+Key invariant: the producer writes `observed_at`; the declaration owns
+`stale_after`; consumers derive freshness by joining both. A dead producer must
+not keep claiming `fresh`.
+
+### Mitigation in source projects
+
+Before 0.6.0, `msgvault-lab` and `forumvault-lab` already published local
+status snapshots with project-specific shapes. Those remain valid project
+implementations, but future adoption should converge on the shared snapshot
+shape and project-contract declarations.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.2 -->
+<!-- doc-version: 0.6.0 -->
 # Repository Structure
 
 ```text
@@ -12,7 +12,8 @@ home-infra-protocol/
 ├── schemas/
 │   ├── services.schema.json
 │   ├── hosts.schema.json
-│   └── project-contract.schema.json
+│   ├── project-contract.schema.json
+│   └── status-snapshot.schema.json
 ├── examples/
 │   ├── home-infra/
 │   │   ├── catalog/
@@ -31,6 +32,8 @@ home-infra-protocol/
 │   ├── GOVERNANCE.md
 │   ├── SECURITY_MODEL.md
 │   ├── RECOVERY_MODEL.md
+│   ├── STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md
+│   ├── SYNC_JOB_CONTRACT_PROPOSAL.md
 │   ├── LLM_WORKFLOW.md
 │   ├── STRUCTURE.md
 │   ├── VERSIONING_RULES.md

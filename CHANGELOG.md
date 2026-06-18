@@ -3,6 +3,38 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.6.0] - 2026-06-18
+
+### Added
+
+- **DF-010 implemented - status snapshot + sync/telemetry job contracts.**
+  Real adopters (`msgvault-lab`, `forumvault-lab`, `plaud-mirror`,
+  host-capacity monitoring, and future Telegram archive work) now have a
+  shared protocol surface for project-owned runtime loops.
+- `schemas/status-snapshot.schema.json`: canonical Telemetry Source output
+  shape with `observed_at`, top-level `condition`, ordered `severity`,
+  display-only `summary`, and optional shaped `checks[]`.
+- `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md`: prose contract for condition,
+  severity ordinals, consumer-derived freshness, check semantics, and alert
+  gates.
+- `docs/SYNC_JOB_CONTRACT_PROPOSAL.md`: source-sync versus telemetry-publisher
+  split, schedule modes, stale-after semantics, and consumer responsibilities.
+- `examples/project/infra.contract.yml`: sanitized examples for one sync job
+  and one telemetry job.
+
+### Changed
+
+- `schemas/project-contract.schema.json`: adds optional `sync_jobs[]` and
+  `telemetry_jobs[]`. `sync_jobs[]` requires `source`; `telemetry_jobs[]`
+  rejects `source`.
+- `SPEC.md` and `docs/PROJECT_CONTRACTS.md`: document project-owned status
+  producers, schedule modes, required/optional freshness fields, and the rule
+  that consumers derive freshness by joining `observed_at` with `stale_after`.
+- `docs/DOWNSTREAM_FEEDBACK.md`: adds DF-010 with the empirical motivation and
+  marks it implemented in 0.6.0.
+
+### Fixed
+
 ## [0.5.2] - 2026-06-18
 
 ### Added

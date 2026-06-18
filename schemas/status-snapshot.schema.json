@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://home-infra-protocol.example/schemas/status-snapshot.schema.json",
+  "title": "Home Infra Protocol Status Snapshot",
+  "description": "Sanitized runtime telemetry output published by a project-owned Telemetry Source. The snapshot records what the producer observed; consumers derive freshness by joining observed_at with the job declaration's stale_after.",
+  "type": "object",
+  "required": ["observed_at", "condition", "severity", "summary"],
+  "additionalProperties": true,
+  "properties": {
+    "observed_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$",
+      "description": "UTC RFC3339 timestamp for when the producer observed or completed the check. Producers MUST write this; consumers derive freshness from it."
+    },
+    "condition": {
+      "$ref": "#/$defs/top_level_condition"
+    },
+    "severity": {
+      "$ref": "#/$defs/severity"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display-only human summary. Consumers MUST NOT parse this field for logic."
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      },
+      "description": "Optional shaped sub-checks, for example one check per account or upstream. The top-level snapshot remains the producer's aggregate view."
+    }
+  },
+  "$defs": {
+    "top_level_condition": {
+      "type": "string",
+      "enum": ["ok", "degraded"],
+      "description": "Producer-emitted aggregate condition. Producers emit only ok or degraded; consumers derive unknown/down from absence, unreadability, or staleness."
+    },
+    "check_condition": {
+      "type": "string",
+      "enum": ["ok", "degraded", "down"],
+      "description": "Sub-check condition. Unlike the top-level producer condition, a producer may mark an individual sub-check down while the aggregate remains degraded."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["none", "info", "watch", "warning", "critical"],
+      "description": "Producer-recommended ordered severity: none=0, info=1, watch=2, warning=3, critical=4. Consumers apply policy on top of this recommendation."
+    },
+    "check": {
+      "type": "object",
+      "required": ["name", "condition"],
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "condition": {
+          "$ref": "#/$defs/check_condition"
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Display-only human summary for the sub-check. Consumers MUST NOT parse this field for logic."
+        }
+      }
+    }
+  }
+}
