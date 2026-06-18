@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.1 -->
+<!-- doc-version: 0.5.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,45 +6,41 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-DF-008 is closed in protocol 0.5.0. `Service.environment` is now a formal
-optional field with closed `production | development` schema values, SPEC
-semantics, `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`, a sanitized example,
-and `infra-portal` 0.11.0 recorded as the first consumer. `home-infra` commit
-`1c2d276` migrated `msgvault-panel-dev` from the old stopgap convention to
-`environment: development`; later `home-infra` commit `e0fa478` proved the
-need for DF-009 by adding profile-local schema validation, a real development
-preview HTTP probe, and a temporary `http-stopgap` warning.
+The next dispatchable protocol work is the **status-snapshot +
+sync/telemetry jobs contract** agreed with the operator on 2026-06-18.
 
-The next dispatchable protocol work returns to existing profile-maintenance
-backlog:
+Why: `msgvault-lab`, `forumvault-lab`, `plaud-mirror`, future Telegram
+archive work, and `home-infra` host-capacity monitoring all need the same
+pattern: a project-owned runtime loop publishes sanitized telemetry, while
+consumers such as Infra Portal and Hermes read it, derive freshness, and warn
+without authoring truth.
 
-Author `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` for
-DF-005 (filed 2026-05-08). DF-005 carries enough scope — cross-repo
-coordination for option A1 (LLM-DocKit STRUCTURE.md template path
-change), skill input contract change for option B1 (`/new-homelab-project`
-gets a `--brainstorm` input), brainstorm format contract decision —
-that a `*_PROPOSAL.md` is the right next artefact before any
-implementation session. The DF entry itself contains the option
-taxonomy (A1/A2/A3 for runbooks-path collision; B1/B2/B3 for
-orchestrator HANDOFF population) and the recommended sequence; the
-PROPOSAL scopes those options into a dispatchable implementation
-session.
+Implementation order:
 
-Empirical motivator: pi-fleet 0.1.1 (2026-05-08) was the first
-homelab-profile project scaffolded end-to-end via
-`integrations/dockit/new-homelab-project.sh`, and surfaced both gaps
-in one Codex audit — the runbooks-path collision and the orchestrator's
-missing HANDOFF *Open work* population step share a single root cause
-(scaffold step does not propagate context from brainstorm to new repo's
-docs). DF-005 is the first DF in this repo filed as an *aggregation* of
-two findings into one systemic entry; the aggregation itself relies on
-an arbiter session with multi-repo context, which is the cross-LLM
-protocol gap recorded in `forgeos/docs/llm/HANDOFF.md` *Open work*
-item #8 (companion recognition missing from proto-`/consensus`).
+1. Add a shared status snapshot schema for Telemetry Source outputs.
+2. Extend `schemas/project-contract.schema.json` with additive
+   `sync_jobs[]` and `telemetry_jobs[]` sections. `sync_jobs[]` requires a
+   source; `telemetry_jobs[]` must not accept one.
+3. Document the contract in `docs/PROJECT_CONTRACTS.md` and `SPEC.md`.
+4. Update `examples/project/infra.contract.yml` with sanitized examples.
+5. Record the protocol roadmap here so a future session can continue from the
+   schema and proposal files without relying on this chat.
 
-If a fresh session opens the repo and finds this block empty (after
-DF-005 ships), the correct response is *not* to invent work — it is
-to confirm with the operator what the priority is.
+Important frozen model points:
+
+- Producers write `observed_at`, `condition`, `severity`, `summary`, and
+  optional shaped `checks[]`.
+- Producers do **not** write freshness. Consumers derive freshness by joining
+  the declaration's `stale_after` with the snapshot's `observed_at`.
+- Top-level producer `condition` is `ok | degraded`; consumers derive
+  `unknown` or `down` from missing, unreadable, or stale snapshots.
+- Periodic modes (`cron`, `internal-loop`) require `cadence` and
+  `stale_after`, with `stale_after > cadence`. Non-periodic modes (`webhook`,
+  `manual`) forbid `cadence`; `stale_after` is optional and means silence
+  budget when present.
+- Alertability is consumer policy. Hermes must gate alerts by intent
+  (`disabled` services and `environment: development` are not production
+  incidents) before acting on producer severity or derived freshness.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -56,8 +52,14 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-05-25 - GPT-5 Codex (DF-009 filing, 0.5.1)
-- Session Focus: Filed **DF-009** as the anti-rot follow-up to DF-008 after
+- Last Updated: 2026-06-18 - GPT-5 Codex (LLM-DocKit sync close, 0.5.2)
+- Session Focus: Closed the pending LLM-DocKit tooling sync as patch 0.5.2:
+  SessionStart onboarding hook, read-only validator skip, orientation and
+  template-residue checks, optional Trace Protocol validation, and validator
+  smoke tests. The next commit in this same operator thread should implement
+  the status-snapshot + sync/telemetry jobs contract described in Open work.
+
+- Previous: 2026-05-25 - GPT-5 Codex (DF-009 filing, 0.5.1) - Filed **DF-009** as the anti-rot follow-up to DF-008 after
   `home-infra` implemented local catalog checks for `environment: development`
   and marked the first HTTP development preview as a temporary stopgap. No
   schema change yet; DF-009 is the dispatch point for owner/freshness/expiry
@@ -110,8 +112,15 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Pending Proposals (for the next session)
 
+Status-snapshot + sync/telemetry jobs contract — active 2026-06-18 operator
+priority. Expected files: status snapshot proposal, sync job proposal,
+`schemas/status-snapshot.schema.json`, additive `sync_jobs[]` /
+`telemetry_jobs[]` fields in `schemas/project-contract.schema.json`, and
+sanitized examples.
+
 `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (DF-005) —
-not yet authored. See *Open work* block above for scope and rationale.
+not yet authored. Still valid backlog, but superseded as immediate priority by
+the status/sync contract above.
 
 (`docs/DEPLOYMENT_EVIDENCE_PROPOSAL.md` shipped in 0.3.0; the
 consumer-side extension it surfaces — `infra-portal` reading

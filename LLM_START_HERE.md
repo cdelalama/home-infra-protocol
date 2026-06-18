@@ -1,4 +1,4 @@
-<!-- doc-version: 0.5.1 -->
+<!-- doc-version: 0.5.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -86,8 +86,7 @@ Source of truth: `docs/llm/HANDOFF.md`.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist
-- [ ] Read this entire file
-- [ ] Review SPEC.md
+- [ ] Read this entire file and update placeholders
 - [ ] Review docs/PROJECT_CONTEXT.md
 - [ ] Review docs/VERSIONING_RULES.md
 - [ ] Read the current docs/llm/HANDOFF.md
@@ -129,6 +128,84 @@ Use the Do Not Touch section in docs/llm/HANDOFF.md to flag any files or areas t
 
 <!-- DOCKIT-EXTERNAL-CONTEXT:START -->
 <!-- DOCKIT-EXTERNAL-CONTEXT:END -->
+
+<!-- DOCKIT-TEMPLATE:START env-policy -->
+### Environment Files (If Applicable)
+- Do not edit generated .env.example files directly.
+- Never change or remove existing credentials in .env or equivalent secret stores.
+- If a new variable is needed, document it in the relevant README and ask the user to add it manually.
+<!-- DOCKIT-TEMPLATE:END env-policy -->
+
+<!-- DOCKIT-TEMPLATE:START trace-protocol -->
+## Trace Protocol
+
+For execution or audit work, begin each substantive execution report or audit
+verdict with a compact `Trace` header, then write the normal explanation in
+prose. The header is for orientation; it does not replace the message.
+
+Required chat header fields:
+- `Role`: `executor` or `auditor`
+- `Sent`: `YYYY-MM-DD HH:MM <local-tz> (HH:MM UTC)`. The order is mandatory:
+  local time first, UTC second in parentheses.
+- `Subject`: current task, or commit hash/title being implemented or audited
+- `Resulting state`: what this message leaves true after it is sent
+- `Repo state`: local branch vs origin and worktree status verified now
+- `Validation`: checks run and result
+- `Next gate`: who/what should act next
+
+Time verification:
+- Verify `Sent` before writing it; do not infer or mentally convert the time.
+- If shell access is available, run both:
+  ```sh
+  date -u '+%Y-%m-%d %H:%M UTC'
+  TZ=Europe/Madrid date '+%Y-%m-%d %H:%M %Z'
+  ```
+- Replace `Europe/Madrid` with `trace_protocol.local_timezone` from
+  `.dockit-config.yml` when the project sets one.
+- If the agent cannot verify the clock, write:
+  `Sent: unverified client time YYYY-MM-DD HH:MM <claimed-tz>`.
+
+Recommended `Resulting state` shape:
+
+```text
+Resulting state: HEAD=<hash|unchanged (hash)>; version=<version|none>; gate=<opened|cleared|blocked|superseded|next-slice>; <short note>
+```
+
+Examples:
+
+```text
+Resulting state: HEAD=01f90bb; version=4.9.1; gate=cleared; supersedes audit of d6fc816
+Resulting state: HEAD=unchanged (01f90bb); version=none; gate=cleared; ready for next slice
+Resulting state: HEAD=unchanged (d6fc816); version=none; gate=blocked; requires executor patch v4.9.1
+```
+
+Use clear prose after the header. Explain what changed, why it matters, what
+was verified, and what risk remains.
+
+When `trace_protocol.enabled: true` is set in `.dockit-config.yml`, the durable
+half is enforced by `scripts/dockit-validate-session.sh --check trace-protocol`:
+- `docs/llm/HANDOFF.md` must contain a `## Trace Anchor` section.
+- HANDOFF Trace Anchor commit times may use `YYYY-MM-DD HH:MM:SS UTC` or
+  `YYYY-MM-DD HH:MM UTC`.
+- `docs/llm/HISTORY.md` entries dated on or after `trace_protocol.since` that
+  reference backtick-quoted commit hashes must end with an inline footer:
+  `Trace: role=executor|auditor; commits=hash1,hash2; state=...; validation=...; next=...`
+
+Projects can set the local timezone used in `Sent` with:
+
+```yaml
+trace_protocol:
+  local_timezone: Europe/Madrid
+```
+
+Projects that do not use executor/auditor windows can disable the chat-side
+convention with:
+
+```yaml
+trace_protocol:
+  enabled: false
+```
+<!-- DOCKIT-TEMPLATE:END trace-protocol -->
 
 <!-- DOCKIT-TEMPLATE:START footer -->
 ---

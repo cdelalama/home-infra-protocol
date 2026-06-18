@@ -3,6 +3,31 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.5.2] - 2026-06-18
+
+### Added
+
+- LLM-DocKit SessionStart onboarding support through
+  `scripts/dockit-bootstrap-context.sh` and the matching `.claude/settings.json`
+  hook.
+- Validator smoke tests in `scripts/test-validator.sh` for read-only session
+  skips, orientation checks, and the durable Trace Protocol guardrail.
+
+### Changed
+
+- `scripts/dockit-validate-session.sh` now supports read-only zero-diff
+  session skips, orientation validation, template-residue checks, and optional
+  Trace Protocol validation.
+- `docs/version-sync-manifest.yml` now separates generic DocKit targets from
+  project-specific protocol targets so future DocKit syncs preserve local
+  protocol docs.
+
+### Fixed
+
+- `docs/llm/HANDOFF.md` now points fresh sessions at the current
+  status-snapshot / sync-job contract work instead of a stale missing proposal
+  path.
+
 ## [0.5.1] - 2026-05-25
 
 ### Added
