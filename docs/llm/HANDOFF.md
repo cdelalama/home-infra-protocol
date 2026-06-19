@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.0 -->
+<!-- doc-version: 0.6.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,7 +7,8 @@ This file is the current operational snapshot. Durable decisions live in
 ## Open work — next concrete step
 
 The **status-snapshot + sync/telemetry jobs contract** shipped in protocol
-0.6.0 on 2026-06-18.
+0.6.0 on 2026-06-18. Patch 0.6.1 only closes the LLM-DocKit Trace guidance
+sync; it does **not** change protocol schemas or contract semantics.
 
 Why: `msgvault-lab`, `forumvault-lab`, `plaud-mirror`, future Telegram
 archive work, and `home-infra` host-capacity monitoring all need the same
@@ -45,10 +46,12 @@ Frozen model points:
 
 Next roadmap:
 
-1. **First adopter: `msgvault-lab`.** Add `sync_jobs[]` to its
-   project contract, then converge its published status snapshot toward
-   `schemas/status-snapshot.schema.json`
-   without breaking the existing panel until the consumer is ready.
+1. **First adopter: `msgvault-lab`.** Start its Phase C1 with
+   `telemetry_jobs[]`: declare the container-side MCP smoke producer in the
+   project contract and publish/compare a status-snapshot-compatible shadow
+   snapshot without changing the existing public status contract yet.
+   Gmail archive sync and verify-cache can become `sync_jobs[]` later, once
+   each has a real source-sync status URL.
 2. **Host capacity telemetry.** Use `telemetry_jobs[]` for the dev-vm
    disk-pressure publisher. The status URL serving path is still a deployment
    decision in `home-infra`; do not pretend it is settled here.
@@ -71,8 +74,16 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-06-18 - GPT-5 Codex (status/sync contract, 0.6.0)
-- Session Focus: Shipped **protocol 0.6.0**: DF-010, status snapshot schema,
+- Last Updated: 2026-06-19 - GPT-5 Codex (DocKit Trace sync, 0.6.1)
+- Session Focus: Closed **protocol 0.6.1** as a DocKit/Trace-only patch:
+  Trace `Sent` headers now require seconds, and agents are told to re-check
+  `git status`, `git log -1`, and the current clock before trusting older
+  Trace repo-state lines. No schema, SPEC, status-snapshot, `sync_jobs[]`, or
+  `telemetry_jobs[]` semantics changed. The next valuable work remains
+  adopter execution in `msgvault-lab`: Phase C1 as a
+  `telemetry_jobs[]` shadow MCP smoke producer.
+
+- Previous: 2026-06-18 - GPT-5 Codex (status/sync contract, 0.6.0) - Shipped **protocol 0.6.0**: DF-010, status snapshot schema,
   status snapshot proposal, sync/telemetry job proposal, additive
   `sync_jobs[]` / `telemetry_jobs[]` in project contracts, SPEC/project-contract
   prose, and sanitized examples. The next valuable work is adoption, not more

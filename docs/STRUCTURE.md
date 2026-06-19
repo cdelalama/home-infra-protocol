@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.0 -->
+<!-- doc-version: 0.6.1 -->
 # Repository Structure
 
 ```text

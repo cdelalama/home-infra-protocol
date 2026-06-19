@@ -1,7 +1,24 @@
-<!-- doc-version: 0.5.0 -->
+<!-- doc-version: 0.6.1 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
+
+## [0.6.1] - 2026-06-19
+
+### Changed
+
+- Synced LLM-DocKit Trace guidance to require `Sent` timestamps with seconds
+  on both the local and UTC sides of the Trace header.
+- Updated bootstrap guidance so agents re-check `git status`, `git log -1`,
+  and the current clock before acting on older Trace blocks.
+- Bumped project doc-version markers for the patch release.
+
+### Fixed
+
+- Reduced the risk of stale Trace `Repo state` reuse after another LLM or the
+  operator acts between trace emission and follow-up work.
+- No protocol contract, schema, SPEC, status-snapshot, `sync_jobs[]`, or
+  `telemetry_jobs[]` semantics changed in this patch.
 
 ## [0.6.0] - 2026-06-18
 
