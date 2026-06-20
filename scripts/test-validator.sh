@@ -10,9 +10,15 @@ set -eu
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 PROJECT_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
 VALIDATOR="$PROJECT_ROOT/scripts/dockit-validate-session.sh"
+CHECK_VERSION="$PROJECT_ROOT/scripts/check-version-sync.sh"
+BUMP_VERSION="$PROJECT_ROOT/scripts/bump-version.sh"
+SYNC_TOOL="$PROJECT_ROOT/scripts/dockit-sync.sh"
+TRACE_STATUS="$PROJECT_ROOT/scripts/dockit-trace-status.sh"
+CODEX_INSTALLER="$PROJECT_ROOT/scripts/dockit-install-codex-hook.sh"
 
 TMP_ROOT=${TMPDIR:-/tmp}/dockit-validator-smoke.$$
 OUT="$TMP_ROOT/out.txt"
+TODAY=$(date +%Y-%m-%d)
 
 cleanup() {
     rm -rf "$TMP_ROOT"
@@ -115,6 +121,213 @@ EOF
     git -C "$_repo" commit -qm initial
 }
 
+init_reference_date_repo() {
+    _repo="$1"
+    _date="$2"
+    mkdir -p "$_repo/docs/llm" "$_repo/scripts"
+
+    cat >"$_repo/docs/llm/HANDOFF.md" <<EOF
+# Handoff
+- Last Updated: $_date
+EOF
+
+    cat >"$_repo/docs/llm/HISTORY.md" <<EOF
+# History
+
+- $_date - Smoke - Commit-date entry. - Files: [docs/llm/HANDOFF.md, docs/llm/HISTORY.md] - Version impact: no
+EOF
+
+    cat >"$_repo/docs/llm/DECISIONS.md" <<'EOF'
+# Decisions
+EOF
+
+    cat >"$_repo/scripts/foo.sh" <<'EOF'
+#!/bin/sh
+exit 0
+EOF
+    chmod +x "$_repo/scripts/foo.sh"
+
+    git -C "$_repo" init -q
+    git -C "$_repo" config user.email smoke@example.invalid
+    git -C "$_repo" config user.name Smoke
+    git -C "$_repo" add .
+    GIT_AUTHOR_DATE="${_date}T12:00:00Z" GIT_COMMITTER_DATE="${_date}T12:00:00Z" \
+        git -C "$_repo" commit -qm initial
+}
+
+write_version_files() {
+    _repo="$1"
+    _version="$2"
+
+    cat >"$_repo/package.json" <<EOF
+{
+  "name": "version-smoke",
+  "version": "$_version",
+  "private": true
+}
+EOF
+
+    cat >"$_repo/openapi.yml" <<EOF
+openapi: 3.1.0
+info:
+  title: Version Smoke
+  version: "$_version"
+paths: {}
+EOF
+
+    cat >"$_repo/package-lock.json" <<EOF
+{
+  "name": "version-smoke",
+  "version": "$_version",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "version-smoke",
+      "version": "$_version"
+    }
+  }
+}
+EOF
+}
+
+init_version_repo() {
+    _repo="$1"
+    mkdir -p "$_repo/scripts" "$_repo/docs"
+    cp "$CHECK_VERSION" "$_repo/scripts/check-version-sync.sh"
+    cp "$BUMP_VERSION" "$_repo/scripts/bump-version.sh"
+    chmod +x "$_repo/scripts/check-version-sync.sh" "$_repo/scripts/bump-version.sh"
+    printf '1.2.3\n' >"$_repo/VERSION"
+    cat >"$_repo/docs/version-sync-manifest.yml" <<'EOF'
+targets:
+- path: VERSION            marker: version-file
+- path: package.json       marker: json-version
+- path: openapi.yml        marker: yaml-info-version
+- path: package-lock.json  marker: package-lock-version
+EOF
+    write_version_files "$_repo" "1.2.3"
+}
+
+init_sync_section_repo() {
+    _repo="$1"
+    _footer_mode="$2"
+    mkdir -p "$_repo"
+
+    cat >"$_repo/.dockit-enabled" <<'EOF'
+enabled: true
+EOF
+
+    cat >"$_repo/.dockit-config.yml" <<'EOF'
+adoption_mode: full
+EOF
+
+    if [ "$_footer_mode" = "with-footer" ]; then
+        cat >"$_repo/LLM_START_HERE.md" <<'EOF'
+# Old adopter start guide
+
+Local project prose stays above synced template sections.
+
+<!-- DOCKIT-TEMPLATE:START footer -->
+---
+Old footer text.
+<!-- DOCKIT-TEMPLATE:END footer -->
+EOF
+    else
+        cat >"$_repo/LLM_START_HERE.md" <<'EOF'
+# Old adopter start guide
+
+Local project prose with no footer marker.
+EOF
+    fi
+
+    git -C "$_repo" init -q
+    git -C "$_repo" config user.email smoke@example.invalid
+    git -C "$_repo" config user.name Smoke
+    git -C "$_repo" add .
+    git -C "$_repo" commit -qm initial
+}
+
+init_sync_versioned_doc_repo() {
+    _repo="$1"
+    mkdir -p "$_repo/docs" "$_repo/scripts"
+
+    printf '0.1.0\n' >"$_repo/VERSION"
+    cat >"$_repo/LLM_START_HERE.md" <<'EOF'
+<!-- doc-version: 0.6.1 -->
+# Versioned adopter start guide
+
+<!-- DOCKIT-TEMPLATE:START footer -->
+---
+Old footer text.
+<!-- DOCKIT-TEMPLATE:END footer -->
+EOF
+
+    cat >"$_repo/.dockit-enabled" <<'EOF'
+enabled: true
+EOF
+
+    cat >"$_repo/.dockit-config.yml" <<'EOF'
+adoption_mode: full
+EOF
+
+    cat >"$_repo/docs/version-sync-manifest.yml" <<'EOF'
+targets:
+- path: VERSION           marker: version-file
+- path: LLM_START_HERE.md marker: html-comment
+EOF
+
+    git -C "$_repo" init -q
+    git -C "$_repo" config user.email smoke@example.invalid
+    git -C "$_repo" config user.name Smoke
+    git -C "$_repo" add .
+    git -C "$_repo" commit -qm initial
+}
+
+init_orientation_drift_repo() {
+    _repo="$1"
+    _mode="$2"
+    mkdir -p "$_repo/docs/llm" "$_repo/docs"
+
+    cat >"$_repo/.dockit-config.yml" <<'EOF'
+orientation_drift:
+  enabled: true
+  roadmap: docs/ROADMAP.md
+  docs:
+    - LLM_START_HERE.md
+    - docs/llm/HANDOFF.md
+EOF
+
+    cat >"$_repo/docs/ROADMAP.md" <<'EOF'
+# Roadmap
+
+## Phase 1
+Status: complete
+
+## Phase 2
+Status: planned
+EOF
+
+    if [ "$_mode" = "drift" ]; then
+        cat >"$_repo/LLM_START_HERE.md" <<'EOF'
+# Start
+
+Next work: Phase 1 cleanup.
+EOF
+    else
+        cat >"$_repo/LLM_START_HERE.md" <<'EOF'
+# Start
+
+Next work: Phase 2 implementation.
+EOF
+    fi
+
+    cat >"$_repo/docs/llm/HANDOFF.md" <<'EOF'
+# Handoff
+
+Next work: Phase 2 implementation.
+EOF
+}
+
 mkdir -p "$TMP_ROOT"
 
 REPO="$TMP_ROOT/main"
@@ -125,6 +338,15 @@ expect_pass "env + clean stale handoff/history skips" \
 
 expect_fail "no env + clean stale handoff/history fails normally" \
     "$VALIDATOR" --project "$REPO" --quiet --check handoff-date --check history-entry
+
+REFERENCE_DATE_REPO="$TMP_ROOT/reference-date"
+init_reference_date_repo "$REFERENCE_DATE_REPO" "2001-02-03"
+expect_pass "clean tree validates HANDOFF/HISTORY against last commit date, not wall clock" \
+    "$VALIDATOR" --project "$REFERENCE_DATE_REPO" --quiet --check handoff-date --check history-entry
+
+printf '\n# dirty\n' >>"$REFERENCE_DATE_REPO/scripts/foo.sh"
+expect_fail "dirty tree validates HANDOFF/HISTORY against wall clock" \
+    "$VALIDATOR" --project "$REFERENCE_DATE_REPO" --quiet --check handoff-date --check history-entry
 
 printf '\nchange\n' >>"$REPO/docs/llm/HANDOFF.md"
 expect_fail "env + modified HANDOFF does not skip" \
@@ -150,6 +372,19 @@ git -C "$REPO" reset -q --hard HEAD
 expect_pass "orientation ignores glob-shaped backtick strings" \
     "$VALIDATOR" --project "$REPO" --quiet --check orientation
 
+expect_pass "orientation-drift skips without config" \
+    "$VALIDATOR" --project "$REPO" --quiet --check orientation-drift
+
+ORIENTATION_OK="$TMP_ROOT/orientation-ok"
+init_orientation_drift_repo "$ORIENTATION_OK" "clean"
+expect_pass "orientation-drift accepts current docs after completed roadmap phase" \
+    "$VALIDATOR" --project "$ORIENTATION_OK" --quiet --check orientation-drift
+
+ORIENTATION_DRIFT="$TMP_ROOT/orientation-drift"
+init_orientation_drift_repo "$ORIENTATION_DRIFT" "drift"
+expect_fail "orientation-drift rejects docs that call a completed phase next" \
+    "$VALIDATOR" --project "$ORIENTATION_DRIFT" --quiet --check orientation-drift
+
 MISSING_HANDOFF="$TMP_ROOT/missing-handoff"
 init_malformed_repo "$MISSING_HANDOFF" handoff
 expect_fail "env + clean malformed repo without HANDOFF still fails" \
@@ -159,6 +394,69 @@ MISSING_HISTORY="$TMP_ROOT/missing-history"
 init_malformed_repo "$MISSING_HISTORY" history
 expect_fail "env + clean malformed repo without HISTORY still fails" \
     env DOCKIT_ALLOW_READ_ONLY_SKIP=1 "$VALIDATOR" --project "$MISSING_HISTORY" --quiet --check history-entry
+
+HISTORY_REPO="$TMP_ROOT/history"
+init_repo "$HISTORY_REPO"
+
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+YYYY-MM-DD - Template - Example line that must not count.
+\`\`\`
+2025-01-15 - Template - Concrete fenced example that must not count.
+\`\`\`
+$TODAY - Smoke - No-dash entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_pass "history default any accepts no-dash and skips template examples" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
+
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+- $TODAY - Smoke - Dash entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_pass "history default any accepts dash" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
+
+cat >"$HISTORY_REPO/.dockit-config.yml" <<'EOF'
+history_format: dash
+EOF
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+$TODAY - Smoke - No-dash entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_fail "history strict dash rejects no-dash" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
+
+cat >"$HISTORY_REPO/.dockit-config.yml" <<'EOF'
+history_format: no-dash
+EOF
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+- $TODAY - Smoke - Dash entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_fail "history strict no-dash rejects dash" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
+
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+$TODAY - Smoke - No-dash entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_pass "history strict no-dash accepts no-dash" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
+
+rm -f "$HISTORY_REPO/.dockit-config.yml"
+cat >"$HISTORY_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+- $TODAY - Smoke - Current entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+- 2999-12-31 - Smoke - Future entry below current entry. - Files: [docs/llm/HISTORY.md] - Version impact: no
+EOF
+expect_fail "history newest-first rejects later date below first entry" \
+    "$VALIDATOR" --project "$HISTORY_REPO" --quiet --check history-entry
 
 expect_pass "trace-protocol skips without .dockit-config.yml" \
     "$VALIDATOR" --project "$REPO" --quiet --check trace-protocol
@@ -203,6 +501,14 @@ EOF
 expect_pass "trace-protocol valid anchor and HISTORY footer pass" \
     "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
 
+cat >"$TRACE_REPO/docs/llm/HISTORY.md" <<EOF
+# History
+
+2000-01-02 - Smoke - Audited \`$TRACE_HASH\`. - Files: [scripts/foo.sh] - Version impact: no - Trace: role=auditor; commits=$TRACE_HASH; state=local-main-no-origin; validation=smoke-pass; next=operator
+EOF
+expect_pass "trace-protocol accepts no-dash HISTORY footer" \
+    "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
+
 TRACE_TIME_MINUTES=$(git -C "$TRACE_REPO" show -s --format=%cd --date=format:'%Y-%m-%d %H:%M UTC' HEAD)
 cat >"$TRACE_REPO/docs/llm/HANDOFF.md" <<EOF
 # Handoff
@@ -223,6 +529,44 @@ EOF
 
 expect_pass "trace-protocol accepts commit time without seconds" \
     "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
+
+cat >"$TRACE_REPO/.dockit-config.yml" <<'EOF'
+adoption_mode: full
+
+trace_protocol:
+  enabled: true
+  since: 2000-01-01
+  reject_current_anchor_label: true
+EOF
+
+expect_fail "trace-protocol can reject current-labelled anchors" \
+    "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
+
+cat >"$TRACE_REPO/docs/llm/HANDOFF.md" <<EOF
+# Handoff
+
+## Trace Anchor
+
+- Role: auditor
+- Subject: \`$TRACE_HASH\` $TRACE_SUBJECT
+- Commit time: $TRACE_TIME
+- State verified: local main, no origin remote in smoke repo
+- Validation: smoke=pass
+- Next gate: operator
+
+## Open work -- next concrete step
+
+Touch \`scripts/foo.sh\`.
+EOF
+
+expect_pass "trace-protocol accepts neutral Subject anchor label" \
+    "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
+
+TRACE_STATUS_REPO="$TMP_ROOT/trace-status"
+init_repo "$TRACE_STATUS_REPO"
+TRACE_STATUS_HASH=$(git -C "$TRACE_STATUS_REPO" rev-parse --short=7 HEAD)
+expect_pass "trace-status emits current HEAD and clean repo state" \
+    sh -c "'$TRACE_STATUS' --project '$TRACE_STATUS_REPO' --role executor --subject smoke --validation smoke-pass --next operator >'$OUT' && grep -q 'HEAD=$TRACE_STATUS_HASH' '$OUT' && grep -q 'Repo state: .*clean' '$OUT'"
 
 cat >"$TRACE_REPO/docs/llm/HISTORY.md" <<EOF
 # History
@@ -294,6 +638,229 @@ trace_protocol:
 EOF
 expect_fail "trace-protocol enabled requires since date" \
     "$VALIDATOR" --project "$TRACE_REPO" --quiet --check trace-protocol
+
+VERSION_REPO="$TMP_ROOT/version"
+init_version_repo "$VERSION_REPO"
+
+expect_pass "version-sync accepts matching json/yaml/package-lock markers" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+sed 's/"version": "1.2.3"/"version": "9.9.9"/' "$VERSION_REPO/package.json" >"$VERSION_REPO/package.json.tmp"
+mv "$VERSION_REPO/package.json.tmp" "$VERSION_REPO/package.json"
+expect_fail "version-sync detects json-version drift" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+sed 's/version: "1.2.3"/version: "9.9.9"/' "$VERSION_REPO/openapi.yml" >"$VERSION_REPO/openapi.yml.tmp"
+mv "$VERSION_REPO/openapi.yml.tmp" "$VERSION_REPO/openapi.yml"
+expect_fail "version-sync detects yaml-info-version drift" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+awk '
+    /"version": "1.2.3"/ && !done { sub(/"1.2.3"/, "\"9.9.9\""); done = 1 }
+    { print }
+' "$VERSION_REPO/package-lock.json" >"$VERSION_REPO/package-lock.json.tmp"
+mv "$VERSION_REPO/package-lock.json.tmp" "$VERSION_REPO/package-lock.json"
+expect_fail "version-sync detects package-lock top-level drift" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+awk '
+    /"version": "1.2.3"/ { count += 1 }
+    count == 2 && /"version": "1.2.3"/ { sub(/"1.2.3"/, "\"9.9.9\"") }
+    { print }
+' "$VERSION_REPO/package-lock.json" >"$VERSION_REPO/package-lock.json.tmp"
+mv "$VERSION_REPO/package-lock.json.tmp" "$VERSION_REPO/package-lock.json"
+expect_fail "version-sync detects package-lock root package drift" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+cp "$VERSION_REPO/docs/version-sync-manifest.yml" "$VERSION_REPO/docs/version-sync-manifest.yml.good"
+sed 's/json-version/unknown-marker/' "$VERSION_REPO/docs/version-sync-manifest.yml.good" >"$VERSION_REPO/docs/version-sync-manifest.yml"
+expect_fail "version-sync rejects unknown marker type" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+mv "$VERSION_REPO/docs/version-sync-manifest.yml.good" "$VERSION_REPO/docs/version-sync-manifest.yml"
+
+write_version_files "$VERSION_REPO" "1.2.3"
+expect_pass "bump-version updates json/yaml/package-lock markers" \
+    sh -c "cd '$VERSION_REPO' && scripts/bump-version.sh 2.0.0"
+
+if grep -q '"version": "2.0.0"' "$VERSION_REPO/package.json" \
+    && grep -q 'version: 2.0.0' "$VERSION_REPO/openapi.yml" \
+    && [ "$(grep -c '"version": "2.0.0"' "$VERSION_REPO/package-lock.json")" -ge 2 ]; then
+    note_pass "bump-version wrote package-lock top-level and root package versions"
+else
+    {
+        echo "package.json/openapi.yml/package-lock.json did not all reach 2.0.0"
+        sed -n '1,80p' "$VERSION_REPO/package-lock.json"
+    } >"$OUT"
+    note_fail "bump-version wrote package-lock top-level and root package versions"
+fi
+
+if [ ! -x "$SYNC_TOOL" ]; then
+    note_pass "dockit-sync missing-section smoke skipped when sync tool is absent"
+else
+    SYNC_FOOTER_REPO="$TMP_ROOT/sync-footer"
+    init_sync_section_repo "$SYNC_FOOTER_REPO" "with-footer"
+    if "$SYNC_TOOL" --init-state --project "$SYNC_FOOTER_REPO" >"$OUT" 2>&1 \
+        && "$SYNC_TOOL" --apply --project "$SYNC_FOOTER_REPO" >"$OUT" 2>&1 \
+        && awk '
+            /<!-- DOCKIT-TEMPLATE:START trace-protocol -->/ { trace = NR }
+            /<!-- DOCKIT-TEMPLATE:START footer -->/ { footer = NR }
+            END { exit !(trace > 0 && footer > 0 && trace < footer) }
+        ' "$SYNC_FOOTER_REPO/LLM_START_HERE.md" \
+        && ! grep -q 'CONFLICT\|ERROR' "$OUT"; then
+        note_pass "dockit-sync inserts missing full-adopter sections before footer"
+    else
+        {
+            echo "dockit-sync did not insert missing section before footer"
+            [ -f "$SYNC_FOOTER_REPO/LLM_START_HERE.md" ] && sed -n '1,220p' "$SYNC_FOOTER_REPO/LLM_START_HERE.md"
+            [ -f "$OUT" ] && sed -n '1,160p' "$OUT"
+        } >"$OUT.tmp"
+        mv "$OUT.tmp" "$OUT"
+        note_fail "dockit-sync inserts missing full-adopter sections before footer"
+    fi
+
+    SYNC_APPEND_REPO="$TMP_ROOT/sync-append"
+    init_sync_section_repo "$SYNC_APPEND_REPO" "without-footer"
+    if "$SYNC_TOOL" --init-state --project "$SYNC_APPEND_REPO" >"$OUT" 2>&1 \
+        && "$SYNC_TOOL" --apply --project "$SYNC_APPEND_REPO" >"$OUT" 2>&1 \
+        && grep -q '<!-- DOCKIT-TEMPLATE:START trace-protocol -->' "$SYNC_APPEND_REPO/LLM_START_HERE.md" \
+        && grep -q '<!-- DOCKIT-TEMPLATE:START footer -->' "$SYNC_APPEND_REPO/LLM_START_HERE.md" \
+        && ! grep -q 'CONFLICT\|ERROR' "$OUT"; then
+        note_pass "dockit-sync appends missing full-adopter sections without footer"
+    else
+        {
+            echo "dockit-sync did not append missing sections without footer"
+            [ -f "$SYNC_APPEND_REPO/LLM_START_HERE.md" ] && sed -n '1,220p' "$SYNC_APPEND_REPO/LLM_START_HERE.md"
+            [ -f "$OUT" ] && sed -n '1,160p' "$OUT"
+        } >"$OUT.tmp"
+        mv "$OUT.tmp" "$OUT"
+        note_fail "dockit-sync appends missing full-adopter sections without footer"
+    fi
+
+    SYNC_VERSIONED_REPO="$TMP_ROOT/sync-versioned-doc"
+    init_sync_versioned_doc_repo "$SYNC_VERSIONED_REPO"
+    if "$SYNC_TOOL" --init-state --project "$SYNC_VERSIONED_REPO" >"$OUT" 2>&1 \
+        && "$SYNC_TOOL" --apply --project "$SYNC_VERSIONED_REPO" >"$OUT" 2>&1 \
+        && grep -q '<!-- doc-version: 0.6.1 -->' "$SYNC_VERSIONED_REPO/docs/integrations/CODEX.md" \
+        && sh -c "cd '$SYNC_VERSIONED_REPO' && scripts/check-version-sync.sh" >"$OUT" 2>&1; then
+        note_pass "dockit-sync normalizes copied doc-version markers to project version"
+    else
+        {
+            echo "dockit-sync did not normalize copied doc-version markers"
+            [ -f "$SYNC_VERSIONED_REPO/docs/integrations/CODEX.md" ] && sed -n '1,40p' "$SYNC_VERSIONED_REPO/docs/integrations/CODEX.md"
+            [ -f "$SYNC_VERSIONED_REPO/docs/version-sync-manifest.yml" ] && sed -n '1,80p' "$SYNC_VERSIONED_REPO/docs/version-sync-manifest.yml"
+            [ -f "$OUT" ] && sed -n '1,160p' "$OUT"
+        } >"$OUT.tmp"
+        mv "$OUT.tmp" "$OUT"
+        note_fail "dockit-sync normalizes copied doc-version markers to project version"
+    fi
+fi
+
+if [ ! -x "$CODEX_INSTALLER" ]; then
+    note_pass "codex hook installer smoke skipped when installer is absent"
+else
+    CODEX_CONFIG="$TMP_ROOT/codex-config.toml"
+    cat >"$CODEX_CONFIG" <<'EOF'
+personality = "pragmatic"
+
+# --- LLM-DocKit DF-033 / D-007: SessionStart enforcement (added 2026-05-03) ---
+# Old unmarked managed block with the wrong Claude-Code JSON mode.
+
+[features]
+hooks = true
+
+[[hooks.SessionStart]]
+
+[[hooks.SessionStart.hooks]]
+type = "command"
+command = "sh -lc 'root=$(git rev-parse --show-toplevel 2>/dev/null || pwd); script=/tmp/dockit-bootstrap-context.sh; if [ -x \"$script\" ]; then \"$script\" --json --project \"$root\"; fi'"
+timeout = 5
+
+[hooks.state]
+
+[hooks.state."/tmp/codex-config.toml:session_start:0:0"]
+enabled = true
+trusted_hash = "sha256:old"
+EOF
+
+    if "$CODEX_INSTALLER" --config "$CODEX_CONFIG" --script "$PROJECT_ROOT/scripts/dockit-bootstrap-context.sh" >"$OUT" 2>&1 \
+        && grep -q -- '--human' "$CODEX_CONFIG" \
+        && ! grep -q -- '--json' "$CODEX_CONFIG" \
+        && grep -q 'LLM-DocKit Codex SessionStart hook: BEGIN' "$CODEX_CONFIG"; then
+        note_pass "codex hook installer replaces old json hook with human mode"
+    else
+        {
+            echo "installer did not replace old json hook with managed human hook"
+            sed -n '1,180p' "$CODEX_CONFIG"
+            [ -f "$OUT" ] && sed -n '1,120p' "$OUT"
+        } >"$OUT.tmp"
+        mv "$OUT.tmp" "$OUT"
+        note_fail "codex hook installer replaces old json hook with human mode"
+    fi
+
+    CODEX_CONFIG_BEFORE="$TMP_ROOT/codex-config-before-second-install.toml"
+    cp "$CODEX_CONFIG" "$CODEX_CONFIG_BEFORE"
+    BEFORE_COUNT=$(grep -c 'dockit-bootstrap-context.sh' "$CODEX_CONFIG" || true)
+    if "$CODEX_INSTALLER" --config "$CODEX_CONFIG" --script "$PROJECT_ROOT/scripts/dockit-bootstrap-context.sh" >"$OUT" 2>&1; then
+        AFTER_COUNT=$(grep -c 'dockit-bootstrap-context.sh' "$CODEX_CONFIG" || true)
+        if [ "$BEFORE_COUNT" = "$AFTER_COUNT" ] && [ "$AFTER_COUNT" -eq 1 ] \
+            && cmp -s "$CODEX_CONFIG_BEFORE" "$CODEX_CONFIG"; then
+            note_pass "codex hook installer is idempotent"
+        else
+            {
+                echo "installer changed config on second run"
+                echo "before=$BEFORE_COUNT after=$AFTER_COUNT"
+                diff -u "$CODEX_CONFIG_BEFORE" "$CODEX_CONFIG" || true
+                sed -n '1,220p' "$CODEX_CONFIG"
+            } >"$OUT"
+            note_fail "codex hook installer is idempotent"
+        fi
+    else
+        note_fail "codex hook installer is idempotent"
+    fi
+fi
+
+if [ ! -x "$PROJECT_ROOT/scripts/dockit-init-project.sh" ]; then
+    note_pass "dockit-init scaffold smoke skipped when init script is absent"
+else
+    INIT_SOURCE="$TMP_ROOT/init-source"
+    mkdir -p "$INIT_SOURCE"
+    git -C "$PROJECT_ROOT" ls-files | while IFS= read -r _file; do
+        mkdir -p "$INIT_SOURCE/$(dirname "$_file")"
+        cp "$PROJECT_ROOT/$_file" "$INIT_SOURCE/$_file"
+    done
+    git -C "$INIT_SOURCE" init -q
+    git -C "$INIT_SOURCE" config user.email smoke@example.invalid
+    git -C "$INIT_SOURCE" config user.name Smoke
+    git -C "$INIT_SOURCE" add .
+    git -C "$INIT_SOURCE" commit -qm "snapshot current working tree"
+
+    SCAFFOLD_PARENT="$TMP_ROOT/init"
+    mkdir -p "$SCAFFOLD_PARENT"
+    SCAFFOLD_REPO="$SCAFFOLD_PARENT/residue-smoke"
+    if "$INIT_SOURCE/scripts/dockit-init-project.sh" residue-smoke --target-dir "$SCAFFOLD_REPO" --source "$INIT_SOURCE" >"$OUT" 2>&1 \
+        && [ ! -f "$SCAFFOLD_REPO/docs/ARCHITECTURE.md" ] \
+        && [ ! -f "$SCAFFOLD_REPO/docs/ROADMAP.md" ] \
+        && [ -f "$SCAFFOLD_REPO/docs/ARCHITECTURE.md.example" ] \
+        && grep -q 'docs/ARCHITECTURE.md.example' "$SCAFFOLD_REPO/docs/version-sync-manifest.yml" \
+        && ! grep -Eq 'path: docs/ARCHITECTURE\.md[[:space:]]+marker: html-comment' "$SCAFFOLD_REPO/docs/version-sync-manifest.yml" \
+        && "$SCAFFOLD_REPO/scripts/dockit-validate-session.sh" --project "$SCAFFOLD_REPO" --quiet --check orientation --check template-residue --check version-sync >"$OUT" 2>&1; then
+        note_pass "dockit-init demotes ARCHITECTURE.md and scaffold passes residue checks"
+    else
+        {
+            echo "scaffold did not demote architecture cleanly or failed validator"
+            [ -d "$SCAFFOLD_REPO" ] && find "$SCAFFOLD_REPO/docs" -maxdepth 2 -type f | sort
+            [ -f "$SCAFFOLD_REPO/docs/version-sync-manifest.yml" ] && sed -n '1,80p' "$SCAFFOLD_REPO/docs/version-sync-manifest.yml"
+            [ -f "$OUT" ] && sed -n '1,120p' "$OUT"
+        } >"$OUT.tmp"
+        mv "$OUT.tmp" "$OUT"
+        note_fail "dockit-init demotes ARCHITECTURE.md and scaffold passes residue checks"
+    fi
+fi
 
 printf '\nValidator smoke: %d passed, %d failed\n' "$pass_count" "$fail_count"
 

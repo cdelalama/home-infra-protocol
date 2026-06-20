@@ -1,7 +1,28 @@
-<!-- doc-version: 0.6.1 -->
+<!-- doc-version: 0.6.2 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
+
+## [0.6.2] - 2026-06-20
+
+### Added
+
+- `docs/integrations/CODEX.md` documents the LLM-DocKit Codex CLI
+  SessionStart hook for this adopter.
+- `scripts/dockit-install-codex-hook.sh` and `scripts/dockit-trace-status.sh`
+  are now available from the synced DocKit substrate.
+
+### Changed
+
+- Synced LLM-DocKit tooling to template v4.12.1, including validator,
+  version-sync, smoke-test, bootstrap, and manifest updates.
+- Kept the home-infra-protocol contract unchanged: no SPEC, schema,
+  status-snapshot, `sync_jobs[]`, or `telemetry_jobs[]` semantics changed.
+
+### Fixed
+
+- Adopted the upstream DocKit sync fix that normalizes copied template
+  `doc-version` markers to the downstream project version before validation.
 
 ## [0.6.1] - 2026-06-19
 

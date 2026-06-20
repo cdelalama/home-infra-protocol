@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.1 -->
+<!-- doc-version: 0.6.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -7,7 +7,7 @@ This file is the current operational snapshot. Durable decisions live in
 ## Open work — next concrete step
 
 The **status-snapshot + sync/telemetry jobs contract** shipped in protocol
-0.6.0 on 2026-06-18. Patch 0.6.1 only closes the LLM-DocKit Trace guidance
+0.6.0 on 2026-06-18. Patch 0.6.2 only closes the LLM-DocKit v4.12.1 tooling
 sync; it does **not** change protocol schemas or contract semantics.
 
 Why: `msgvault-lab`, `forumvault-lab`, `plaud-mirror`, future Telegram
@@ -74,14 +74,19 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-06-19 - GPT-5 Codex (DocKit Trace sync, 0.6.1)
-- Session Focus: Closed **protocol 0.6.1** as a DocKit/Trace-only patch:
+- Last Updated: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2)
+- Session Focus: Closed **protocol 0.6.2** as a DocKit-only tooling patch:
+  adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
+  integration guide, Codex hook installer, and trace-status helper. No schema,
+  SPEC, status-snapshot, `sync_jobs[]`, or `telemetry_jobs[]` semantics changed.
+  The next valuable work remains adopter execution in `msgvault-lab`: Phase C1
+  as a `telemetry_jobs[]` shadow MCP smoke producer.
+
+- Previous: 2026-06-19 - GPT-5 Codex (DocKit Trace sync, 0.6.1) - Closed **protocol 0.6.1** as a DocKit/Trace-only patch:
   Trace `Sent` headers now require seconds, and agents are told to re-check
   `git status`, `git log -1`, and the current clock before trusting older
   Trace repo-state lines. No schema, SPEC, status-snapshot, `sync_jobs[]`, or
-  `telemetry_jobs[]` semantics changed. The next valuable work remains
-  adopter execution in `msgvault-lab`: Phase C1 as a
-  `telemetry_jobs[]` shadow MCP smoke producer.
+  `telemetry_jobs[]` semantics changed.
 
 - Previous: 2026-06-18 - GPT-5 Codex (status/sync contract, 0.6.0) - Shipped **protocol 0.6.0**: DF-010, status snapshot schema,
   status snapshot proposal, sync/telemetry job proposal, additive

@@ -62,7 +62,7 @@ while [ $# -gt 0 ]; do
         --help|-h)
             echo "Usage: $0 [--human|--json] [--quiet] [--check NAME]... [--project PATH]"
             echo ""
-            echo "Checks: handoff-date, history-entry, decisions-referenced, version-sync, external-context, external-triggers, orientation, template-residue, trace-protocol"
+            echo "Checks: handoff-date, history-entry, decisions-referenced, version-sync, external-context, external-triggers, orientation, orientation-drift, template-residue, trace-protocol"
             echo ""
             echo "Exit codes: 0=pass, 1=fail, 2=script error"
             exit 0
@@ -138,10 +138,12 @@ should_run() {
     if [ -z "$SELECTED_CHECKS" ]; then
         return 0  # no filter = run all
     fi
-    case "$SELECTED_CHECKS" in
-        *"$_check_name"*) return 0 ;;
-        *) return 1 ;;
-    esac
+    for _selected_check in $SELECTED_CHECKS; do
+        if [ "$_selected_check" = "$_check_name" ]; then
+            return 0
+        fi
+    done
+    return 1
 }
 
 is_zero_diff_read_only_session() {
@@ -149,6 +151,66 @@ is_zero_diff_read_only_session() {
     (cd "$PROJECT_ROOT" \
         && git diff HEAD --quiet 2>/dev/null \
         && git diff --cached --quiet 2>/dev/null)
+}
+
+is_clean_tracked_tree() {
+    (cd "$PROJECT_ROOT" \
+        && git diff HEAD --quiet 2>/dev/null \
+        && git diff --cached --quiet 2>/dev/null)
+}
+
+validation_reference_date() {
+    if is_clean_tracked_tree; then
+        _head_date=$(cd "$PROJECT_ROOT" && git show -s --format=%cd --date=format:%Y-%m-%d HEAD 2>/dev/null || true)
+        if [ -n "$_head_date" ]; then
+            echo "$_head_date|last commit date"
+            return
+        fi
+    fi
+    echo "$TODAY|today"
+}
+
+# Minimal top-level .dockit-config.yml reader. This intentionally handles only
+# simple scalar keys at indentation 0; nested feature parsers stay separate.
+_read_top_level_value() {
+    _key="$1"
+    [ -f "$CONFIG_FILE" ] || return
+    while IFS= read -r _line || [ -n "$_line" ]; do
+        case "$_line" in ""|\#*) continue ;; esac
+        _s=$(echo "$_line" | sed 's/^ *//')
+        _i=$(( ${#_line} - ${#_s} ))
+        [ "$_i" -eq 0 ] || continue
+        case "$_s" in
+            "$_key":*)
+                echo "$_s" | sed "s/^$_key: *//; s/^\"//; s/\"$//; s/^'//; s/'$//"
+                return
+                ;;
+        esac
+    done < "$CONFIG_FILE"
+}
+
+_read_history_format() {
+    _format=$(_read_top_level_value history_format || true)
+    if [ -n "$_format" ]; then
+        echo "$_format"
+    else
+        echo "any"
+    fi
+}
+
+_history_dated_entries() {
+    awk '
+        /^```/ { in_fence = !in_fence; next }
+        in_fence { next }
+        /^- [0-9]{4}-[0-9]{2}-[0-9]{2} - / {
+            print substr($0, 3, 10) "|dash|" NR
+            next
+        }
+        /^[0-9]{4}-[0-9]{2}-[0-9]{2} - / {
+            print substr($0, 1, 10) "|no-dash|" NR
+            next
+        }
+    ' "$HISTORY"
 }
 
 # ── Check functions ─────────────────────────────────────────────────────────
@@ -166,15 +228,19 @@ check_handoff_date() {
         return
     fi
 
+    _reference=$(validation_reference_date)
+    _expected_date=$(printf '%s\n' "$_reference" | cut -d'|' -f1)
+    _expected_label=$(printf '%s\n' "$_reference" | cut -d'|' -f2)
+
     # Look for "Last Updated: YYYY-MM-DD" pattern
     handoff_date=$(grep -E '^\s*-?\s*Last Updated:' "$HANDOFF" 2>/dev/null | head -1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1 || true)
 
     if [ -z "$handoff_date" ]; then
         add_result "handoff-date" "FAIL" "No 'Last Updated' date found in HANDOFF.md"
-    elif [ "$handoff_date" != "$TODAY" ]; then
-        add_result "handoff-date" "FAIL" "Last Updated is $handoff_date, expected $TODAY"
+    elif [ "$handoff_date" != "$_expected_date" ]; then
+        add_result "handoff-date" "FAIL" "Last Updated is $handoff_date, expected $_expected_date ($_expected_label)"
     else
-        add_result "handoff-date" "PASS" "HANDOFF.md has today's date ($TODAY)"
+        add_result "handoff-date" "PASS" "HANDOFF.md has expected date ($_expected_date, $_expected_label)"
     fi
 }
 
@@ -191,11 +257,68 @@ check_history_entry() {
         return
     fi
 
-    # Look for today's date anywhere in the history entries (not in header/format lines)
-    if grep -q "^- $TODAY" "$HISTORY" 2>/dev/null; then
-        add_result "history-entry" "PASS" "HISTORY.md has entry for $TODAY"
+    _history_format=$(_read_history_format)
+    case "$_history_format" in
+        any|dash|no-dash) ;;
+        *)
+            add_result "history-entry" "FAIL" "Invalid history_format '$_history_format' in .dockit-config.yml (expected any, dash, or no-dash)"
+            return
+            ;;
+    esac
+
+    _entries=$(_history_dated_entries)
+    if [ -z "$_entries" ]; then
+        add_result "history-entry" "FAIL" "No dated HISTORY.md entries found"
+        return
+    fi
+
+    _first=$(printf '%s\n' "$_entries" | head -1)
+    _first_date=$(printf '%s\n' "$_first" | cut -d'|' -f1)
+    _first_format=$(printf '%s\n' "$_first" | cut -d'|' -f2)
+
+    _reference=$(validation_reference_date)
+    _expected_date=$(printf '%s\n' "$_reference" | cut -d'|' -f1)
+    _expected_label=$(printf '%s\n' "$_reference" | cut -d'|' -f2)
+
+    if [ "$_first_date" != "$_expected_date" ]; then
+        add_result "history-entry" "FAIL" "First dated HISTORY.md entry is $_first_date, expected $_expected_date ($_expected_label)"
+        return
+    fi
+
+    _format_error=""
+    _order_error=""
+    _prev_date=""
+    _old_ifs="$IFS"
+    IFS='
+'
+    for _entry in $_entries; do
+        _date=$(printf '%s\n' "$_entry" | cut -d'|' -f1)
+        _format=$(printf '%s\n' "$_entry" | cut -d'|' -f2)
+        _line=$(printf '%s\n' "$_entry" | cut -d'|' -f3)
+
+        if [ "$_history_format" = "dash" ] && [ "$_format" != "dash" ]; then
+            _format_error="line $_line uses no-dash format but history_format=dash"
+            break
+        fi
+        if [ "$_history_format" = "no-dash" ] && [ "$_format" != "no-dash" ]; then
+            _format_error="line $_line uses dash format but history_format=no-dash"
+            break
+        fi
+
+        if [ -n "$_prev_date" ] && awk -v prev="$_prev_date" -v curr="$_date" 'BEGIN { exit (curr > prev) ? 0 : 1 }'; then
+            _order_error="line $_line has date $_date after newer entry $_prev_date; HISTORY.md must be newest-first"
+            break
+        fi
+        _prev_date="$_date"
+    done
+    IFS="$_old_ifs"
+
+    if [ -n "$_format_error" ]; then
+        add_result "history-entry" "FAIL" "$_format_error"
+    elif [ -n "$_order_error" ]; then
+        add_result "history-entry" "FAIL" "$_order_error"
     else
-        add_result "history-entry" "FAIL" "No HISTORY.md entry for $TODAY"
+        add_result "history-entry" "PASS" "HISTORY.md first dated entry is $_expected_date ($_expected_label); format $_first_format accepted by history_format=$_history_format; dated entries are newest-first"
     fi
 }
 
@@ -351,6 +474,14 @@ _read_trace_value() {
 
 _trace_enabled_for_validation() {
     _enabled=$(_read_trace_value enabled)
+    case "$_enabled" in
+        true|yes|1) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+_trace_reject_current_anchor_label() {
+    _enabled=$(_read_trace_value reject_current_anchor_label)
     case "$_enabled" in
         true|yes|1) return 0 ;;
         *) return 1 ;;
@@ -626,6 +757,155 @@ check_orientation() {
     fi
 }
 
+# ── Check: orientation-drift (DF-047) ───────────────────────────────────────
+# Optional semantic guard for projects with a phase-based roadmap. It catches
+# the recurrent MED failure where entry docs still say "next phase X" after
+# ROADMAP marks Phase X complete. Disabled unless .dockit-config.yml opts in.
+
+_read_orientation_drift_value() {
+    _key="$1"
+    [ -f "$CONFIG_FILE" ] || return
+    _in=false
+    while IFS= read -r _line || [ -n "$_line" ]; do
+        case "$_line" in ""|\#*) continue ;; esac
+        _s=$(echo "$_line" | sed 's/^ *//')
+        _i=$(( ${#_line} - ${#_s} ))
+        if [ "$_i" -eq 0 ]; then
+            [ "$_s" = "orientation_drift:" ] && _in=true || _in=false
+            continue
+        fi
+        if [ "$_in" = true ] && [ "$_i" -eq 2 ]; then
+            case "$_s" in
+                "$_key":*)
+                    echo "$_s" | sed "s/^$_key: *//; s/^\"//; s/\"$//; s/^'//; s/'$//"
+                    return
+                    ;;
+            esac
+        fi
+    done < "$CONFIG_FILE"
+}
+
+_read_orientation_drift_docs() {
+    [ -f "$CONFIG_FILE" ] || return
+    _in=false
+    _in_docs=false
+    while IFS= read -r _line || [ -n "$_line" ]; do
+        case "$_line" in ""|\#*) continue ;; esac
+        _s=$(echo "$_line" | sed 's/^ *//')
+        _i=$(( ${#_line} - ${#_s} ))
+        if [ "$_i" -eq 0 ]; then
+            [ "$_s" = "orientation_drift:" ] && _in=true || _in=false
+            _in_docs=false
+            continue
+        fi
+        [ "$_in" = true ] || continue
+        if [ "$_i" -eq 2 ]; then
+            [ "$_s" = "docs:" ] && _in_docs=true || _in_docs=false
+            continue
+        fi
+        if [ "$_in_docs" = true ] && [ "$_i" -eq 4 ]; then
+            case "$_s" in
+                -*)
+                    echo "$_s" | sed 's/^- *//; s/^"//; s/"$//; s/^'\''//; s/'\''$//'
+                    ;;
+            esac
+        fi
+    done < "$CONFIG_FILE"
+}
+
+_orientation_drift_enabled() {
+    _enabled=$(_read_orientation_drift_value enabled)
+    case "$_enabled" in
+        true|yes|1) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+_escape_phase_regex() {
+    printf '%s' "$1" | sed 's/[][\\.^$*+?{}|()]/\\&/g'
+}
+
+check_orientation_drift() {
+    if ! should_run "orientation-drift"; then return; fi
+
+    if [ ! -f "$CONFIG_FILE" ]; then
+        add_result "orientation-drift" "PASS" "Skipped (no .dockit-config.yml; enable with orientation_drift.enabled: true)"
+        return
+    fi
+
+    if ! _orientation_drift_enabled; then
+        add_result "orientation-drift" "PASS" "Skipped (orientation_drift.enabled is not true)"
+        return
+    fi
+
+    _roadmap=$(_read_orientation_drift_value roadmap)
+    [ -n "$_roadmap" ] || _roadmap="docs/ROADMAP.md"
+    _roadmap_path="$PROJECT_ROOT/$_roadmap"
+    if [ ! -f "$_roadmap_path" ]; then
+        add_result "orientation-drift" "FAIL" "orientation_drift roadmap not found: $_roadmap"
+        return
+    fi
+
+    _docs=$(_read_orientation_drift_docs | tr '\n' ' ')
+    _docs_configured=true
+    if [ -z "$_docs" ]; then
+        _docs_configured=false
+        _docs="LLM_START_HERE.md README.md docs/PROJECT_CONTEXT.md docs/ARCHITECTURE.md docs/llm/HANDOFF.md"
+    fi
+
+    _completed=$(awk '
+        /^##[[:space:]]+Phase[[:space:]]+/ {
+            current = $0
+            sub(/^##[[:space:]]+Phase[[:space:]]+/, "", current)
+            sub(/[[:space:]].*$/, "", current)
+            next
+        }
+        /^Status:[[:space:]]*complete([[:space:]]|$)/ {
+            if (current != "") print current
+            current = ""
+            next
+        }
+        /^Status:/ { current = "" }
+    ' "$_roadmap_path")
+
+    if [ -z "$_completed" ]; then
+        add_result "orientation-drift" "FAIL" "No completed phases parsed from $_roadmap (expected '## Phase N' followed by 'Status: complete')"
+        return
+    fi
+
+    _issues=""
+    _checked=0
+    _missing=""
+    for _doc in $_docs; do
+        _doc_path="$PROJECT_ROOT/$_doc"
+        if [ ! -f "$_doc_path" ]; then
+            if [ "$_docs_configured" = true ]; then
+                _missing="$_missing $_doc"
+            fi
+            continue
+        fi
+        _checked=$((_checked + 1))
+        for _phase in $_completed; do
+            _esc=$(_escape_phase_regex "$_phase")
+            _hits=$(grep -inE "next[^.]*phase ${_esc}([^0-9A-Za-z.]|$)" "$_doc_path" 2>/dev/null || true)
+            if [ -n "$_hits" ]; then
+                _issues="$_issues; $_doc claims completed Phase $_phase is next"
+            fi
+        done
+    done
+
+    if [ -n "$_missing" ]; then
+        add_result "orientation-drift" "FAIL" "orientation_drift configured doc(s) not found:$_missing"
+    elif [ "$_checked" -eq 0 ]; then
+        add_result "orientation-drift" "FAIL" "orientation_drift has no existing docs to check"
+    elif [ -n "$_issues" ]; then
+        _msg=$(echo "$_issues" | sed 's/^; //')
+        add_result "orientation-drift" "FAIL" "$_msg"
+    else
+        add_result "orientation-drift" "PASS" "No completed roadmap phase is described as next in $_checked doc(s)"
+    fi
+}
+
 # ── Check: template-residue (DF-035 option (a)) ──────────────────────────────
 # Greps canonical scaffold-shipped docs for known author-voice / template
 # placeholder patterns that survive `dockit-init-project.sh` and poison
@@ -753,8 +1033,8 @@ check_trace_protocol() {
             if ! printf '%s\n' "$_anchor" | grep -qE 'Role:[[:space:]]*(executor|auditor)'; then
                 _trace_append_error "Trace Anchor missing Role: executor|auditor"
             fi
-            if ! printf '%s\n' "$_anchor" | grep -qE '(Current target|Current audit target|Subject):'; then
-                _trace_append_error "Trace Anchor missing Current target/Subject"
+            if ! printf '%s\n' "$_anchor" | grep -qE '(Current target|Current audit target|Trace target|Subject):'; then
+                _trace_append_error "Trace Anchor missing Trace target/Subject"
             fi
             if ! printf '%s\n' "$_anchor" | grep -qE '(State verified|Repo state):'; then
                 _trace_append_error "Trace Anchor missing State verified/Repo state"
@@ -770,6 +1050,11 @@ check_trace_protocol() {
             for _hash in $_anchor_hashes; do
                 _trace_validate_commit "$_hash" "HANDOFF Trace Anchor" "$_anchor" true "$_trace_upstream"
             done
+
+            if _trace_reject_current_anchor_label \
+                && printf '%s\n' "$_anchor" | grep -qE '(Current target|Current audit target):'; then
+                _trace_append_error "trace_protocol.reject_current_anchor_label=true disallows HANDOFF Trace Anchor labels that imply currency; use Subject: or Trace target: instead"
+            fi
         fi
     fi
 
@@ -777,21 +1062,27 @@ check_trace_protocol() {
         _trace_append_error "HISTORY.md not found"
     else
         _history_entries=$(awk -v since="$_trace_since" '
-            /^- [0-9]{4}-[0-9]{2}-[0-9]{2}/ {
+            /^- [0-9]{4}-[0-9]{2}-[0-9]{2} - / {
                 d = substr($0, 3, 10)
-                if (d >= since) print
+                if (d >= since) print d "|" $0
+                next
+            }
+            /^[0-9]{4}-[0-9]{2}-[0-9]{2} - / {
+                d = substr($0, 1, 10)
+                if (d >= since) print d "|" $0
             }
         ' "$HISTORY")
 
         _old_ifs="$IFS"
         IFS='
 '
-        for _entry in $_history_entries; do
+        for _history_record in $_history_entries; do
+            _date=$(printf '%s\n' "$_history_record" | cut -d'|' -f1)
+            _entry=$(printf '%s\n' "$_history_record" | cut -d'|' -f2-)
             _entry_hashes=$(printf '%s\n' "$_entry" | _trace_hashes_from_text)
             [ -z "$_entry_hashes" ] && continue
 
             if ! printf '%s\n' "$_entry" | grep -qE 'Trace: role=(executor|auditor); commits=[^;]+; state=[^;]+; validation=[^;]+; next=.+'; then
-                _date=$(printf '%s\n' "$_entry" | cut -c3-12)
                 _trace_append_error "HISTORY entry $_date references backticked commit hash(es) but lacks inline Trace footer"
                 continue
             fi
@@ -830,6 +1121,7 @@ check_version_sync
 check_external_context
 check_external_triggers
 check_orientation
+check_orientation_drift
 check_template_residue
 check_trace_protocol
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.1 -->
+<!-- doc-version: 0.6.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -29,7 +29,8 @@ Recommended reading order:
 ### Documentation Update Rules
 - Update docs/llm/HANDOFF.md every time you make a change.
 - Append an entry to docs/llm/HISTORY.md in every session.
-- HISTORY format: YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: [yes/no + details]
+- HISTORY format defaults to `any`: either `- YYYY-MM-DD - <LLM_NAME> - ...` or `YYYY-MM-DD - <LLM_NAME> - ...` is accepted. Set top-level `history_format: dash` or `history_format: no-dash` in `.dockit-config.yml` when a project wants strict enforcement.
+- Projects with a phase-based roadmap can opt into semantic phase drift checks with `.dockit-config.yml` `orientation_drift.enabled: true`; this fails when entry docs describe a completed roadmap phase as "next".
 - Put long-form rationale in docs/llm/DECISIONS.md and link to it from HANDOFF.
 - Prefer ASCII-only in docs/llm/* to avoid Windows encoding issues.
 <!-- DOCKIT-TEMPLATE:END doc-update-rules -->
@@ -60,6 +61,7 @@ Recommended reading order:
 - Every commit that changes code/config files MUST include a version bump. The pre-commit hook enforces this.
 - For version bumps, run `scripts/bump-version.sh <new_version>`; do not edit version strings manually.
 - The bump script reads `docs/version-sync-manifest.yml` to update all tracked files atomically.
+- Supported manifest marker types are `version-file`, `changelog`, `html-comment`, `json-version`, `yaml-info-version`, and `package-lock-version`.
 - Validate sync with `scripts/check-version-sync.sh` (also available as pre-commit hook).
 - Do not bump versions without consulting docs/VERSIONING_RULES.md for impact level (patch/minor/major).
 - Do NOT batch multiple code commits without versioning. No exceptions.
@@ -165,6 +167,13 @@ Time verification:
   `.dockit-config.yml` when the project sets one.
 - If the agent cannot verify the clock, write:
   `Sent: unverified client time YYYY-MM-DD HH:MM:SS <claimed-tz>`.
+- Prefer generating the close-out scaffold immediately before sending it:
+  ```sh
+  scripts/dockit-trace-status.sh --role executor --subject "<commit/task>" \
+    --validation "<checks>" --next "<next gate>"
+  ```
+  This prints current HEAD, local/upstream state, worktree cleanliness, version,
+  and verified local/UTC time from git/date instead of relying on memory.
 
 Recommended `Resulting state` shape:
 
@@ -193,6 +202,11 @@ half is enforced by `scripts/dockit-validate-session.sh --check trace-protocol`:
 - `docs/llm/HANDOFF.md` must contain a `## Trace Anchor` section.
 - HANDOFF Trace Anchor commit times may use `YYYY-MM-DD HH:MM:SS UTC` or
   `YYYY-MM-DD HH:MM UTC`.
+- A committed HANDOFF Trace Anchor is a durable repo-side anchor, not a
+  guaranteed live HEAD pointer. Prefer neutral labels such as `Subject:` or
+  `Trace target:`. Projects can set
+  `trace_protocol.reject_current_anchor_label: true` to fail anchors labelled
+  `Current target:` or `Current audit target:`.
 - `docs/llm/HISTORY.md` entries dated on or after `trace_protocol.since` that
   reference backtick-quoted commit hashes must end with an inline footer:
   `Trace: role=executor|auditor; commits=hash1,hash2; state=...; validation=...; next=...`
