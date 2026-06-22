@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -708,6 +708,10 @@ choose one of:
 - Add a `home-infra` catalog audit/check that warns or fails when development
   entries pass their freshness window.
 
+Follow-up: DF-009 implemented the anti-rot mechanism in 0.7.0. The accepted
+shape rejects manual `last_confirmed` and uses `preview.purpose`,
+`preview.expires_at`, `project_id`, and `state_policy`.
+
 ### Implementation hints (when accepted)
 
 Files to touch:
@@ -746,7 +750,7 @@ to `name: msgvault-panel` plus `environment: development` in commit `1c2d276`.
   `home-infra/scripts/audit-catalog.py`
 - Date observed: 2026-05-25
 - Category: drift-control, validator-gap, lifecycle-hygiene
-- Status: open
+- Status: implemented (0.7.0)
 - Related: DF-006, DF-008
 
 ### Observation
@@ -767,48 +771,38 @@ profile invent incompatible tags or prose conventions.
 
 ### Protocol implication
 
-Add optional development-preview freshness metadata without changing the
-meaning of `Service.environment`.
+Home Infra Protocol 0.7.0 implements the anti-rot extension without changing
+the meaning of `Service.environment` and without requiring every project to
+keep a development runtime alive.
 
-Candidate shape:
+Accepted shape:
 
 ```yaml
+project_id: example-panel
 environment: development
-development:
-  owner: operator
-  last_confirmed: 2026-05-25
-  expires_at: 2026-06-24
-  insecure_transport: temporary-http
+preview:
+  purpose: Validate UI changes before the next production release.
+  expires_at: "2026-07-15T00:00:00Z"
+state_policy: isolated
 ```
 
-Open details for the proposal:
+Key decisions:
 
-- Whether the metadata block should be named `development`, `lifecycle`, or
-  something more general.
-- Whether `owner` is required for `environment: development`.
-- Whether `last_confirmed` or `expires_at` is required, and what date format is
-  normative.
-- Whether transport exceptions such as temporary HTTP previews belong in the
-  protocol or stay as adopter-profile policy.
-- Whether consumers only render stale state, or validators should fail stale
-  entries after a grace period.
-
-### Implementation hints (when accepted)
-
-Files to touch:
-  - `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`: move the anti-rot note from
-    follow-up text to the accepted mechanism.
-  - `schemas/services.schema.json`: add the optional metadata block if the
-    chosen shape belongs in the protocol.
-  - `SPEC.md`: document freshness semantics and which checks are warnings vs.
-    failures.
-  - `examples/home-infra/catalog/services.yml`: show a sanitized development
-    preview with freshness metadata.
-  - `docs/DOWNSTREAM_FEEDBACK.md`: update DF-009 status when a proposal or
-    implementation ships.
-
-Version bump: patch for proposal-only text; minor if the schema or SPEC gains
-new optional fields.
+- `project_id` groups multiple runtimes of the same project. It is optional for
+  production-only projects and expected when production and development
+  runtimes coexist.
+- `preview` is the metadata block. `preview.purpose` and
+  `preview.expires_at` express human intent. `expires_at` is RFC3339 UTC.
+- `last_confirmed` is rejected. Freshness comes from live probes or status
+  snapshots, not hand-maintained dates.
+- `state_policy` declares side-effect ownership:
+  `none | read_only | isolated | production_write`.
+- `production_write` in development is a strong warning and should require
+  reviewed justification.
+- Transport exceptions such as temporary HTTP previews remain adopter-profile
+  policy unless a future real adopter needs a portable field.
+- In 0.7.x these checks are warnings, not schema failures, because
+  `environment: development` was already valid in 0.5.x and 0.6.x.
 
 Cross-repo touches required: coordinate with `home-infra` so
 `scripts/audit-catalog.py` can consume the accepted metadata, then coordinate

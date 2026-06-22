@@ -50,6 +50,44 @@
             "default": "production",
             "description": "Lifecycle environment for the service record. Omitted means production. `development` marks an operator-visible private development preview; it is not production deployment evidence and consumers should treat stopped previews as dormant or informational rather than production incidents."
           },
+          "project_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$",
+            "description": "Optional stable project grouping key. A single production runtime can omit it; when production and development runtimes of the same project coexist, related service records should use the same project_id so consumers can group them."
+          },
+          "preview_of": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$",
+            "description": "Optional override for rare cases where a development preview cannot be paired with production by project_id + environment alone. Not required for the common case."
+          },
+          "preview": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Human intent for a development runtime. The schema validates the shape when present; profile validators should warn when visible development runtimes omit preview metadata.",
+            "required": ["purpose", "expires_at"],
+            "properties": {
+              "purpose": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Short human reason this development runtime exists."
+              },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "RFC3339 UTC timestamp after which the preview should be reviewed, renewed, or retired."
+              }
+            }
+          },
+          "state_policy": {
+            "type": "string",
+            "enum": ["none", "read_only", "isolated", "production_write"],
+            "description": "Declared side-effect policy for this runtime. Development runtimes should declare whether they have no effects, read-only production access, isolated development writes, or production-impacting writes."
+          },
+          "state_policy_justification": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Optional reviewed justification for risky state policies, especially development runtimes that declare production_write."
+          },
           "fallback_url": { "type": "string" },
           "host_id": { "type": "string" },
           "runtime": { "type": "string" },

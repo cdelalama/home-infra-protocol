@@ -141,22 +141,63 @@ services:
       timeout_ms: 2000
       expect_status: 200
 
+  - id: example-panel
+    name: Example Panel
+    category: tools
+    url: https://panel.example.internal/
+    interface: web
+    project_id: example-panel
+    exposure:
+      visibility: operator
+      canonical: true
+      backend_url: http://127.0.0.1:9080
+    host_id: nas
+    runtime: docker
+    image: registry.example.internal/example-panel:1.4.0
+    tags: [panel]
+    secrets_source:
+      kind: doppler
+      project: example-panel
+      config: prd
+      variables: [EXAMPLE_PANEL_TOKEN]
+    description: |
+      Sanitized production service. The matching development preview below
+      shares `project_id: example-panel`, so consumers can group both runtimes
+      without assuming every project must have a development runtime.
+    status:
+      type: http
+      url: https://panel.example.internal/api/health
+      timeout_ms: 2000
+      expect_status: 200
+
   - id: example-panel-dev
     name: Example Panel
     category: tools
     url: https://dev.example.internal/example-panel/
     interface: web
+    project_id: example-panel
     environment: development
+    preview:
+      purpose: Validate UI changes before the next production release.
+      expires_at: "2026-07-15T00:00:00Z"
+    state_policy: isolated
     exposure:
       visibility: operator
       canonical: false
     host_id: nas
     runtime: docker
+    image: registry.example.internal/example-panel:dev-preview
     tags: [panel, preview]
+    secrets_source:
+      kind: doppler
+      project: example-panel
+      config: dev
+      variables: [EXAMPLE_PANEL_TOKEN]
     description: |
-      Sanitized development preview. The `environment: development` marker
-      makes this entry visible to operators without claiming production
-      deployment evidence. A stopped preview should render as dormant or
-      informational, not as a production incident.
+      Sanitized development runtime. The `environment: development` marker
+      makes this entry visible without claiming production deployment evidence.
+      `preview` declares why it exists and when it should be renewed or
+      retired. `state_policy: isolated` says it may write only to isolated
+      development state, not production state.
     status:
       type: none

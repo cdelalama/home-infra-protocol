@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -57,16 +57,21 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-05-01)
+## Current Status (2026-06-22)
 
-Initial scaffold created from LLM-DocKit. The repository is specification-only;
-no validator CLI or runtime service exists yet.
+Protocol 0.7.0 implements the parallel-runtime and development-preview
+anti-rot contract. Development runtimes remain optional, but when they exist
+the protocol can group them with production, declare preview lifecycle, and
+make side-effect ownership auditable.
 
 ## Upcoming Milestones
 
-1. v0.1 draft: spec, schemas, examples, and core docs.
-2. v0.2 validator: local catalog and project contract validation.
-3. v0.3 reference consumer contract: guidance for portals and MCP servers.
+1. Adopt the 0.7.0 service fields in the private `home-infra` catalog and
+   auditor.
+2. Teach `infra-portal` to group parallel production/development runtimes and
+   render lifecycle/side-effect warnings.
+3. Keep project-owned sync/telemetry adoption moving through real adopters
+   such as `msgvault-lab`, host-capacity telemetry, and ForumVault.
 
 ## References
 

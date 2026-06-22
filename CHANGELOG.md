@@ -1,7 +1,41 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
+
+## [0.7.0] - 2026-06-22
+
+### Added
+
+- **DF-009 implemented - parallel environments and preview anti-rot.**
+  Development runtimes remain optional, but when they exist the protocol now
+  has a portable way to group them with production and declare lifecycle and
+  side-effect intent.
+- `docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md`: accepted proposal for
+  `project_id`, preview lifecycle, side-effect ownership, and consumer warning
+  semantics.
+- `schemas/services.schema.json`: additive optional `project_id`,
+  `preview_of`, `preview`, `state_policy`, and
+  `state_policy_justification` fields on `Service`.
+
+### Changed
+
+- `SPEC.md`: documents that the protocol regulates live runtimes, not whether
+  a project has code under active development. Production-only projects stay
+  valid and simple.
+- `SPEC.md`: defines consumer-computed signals such as
+  `parallel-environments`, `expired-preview`, `unbounded-preview`,
+  `undeclared-effects`, `production-write-preview`, and
+  `secret-overlap-risk`.
+- `docs/DEVELOPMENT_ENVIRONMENT_PROPOSAL.md`: replaces the deferred anti-rot
+  note with the 0.7.0 accepted mechanism and explicitly rejects manual
+  `last_confirmed` freshness.
+- `examples/home-infra/catalog/services.yml`: adds a sanitized production
+  service plus matching development runtime that share `project_id` and declare
+  `preview` and `state_policy`.
+- `docs/DOWNSTREAM_FEEDBACK.md`: marks DF-009 implemented in 0.7.0.
+
+### Fixed
 
 ## [0.6.2] - 2026-06-20
 

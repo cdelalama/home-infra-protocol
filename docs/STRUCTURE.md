@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # Repository Structure
 
 ```text
@@ -32,6 +32,7 @@ home-infra-protocol/
 │   ├── GOVERNANCE.md
 │   ├── SECURITY_MODEL.md
 │   ├── RECOVERY_MODEL.md
+│   ├── PARALLEL_ENVIRONMENTS_PROPOSAL.md
 │   ├── STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md
 │   ├── SYNC_JOB_CONTRACT_PROPOSAL.md
 │   ├── LLM_WORKFLOW.md

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,63 +6,58 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-The **status-snapshot + sync/telemetry jobs contract** shipped in protocol
-0.6.0 on 2026-06-18. Patch 0.6.2 only closes the LLM-DocKit v4.12.1 tooling
-sync; it does **not** change protocol schemas or contract semantics.
+The **parallel-runtimes + preview anti-rot contract** shipped in protocol 0.7.0
+on 2026-06-22. DF-009 is closed in this repo.
 
-Why: `msgvault-lab`, `forumvault-lab`, `plaud-mirror`, future Telegram
-archive work, and `home-infra` host-capacity monitoring all need the same
-pattern: a project-owned runtime loop publishes sanitized telemetry, while
-consumers such as Infra Portal and Hermes read it, derive freshness, and warn
-without authoring truth.
+Why: a project can have a production runtime and a development runtime alive at
+the same time. That is acceptable when the development runtime is an
+intentional temporary surface, but risky when it also owns production state
+through crons, backups, syncs, imports, writes, or production credentials.
 
 What shipped:
 
-- `schemas/status-snapshot.schema.json` defines the shared Telemetry Source
-  output.
-- `schemas/project-contract.schema.json` now has additive `sync_jobs[]` and
-  `telemetry_jobs[]`.
-- `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md` and
-  `docs/SYNC_JOB_CONTRACT_PROPOSAL.md` contain the full design rationale.
-- `docs/PROJECT_CONTRACTS.md` and `SPEC.md` document the normative shape.
-- `examples/project/infra.contract.yml` includes sanitized sync and telemetry
-  examples.
+- `docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md` captures the accepted design.
+- `schemas/services.schema.json` now has additive optional `project_id`,
+  `preview_of`, `preview`, `state_policy`, and
+  `state_policy_justification` fields.
+- `SPEC.md` documents that the protocol regulates live runtimes, not whether a
+  project has code under active development.
+- `examples/home-infra/catalog/services.yml` includes a sanitized production
+  service plus a matching development runtime.
+- `docs/DOWNSTREAM_FEEDBACK.md` marks DF-009 implemented in 0.7.0.
 
 Frozen model points:
 
-- Producers write `observed_at`, `condition`, `severity`, `summary`, and
-  optional shaped `checks[]`.
-- Producers do **not** write freshness. Consumers derive freshness by joining
-  the declaration's `stale_after` with the snapshot's `observed_at`.
-- Top-level producer `condition` is `ok | degraded`; consumers derive
-  `unknown` or `down` from missing, unreadable, or stale snapshots.
-- Periodic modes (`cron`, `internal-loop`) require `cadence` and
-  `stale_after`, with `stale_after > cadence`. Non-periodic modes (`webhook`,
-  `manual`) forbid `cadence`; `stale_after` is optional and means silence
-  budget when present.
-- Alertability is consumer policy. Hermes must gate alerts by intent
-  (`disabled` services and `environment: development` are not production
-  incidents) before acting on producer severity or derived freshness.
+- Development runtimes are optional. Production-only projects stay simple.
+- When production and development runtimes coexist, both should share
+  `project_id` so consumers can group them.
+- `preview.purpose` and `preview.expires_at` declare lifecycle intent.
+- No manual `last_confirmed`; freshness comes from probes/status snapshots.
+- `state_policy` declares side-effect ownership:
+  `none | read_only | isolated | production_write`.
+- `production_write` in development is a strong warning and needs reviewed
+  justification.
+- `shadow` is not a third `environment`; model it through `state_policy`
+  (usually `read_only`) and project/service prose.
 
 Next roadmap:
 
-1. **First adopter: `msgvault-lab`.** Start its Phase C1 with
-   `telemetry_jobs[]`: declare the container-side MCP smoke producer in the
-   project contract and publish/compare a status-snapshot-compatible shadow
-   snapshot without changing the existing public status contract yet.
-   Gmail archive sync and verify-cache can become `sync_jobs[]` later, once
-   each has a real source-sync status URL.
-2. **Host capacity telemetry.** Use `telemetry_jobs[]` for the dev-vm
-   disk-pressure publisher. The status URL serving path is still a deployment
-   decision in `home-infra`; do not pretend it is settled here.
-3. **Infra Portal consumer.** Teach the portal to read declared jobs plus
-   status snapshots generically, derive freshness, and render stale versus
-   severe states consistently.
-4. **Hermes alerts.** Hermes consumes the same declarations/snapshots after
-   the producer and portal paths prove the contract. It should alert only after
-   disabled/development gates, dedupe, and escalation policy.
-5. **Protocol feedback.** Do not extend the schema again until at least one
-   real adopter (`msgvault-lab` or host-capacity) exposes a concrete gap.
+1. **Private adopter: `home-infra`.** Add/adopt the 0.7.0 fields where there
+   are parallel runtimes, especially stale development previews. Extend the
+   private `home-infra` catalog auditor to warn on missing `preview`, missing
+   `state_policy`, expired previews, and obvious secret overlap.
+2. **Resolve `msgvault-panel-dev`.** In `home-infra`, either retire it or renew
+   it explicitly with `preview.purpose`, `preview.expires_at`, and
+   `state_policy`.
+3. **Infra Portal consumer.** Group production/development service cards by
+   `project_id` and render lifecycle/side-effect warnings without using health
+   severity colors for relationship state.
+4. **Hermes alerts last.** Alert only after the protocol, private catalog, and
+   portal rendering prove the contract.
+5. **Keep DF-010 adoption moving separately.** The status-snapshot +
+   sync/telemetry jobs contract remains valid: `msgvault-lab` Phase C1,
+   host-capacity telemetry, and generic Infra Portal/Hermes consumers still
+   need adopter work.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -74,12 +69,18 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2)
-- Session Focus: Closed **protocol 0.6.2** as a DocKit-only tooling patch:
+- Last Updated: 2026-06-22 - GPT-5 Codex (parallel runtimes, 0.7.0)
+- Session Focus: Shipped **protocol 0.7.0** for DF-009: development runtimes
+  remain optional, but live previews now have portable lifecycle and
+  side-effect fields (`project_id`, `preview`, `state_policy`) and consumer
+  warning semantics. Next gate is private adoption in `home-infra`, then
+  `infra-portal` grouping/warnings.
+
+- Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
   integration guide, Codex hook installer, and trace-status helper. No schema,
   SPEC, status-snapshot, `sync_jobs[]`, or `telemetry_jobs[]` semantics changed.
-  The next valuable work remains adopter execution in `msgvault-lab`: Phase C1
+  The next valuable work remained adopter execution in `msgvault-lab`: Phase C1
   as a `telemetry_jobs[]` shadow MCP smoke producer.
 
 - Previous: 2026-06-19 - GPT-5 Codex (DocKit Trace sync, 0.6.1) - Closed **protocol 0.6.1** as a DocKit/Trace-only patch:
@@ -192,15 +193,13 @@ consumer-side extension it surfaces — `infra-portal` reading
 - **DF-009** — Development previews need anti-rot metadata and checks. Filed
   2026-05-25 from the first `environment: development` adopter after
   `home-infra` added profile-local schema validation, a real preview probe, and
-  a temporary HTTP stopgap warning. Status: `open`. Not currently dispatchable
-  ahead of DF-005 unless the operator prioritizes development preview lifecycle
-  hygiene.
+  a temporary HTTP stopgap warning. Status: `implemented (0.7.0)`.
 - **DF-010** — Project-owned sync and telemetry loops need a shared status
   contract. Filed 2026-06-18 from `msgvault-lab`, `forumvault-lab`,
   `plaud-mirror`, `home-infra` host-capacity, and future Telegram archive
   needs. Status: `implemented (0.6.0)`.
 
-(DF-001 through DF-006 except DF-005, plus DF-008 and DF-010, are closed: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005, plus DF-008, DF-009, and DF-010, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a
@@ -209,9 +208,11 @@ future session, but not currently dispatchable: (b) is gated on a
 exist; (c) is reserved for protocol v1.0. DF-006 implemented in 0.4.0
 with schema/SPEC/examples plus adopter-side `home-infra` auditor. DF-008
 implemented in 0.5.0 with schema/SPEC/proposal/example plus `infra-portal`
-0.11.0 consumer evidence. DF-010 implemented in 0.6.0 with the status snapshot
+0.11.0 consumer evidence. DF-009 implemented in 0.7.0 with the parallel
+runtimes / preview lifecycle / side-effect ownership proposal, schema fields,
+SPEC prose, and sanitized examples. DF-010 implemented in 0.6.0 with the status snapshot
 schema, project-contract job declarations, proposals, and examples. DF-007 and
-DF-009 remain open feedback.)
+DF-005 remain open feedback.)
 
 ## Patch 0.2.1 Outcome
 

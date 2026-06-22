@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,10 +81,11 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-05-25 - Codex.
-- Working on: protocol 0.5.1 filing for DF-009 development-preview anti-rot.
-- Status: `Service.environment` is formal protocol in 0.5.0; 0.5.1 records the
-  next follow-up for owner/freshness/expiry metadata and stale-preview checks.
+- Last Updated: 2026-06-22 - GPT-5 Codex.
+- Working on: protocol 0.7.0 adoption follow-up for parallel runtimes.
+- Status: DF-009 is implemented in 0.7.0; next work moves to `home-infra` to
+  adopt `project_id`, `preview`, and `state_policy` in the private catalog and
+  auditor.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

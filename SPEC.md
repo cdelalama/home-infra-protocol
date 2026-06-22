@@ -1,4 +1,4 @@
-<!-- doc-version: 0.6.2 -->
+<!-- doc-version: 0.7.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -64,6 +64,9 @@ Recommended fields:
 
 - `interface`
 - `environment`
+- `project_id`
+- `preview`
+- `state_policy`
 - `exposure`
 - `host_id`
 - `runtime`
@@ -144,6 +147,73 @@ Semantics for `environment: development`:
   informational by consumers rather than as a production incident.
 - A live development preview may show healthy runtime status, but that status
   is evidence only for the preview, not for production deployment completion.
+
+#### Parallel runtimes and preview lifecycle
+
+The protocol regulates runtimes that exist. It does not require every project
+under active development to keep a development runtime alive. A project can be
+actively changed in git and still have only a production runtime in the service
+catalog.
+
+When multiple runtimes of the same project exist, the catalog should make that
+relationship explicit:
+
+- `project_id` groups service records that represent the same project across
+  environments. A production-only service can omit it; if a production runtime
+  and a development runtime coexist, both SHOULD declare the same `project_id`.
+- `preview_of` is an optional override for rare cases where `project_id +
+  environment` is not enough to pair records. It is not required for the common
+  case and should not become a second source of truth for normal pairings.
+- `preview.purpose` explains why a development runtime exists.
+- `preview.expires_at` declares when the preview should be reviewed, renewed,
+  or retired. It is an RFC3339 UTC timestamp.
+- `state_policy` declares the runtime's side-effect policy:
+  `none | read_only | isolated | production_write`.
+- `state_policy_justification` may point to the reviewed reason for risky
+  policies, especially `production_write` in a development runtime.
+
+Development runtime lifecycle is computed by consumers from catalog intent and
+observed status. Catalogs MUST NOT contain hand-maintained `last_confirmed`,
+`observed_*`, or `actual_*` fields for preview freshness. They rot for the same
+reason runtime evidence rots elsewhere in the protocol.
+
+Suggested consumer signals:
+
+| Signal | Meaning | Typical action |
+|--------|---------|----------------|
+| `parallel-environments` | Production and development runtimes share a `project_id`. | Group the cards and show both roles. |
+| `expired-preview` | `now > preview.expires_at`. | Ask the operator to renew or retire the preview. |
+| `stale-data` | The runtime status snapshot or probe is stale. | Warn that the preview may be abandoned. |
+| `unbounded-preview` | Development runtime has no `preview.expires_at`. | Soft warning; require intent before the preview ages. |
+| `undeclared-effects` | Development runtime lacks `state_policy`. | Warn that side effects are unknown. |
+| `production-write-preview` | Development runtime declares `state_policy: production_write`. | Strong warning; require reviewed justification. |
+| `secret-overlap-risk` | Development runtime appears to use the same production secret source as its production pair. | Treat as possible production-write risk even if self-declared policy is weaker. |
+
+The side-effect rule is deliberately stricter than the visual grouping rule:
+
+> Development previews may duplicate surfaces, not ownership of production
+> state, unless an explicit reviewed exception says otherwise.
+
+`state_policy` is a declaration, not the only evidence. Validators SHOULD
+cross-check other fields when possible. For example, if a development runtime
+and its production pair share the same secret-store project/config, a validator
+may warn about `secret-overlap-risk` even when the development service declares
+`state_policy: isolated`.
+
+`shadow` is not a third `environment` value. A shadow runtime observes or
+compares production-like state without taking ownership of external effects;
+model it with an appropriate `state_policy` (usually `read_only`) and document
+its purpose in the service or project contract.
+
+Consumers MAY compare development and production versions when both records
+expose comparable versions. Version drift is useful display context, but it is
+not the load-bearing lifecycle signal because many previews use moving tags or
+local builds.
+
+Schema note: 0.7.0 adds these fields without making old
+`environment: development` entries schema-invalid. Validators SHOULD warn on
+missing lifecycle/side-effect metadata; future major versions may promote some
+warnings into required fields after adopter evidence.
 
 #### `exposure`
 
