@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.0 -->
+<!-- doc-version: 0.7.1 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,11 +81,13 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-06-22 - GPT-5 Codex.
-- Working on: protocol 0.7.0 adoption follow-up for parallel runtimes.
-- Status: DF-009 is implemented in 0.7.0; next work moves to `home-infra` to
-  adopt `project_id`, `preview`, and `state_policy` in the private catalog and
-  auditor.
+- Last Updated: 2026-07-12 - GPT-5 Codex.
+- Working on: close the inherited LLM-DocKit v4.12.3 sync as protocol 0.7.1
+  before filing the authentication-placement downstream proposal.
+- Status: 0.7.1 changes governance tooling and orientation only; SPEC, schemas,
+  examples, and protocol semantics remain those of 0.7.0. Home Infra 0.4.3 and
+  deployed Infra Portal 0.16.3 now provide real producer/consumer evidence for
+  the next clean session to file DF-011 and its provider-neutral proposal.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist
@@ -142,16 +144,24 @@ Use the Do Not Touch section in docs/llm/HANDOFF.md to flag any files or areas t
 <!-- DOCKIT-TEMPLATE:START trace-protocol -->
 ## Trace Protocol
 
-For execution or audit work, begin each substantive execution report or audit
-verdict with a compact `Trace` header, then write the normal explanation in
-prose. The header is for orientation; it does not replace the message.
+Every substantive assistant turn in a DocKit-governed session must begin with
+a compact `Trace` header, then continue with the normal explanation in prose.
+This includes execution, audit, design opinions, recommendations,
+brainstorming, clarifying questions, status reports, and go/no-go calls.
+
+A turn is substantive if the operator might need to find it when returning to
+a multi-window workflow: it contains a decision, opinion, recommendation,
+status, audit, action, or clarifying question. Non-substantive turns such as a
+pure acknowledgement under 50 characters do not require Trace, but emitting
+Trace is always safe. The header is for orientation; it does not replace the
+message.
 
 Required chat header fields:
-- `Role`: `executor` or `auditor`
+- `Role`: `executor`, `auditor`, or `advisor`
 - `Sent`: `YYYY-MM-DD HH:MM:SS <local-tz> (HH:MM:SS UTC)`. The order and
   precision are mandatory: local time first, UTC second in parentheses, seconds
   included on both sides.
-- `Subject`: current task, or commit hash/title being implemented or audited
+- `Subject`: current task, question, recommendation, or commit hash/title being implemented or audited
 - `Resulting state`: what this message leaves true after it is sent
 - `Repo state`: local branch vs origin and worktree status verified now
 - `Validation`: checks run and result
@@ -210,7 +220,7 @@ half is enforced by `scripts/dockit-validate-session.sh --check trace-protocol`:
   `Current target:` or `Current audit target:`.
 - `docs/llm/HISTORY.md` entries dated on or after `trace_protocol.since` that
   reference backtick-quoted commit hashes must end with an inline footer:
-  `Trace: role=executor|auditor; commits=hash1,hash2; state=...; validation=...; next=...`
+  `Trace: role=executor|auditor|advisor; commits=hash1,hash2; state=...; validation=...; next=...`
 
 Projects can set the local timezone used in `Sent` with:
 
@@ -219,7 +229,7 @@ trace_protocol:
   local_timezone: Europe/Madrid
 ```
 
-Projects that do not use executor/auditor windows can disable the chat-side
+Projects that do not use Trace-oriented LLM windows can disable the chat-side
 convention with:
 
 ```yaml

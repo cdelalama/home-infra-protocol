@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.0 -->
+<!-- doc-version: 0.7.1 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -57,19 +57,20 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-06-22)
+## Current Status (2026-07-12)
 
-Protocol 0.7.0 implements the parallel-runtime and development-preview
-anti-rot contract. Development runtimes remain optional, but when they exist
-the protocol can group them with production, declare preview lifecycle, and
-make side-effect ownership auditable.
+Protocol 0.7.1 is a DocKit-governance patch over the 0.7.0
+parallel-runtime and development-preview anti-rot contract. It does not change
+SPEC, schema, example, or runtime semantics. Home Infra and Infra Portal have
+completed the private producer/consumer adoption that the 0.7.0 roadmap named.
 
 ## Upcoming Milestones
 
-1. Adopt the 0.7.0 service fields in the private `home-infra` catalog and
-   auditor.
-2. Teach `infra-portal` to group parallel production/development runtimes and
-   render lifecycle/side-effect warnings.
+1. File DF-011 plus a proposal for the provider-neutral authentication
+   placement mode proven by Home Infra and Infra Portal. Keep Home Infra's
+   expectations, waivers, and provider choice outside the public protocol.
+2. Dispatch any accepted schema/SPEC implementation from the proposal's
+   implementation hints in a later, separate protocol release.
 3. Keep project-owned sync/telemetry adoption moving through real adopters
    such as `msgvault-lab`, host-capacity telemetry, and ForumVault.
 

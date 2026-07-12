@@ -3,6 +3,22 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.7.1] - 2026-07-12
+
+### Added
+
+- Synced LLM-DocKit governance substrate to v4.12.3.
+
+### Changed
+
+- Updated DocKit onboarding, Trace v1.4 guidance, validator smoke coverage, and bootstrap scripts.
+
+### Fixed
+
+- Closed local drift against the current LLM-DocKit template baseline.
+- Repaired stale onboarding and handoff orientation after the 0.7.0 private
+  producer/consumer adoption completed.
+
 ## [0.7.0] - 2026-06-22
 
 ### Added

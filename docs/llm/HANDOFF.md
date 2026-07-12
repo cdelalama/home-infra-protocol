@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.0 -->
+<!-- doc-version: 0.7.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,58 +6,25 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-The **parallel-runtimes + preview anti-rot contract** shipped in protocol 0.7.0
-on 2026-06-22. DF-009 is closed in this repo.
+Protocol 0.7.1 closes the inherited LLM-DocKit v4.12.3 governance sync. The
+patch changes onboarding, Trace advisor-role support, validators, and version
+markers only; SPEC, schemas, examples, and protocol semantics remain those of
+0.7.0.
 
-Why: a project can have a production runtime and a development runtime alive at
-the same time. That is acceptable when the development runtime is an
-intentional temporary surface, but risky when it also owns production state
-through crons, backups, syncs, imports, writes, or production credentials.
+The private 0.7.0 adoption loop is complete: Home Infra implements the
+parallel-runtime policy and audit gate, and deployed Infra Portal consumes
+project/runtime lifecycle plus strict authentication intent. The next protocol
+session must stay proposal-only:
 
-What shipped:
-
-- `docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md` captures the accepted design.
-- `schemas/services.schema.json` now has additive optional `project_id`,
-  `preview_of`, `preview`, `state_policy`, and
-  `state_policy_justification` fields.
-- `SPEC.md` documents that the protocol regulates live runtimes, not whether a
-  project has code under active development.
-- `examples/home-infra/catalog/services.yml` includes a sanitized production
-  service plus a matching development runtime.
-- `docs/DOWNSTREAM_FEEDBACK.md` marks DF-009 implemented in 0.7.0.
-
-Frozen model points:
-
-- Development runtimes are optional. Production-only projects stay simple.
-- When production and development runtimes coexist, both should share
-  `project_id` so consumers can group them.
-- `preview.purpose` and `preview.expires_at` declare lifecycle intent.
-- No manual `last_confirmed`; freshness comes from probes/status snapshots.
-- `state_policy` declares side-effect ownership:
-  `none | read_only | isolated | production_write`.
-- `production_write` in development is a strong warning and needs reviewed
-  justification.
-- `shadow` is not a third `environment`; model it through `state_policy`
-  (usually `read_only`) and project/service prose.
-
-Next roadmap:
-
-1. **Private adopter: `home-infra`.** Add/adopt the 0.7.0 fields where there
-   are parallel runtimes, especially stale development previews. Extend the
-   private `home-infra` catalog auditor to warn on missing `preview`, missing
-   `state_policy`, expired previews, and obvious secret overlap.
-2. **Resolve `msgvault-panel-dev`.** In `home-infra`, either retire it or renew
-   it explicitly with `preview.purpose`, `preview.expires_at`, and
-   `state_policy`.
-3. **Infra Portal consumer.** Group production/development service cards by
-   `project_id` and render lifecycle/side-effect warnings without using health
-   severity colors for relationship state.
-4. **Hermes alerts last.** Alert only after the protocol, private catalog, and
-   portal rendering prove the contract.
-5. **Keep DF-010 adoption moving separately.** The status-snapshot +
-   sync/telemetry jobs contract remains valid: `msgvault-lab` Phase C1,
-   host-capacity telemetry, and generic Infra Portal/Hermes consumers still
-   need adopter work.
+1. Start from published, clean 0.7.1.
+2. File DF-011 in `docs/DOWNSTREAM_FEEDBACK.md` with evidence from Home Infra
+   0.4.3 and deployed Infra Portal 0.15.0-0.16.3.
+3. Add the planned docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md proposal for only the neutral
+   `exposure.authentication.mode: none | application | proxy` declaration.
+4. Keep expectations, waivers, deadlines, provider selection, and verification
+   claims outside the public protocol.
+5. Do not edit SPEC or schemas in that proposal session. Dispatch a later
+   implementation release through DF-011 implementation hints.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -69,12 +36,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-06-22 - GPT-5 Codex (parallel runtimes, 0.7.0)
-- Session Focus: Shipped **protocol 0.7.0** for DF-009: development runtimes
-  remain optional, but live previews now have portable lifecycle and
-  side-effect fields (`project_id`, `preview`, `state_policy`) and consumer
-  warning semantics. Next gate is private adoption in `home-infra`, then
-  `infra-portal` grouping/warnings.
+- Last Updated: 2026-07-12 - GPT-5 Codex (LLM-DocKit v4.12.3 sync, 0.7.1)
+- Session Focus: Close the LLM-DocKit v4.12.3 governance sync as protocol
+  0.7.1. Runtime and protocol semantics are unchanged; the next clean session
+  files DF-011 plus the provider-neutral authentication placement proposal.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -406,8 +371,8 @@ Home Infra Protocol defines a reusable way to describe small infrastructure in
 Git so humans, portals, MCP servers, recovery workflows, and LLM agents share a
 single current memory.
 
-The first private implementation is expected to be `home-infra`; the first
-consumer pattern is expected to be `infra-portal`.
+The first private implementation is `home-infra`; the first deployed consumer
+is `infra-portal`.
 
 ## Important Constraints
 
@@ -421,12 +386,13 @@ consumer pattern is expected to be `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Review the v0.1 draft and governance rules with the user.
-2. Decide whether the repo should remain spec-only for v0.1.
-3. Add CI validation once a validator exists.
-4. Add protocol version declarations for private implementations later.
-5. If `infra-agent` starts, document its stats contract as a candidate
-   telemetry-provider extension before wiring it into `infra-portal`.
+1. Publish the DocKit-only 0.7.1 baseline with no schema or SPEC semantics.
+2. File DF-011 and the authentication placement proposal as 0.7.2.
+3. Implement an accepted proposal later through its explicit implementation
+   hints; do not collapse proposal and implementation into one session.
+4. Continue real adoption of project-owned sync and telemetry contracts.
+5. Keep any future `infra-agent` stats contract evidence-gated and independent
+   from authentication placement.
 
 ## Files To Read First
 
