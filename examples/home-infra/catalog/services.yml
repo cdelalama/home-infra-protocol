@@ -19,6 +19,8 @@ services:
       visibility: operator
       canonical: true
       backend_url: http://127.0.0.1:8080
+      authentication:
+        mode: none
     host_id: nas
     runtime: docker
     image: infra-portal:0.1.0
@@ -55,6 +57,8 @@ services:
       visibility: operator
       canonical: true
       backend_url: http://10.0.0.20:8123
+      authentication:
+        mode: application
     fallback_url: http://10.0.0.20:8123/
     host_id: home-automation
     runtime: docker
@@ -184,6 +188,8 @@ services:
     exposure:
       visibility: operator
       canonical: false
+      authentication:
+        mode: proxy
     host_id: nas
     runtime: docker
     image: registry.example.internal/example-panel:dev-preview

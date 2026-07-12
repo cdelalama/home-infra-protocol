@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,19 +6,21 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.7.2 accepts DF-011 and
-`docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` from pinned Home Infra 0.4.3 and
-Infra Portal 0.16.x evidence. This release is proposal-only: SPEC, schemas,
-examples, and protocol semantics remain those of 0.7.0.
+Protocol 0.8.0 implements the separately accepted DF-011 proposal from pinned
+Home Infra 0.4.3 and Infra Portal 0.16.x evidence. The optional
+`exposure.authentication.mode` object now ships in schema, SPEC, sanitized
+examples, and focused tests. The accepted scope and honesty boundary remain
+anchored in `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
 
-Next protocol session:
+Next ecosystem step:
 
-1. Start from published, clean 0.7.2.
-2. Implement the optional `exposure.authentication.mode` contract as 0.8.0.
-3. Add sanitized examples for `none`, `application`, and `proxy`.
-4. Run read-only conformance checks against the pinned producer/consumer.
-5. Keep expectations, waivers, providers, assessments, probes, and action-plane
+1. Home Infra records the accepted 0.8.0 transition with provenance.
+2. Existing consumers continue without forced migration; Infra Portal already
+   supports the additive declaration.
+3. Keep expectations, waivers, providers, assessments, probes, and action-plane
    policy outside the public protocol.
+4. Let later protocol work remain adopter-driven rather than adding speculative
+   authentication fields.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -30,10 +32,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-12 - GPT-5 Codex (DF-011 proposal, 0.7.2)
-- Session Focus: Accepted the provider-neutral authentication placement
-  declaration in a proposal-only release. No schema, SPEC, example, or semantic
-  change ships in 0.7.2. Next gate: implement the accepted contract as 0.8.0.
+- Last Updated: 2026-07-12 - GPT-5 Codex (DF-011 implementation, 0.8.0)
+- Session Focus: Implemented provider-neutral authentication placement from the
+  separately accepted proposal. The field is additive and intent-only. Next
+  gate: publish, then record the accepted transition in Home Infra.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -114,9 +116,8 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Pending Proposals (for the next session)
 
-`docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is accepted and dispatchable as
-protocol 0.8.0. The implementation scope is limited to schema, SPEC, sanitized
-examples, DF closure, and read-only conformance checks.
+`docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is implemented in protocol 0.8.0.
+No authentication proposal remains immediately dispatchable.
 
 `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (DF-005) —
 not yet authored. Still valid backlog, but superseded as immediate priority by
@@ -154,10 +155,10 @@ consumer-side extension it surfaces — `infra-portal` reading
   needs. Status: `implemented (0.6.0)`.
 - **DF-011** — Operator services need provider-neutral authentication
   placement. Filed 2026-07-12 from Home Infra 0.4.3 and deployed Infra Portal
-  0.16.3. Status: `accepted`; dispatchable as protocol 0.8.0 through
+  0.16.3. Status: `implemented (0.8.0)` through the separately accepted
   `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
 
-(DF-001 through DF-006 except DF-005, plus DF-008, DF-009, and DF-010, are closed; DF-011 is accepted: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005, plus DF-008 through DF-011, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a
@@ -379,12 +380,12 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Publish the DocKit-only 0.7.1 baseline with no schema or SPEC semantics.
-2. File DF-011 and the authentication placement proposal as 0.7.2.
-3. Implement an accepted proposal later through its explicit implementation
-   hints; do not collapse proposal and implementation into one session.
-4. Continue real adoption of project-owned sync and telemetry contracts.
-5. Keep any future `infra-agent` stats contract evidence-gated and independent
+1. Publish protocol 0.8.0 after schema, SPEC, example, regression, and
+   downstream conformance gates pass.
+2. Record the accepted transition in Home Infra with provenance; do not mutate
+   downstream facts from this protocol session.
+3. Continue real adoption of project-owned sync and telemetry contracts.
+4. Keep any future `infra-agent` stats contract evidence-gated and independent
    from authentication placement.
 
 ## Files To Read First

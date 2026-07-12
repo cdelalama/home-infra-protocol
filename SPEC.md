@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -245,6 +245,34 @@ Fields:
 - `backend_url` — optional implementation address used by a proxy or runbook.
   Loopback/private backend addresses belong here, not in the operator-facing
   `url`.
+- `authentication` — optional provider-neutral declaration of where
+  authentication is intended to be enforced. When present, it requires `mode`:
+  - `none`: this service surface declares no authentication requirement.
+  - `application`: authentication is implemented inside the application,
+    including built-in login supplied by upstream software.
+  - `proxy`: authentication is enforced by ingress or reverse proxy.
+
+Authentication placement is intent, not runtime evidence. A consumer MAY
+render the declared mode neutrally or compare it with separate adopter-owned
+policy. A consumer MUST NOT label a service protected solely because the mode
+is `application` or `proxy`, infer a provider or authorization model, or write
+an observation back into catalog truth.
+
+The public protocol does not define provider selection, credentials, signup or
+session policy, expectations, deadlines, waivers, consumer-derived assessment
+states, negative authentication probes, or action-plane authorization.
+Additional members under `authentication` are adopter extensions and carry no
+protocol semantics unless promoted through a later evidence-backed change.
+
+Example:
+
+```yaml
+exposure:
+  visibility: operator
+  canonical: true
+  authentication:
+    mode: application
+```
 
 For `interface: web` with `exposure.visibility: operator`, catalogs SHOULD use
 an operator-resolvable hostname in `url`, not a host-local implementation
@@ -258,6 +286,12 @@ The protocol deliberately does not name a DNS provider, reverse proxy, or
 certificate mechanism. Adopters may layer a local profile on top, such as
 "operator web URLs must be `https://*.example.internal/` and route through
 edge-caddy".
+
+#### Consumer support for authentication placement
+
+| Consumer | Version | Reads `mode` | Notes |
+|----------|---------|--------------|-------|
+| infra-portal | 0.16.3 | yes | Renders the declaration as "Auth declared" and uses strict browser egress. Any assessment joined from private adopter policy is consumer output, not protocol truth. |
 
 #### Consumer support for `interface`
 

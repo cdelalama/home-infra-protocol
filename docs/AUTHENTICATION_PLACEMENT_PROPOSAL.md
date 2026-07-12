@@ -1,8 +1,8 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Authentication Placement Proposal
 
-Status: accepted for a later implementation release; no schema or SPEC change
-ships with this proposal.
+Status: implemented in protocol 0.8.0. The proposal was accepted separately in
+0.7.2 before schema or SPEC changes shipped.
 
 ## Problem
 

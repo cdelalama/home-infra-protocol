@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Versioning Rules
 
 Home Infra Protocol uses Semantic Versioning.
@@ -17,6 +17,8 @@ Home Infra Protocol uses Semantic Versioning.
 - Clarifications.
 - Example fixes.
 - Non-breaking documentation improvements.
+- Proposal-only DF filings that do not change SPEC, schemas, examples, or
+  protocol semantics.
 - Validator bug fixes once validators exist.
 
 ### Minor

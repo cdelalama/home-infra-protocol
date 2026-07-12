@@ -36,6 +36,19 @@
               "backend_url": {
                 "type": "string",
                 "description": "Optional implementation/backend address used by a proxy or runbook. This may be loopback; it is not the operator-facing URL."
+              },
+              "authentication": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": ["mode"],
+                "description": "Provider-neutral declaration of where authentication is intended to be enforced. This is intent, not evidence that protection is configured or effective. Additional members are adopter extensions without protocol semantics.",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": ["none", "application", "proxy"],
+                    "description": "Authentication placement: none at this surface, inside the application, or at the ingress/reverse proxy. Upstream built-in login is application."
+                  }
+                }
               }
             }
           },

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -59,14 +59,14 @@ authorities over inventory or intent.
 
 ## Current Status (2026-07-12)
 
-Protocol 0.7.2 accepts DF-011 and the provider-neutral authentication placement
-proposal from real Home Infra and Infra Portal adoption. It is proposal-only:
-SPEC, schema, examples, and protocol semantics remain those of 0.7.0.
+Protocol 0.8.0 implements the separately accepted DF-011 provider-neutral
+authentication placement contract from real Home Infra and Infra Portal
+adoption. The optional field is additive and declares intent, not proof.
 
 ## Upcoming Milestones
 
-1. Implement accepted DF-011 as protocol 0.8.0 using the proposal's explicit
-   schema, SPEC, example, and conformance acceptance criteria.
+1. Record 0.8.0 adoption in Home Infra with provenance and keep consumer
+   support honest; Infra Portal already consumes the additive field.
 2. Keep Home Infra expectations, waivers, provider choice, portal assessments,
    and action-plane policy outside the public protocol.
 3. Keep project-owned sync/telemetry adoption moving through real adopters

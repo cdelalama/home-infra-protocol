@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -8,6 +8,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
 
 ## Entries
+
+- 2026-07-12 - GPT-5 Codex + Carlos (operator/arbiter) - **Implemented DF-011 as protocol 0.8.0 from the separately accepted 0.7.2 proposal.** Added optional provider-neutral `exposure.authentication.mode: none | application | proxy` to the services schema, explicit intent-not-proof and consumer honesty semantics to SPEC, sanitized examples for all three modes, a consumer-support row, and focused Python regression tests for accepted/rejected modes plus the complete example. Marked DF-011 and its proposal implemented, added the proposal-only patch rule to versioning guidance, and removed the stale 0.7.1/0.7.2 Next Concrete Steps found by the independent Fable audit. Private expectations, waivers, providers, assessments, probes, and action-plane policy remain excluded. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, SPEC.md, schemas/services.schema.json, examples/home-infra/catalog/services.yml, tests/test_authentication_placement.py, docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md, docs/DOWNSTREAM_FEEDBACK.md, docs/PROJECT_CONTEXT.md, docs/STRUCTURE.md, docs/VERSIONING_RULES.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.7.2 -> 0.8.0 minor: additive optional authentication placement contract).
 
 - 2026-07-12 - GPT-5 Codex + Carlos (operator/arbiter) - Filed and accepted DF-011 from pinned Home Infra 0.4.3 producer and Infra Portal 0.16.x consumer evidence. Added `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` for only the provider-neutral `exposure.authentication.mode: none | application | proxy` declaration. Kept expectations, waivers, deadlines, providers, consumer assessments, probes, and action-plane policy outside the public protocol. This 0.7.2 release is proposal-only: no SPEC, schema, example, or protocol semantic change. Dispatches a separate 0.8.0 implementation through explicit acceptance criteria. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/STRUCTURE.md, docs/DOWNSTREAM_FEEDBACK.md, docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md, docs/version-sync-manifest.yml, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.7.1 -> 0.7.2 patch: accepted proposal and downstream evidence; no contract implementation).
 

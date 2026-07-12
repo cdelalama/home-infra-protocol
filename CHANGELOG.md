@@ -3,6 +3,26 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.8.0] - 2026-07-12
+
+### Added
+
+- Optional `exposure.authentication.mode` with provider-neutral values
+  `none`, `application`, and `proxy` in the services schema.
+- Sanitized examples for all three modes and regression tests for accepted and
+  rejected values plus full example validation.
+
+### Changed
+
+- SPEC now defines authentication placement as intent, not proof, with explicit
+  consumer honesty rules and Infra Portal support recorded.
+- DF-011 and `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` are implemented.
+
+### Fixed
+
+- Removed stale HANDOFF steps that still described 0.7.1 and 0.7.2 as future
+  work after those releases were published.
+
 ## [0.7.2] - 2026-07-12
 
 ### Added

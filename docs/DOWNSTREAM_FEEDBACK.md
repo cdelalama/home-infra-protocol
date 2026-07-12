@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -873,7 +873,9 @@ shape and project-contract declarations.
 - Source: `home-infra` 0.4.3 + deployed `infra-portal` 0.16.3
 - Date observed: 2026-07-12
 - Category: field-gap
-- Status: accepted — see `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`
+- Status: implemented (0.8.0) — additive schema, SPEC semantics, sanitized
+  examples, and focused regression tests shipped from the separately accepted
+  `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`
 - Related: DF-006, DF-009
 
 ### Observation

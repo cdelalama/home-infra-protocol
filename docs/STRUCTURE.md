@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.2 -->
+<!-- doc-version: 0.8.0 -->
 # Repository Structure
 
 ```text
@@ -51,7 +51,8 @@ home-infra-protocol/
 ├── src/
 │   └── .gitkeep
 └── tests/
-    └── .gitkeep
+    ├── .gitkeep
+    └── test_authentication_placement.py
 ```
 
 ## Notes
@@ -59,4 +60,5 @@ home-infra-protocol/
 - `schemas/` contains protocol schema drafts.
 - `examples/` must stay sanitized and generic.
 - `src/` is reserved for future validator or reference tooling.
+- `tests/` contains focused protocol/schema regression tests.
 - `docs/llm/` is working memory for LLM-assisted maintenance.
