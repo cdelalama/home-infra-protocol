@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.1 -->
+<!-- doc-version: 0.7.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -867,3 +867,63 @@ Before 0.6.0, `msgvault-lab` and `forumvault-lab` already published local
 status snapshots with project-specific shapes. Those remain valid project
 implementations, but future adoption should converge on the shared snapshot
 shape and project-contract declarations.
+
+## DF-011 — Operator services need provider-neutral authentication placement
+
+- Source: `home-infra` 0.4.3 + deployed `infra-portal` 0.16.3
+- Date observed: 2026-07-12
+- Category: field-gap
+- Status: accepted — see `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`
+- Related: DF-006, DF-009
+
+### Observation
+
+Home Infra needs to record whether an operator-facing service places
+authentication in the application, at the reverse proxy, or nowhere. The first
+real producer incubated `exposure.authentication.mode` across its catalog, and
+Infra Portal became a real consumer that renders the mode while stripping
+private policy before browser egress.
+
+The incubation also established a necessary boundary. Home Infra owns
+expectations, deadlines, waivers, provider choice, and catalog gates. Infra
+Portal may derive a browser-safe assessment, but that state is consumer output.
+Neither belongs in the portable declaration. The protocol currently has no
+field for the smaller neutral fact shared by both systems.
+
+Evidence at filing:
+
+- `home-infra` 0.4.3 commit
+  `3f6b6ad78b15d851e5466222b88d1d534cd69c39` declares and validates the
+  placement mode.
+- `infra-portal` 0.16.4 commit
+  `481569bee11b3fe298127043926050057f0701a1` ingests it and uses strict
+  browser DTOs; production 0.16.3 proves the consumer path live.
+
+### Protocol implication
+
+Accept the provider-neutral optional declaration:
+
+```yaml
+exposure:
+  authentication:
+    mode: none | application | proxy
+```
+
+The field declares intended placement, not evidence that authentication works.
+The protocol must not absorb Home Infra expectations/waivers, provider names,
+consumer assessments, or action-plane policy.
+
+### Implementation hints
+
+Files to touch:
+
+- `schemas/services.schema.json`: additive optional object and closed mode enum.
+- `SPEC.md`: placement semantics and intent-not-proof boundary.
+- `examples/home-infra/catalog/services.yml`: sanitized examples for all modes.
+- `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`: verify acceptance criteria.
+- `docs/DOWNSTREAM_FEEDBACK.md`: mark DF-011 implemented after those changes.
+
+Version bump: minor (`0.8.0`).
+
+Cross-repo touches required: read-only validation against `home-infra` and
+`infra-portal`; no downstream writes from the protocol implementation session.

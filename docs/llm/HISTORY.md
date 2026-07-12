@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.1 -->
+<!-- doc-version: 0.7.2 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -8,6 +8,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
 
 ## Entries
+
+- 2026-07-12 - GPT-5 Codex + Carlos (operator/arbiter) - Filed and accepted DF-011 from pinned Home Infra 0.4.3 producer and Infra Portal 0.16.x consumer evidence. Added `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` for only the provider-neutral `exposure.authentication.mode: none | application | proxy` declaration. Kept expectations, waivers, deadlines, providers, consumer assessments, probes, and action-plane policy outside the public protocol. This 0.7.2 release is proposal-only: no SPEC, schema, example, or protocol semantic change. Dispatches a separate 0.8.0 implementation through explicit acceptance criteria. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/STRUCTURE.md, docs/DOWNSTREAM_FEEDBACK.md, docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md, docs/version-sync-manifest.yml, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.7.1 -> 0.7.2 patch: accepted proposal and downstream evidence; no contract implementation).
 
 - 2026-07-12 - GPT-5 Codex - **Closed the inherited LLM-DocKit v4.12.3 sync started on 2026-06-23.** Applied the current DocKit governance substrate, including Trace v1.4 substantive-turn scope and advisor role support, then bumped project version 0.7.0 -> 0.7.1. Repaired the inherited mutilated Session Focus and stale pre-adoption orientation after confirming the complete diff leaves SPEC, schemas, examples, and protocol semantics unchanged. - Files: [LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/version-sync-manifest.yml, docs/integrations/CODEX.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, scripts/dockit-bootstrap-context.sh, scripts/dockit-trace-status.sh, scripts/dockit-validate-session.sh, scripts/test-validator.sh, VERSION, CHANGELOG.md, doc-version targets] - Version impact: yes (0.7.0 -> 0.7.1 patch: DocKit governance and orientation sync)
 

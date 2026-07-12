@@ -28,6 +28,7 @@ targets:
 - path: docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md marker: html-comment
 - path: docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md marker: html-comment
 - path: docs/SYNC_JOB_CONTRACT_PROPOSAL.md marker: html-comment
+- path: docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md marker: html-comment
 - path: docs/llm/HISTORY.md        marker: html-comment
 - path: docs/llm/DECISIONS.md      marker: html-comment
 - path: docs/llm/README.md         marker: html-comment

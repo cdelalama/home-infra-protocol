@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.1 -->
+<!-- doc-version: 0.7.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -82,12 +82,13 @@ Recommended reading order:
 Source of truth: `docs/llm/HANDOFF.md`.
 
 - Last Updated: 2026-07-12 - GPT-5 Codex.
-- Working on: close the inherited LLM-DocKit v4.12.3 sync as protocol 0.7.1
-  before filing the authentication-placement downstream proposal.
-- Status: 0.7.1 changes governance tooling and orientation only; SPEC, schemas,
-  examples, and protocol semantics remain those of 0.7.0. Home Infra 0.4.3 and
-  deployed Infra Portal 0.16.3 now provide real producer/consumer evidence for
-  the next clean session to file DF-011 and its provider-neutral proposal.
+- Working on: dispatch the accepted DF-011 authentication-placement contract
+  from the proposal-only 0.7.2 release.
+- Status: DF-011 and `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` accept only
+  `exposure.authentication.mode: none | application | proxy` from real Home
+  Infra and Infra Portal evidence. Protocol 0.7.2 does not change SPEC, schemas,
+  examples, or semantics. The next separate release is 0.8.0 implementation;
+  expectations, waivers, providers, assessments, and action policy stay out.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

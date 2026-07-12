@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.1 -->
+<!-- doc-version: 0.7.2 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -59,18 +59,16 @@ authorities over inventory or intent.
 
 ## Current Status (2026-07-12)
 
-Protocol 0.7.1 is a DocKit-governance patch over the 0.7.0
-parallel-runtime and development-preview anti-rot contract. It does not change
-SPEC, schema, example, or runtime semantics. Home Infra and Infra Portal have
-completed the private producer/consumer adoption that the 0.7.0 roadmap named.
+Protocol 0.7.2 accepts DF-011 and the provider-neutral authentication placement
+proposal from real Home Infra and Infra Portal adoption. It is proposal-only:
+SPEC, schema, examples, and protocol semantics remain those of 0.7.0.
 
 ## Upcoming Milestones
 
-1. File DF-011 plus a proposal for the provider-neutral authentication
-   placement mode proven by Home Infra and Infra Portal. Keep Home Infra's
-   expectations, waivers, and provider choice outside the public protocol.
-2. Dispatch any accepted schema/SPEC implementation from the proposal's
-   implementation hints in a later, separate protocol release.
+1. Implement accepted DF-011 as protocol 0.8.0 using the proposal's explicit
+   schema, SPEC, example, and conformance acceptance criteria.
+2. Keep Home Infra expectations, waivers, provider choice, portal assessments,
+   and action-plane policy outside the public protocol.
 3. Keep project-owned sync/telemetry adoption moving through real adopters
    such as `msgvault-lab`, host-capacity telemetry, and ForumVault.
 

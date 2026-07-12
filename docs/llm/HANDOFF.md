@@ -1,4 +1,4 @@
-<!-- doc-version: 0.7.1 -->
+<!-- doc-version: 0.7.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,25 +6,19 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.7.1 closes the inherited LLM-DocKit v4.12.3 governance sync. The
-patch changes onboarding, Trace advisor-role support, validators, and version
-markers only; SPEC, schemas, examples, and protocol semantics remain those of
-0.7.0.
+Protocol 0.7.2 accepts DF-011 and
+`docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` from pinned Home Infra 0.4.3 and
+Infra Portal 0.16.x evidence. This release is proposal-only: SPEC, schemas,
+examples, and protocol semantics remain those of 0.7.0.
 
-The private 0.7.0 adoption loop is complete: Home Infra implements the
-parallel-runtime policy and audit gate, and deployed Infra Portal consumes
-project/runtime lifecycle plus strict authentication intent. The next protocol
-session must stay proposal-only:
+Next protocol session:
 
-1. Start from published, clean 0.7.1.
-2. File DF-011 in `docs/DOWNSTREAM_FEEDBACK.md` with evidence from Home Infra
-   0.4.3 and deployed Infra Portal 0.15.0-0.16.3.
-3. Add the planned docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md proposal for only the neutral
-   `exposure.authentication.mode: none | application | proxy` declaration.
-4. Keep expectations, waivers, deadlines, provider selection, and verification
-   claims outside the public protocol.
-5. Do not edit SPEC or schemas in that proposal session. Dispatch a later
-   implementation release through DF-011 implementation hints.
+1. Start from published, clean 0.7.2.
+2. Implement the optional `exposure.authentication.mode` contract as 0.8.0.
+3. Add sanitized examples for `none`, `application`, and `proxy`.
+4. Run read-only conformance checks against the pinned producer/consumer.
+5. Keep expectations, waivers, providers, assessments, probes, and action-plane
+   policy outside the public protocol.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -36,10 +30,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-12 - GPT-5 Codex (LLM-DocKit v4.12.3 sync, 0.7.1)
-- Session Focus: Close the LLM-DocKit v4.12.3 governance sync as protocol
-  0.7.1. Runtime and protocol semantics are unchanged; the next clean session
-  files DF-011 plus the provider-neutral authentication placement proposal.
+- Last Updated: 2026-07-12 - GPT-5 Codex (DF-011 proposal, 0.7.2)
+- Session Focus: Accepted the provider-neutral authentication placement
+  declaration in a proposal-only release. No schema, SPEC, example, or semantic
+  change ships in 0.7.2. Next gate: implement the accepted contract as 0.8.0.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -120,14 +114,9 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Pending Proposals (for the next session)
 
-None immediately dispatchable inside this repo after 0.6.0. The status
-snapshot and sync/telemetry job proposals have shipped:
-`docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md` and
-`docs/SYNC_JOB_CONTRACT_PROPOSAL.md`.
-
-The next valuable work is adopter-driven, not more protocol design:
-`msgvault-lab` first, then `home-infra` host-capacity telemetry, then
-Infra Portal and Hermes consumers.
+`docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is accepted and dispatchable as
+protocol 0.8.0. The implementation scope is limited to schema, SPEC, sanitized
+examples, DF closure, and read-only conformance checks.
 
 `docs/HOMELAB_PROFILE_COLLISION_AND_POPULATE_PROPOSAL.md` (DF-005) —
 not yet authored. Still valid backlog, but superseded as immediate priority by
@@ -163,8 +152,12 @@ consumer-side extension it surfaces — `infra-portal` reading
   contract. Filed 2026-06-18 from `msgvault-lab`, `forumvault-lab`,
   `plaud-mirror`, `home-infra` host-capacity, and future Telegram archive
   needs. Status: `implemented (0.6.0)`.
+- **DF-011** — Operator services need provider-neutral authentication
+  placement. Filed 2026-07-12 from Home Infra 0.4.3 and deployed Infra Portal
+  0.16.3. Status: `accepted`; dispatchable as protocol 0.8.0 through
+  `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
 
-(DF-001 through DF-006 except DF-005, plus DF-008, DF-009, and DF-010, are closed: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005, plus DF-008, DF-009, and DF-010, are closed; DF-011 is accepted: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a

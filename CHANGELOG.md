@@ -3,6 +3,25 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.7.2] - 2026-07-12
+
+### Added
+
+- DF-011 records real Home Infra producer and Infra Portal consumer evidence
+  for provider-neutral authentication placement.
+- `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` accepts the future optional
+  `exposure.authentication.mode: none | application | proxy` declaration.
+
+### Changed
+
+- Reoriented the next gate to a separate 0.8.0 schema, SPEC, examples, and
+  conformance implementation release.
+
+### Fixed
+
+- Kept private expectations, waivers, provider choice, consumer assessments,
+  probes, and action-plane authorization outside the portable protocol.
+
 ## [0.7.1] - 2026-07-12
 
 ### Added
