@@ -12,9 +12,10 @@ Home Infra 0.4.3 and Infra Portal 0.16.x evidence. The optional
 examples, and focused tests. The accepted scope and honesty boundary remain
 anchored in `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
 
-Next ecosystem step:
+Current ecosystem state:
 
-1. Home Infra records the accepted 0.8.0 transition with provenance.
+1. Home Infra accepted the 0.8.0 transition at `c30f3b4` and now records
+   ForgeOS 0.23.0 authentication planning at `f3c3462`/`c5634fc`.
 2. Existing consumers continue without forced migration; Infra Portal already
    supports the additive declaration.
 3. Keep expectations, waivers, providers, assessments, probes, and action-plane
@@ -32,10 +33,13 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-12 - GPT-5 Codex (DF-011 implementation, 0.8.0)
-- Session Focus: Implemented provider-neutral authentication placement from the
-  separately accepted proposal. The field is additive and intent-only. Next
-  gate: publish, then record the accepted transition in Home Infra.
+- Last Updated: 2026-07-13 - GPT-5 Codex + Fable (post-release documentation
+  audit)
+- Session Focus: Provider-neutral authentication placement remains published
+  as protocol 0.8.0 and accepted by Home Infra. Removed a stale unmanaged
+  `doc-version` comment from CHANGELOG; its release heading is the canonical
+  `changelog` version-sync marker. No protocol semantics changed. Later work
+  remains adopter-driven under `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

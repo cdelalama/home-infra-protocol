@@ -1,4 +1,3 @@
-<!-- doc-version: 0.7.0 -->
 # Changelog
 
 All notable changes to Home Infra Protocol are tracked here.
