@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -493,6 +493,20 @@ Required fields:
 - `condition`: producer-emitted aggregate condition, `ok | degraded`.
 - `severity`: producer-recommended ordered severity.
 - `summary`: display-only human summary.
+
+Optional `checks[]` split machine identity from presentation:
+
+- `name`: stable machine-readable identifier used for joins and logic.
+- `label`: optional concise human-facing label. Producers SHOULD provide it
+  when `name` contains implementation syntax, abbreviations, or other text that
+  is not suitable as an operator-facing label.
+- `summary`: optional plain-language result for the check. It SHOULD describe
+  what the operator needs to know and SHOULD NOT expose internal field names or
+  `key=value` diagnostics as the primary UI copy.
+
+Consumers MUST use typed fields and `name` for logic. They MAY display `label`
+when present and derive a cosmetic fallback from `name` when it is absent. They
+MUST NOT parse `label` or `summary`.
 
 `severity` is ordered:
 

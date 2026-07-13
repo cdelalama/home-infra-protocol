@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -929,3 +929,38 @@ Version bump: minor (`0.8.0`).
 
 Cross-repo touches required: read-only validation against `home-infra` and
 `infra-portal`; no downstream writes from the protocol implementation session.
+
+## DF-012 — Stable check identifiers need optional operator-facing labels
+
+- Source: `infra-portal` 0.17.0 design review + `forumvault-lab` 0.15.8
+- Date observed: 2026-07-13
+- Category: usability
+- Status: implemented (0.9.0) — optional `checks[].label`, identity/display
+  semantics, producer adoption, consumer support, and regression tests
+- Related: DF-010
+
+### Observation
+
+The first project-card consumer rendered stable status check names such as
+`last-sync` and `mcp.tools_list` directly. Those identifiers are useful for
+machine joins but poor operator copy. ForumVault also published the display
+summary `Last run error_class=none`, exposing an implementation field even
+though the protocol already described summary as human-facing text.
+
+The portal could maintain project-specific label maps, but that would couple a
+generic consumer to producer ids. Parsing or rewriting summaries would violate
+the display-only contract.
+
+### Protocol implication
+
+Keep required `checks[].name` as stable machine identity and add optional
+`checks[].label` for concise human-facing copy. Clarify that label and summary
+are never parsed for logic and that summaries should avoid internal field names
+or `key=value` expressions as primary UI copy.
+
+### Implementation evidence
+
+- Protocol 0.9.0 schema, SPEC, D-004, and tests define the additive field.
+- ForumVault 0.15.9 publishes labels and plain-language result summaries.
+- Infra Portal 0.17.0 preserves the label through strict egress, displays it,
+  and uses a cosmetic humanized-name fallback for older producers.

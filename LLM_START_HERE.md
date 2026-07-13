@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,15 +81,12 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-12 - GPT-5 Codex.
-- Working on: downstream adoption and provenance after protocol 0.8.0
-  implements DF-011 authentication placement.
-- Status: the optional `exposure.authentication.mode: none | application |
-  proxy` contract now ships in schema, SPEC, sanitized examples, and regression
-  tests. It remains intent, not proof. Expectations, waivers, providers,
-  assessments, probes, and action policy stay outside the public protocol.
-  Next: Home Infra records the accepted transition; consumers need no forced
-  migration because the field is additive and Infra Portal already supports it.
+- Last Updated: 2026-07-13 - GPT-5 Codex.
+- Working on: protocol 0.9.0 status-check identity and operator-copy clarity.
+- Status: DF-012 is implemented from real ForumVault producer and Infra Portal
+  consumer evidence. `checks[].name` remains stable machine identity;
+  `checks[].label` is optional human copy; summaries remain display-only. The
+  next protocol change remains adopter-driven.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

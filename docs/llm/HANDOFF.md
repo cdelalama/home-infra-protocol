@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,22 +6,21 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.8.0 implements the separately accepted DF-011 proposal from pinned
-Home Infra 0.4.3 and Infra Portal 0.16.x evidence. The optional
-`exposure.authentication.mode` object now ships in schema, SPEC, sanitized
-examples, and focused tests. The accepted scope and honesty boundary remain
-anchored in `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
+Protocol 0.9.0 implements DF-012 from real ForumVault producer and Infra Portal
+consumer evidence. Status checks retain required stable machine `name` and gain
+optional human-facing `label`; summaries remain plain display-only copy.
+The implemented contract lives in `schemas/status-snapshot.schema.json` and
+`SPEC.md`; regression coverage lives in `tests/test_status_snapshot_labels.py`.
 
 Current ecosystem state:
 
-1. Home Infra accepted the 0.8.0 transition at `c30f3b4` and now records
-   ForgeOS 0.23.0 authentication planning at `f3c3462`/`c5634fc`.
-2. Existing consumers continue without forced migration; Infra Portal already
-   supports the additive declaration.
-3. Keep expectations, waivers, providers, assessments, probes, and action-plane
-   policy outside the public protocol.
+1. ForumVault 0.15.9 is the first labelled producer; Infra Portal 0.17.0
+   preserves and renders labels with a cosmetic fallback for older producers.
+2. Plaud Mirror and MessageVault remain valid without labels; adoption is
+   optional and should happen when those producer surfaces are next touched.
+3. Home Infra catalog policy and ForgeOS authentication planning are unchanged.
 4. Let later protocol work remain adopter-driven rather than adding speculative
-   authentication fields.
+   presentation fields.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -33,13 +32,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-13 - GPT-5 Codex + Fable (post-release documentation
-  audit)
-- Session Focus: Provider-neutral authentication placement remains published
-  as protocol 0.8.0 and accepted by Home Infra. Removed a stale unmanaged
-  `doc-version` comment from CHANGELOG; its release heading is the canonical
-  `changelog` version-sync marker. No protocol semantics changed. Later work
-  remains adopter-driven under `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
+- Last Updated: 2026-07-13 - GPT-5 Codex.
+- Session Focus: Publish protocol 0.9.0 check identity/display separation and
+  coordinate its first producer and consumer adoption. No authority,
+  freshness, alerting, authentication, or action-plane semantics change.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

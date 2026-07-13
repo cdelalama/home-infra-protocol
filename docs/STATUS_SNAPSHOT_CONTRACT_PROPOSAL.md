@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # Status Snapshot Contract Proposal
 
 ## Status
@@ -42,9 +42,10 @@ it, or alert on it, but they do not rewrite source-of-truth inventory from it.
   "checks": [
     {
       "name": "account:operator@example.invalid",
+      "label": "Operator account",
       "condition": "ok",
       "severity": "none",
-      "summary": "0 errors"
+      "summary": "The latest account sync completed without errors."
     }
   ]
 }
@@ -60,7 +61,9 @@ Required top-level fields:
 Optional fields:
 
 - `checks[]`: shaped sub-checks. If present, each check has `name` and
-  `condition`; `severity` and `summary` are optional.
+  `condition`; `label`, `severity`, and `summary` are optional. `name` is the
+  stable machine identifier. `label` is concise operator-facing copy for
+  consumers that render the check.
 
 ## Condition
 
@@ -139,6 +142,11 @@ be added to the declaration.
 alert routing, entity identity, freshness, or ownership. Machine logic uses
 typed fields.
 
+The same boundary applies to `checks[].label` and `checks[].summary`. Producers
+SHOULD write plain-language operator copy instead of exposing implementation
+fields such as `error_class=none`. Consumers use `checks[].name` for joins and
+may humanize that identifier only as a display fallback when `label` is absent.
+
 ## Consumer Alert Gate
 
 The default alert predicate is:
@@ -170,6 +178,7 @@ above after dedupe.
 - The schema requires `observed_at`, `condition`, `severity`, and `summary`.
 - Top-level `condition` is restricted to `ok | degraded`.
 - `checks[].condition` permits `ok | degraded | down`.
+- `checks[].label` is optional, human-facing, and never used for logic.
 - `severity` uses the ordered `none | info | watch | warning | critical`
   vocabulary.
 - The SPEC and project-contract docs state that freshness is derived by the

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -57,20 +57,20 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-07-12)
+## Current Status (2026-07-13)
 
-Protocol 0.8.0 implements the separately accepted DF-011 provider-neutral
-authentication placement contract from real Home Infra and Infra Portal
-adoption. The optional field is additive and declares intent, not proof.
+Protocol 0.9.0 adds optional human labels to status snapshot checks from real
+ForumVault producer and Infra Portal consumer evidence. Stable `name` remains
+machine identity; `label` and `summary` are display-only.
 
 ## Upcoming Milestones
 
-1. Record 0.8.0 adoption in Home Infra with provenance and keep consumer
-   support honest; Infra Portal already consumes the additive field.
+1. Let Plaud Mirror and MessageVault adopt optional check labels when their
+   producer surfaces next change; no forced migration is required.
 2. Keep Home Infra expectations, waivers, provider choice, portal assessments,
    and action-plane policy outside the public protocol.
-3. Keep project-owned sync/telemetry adoption moving through real adopters
-   such as `msgvault-lab`, host-capacity telemetry, and ForumVault.
+3. Keep later status vocabulary adopter-driven rather than adding speculative
+   presentation fields.
 
 ## References
 

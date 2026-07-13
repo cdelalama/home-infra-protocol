@@ -1,4 +1,4 @@
-<!-- doc-version: 0.8.0 -->
+<!-- doc-version: 0.9.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -27,3 +27,18 @@ servers, agents, and validators are deferred until the vocabulary stabilizes.
 Portals, MCP servers, validators, and telemetry agents consume or measure
 protocol data. They must not silently become the source of infrastructure
 truth.
+
+## D-004: Separate Check Identity From Operator Copy
+
+**Date:** 2026-07-13
+**Status:** Accepted
+
+Status snapshot checks keep required `name` as their stable machine-readable
+identity and gain optional `label` for concise operator-facing copy. Producers
+should supply a label when the stable name contains implementation syntax or
+jargon. `summary` remains display-only plain language; neither label nor
+summary may be parsed by consumers.
+
+This preserves backward compatibility and machine joins while preventing a
+consumer from either exposing raw identifiers or maintaining project-specific
+label maps. A consumer may humanize `name` as a cosmetic fallback only.

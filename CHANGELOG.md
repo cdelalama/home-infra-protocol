@@ -2,6 +2,25 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.9.0] - 2026-07-13
+
+### Added
+
+- Optional `checks[].label` for concise human-facing status check names.
+- Regression tests for labelled, unlabelled, and invalid empty-label snapshots.
+
+### Changed
+
+- Define `checks[].name` as stable machine identity and reserve `label` plus
+  `summary` for display-only operator copy.
+- Clarify that summaries should not expose internal field names or `key=value`
+  diagnostics as their primary text.
+
+### Fixed
+
+- Close DF-012 so generic consumers no longer need producer-specific maps to
+  avoid rendering raw check ids.
+
 ## [0.8.0] - 2026-07-12
 
 ### Added

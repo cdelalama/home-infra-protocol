@@ -22,7 +22,7 @@
     "summary": {
       "type": "string",
       "minLength": 1,
-      "description": "Display-only human summary. Consumers MUST NOT parse this field for logic."
+      "description": "Display-only human summary. It SHOULD be a plain-language operator statement rather than an internal field name or key=value expression. Consumers MUST NOT parse this field for logic."
     },
     "checks": {
       "type": "array",
@@ -55,7 +55,14 @@
       "properties": {
         "name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "description": "Stable machine-readable check identifier. Consumers MUST use this field for joins and logic and SHOULD prefer label for display when label is present."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Optional concise human-facing check label. Producers SHOULD provide it when the stable name would expose implementation syntax or jargon in an operator UI."
         },
         "condition": {
           "$ref": "#/$defs/check_condition"
@@ -65,7 +72,7 @@
         },
         "summary": {
           "type": "string",
-          "description": "Display-only human summary for the sub-check. Consumers MUST NOT parse this field for logic."
+          "description": "Display-only human summary for the sub-check. It SHOULD be a plain-language statement rather than an internal field name or key=value expression. Consumers MUST NOT parse this field for logic."
         }
       }
     }
