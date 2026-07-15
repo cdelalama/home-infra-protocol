@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.1 -->
+<!-- doc-version: 0.9.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,17 +6,18 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.9.1 records DF-013 from a real host replacement that restored its
-backend and machine consumer but left the canonical TLS route and Portal state
-broken. Home Infra and pi-fleet now incubate private all-surface recovery and
-security-parity gates. No schema, SPEC, example, validator, or consumer
-semantic changes in this patch. The evidence and promotion gate are canonical
-in `docs/DOWNSTREAM_FEEDBACK.md` under DF-013.
+Protocol 0.9.2 keeps DF-013 open after correcting orientation that still
+described the already-published 0.8.0 as future work. Home Infra and pi-fleet
+continue to incubate private all-surface recovery and security-parity gates.
+No schema, SPEC, example, validator, or consumer semantic changes in this
+patch. The evidence and promotion gate are canonical in
+`docs/DOWNSTREAM_FEEDBACK.md` under DF-013.
 
 Current ecosystem state:
 
-1. Home Infra 0.6.0 and pi-fleet 0.4.0 are the first private recovery adopter
-   pair; Infra Portal remains a generic observer and required no special code.
+1. Home Infra 0.6.1 and pi-fleet 0.4.1 are the hardened first private recovery
+   adopter pair; Infra Portal remains a generic observer and required no
+   special code.
 2. A second proxied service must exercise the same closure model before a
    sanitized proposal is authored.
 3. Keep private addresses, hardware identity, products, backup references,
@@ -35,9 +36,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 ## Current Status
 
 - Last Updated: 2026-07-15 - GPT-5 Codex.
-- Session Focus: Publish protocol 0.9.1 as a feedback-only DF-013 filing from
-  pinned Home Infra/pi-fleet recovery evidence. No authority, schema, SPEC,
-  example, validator, or runtime semantics change.
+- Session Focus: Publish protocol 0.9.2 as an orientation-only correction that
+  removes the stale 0.8.0 publication instruction and keeps DF-013 incubation
+  as the active gate. No authority, schema, SPEC, example, validator, or
+  runtime semantics change.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -388,13 +390,13 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Publish protocol 0.8.0 after schema, SPEC, example, regression, and
-   downstream conformance gates pass.
-2. Record the accepted transition in Home Infra with provenance; do not mutate
-   downstream facts from this protocol session.
+1. Keep DF-013 open until a second real proxied-service recovery exercises the
+   private all-surface closure model.
+2. Author a separate sanitized proposal only if the neutral shape survives
+   both adopter cases; do not promote private host or workflow details.
 3. Continue real adoption of project-owned sync and telemetry contracts.
 4. Keep any future `infra-agent` stats contract evidence-gated and independent
-   from authentication placement.
+   from authentication placement and recovery incubation.
 
 ## Files To Read First
 

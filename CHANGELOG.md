@@ -2,6 +2,18 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.9.2] - 2026-07-15
+
+### Changed
+
+- Reconcile current orientation with the already-published 0.8.0 and 0.9.x
+  releases, leaving DF-013 incubation as the active protocol gate.
+
+### Fixed
+
+- Remove a stale handoff block that still instructed a future session to
+  publish protocol 0.8.0.
+
 ## [0.9.1] - 2026-07-15
 
 ### Added

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.1 -->
+<!-- doc-version: 0.9.2 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -59,8 +59,8 @@ authorities over inventory or intent.
 
 ## Current Status (2026-07-15)
 
-Protocol 0.9.1 records DF-013 after a host replacement restored a backend but
-left its canonical TLS surface and Portal state broken. The reusable
+Protocol 0.9.2 keeps DF-013 open after a host replacement restored a backend
+but left its canonical TLS surface and Portal state broken. The reusable
 all-surface recovery shape is still incubating in private adopters; no public
 contract semantics changed.
 
