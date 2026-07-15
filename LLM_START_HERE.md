@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,12 +81,12 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-13 - GPT-5 Codex.
-- Working on: protocol 0.9.0 status-check identity and operator-copy clarity.
-- Status: DF-012 is implemented from real ForumVault producer and Infra Portal
-  consumer evidence. `checks[].name` remains stable machine identity;
-  `checks[].label` is optional human copy; summaries remain display-only. The
-  next protocol change remains adopter-driven.
+- Last Updated: 2026-07-15 - GPT-5 Codex.
+- Working on: protocol 0.9.1 records DF-013 from an incomplete host recovery
+  that restored its backend but not its canonical TLS surface.
+- Status: DF-013 is open and incubating in private adopters. No recovery field,
+  schema, SPEC, example, or validator changed; a second real proxied-service
+  recovery is required before a neutral proposal is accepted.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

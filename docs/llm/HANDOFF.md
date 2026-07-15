@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,21 +6,23 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.9.0 implements DF-012 from real ForumVault producer and Infra Portal
-consumer evidence. Status checks retain required stable machine `name` and gain
-optional human-facing `label`; summaries remain plain display-only copy.
-The implemented contract lives in `schemas/status-snapshot.schema.json` and
-`SPEC.md`; regression coverage lives in `tests/test_status_snapshot_labels.py`.
+Protocol 0.9.1 records DF-013 from a real host replacement that restored its
+backend and machine consumer but left the canonical TLS route and Portal state
+broken. Home Infra and pi-fleet now incubate private all-surface recovery and
+security-parity gates. No schema, SPEC, example, validator, or consumer
+semantic changes in this patch. The evidence and promotion gate are canonical
+in `docs/DOWNSTREAM_FEEDBACK.md` under DF-013.
 
 Current ecosystem state:
 
-1. ForumVault 0.15.9 is the first labelled producer; Infra Portal 0.17.0
-   preserves and renders labels with a cosmetic fallback for older producers.
-2. Plaud Mirror and MessageVault remain valid without labels; adoption is
-   optional and should happen when those producer surfaces are next touched.
-3. Home Infra catalog policy and ForgeOS authentication planning are unchanged.
-4. Let later protocol work remain adopter-driven rather than adding speculative
-   presentation fields.
+1. Home Infra 0.6.0 and pi-fleet 0.4.0 are the first private recovery adopter
+   pair; Infra Portal remains a generic observer and required no special code.
+2. A second proxied service must exercise the same closure model before a
+   sanitized proposal is authored.
+3. Keep private addresses, hardware identity, products, backup references,
+   commands, and policy outside this public repository.
+4. DF-012 remains implemented in 0.9.0; optional producer label adoption is not
+   blocked by this feedback-only patch.
 
 ## Pending session — Ecosystem Reconciliation
 
@@ -32,10 +34,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-13 - GPT-5 Codex.
-- Session Focus: Publish protocol 0.9.0 check identity/display separation and
-  coordinate its first producer and consumer adoption. No authority,
-  freshness, alerting, authentication, or action-plane semantics change.
+- Last Updated: 2026-07-15 - GPT-5 Codex.
+- Session Focus: Publish protocol 0.9.1 as a feedback-only DF-013 filing from
+  pinned Home Infra/pi-fleet recovery evidence. No authority, schema, SPEC,
+  example, validator, or runtime semantics change.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -157,8 +159,14 @@ consumer-side extension it surfaces — `infra-portal` reading
   placement. Filed 2026-07-12 from Home Infra 0.4.3 and deployed Infra Portal
   0.16.3. Status: `implemented (0.8.0)` through the separately accepted
   `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md`.
+- **DF-012** — Stable check identities need optional operator labels. Filed
+  2026-07-13 from ForumVault and Infra Portal. Status: `implemented (0.9.0)`.
+- **DF-013** — Host recovery can restore a backend while required canonical,
+  consumer, observer, publication, or security surfaces remain broken. Filed
+  2026-07-15 from Home Infra 0.6.0 and pi-fleet 0.4.0. Status: `open`; requires
+  a second real proxied-service recovery before any proposal or schema work.
 
-(DF-001 through DF-006 except DF-005, plus DF-008 through DF-011, are closed: DF-001 + DF-002 implemented in production
+(DF-001 through DF-006 except DF-005, plus DF-008 through DF-012, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
 DF-004 implemented in 0.3.1 via option (a). DF-004 options (b) validator
 check and (c) schema-required remain queued in DF-004 itself for a

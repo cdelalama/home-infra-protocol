@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # Status Snapshot Contract Proposal
 
 ## Status

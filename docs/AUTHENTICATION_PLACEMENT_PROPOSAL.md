@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # Authentication Placement Proposal
 
 Status: implemented in protocol 0.8.0. The proposal was accepted separately in

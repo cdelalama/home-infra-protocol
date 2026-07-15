@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -964,3 +964,72 @@ or `key=value` expressions as primary UI copy.
 - ForumVault 0.15.9 publishes labels and plain-language result summaries.
 - Infra Portal 0.17.0 preserves the label through strict egress, displays it,
   and uses a cosmetic humanized-name fallback for older producers.
+
+## DF-013 — Host recovery can restore the backend while required service surfaces remain broken
+
+- Source: `home-infra` 0.6.0 (`51d1bbd590ae`) + `pi-fleet` 0.4.0
+  (`1dc56e67d628`) + deployed Infra Portal 0.19.2
+- Date observed: 2026-07-15
+- Category: field-gap, process, usability
+- Status: open
+- Related: DF-003, DF-006
+
+### Observation
+
+A replacement host restored the application backend, physical controller,
+persistent state, and its primary machine consumer. The canonical operator URL
+and Infra Portal nevertheless remained down because a local TLS proxy from the
+previous topology had not been restored. The upstream ingress still expected
+HTTPS and a specific TLS server name, so the canonical route returned 502.
+
+Checking only the host-local backend would have declared a partial recovery
+complete. Changing the Portal probe to the direct HTTP backend would have made
+the dashboard green while hiding both the broken canonical route and a
+transport-security regression. Completion required restoring the local TLS
+hop, configuring the ingress TLS name, verifying the machine consumer, testing
+the canonical URL, reconciling published source of truth, and observing the
+service as healthy from the Portal.
+
+### Protocol implication
+
+The existing completion rule correctly requires source-of-truth and relevant
+consumers to agree, but it does not provide a neutral machine-readable way to
+declare all required acceptance surfaces or their observation points. One
+private adopter now incubates:
+
+- required acceptance surfaces with stable ids, check kinds, observation
+  points, expected results, and required/optional status;
+- explicit `complete`, `incomplete`, and `rolled_back` operation outcomes;
+- security-parity checks that distinguish transport encryption from peer
+  verification;
+- a closure rule that fails when any required target, integration, operator,
+  observer, or publication surface fails.
+
+Do not promote that private shape yet. A second real proxied-service recovery
+must exercise it first so the protocol can distinguish reusable concepts from
+host-specific workflow. Any future proposal must remain implementation-neutral
+and sanitized. Private addresses, MACs, backup locations, secret references,
+proxy products, role commands, and operator policy do not belong in the public
+contract.
+
+### Promotion gate
+
+Before moving DF-013 to `accepted`:
+
+1. Run the same all-surface closure model for one other service with canonical
+   ingress and at least one independent consumer.
+2. Record which acceptance fields and observation-point names survive both
+   cases unchanged.
+3. Define how security regression is represented without claiming that an
+   acceptance declaration proves runtime protection.
+4. Produce a separate sanitized proposal with compatibility and consumer
+   honesty rules; schema, SPEC, examples, and validators remain untouched until
+   that proposal is accepted.
+
+### Mitigation in source projects
+
+Home Infra 0.6.0 owns the private recovery graph, declarative ingress, pinned
+role dependency, preflight, and all-surface closure. pi-fleet 0.4.0 owns target
+deploy, encrypted backup, exact-host restore, rollback, and physical-device
+gates. The canonical HTTPS probe remains authoritative; Infra Portal required
+no recovery-specific code.

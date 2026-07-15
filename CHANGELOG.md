@@ -2,6 +2,24 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.9.1] - 2026-07-15
+
+### Added
+
+- DF-013 records that host recovery can restore a backend while canonical,
+  consumer, observer, publication, or transport-security surfaces remain
+  broken.
+
+### Changed
+
+- Gate any reusable all-surface recovery proposal on a second real proxied
+  service and explicitly keep private host/workflow details out of protocol.
+
+### Fixed
+
+- Reoriented current work away from speculative recovery schema design and
+  toward downstream incubation evidence.
+
 ## [0.9.0] - 2026-07-13
 
 ### Added

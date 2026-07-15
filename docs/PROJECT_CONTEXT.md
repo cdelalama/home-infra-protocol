@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.0 -->
+<!-- doc-version: 0.9.1 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -57,20 +57,21 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-07-13)
+## Current Status (2026-07-15)
 
-Protocol 0.9.0 adds optional human labels to status snapshot checks from real
-ForumVault producer and Infra Portal consumer evidence. Stable `name` remains
-machine identity; `label` and `summary` are display-only.
+Protocol 0.9.1 records DF-013 after a host replacement restored a backend but
+left its canonical TLS surface and Portal state broken. The reusable
+all-surface recovery shape is still incubating in private adopters; no public
+contract semantics changed.
 
 ## Upcoming Milestones
 
-1. Let Plaud Mirror and MessageVault adopt optional check labels when their
-   producer surfaces next change; no forced migration is required.
-2. Keep Home Infra expectations, waivers, provider choice, portal assessments,
-   and action-plane policy outside the public protocol.
-3. Keep later status vocabulary adopter-driven rather than adding speculative
-   presentation fields.
+1. Exercise the private all-surface closure model on one other proxied service.
+2. Promote only fields that survive both cases into a separate sanitized
+   proposal; keep host identity, proxy products, secrets, backups, and commands
+   private.
+3. Keep later status and recovery vocabulary adopter-driven rather than adding
+   speculative fields.
 
 ## References
 
