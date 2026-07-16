@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-07-16 - GPT-5 Codex - **Minor 0.10.0 - authoritative next-run evidence.** Implemented DF-014 with optional status-snapshot `next_run_at`, UTC validation, producer/consumer ownership rules, and explicit separation from freshness. Plaud Mirror is the first scheduler-owned producer and Infra Portal restores countdown UX without deriving `DUE` from cadence. - Files: [SPEC.md, schemas/status-snapshot.schema.json, docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md, docs/DOWNSTREAM_FEEDBACK.md, docs/PROJECT_CONTEXT.md, docs/ARCHITECTURE.md, docs/STRUCTURE.md, docs/llm/DECISIONS.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, tests/test_status_snapshot_next_run.py, LLM_START_HERE.md, CHANGELOG.md, VERSION + doc-version targets] - Version impact: yes (0.9.3 -> 0.10.0, minor: additive status-snapshot field)
 
 ## Entries
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -59,18 +59,21 @@ authorities over inventory or intent.
 
 ## Current Status (2026-07-16)
 
-Protocol 0.9.3 keeps DF-013 open after a host replacement restored a backend
-but left its canonical TLS surface and Portal state broken. The reusable
-all-surface recovery shape is hardened in the first private adopter pair but
-still needs a second proxied-service case; no public contract semantics changed.
+Protocol 0.10.0 adds optional producer-owned `next_run_at` scheduling evidence
+to status snapshots after a real consumer lost useful countdowns when it
+stopped deriving unsupported wall-clock plans from cadence. Freshness remains
+strictly derived from `observed_at + stale_after`. DF-013 remains open and its
+second proxied-service recovery gate is unchanged.
 
 ## Upcoming Milestones
 
-1. Exercise the private all-surface closure model on one other proxied service.
-2. Promote only fields that survive both cases into a separate sanitized
+1. Complete first-producer and consumer adoption of `next_run_at` without
+   turning expired plans into incidents.
+2. Exercise the private all-surface closure model on one other proxied service.
+3. Promote only fields that survive both cases into a separate sanitized
    proposal; keep host identity, proxy products, secrets, backups, and commands
    private.
-3. Keep later status and recovery vocabulary adopter-driven rather than adding
+4. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References

@@ -13,6 +13,12 @@
       "pattern": "Z$",
       "description": "UTC RFC3339 timestamp for when the producer observed or completed the check. Producers MUST write this; consumers derive freshness from it."
     },
+    "next_run_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$",
+      "description": "Optional UTC RFC3339 timestamp for the next execution planned by the producer's scheduler. Consumers may render it as an attributed countdown but MUST NOT derive lateness, freshness, or incidents from it. Producers omit it when no authoritative next execution is known."
+    },
     "condition": {
       "$ref": "#/$defs/top_level_condition"
     },

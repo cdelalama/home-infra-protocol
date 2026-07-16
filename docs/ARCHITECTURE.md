@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Architecture
 
 ## Overview
@@ -22,6 +22,10 @@ It defines:
 | Consumer | Renders, validates, searches, or answers questions from source-of-truth data. |
 | Telemetry source | Measures runtime state; never becomes source of intent. |
 | LLM agent | Reads and updates the source-of-truth repo according to completion rules. |
+
+Producer-owned runtime plans such as `next_run_at` flow through the telemetry
+snapshot. Consumers may render them, but cadence remains declaration metadata
+and freshness remains a separate consumer derivation.
 
 ## Data Flow
 

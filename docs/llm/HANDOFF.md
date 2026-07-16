@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,23 +6,26 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.9.3 keeps DF-013 open after reconciling final first-adopter evidence.
-Home Infra and pi-fleet continue to incubate private all-surface recovery and
-security-parity gates.
-No schema, SPEC, example, validator, or consumer semantic changes in this
-patch. The evidence and promotion gate are canonical in
-`docs/DOWNSTREAM_FEEDBACK.md` under DF-013.
+Protocol 0.10.0 implements DF-014 with optional producer-owned `next_run_at` in
+status snapshots. Plaud Mirror is the first authoritative producer and Infra
+Portal is the first consumer. The field is planning evidence only: expired
+values never become `DUE`, freshness, or incidents. DF-013 remains open on its
+independent second proxied-service recovery gate. The canonical field and
+promotion evidence live in `schemas/status-snapshot.schema.json` and
+`docs/DOWNSTREAM_FEEDBACK.md`.
 
 Current ecosystem state:
 
-1. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
+1. Plaud Mirror publishes scheduler-owned `next_run_at`; Infra Portal renders a
+   countdown when future and static cadence otherwise.
+2. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
    recovery adopter pair after independent Fable review; Infra Portal remains
    a generic observer and required no special code.
-2. A second proxied service must exercise the same closure model before a
+3. A second proxied service must exercise the same closure model before a
    sanitized proposal is authored.
-3. Keep private addresses, hardware identity, products, backup references,
+4. Keep private addresses, hardware identity, products, backup references,
    commands, and policy outside this public repository.
-4. DF-012 remains implemented in 0.9.0; optional producer label adoption is not
+5. DF-012 remains implemented in 0.9.0; optional producer label adoption is not
    blocked by this feedback-only patch.
 
 ## Pending session — Ecosystem Reconciliation
@@ -35,11 +38,10 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
-- Session Focus: Protocol 0.9.3 records Home Infra 0.6.5 plus pi-fleet 0.4.5
-  as the hardened first adopter pair and keeps DF-013 incubation as the active
-  gate. No authority, schema,
-  SPEC semantics, example, validator, or runtime semantics change.
+- Last Updated: 2026-07-16 - GPT-5 Codex.
+- Session Focus: Protocol 0.10.0 implements DF-014 with additive
+  `next_run_at`. The producer owns the plan, the consumer may render it, and
+  only `observed_at + stale_after` determines freshness. DF-013 remains open.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

@@ -2,6 +2,24 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.10.0] - 2026-07-16
+
+### Added
+
+- Optional status-snapshot `next_run_at` for producer-owned UTC scheduling
+  plans.
+- Regression coverage for UTC validation and backward-compatible omission.
+
+### Changed
+
+- Keep next-execution plans separate from cadence and freshness: consumers may
+  render an attributed countdown but may not infer `DUE` or health from it.
+
+### Fixed
+
+- Restore a truthful path for countdown UX after Infra Portal removed its
+  unsupported `observed_at + cadence` estimate.
+
 ## [0.9.3] - 2026-07-16
 
 ### Changed

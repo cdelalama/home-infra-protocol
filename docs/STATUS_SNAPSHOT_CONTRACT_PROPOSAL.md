@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Status Snapshot Contract Proposal
 
 ## Status
@@ -36,6 +36,7 @@ it, or alert on it, but they do not rewrite source-of-truth inventory from it.
 ```json
 {
   "observed_at": "2026-06-18T10:30:00Z",
+  "next_run_at": "2026-06-18T10:45:00Z",
   "condition": "ok",
   "severity": "none",
   "summary": "Gmail archive sync completed cleanly",
@@ -60,6 +61,10 @@ Required top-level fields:
 
 Optional fields:
 
+- `next_run_at`: the next execution planned by the producer's scheduler, as a
+  UTC RFC3339 timestamp ending in `Z`. It is omitted when no authoritative plan
+  is available. Consumers may show an attributed countdown but may not turn an
+  expired plan into `due`, staleness, or an incident.
 - `checks[]`: shaped sub-checks. If present, each check has `name` and
   `condition`; `label`, `severity`, and `summary` are optional. `name` is the
   stable machine identifier. `label` is concise operator-facing copy for
@@ -132,6 +137,11 @@ consumer derives the appropriate display state. The protocol recommends:
 
 Those derived values do not get written back into the snapshot.
 
+`next_run_at` does not participate in freshness. It answers when the producer
+currently plans to execute again; `stale_after` answers how long the latest
+successful observation remains usable. Consumers must keep those questions
+separate and must not reconstruct a schedule from `observed_at + cadence`.
+
 Freshness derivation assumes NTP-synchronized hosts and tolerates small clock
 skew. If real adopters need an explicit tolerance, a future optional field can
 be added to the declaration.
@@ -176,6 +186,7 @@ above after dedupe.
 
 - `schemas/status-snapshot.schema.json` exists and parses as JSON Schema.
 - The schema requires `observed_at`, `condition`, `severity`, and `summary`.
+- Optional `next_run_at` is UTC, producer-owned, and never a lateness signal.
 - Top-level `condition` is restricted to `ok | degraded`.
 - `checks[].condition` permits `ok | degraded | down`.
 - `checks[].label` is optional, human-facing, and never used for logic.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,12 +81,12 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
-- Working on: protocol 0.9.3 keeps DF-013 open after reconciling the final
-  first-adopter hardening evidence from Home Infra 0.6.5 and pi-fleet 0.4.5.
-- Status: DF-013 is open and incubating in private adopters. No recovery field,
-  schema, SPEC, example, or validator changed; a second real proxied-service
-  recovery is required before a neutral proposal is accepted.
+- Last Updated: 2026-07-16 - GPT-5 Codex.
+- Working on: protocol 0.10.0 adds optional producer-owned `next_run_at` to
+  status snapshots and keeps it semantically separate from freshness.
+- Status: DF-014 is implemented with Plaud Mirror as first producer and Infra
+  Portal as consumer. DF-013 remains open on its independent second-recovery
+  evidence gate.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

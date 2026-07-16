@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -42,3 +42,17 @@ summary may be parsed by consumers.
 This preserves backward compatibility and machine joins while preventing a
 consumer from either exposing raw identifiers or maintaining project-specific
 label maps. A consumer may humanize `name` as a cosmetic fallback only.
+
+## D-005: Keep Planned Execution Separate From Freshness
+
+**Date:** 2026-07-16
+**Status:** Accepted
+
+An optional status-snapshot `next_run_at` is authored by the producer scheduler
+and may be rendered as an attributed countdown. Consumers must not reconstruct
+it from `observed_at + cadence`, because cadence is an interval rather than a
+wall-clock schedule. An expired plan never means `due`; only the declaration's
+`stale_after` plus snapshot `observed_at` determines freshness.
+
+This restores useful scheduling visibility without making the consumer an
+authority over producer execution or creating a second health signal.

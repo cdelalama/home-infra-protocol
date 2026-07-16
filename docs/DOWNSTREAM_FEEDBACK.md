@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1043,3 +1043,38 @@ scoped as role multisurface verification; Home Infra adds HA entities and local
 TLS SNI for all-surface closure. This strengthens implementation evidence but
 does not satisfy the required second proxied-service case or change DF-013 from
 `open`.
+
+## DF-014 — Consumers need authoritative next-execution evidence
+
+- Source: `infra-portal` 0.19.1/0.19.2 + `plaud-mirror` 0.12.0
+- Date observed: 2026-07-16
+- Category: field-gap
+- Status: implemented (0.10.0)
+- Related: DF-010
+
+### Observation
+
+Infra Portal 0.19.1 estimated a periodic job's next execution by adding the
+declared cadence to `observed_at`. That produced useful countdowns, but cadence
+is only an interval and `observed_at` is not a scheduler anchor. Version 0.19.2
+removed the unsupported `NEXT`/`DUE` display and exposed only static cadence,
+which restored semantic honesty but silently removed a useful operator
+capability. Plaud Mirror already had an authoritative scheduler-owned
+`nextTickAt`, but the public status snapshot had no neutral field for it.
+
+### Protocol implication
+
+Add optional top-level `next_run_at` to the status snapshot. It is a UTC plan
+owned by the producer scheduler, omitted when unknown, and separate from
+freshness. Consumers may render an attributed countdown. They must not derive
+the value from cadence, treat an expired value as due, or let it override
+`observed_at + stale_after`.
+
+### Implementation evidence
+
+- Protocol 0.10.0 defines the additive field in schema, SPEC, proposal, and
+  regression tests.
+- Plaud Mirror is the first producer because its in-process scheduler already
+  owns an exact next-tick timestamp.
+- Infra Portal consumes the field through strict egress, retains static cadence
+  as fallback, and tests that expired plans never manufacture `DUE`.

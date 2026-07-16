@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Repository Structure
 
 ```text
@@ -53,6 +53,7 @@ home-infra-protocol/
 └── tests/
     ├── .gitkeep
     ├── test_authentication_placement.py
+    ├── test_status_snapshot_next_run.py
     └── test_status_snapshot_labels.py
 ```
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.3 -->
+<!-- doc-version: 0.10.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -494,6 +494,15 @@ Required fields:
 - `severity`: producer-recommended ordered severity.
 - `summary`: display-only human summary.
 
+Optional scheduling evidence:
+
+- `next_run_at`: UTC RFC3339 timestamp ending in `Z` for the next execution
+  authoritatively planned by the producer's scheduler. Producers MUST omit it
+  when disabled or when the next execution is unknown. Consumers MAY render an
+  attributed countdown, but MUST NOT derive this value by adding declared
+  cadence to `observed_at` and MUST NOT use an expired value to declare a job
+  due, late, stale, or unhealthy.
+
 Optional `checks[]` split machine identity from presentation:
 
 - `name`: stable machine-readable identifier used for joins and logic.
@@ -530,6 +539,9 @@ freshness = now - snapshot.observed_at <= declaration.stale_after ? fresh : stal
 
 This requires a join between the status snapshot and the job declaration.
 `stale_after` belongs in the declaration, not in runtime output.
+`next_run_at` is a producer plan, not freshness evidence. It does not override
+the derived result and may legitimately be future-dated while the last usable
+snapshot is already stale.
 
 ### Consumer
 
