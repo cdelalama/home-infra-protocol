@@ -67,11 +67,14 @@ second proxied-service recovery gate is unchanged.
 
 ## Upcoming Milestones
 
-1. Keep first-adopter evidence healthy: Plaud Mirror 0.13.0 publishes the live
-   plan and Infra Portal 0.20.0 falls back to cadence after expiry without an
+1. Keep first-adopter evidence healthy: Plaud Mirror 0.13.1 publishes the live
+   plan and Infra Portal 0.20.2 falls back to cadence after expiry without an
    incident or freshness claim.
-2. Exercise the private all-surface closure model on one other proxied service.
-3. Promote only recovery fields that survive both cases into a separate sanitized
+2. Harden the status schema so UTC-Z validity does not depend on a validator's
+   optional format assertion, and define `next_run_at <= now` as expired plan
+   evidence without prescribing consumer copy.
+3. Exercise the private all-surface closure model on one other proxied service.
+4. Promote only recovery fields that survive both cases into a separate sanitized
    proposal; keep host identity, proxy products, secrets, backups, and commands
    private.
 4. Keep later status and recovery vocabulary adopter-driven rather than adding

@@ -84,10 +84,12 @@ Source of truth: `docs/llm/HANDOFF.md`.
 - Last Updated: 2026-07-16 - GPT-5 Codex.
 - Working on: protocol 0.10.0 adds optional producer-owned `next_run_at` to
   status snapshots and keeps it semantically separate from freshness.
-- Status: DF-014 is implemented and deployed end to end: Plaud Mirror 0.13.0
-  source 31d9602 publishes the plan, Infra Portal 0.20.0 source 582d10b renders
-  it, and Home Infra 0.6.8 input e8774d5 supplies warning-free provenance.
-  DF-013 remains open on its independent second-recovery evidence gate.
+- Status: DF-014 is implemented and deployed end to end: Plaud Mirror 0.13.1
+  source d00ca3e publishes the plan, Infra Portal 0.20.2 source c13daca renders
+  it, and Home Infra 0.6.10 input 015d7ee supplies warning-free provenance.
+  Final independent Fable audit returned GO. A future 0.10.1 patch should make
+  UTC-Z schema validation assertion-independent and define equality as expired
+  countdown evidence. DF-013 remains open on its second-recovery evidence gate.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist
