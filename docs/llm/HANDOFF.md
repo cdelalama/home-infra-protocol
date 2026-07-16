@@ -15,7 +15,7 @@ patch. The evidence and promotion gate are canonical in
 
 Current ecosystem state:
 
-1. Home Infra 0.6.4 and private pi-fleet 0.4.4 are the final hardened first
+1. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
    recovery adopter pair after independent Fable review; Infra Portal remains
    a generic observer and required no special code.
 2. A second proxied service must exercise the same closure model before a
@@ -36,9 +36,9 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 ## Current Status
 
 - Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
-- Session Focus: Publish protocol 0.9.3 as an orientation-only correction that
-  records Home Infra 0.6.4 plus pi-fleet 0.4.4 as the hardened first adopter
-  pair and keeps DF-013 incubation as the active gate. No authority, schema,
+- Session Focus: Protocol 0.9.3 records Home Infra 0.6.5 plus pi-fleet 0.4.5
+  as the hardened first adopter pair and keeps DF-013 incubation as the active
+  gate. No authority, schema,
   SPEC semantics, example, validator, or runtime semantics change.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:

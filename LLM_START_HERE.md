@@ -83,7 +83,7 @@ Source of truth: `docs/llm/HANDOFF.md`.
 
 - Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
 - Working on: protocol 0.9.3 keeps DF-013 open after reconciling the final
-  first-adopter hardening evidence from Home Infra 0.6.4 and pi-fleet 0.4.4.
+  first-adopter hardening evidence from Home Infra 0.6.5 and pi-fleet 0.4.5.
 - Status: DF-013 is open and incubating in private adopters. No recovery field,
   schema, SPEC, example, or validator changed; a second real proxied-service
   recovery is required before a neutral proposal is accepted.

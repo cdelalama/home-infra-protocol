@@ -7,7 +7,7 @@ All notable changes to Home Infra Protocol are tracked here.
 ### Changed
 
 - Reconcile DF-013 orientation with the final first-adopter pair: Home Infra
-  0.6.4 and private pi-fleet 0.4.4 after independent Fable review.
+  0.6.5 and private pi-fleet 0.4.5 after independent Fable review.
 - Keep the second proxied-service recovery as the promotion gate; no recovery
   field, schema, SPEC semantics, example, validator, or authority changed.
 
