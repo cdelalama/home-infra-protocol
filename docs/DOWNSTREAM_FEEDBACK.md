@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1033,3 +1033,11 @@ role dependency, preflight, and all-surface closure. pi-fleet 0.4.0 owns target
 deploy, encrypted backup, exact-host restore, rollback, and physical-device
 gates. The canonical HTTPS probe remains authoritative; Infra Portal required
 no recovery-specific code.
+
+The first adopter pair was subsequently hardened through Home Infra 0.6.4 and
+private pi-fleet 0.4.4. Independent Fable review found the ten original defects
+closed; follow-up patches added fixture-tested Compose evidence, bounded
+rollbacks, unpredictable staging paths, post-snapshot all-surface verification,
+and explicit incomplete outcomes. This strengthens implementation evidence but
+does not satisfy the required second proxied-service case or change DF-013 from
+`open`.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -57,12 +57,12 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-07-15)
+## Current Status (2026-07-16)
 
-Protocol 0.9.2 keeps DF-013 open after a host replacement restored a backend
+Protocol 0.9.3 keeps DF-013 open after a host replacement restored a backend
 but left its canonical TLS surface and Portal state broken. The reusable
-all-surface recovery shape is still incubating in private adopters; no public
-contract semantics changed.
+all-surface recovery shape is hardened in the first private adopter pair but
+still needs a second proxied-service case; no public contract semantics changed.
 
 ## Upcoming Milestones
 

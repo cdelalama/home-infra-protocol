@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # Security Model
 
 Home Infra Protocol assumes catalogs may be consumed by internal tools and LLM

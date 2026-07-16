@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -8,6 +8,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
 
 ## Entries
+
+- 2026-07-16 - GPT-5 Codex + Fable - **Published protocol 0.9.3 orientation for the final DF-013 first-adopter evidence.** Recorded Home Infra 0.6.4 and private pi-fleet 0.4.4 after independent review and final hardening, retained the second proxied-service recovery as the promotion gate, and kept DF-013 open. No recovery field, schema, SPEC semantics, sanitized example, validator, authority, or consumer runtime changed. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/DOWNSTREAM_FEEDBACK.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.9.2 to 0.9.3 patch: current-work orientation only).
 
 - 2026-07-15 - GPT-5 Codex - **Published protocol 0.9.2 as an orientation-only correction.** Removed the stale handoff instruction to publish the already-shipped 0.8.0, recorded Home Infra 0.6.1 plus pi-fleet 0.4.1 as the hardened first adopter pair, and kept DF-013 gated on a second real proxied-service recovery. No schema, SPEC, example, validator, authority, or runtime semantics changed. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.9.1 -> 0.9.2 patch: current-work orientation only).
 

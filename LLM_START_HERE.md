@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,9 +81,9 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-15 - GPT-5 Codex.
-- Working on: protocol 0.9.2 keeps DF-013 open after reconciling stale
-  orientation left behind by the already-published 0.8.0 release.
+- Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
+- Working on: protocol 0.9.3 keeps DF-013 open after reconciling the final
+  first-adopter hardening evidence from Home Infra 0.6.4 and pi-fleet 0.4.4.
 - Status: DF-013 is open and incubating in private adopters. No recovery field,
   schema, SPEC, example, or validator changed; a second real proxied-service
   recovery is required before a neutral proposal is accepted.

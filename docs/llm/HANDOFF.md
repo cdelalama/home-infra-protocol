@@ -1,4 +1,4 @@
-<!-- doc-version: 0.9.2 -->
+<!-- doc-version: 0.9.3 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,18 +6,18 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.9.2 keeps DF-013 open after correcting orientation that still
-described the already-published 0.8.0 as future work. Home Infra and pi-fleet
-continue to incubate private all-surface recovery and security-parity gates.
+Protocol 0.9.3 keeps DF-013 open after reconciling final first-adopter evidence.
+Home Infra and pi-fleet continue to incubate private all-surface recovery and
+security-parity gates.
 No schema, SPEC, example, validator, or consumer semantic changes in this
 patch. The evidence and promotion gate are canonical in
 `docs/DOWNSTREAM_FEEDBACK.md` under DF-013.
 
 Current ecosystem state:
 
-1. Home Infra 0.6.1 and pi-fleet 0.4.1 are the hardened first private recovery
-   adopter pair; Infra Portal remains a generic observer and required no
-   special code.
+1. Home Infra 0.6.4 and private pi-fleet 0.4.4 are the final hardened first
+   recovery adopter pair after independent Fable review; Infra Portal remains
+   a generic observer and required no special code.
 2. A second proxied service must exercise the same closure model before a
    sanitized proposal is authored.
 3. Keep private addresses, hardware identity, products, backup references,
@@ -35,11 +35,11 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 
 ## Current Status
 
-- Last Updated: 2026-07-15 - GPT-5 Codex.
-- Session Focus: Publish protocol 0.9.2 as an orientation-only correction that
-  removes the stale 0.8.0 publication instruction and keeps DF-013 incubation
-  as the active gate. No authority, schema, SPEC, example, validator, or
-  runtime semantics change.
+- Last Updated: 2026-07-16 - GPT-5 Codex + Fable.
+- Session Focus: Publish protocol 0.9.3 as an orientation-only correction that
+  records Home Infra 0.6.4 plus pi-fleet 0.4.4 as the hardened first adopter
+  pair and keeps DF-013 incubation as the active gate. No authority, schema,
+  SPEC semantics, example, validator, or runtime semantics change.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
