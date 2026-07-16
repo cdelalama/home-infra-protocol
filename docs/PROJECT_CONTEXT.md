@@ -67,10 +67,11 @@ second proxied-service recovery gate is unchanged.
 
 ## Upcoming Milestones
 
-1. Complete first-producer and consumer adoption of `next_run_at` without
-   turning expired plans into incidents.
+1. Keep first-adopter evidence healthy: Plaud Mirror 0.13.0 publishes the live
+   plan and Infra Portal 0.20.0 falls back to cadence after expiry without an
+   incident or freshness claim.
 2. Exercise the private all-surface closure model on one other proxied service.
-3. Promote only fields that survive both cases into a separate sanitized
+3. Promote only recovery fields that survive both cases into a separate sanitized
    proposal; keep host identity, proxy products, secrets, backups, and commands
    private.
 4. Keep later status and recovery vocabulary adopter-driven rather than adding

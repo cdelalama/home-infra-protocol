@@ -16,8 +16,10 @@ promotion evidence live in `schemas/status-snapshot.schema.json` and
 
 Current ecosystem state:
 
-1. Plaud Mirror publishes scheduler-owned `next_run_at`; Infra Portal renders a
-   countdown when future and static cadence otherwise.
+1. Plaud Mirror 0.13.0 source 31d9602 publishes scheduler-owned `next_run_at`;
+   Infra Portal 0.20.0 source 582d10b renders a countdown when future and static
+   cadence otherwise. Home Infra 0.6.8 input e8774d5 is synchronized with no
+   provenance warnings. Live evidence is 627/627, `ok/none`, and not stale.
 2. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
    recovery adopter pair after independent Fable review; Infra Portal remains
    a generic observer and required no special code.
@@ -41,7 +43,8 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 - Last Updated: 2026-07-16 - GPT-5 Codex.
 - Session Focus: Protocol 0.10.0 implements DF-014 with additive
   `next_run_at`. The producer owns the plan, the consumer may render it, and
-  only `observed_at + stale_after` determines freshness. DF-013 remains open.
+  only `observed_at + stale_after` determines freshness. The first producer,
+  consumer, and control-plane adoption is deployed; DF-013 remains open.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
