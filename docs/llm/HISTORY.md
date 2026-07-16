@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.0 -->
+<!-- doc-version: 0.10.1 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-07-16 - GPT-5 Codex - Prepared Protocol 0.10.1 schedule-evidence hardening: exact UTC RFC3339 patterns no longer depend on optional format assertion; periodic, webhook, and manual adoption semantics are explicit; expired plans cannot become DUE; focused tests cover malformed suffix-only text and fractional UTC seconds. - Files: [schemas/status-snapshot.schema.json, SPEC.md, tests/test_status_snapshot_next_run.py, CHANGELOG.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, VERSION and version markers] - Version impact: yes (0.10.0 to 0.10.1 patch)
 
 - 2026-07-16 - Fable + GPT-5 Codex - **Final independent DF-014 rollout audit returned GO with no blockers.** Fable reproduced Protocol schema tests, Portal 108/108 tests, Plaud 194/194 tests, warning-free Home Infra provenance, live future `nextRunAt`, freshness independence, and no `DUE`. Current adopters are Plaud Mirror 0.13.1 source d00ca3e, Infra Portal 0.20.2 source c13daca, and Home Infra 0.6.10 input 015d7ee. The nonblocking protocol follow-up is a 0.10.1 patch making UTC-Z validity independent of optional JSON Schema format assertion and defining `next_run_at <= now` as expired plan evidence without prescribing UI copy. No schema or SPEC changed in this documentation-only closure. - Files: [LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md] - Version impact: no (final audit evidence and explicit next patch for existing 0.10.0)
 

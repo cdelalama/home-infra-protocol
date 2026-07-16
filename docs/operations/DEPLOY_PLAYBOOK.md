@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.0 -->
+<!-- doc-version: 0.10.1 -->
 # Deploy Playbook
 
 There is no deployable service in v0.1.

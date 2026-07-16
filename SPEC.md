@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.0 -->
+<!-- doc-version: 0.10.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -502,6 +502,26 @@ Optional scheduling evidence:
   attributed countdown, but MUST NOT derive this value by adding declared
   cadence to `observed_at` and MUST NOT use an expired value to declare a job
   due, late, stale, or unhealthy.
+
+Schedule-mode presentation and adoption are cross-object rules:
+
+- an enabled `cron` or `internal-loop` producer SHOULD publish `next_run_at`
+  whenever its scheduler has already selected the next execution; a Home Infra
+  profile MAY make that evidence mandatory for its registered periodic jobs;
+- `webhook` producers are event-driven and `manual` producers are
+  operator-driven, so they MUST omit `next_run_at` unless a concrete future run
+  has actually been queued by the producer;
+- consumers SHOULD identify the declared trigger mode when no countdown is
+  applicable, for example `ON EVENT` for `webhook` and `MANUAL` for `manual`;
+- a value at or before the consumer's current time is an expired plan. It
+  remains historical producer evidence, but consumers MUST stop the countdown
+  and fall back to cadence or trigger-mode presentation without manufacturing
+  `DUE`.
+
+Contract validators can validate a snapshot in isolation, but enforcing the
+periodic adoption rule requires joining the project contract job declaration
+with its live status snapshot. That cross-object check belongs in a source-of-
+truth profile, producer acceptance test, or deployment verifier.
 
 Optional `checks[]` split machine identity from presentation:
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.0 -->
+<!-- doc-version: 0.10.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -6,23 +6,22 @@ This file is the current operational snapshot. Durable decisions live in
 
 ## Open work — next concrete step
 
-Protocol 0.10.0 implements DF-014 with optional producer-owned `next_run_at` in
-status snapshots. Plaud Mirror is the first authoritative producer and Infra
-Portal is the first consumer. The field is planning evidence only: expired
-values never become `DUE`, freshness, or incidents. DF-013 remains open on its
-independent second proxied-service recovery gate. The canonical field and
-promotion evidence live in `schemas/status-snapshot.schema.json` and
-`docs/DOWNSTREAM_FEEDBACK.md`. Final independent Fable audit returned GO. Its
-only protocol-specific finding is that JSON Schema `format` can be annotation-
-only; a future 0.10.1 patch should add assertion-independent UTC-Z validation
-and define `next_run_at <= now` as expired countdown evidence.
+Protocol 0.10.1 closes the independent-audit hardening for DF-014:
+`observed_at` and `next_run_at` now carry assertion-independent UTC RFC3339
+patterns, a plan at or before the consumer clock is explicitly expired, and
+the schedule-mode matrix distinguishes periodic plans from webhook/manual
+triggers in `schemas/status-snapshot.schema.json` and `SPEC.md`. Plaud Mirror
+remains the first deployed producer. ForumVault and
+msgvault adoption are coordinated through Home Infra's private cross-object
+gate; Media2Text remains correctly event-driven. DF-013 remains open on its
+independent second proxied-service recovery gate.
 
 Current ecosystem state:
 
-1. Plaud Mirror 0.13.1 source d00ca3e publishes scheduler-owned `next_run_at`;
-   Infra Portal 0.20.2 source c13daca renders a countdown when future and static
-   cadence otherwise. Home Infra 0.6.10 input 015d7ee is synchronized with no
-   provenance warnings. Live evidence is 627/627, `ok/none`, and not stale.
+1. Protocol 0.10.1 is the current contract candidate. Infra Portal 0.20.3,
+   ForumVault 0.16.0, and Home Infra 0.7.0 are the coordinated adopters in this
+   rollout; msgvault 0.24.0 remains branch-only until its occupied worktree is
+   reconciled and the runtime is deployed.
 2. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
    recovery adopter pair after independent Fable review; Infra Portal remains
    a generic observer and required no special code.
@@ -44,12 +43,12 @@ A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AN
 ## Current Status
 
 - Last Updated: 2026-07-16 - GPT-5 Codex.
-- Session Focus: Protocol 0.10.0 implements DF-014 with additive
-  `next_run_at`. The producer owns the plan, the consumer may render it, and
-  only `observed_at + stale_after` determines freshness. The first producer,
-  consumer, and control-plane adoption is deployed and independently audited
-  GO. The next protocol patch should harden timestamp assertion/equality
-  semantics; DF-013 remains open.
+- Session Focus: Protocol 0.10.1 hardens DF-014 and records its cross-project
+  adoption matrix. The producer owns `next_run_at`, the consumer may render
+  it, and only `observed_at + stale_after` determines freshness. Plaud Mirror
+  is deployed, ForumVault is the next periodic producer in this rollout,
+  msgvault remains explicitly pending, and event/manual jobs omit countdowns.
+  DF-013 remains open.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

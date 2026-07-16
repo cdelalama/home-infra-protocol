@@ -33,6 +33,17 @@ class StatusSnapshotNextRunTest(unittest.TestCase):
         with self.assertRaises(ValidationError):
             validate(candidate, SCHEMA)
 
+    def test_rejects_text_that_only_ends_in_z(self) -> None:
+        candidate = snapshot()
+        candidate["next_run_at"] = "not-a-timestampZ"
+        with self.assertRaises(ValidationError):
+            validate(candidate, SCHEMA)
+
+    def test_accepts_fractional_utc_seconds(self) -> None:
+        candidate = snapshot()
+        candidate["next_run_at"] = "2026-07-16T16:15:00.123Z"
+        validate(candidate, SCHEMA)
+
 
 if __name__ == "__main__":
     unittest.main()

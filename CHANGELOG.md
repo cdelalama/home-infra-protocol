@@ -2,6 +2,20 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.10.1] - 2026-07-16
+
+### Changed
+
+- Define schedule-mode presentation and adoption semantics across periodic,
+  webhook, and manual project observations.
+
+### Fixed
+
+- Make UTC `observed_at` and `next_run_at` validation independent of optional
+  JSON Schema format assertion.
+- Define an expired plan as evidence at or before the consumer clock and forbid
+  consumers from manufacturing a `DUE` state.
+
 ## [0.10.0] - 2026-07-16
 
 ### Added
