@@ -4,24 +4,85 @@
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
+## Pre-shutdown cold-start checkpoint (2026-07-18)
+
+This checkpoint is the durable replacement for the VM's ephemeral terminal
+state. The protocol implementation baseline is published protocol 0.10.1 at
+`0dce100`; this checkpoint changes orientation only, not protocol semantics,
+schemas, examples, runtimes, or sibling repositories.
+
+At the start of this session, `main`, `origin/main`, and the clean worktree all
+agreed at `0dce100`. The other `home-infra-protocol` Claude and administrative
+tmux panes contained no unrecorded work. The VM has many unrelated tmux
+sessions, but this public repo does not claim that those other projects are
+restart-ready. A shutdown will end the processes; committed and pushed Git
+state is the recovery authority.
+
+Cold-start sequence for a new LLM session:
+
+1. Run `cd ~/src/home-infra-protocol`, then `git fetch --prune origin` and
+   `git status --short --branch`. Stop if the branch diverges or the worktree is
+   unexpectedly dirty.
+2. Let the installed SessionStart hook load the project. If it does not emit
+   onboarding, run `scripts/dockit-bootstrap-context.sh` manually.
+3. Follow the mandatory reading order in `LLM_START_HERE.md`, with this file as
+   the current-work authority.
+4. Run `scripts/check-version-sync.sh` and
+   `scripts/dockit-validate-session.sh --human` before making changes.
+5. Treat every live health result, timestamp, count, deployment claim, and
+   worktree state below as historical evidence after the reboot. Re-verify it
+   in the owning repo before acting or claiming current runtime truth.
+
+Read-only ecosystem reconciliation performed for this checkpoint:
+
+- Protocol 0.10.1 is published, not a candidate. Its schema hardening and the
+  DF-014 first-adopter audit are closed.
+- Infra Portal 0.20.3 is published and deployed. ForumVault 0.16.0 completed a
+  real hourly schedule-evidence soak and is accepted as `required` by Home
+  Infra. Plaud Mirror is now at deployed 0.14.2 and retains the periodic
+  producer contract. Media2Text remains correctly event-driven.
+- Home Infra 0.7.6 remains the private source of truth. Its next schedule gate
+  is still msgvault: clean branch `codex/observation-schedule-evidence` at
+  `4723975` / 0.24.0 is not deployed and must not be promoted from `pending`
+  until its separate primary-worktree DocKit changes are reconciled, the
+  candidate is deployed, and a future `next_run_at` is observed.
+- This repo last adopted LLM-DocKit 4.12.3. Canonical LLM-DocKit is 4.13.1;
+  the 2026-07-18 dry run reports six updated files and one new session-gate
+  script. The current Codex SessionStart path worked in this session. Perform
+  the 4.13.1 sync later as a dedicated tooling patch, and keep its global hook
+  reinstall behind the operator-controlled backup, diff, trust, and
+  fresh-session checks required by LLM-DocKit.
+
+## Do Not Touch Without Explicit Operator Approval
+
+- Do not edit or deploy `home-infra`, Infra Portal, Plaud Mirror, ForumVault,
+  msgvault, pi-fleet, or any NAS/VM runtime from this protocol session.
+- Do not merge or deploy msgvault's isolated 0.24.0 branch from here.
+- Do not add recovery fields or author a sanitized DF-013 proposal before a
+  second real proxied-service recovery passes the existing evidence gate.
+- Do not combine a DocKit 4.13.1 sync with protocol-semantic work.
+- Do not copy private addresses, host identity, products, secrets, backup
+  locations, commands, or adopter policy into this public repository.
+
 ## Open work — next concrete step
 
-Protocol 0.10.1 closes the independent-audit hardening for DF-014:
+Protocol 0.10.1 is published and closes the independent-audit hardening for
+DF-014:
 `observed_at` and `next_run_at` now carry assertion-independent UTC RFC3339
 patterns, a plan at or before the consumer clock is explicitly expired, and
 the schedule-mode matrix distinguishes periodic plans from webhook/manual
 triggers in `schemas/status-snapshot.schema.json` and `SPEC.md`. Plaud Mirror
-remains the first deployed producer. ForumVault and
-msgvault adoption are coordinated through Home Infra's private cross-object
-gate; Media2Text remains correctly event-driven. DF-013 remains open on its
-independent second proxied-service recovery gate.
+remains the first deployed producer, ForumVault has completed its soak, and
+msgvault remains the only pending periodic adoption in this rollout. DF-013
+remains open on its independent second proxied-service recovery gate.
 
 Current ecosystem state:
 
-1. Protocol 0.10.1 is the current contract candidate. Infra Portal 0.20.3,
-   ForumVault 0.16.0, and Home Infra 0.7.0 are the coordinated adopters in this
-   rollout; msgvault 0.24.0 remains branch-only until its occupied worktree is
-   reconciled and the runtime is deployed.
+1. Protocol 0.10.1 is the published contract. Infra Portal 0.20.3,
+   ForumVault 0.16.0, Plaud Mirror 0.14.2, and Home Infra 0.7.6 are the current
+   coordinated releases relevant to this rollout. Msgvault 0.24.0 remains
+   branch-only until its occupied primary worktree is reconciled, the runtime
+   is deployed, and a future plan is observed.
 2. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
    recovery adopter pair after independent Fable review; Infra Portal remains
    a generic observer and required no special code.
@@ -32,23 +93,42 @@ Current ecosystem state:
 5. DF-012 remains implemented in 0.9.0; optional producer label adoption is not
    blocked by this feedback-only patch.
 
-## Pending session — Ecosystem Reconciliation
+## Open decisions after restart
 
-A multi-day deliberation on 2026-05-02→04 produced two cross-repo proposals AND surfaced a significant prior-art gap: `~/src/llm-council` predates much of `LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`. Reconciliation gated to Session 4 of the roadmap.
+1. Resume the msgvault deploy-observe-promote gate, or schedule the separate
+   LLM-DocKit 4.13.1 tooling sync first. Do not combine them; msgvault is the
+   current ecosystem rollout gate, while the DocKit sync is repository hygiene.
+2. Select the second real proxied service for DF-013 only in the private
+   source-of-truth workflow. This public repo must not guess the service or
+   pre-author the recovery proposal.
+3. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
+   and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
+   Project SemVer 0.10.1 is authoritative today; do not silently rewrite the
+   core spec during an operational checkpoint.
+
+## Deferred ecosystem reconciliation backlog
+
+A multi-day deliberation on 2026-05-02 to 2026-05-04 produced two cross-repo
+proposals and surfaced a significant prior-art gap: `~/src/llm-council`
+predates much of `LLM-DocKit/docs/CONSENSUS_PROTOCOL_PROPOSAL.md`.
 
 **Master roadmap**: `~/src/home-infra/docs/SESSION_HANDOFF_2026-05-04_ECOSYSTEM_RECONCILIATION.md`
 
-**For this repo specifically**: Session 1 (Implement DEPLOYMENT_EVIDENCE_PROPOSAL.md) **shipped in 0.3.0** (this session). Session 4 is the one that produces `docs/ECOSYSTEM_MAP.md` here. Remaining sessions documented with copy-pasteable prompts in the master roadmap.
+**Fresh-session warning**: the master roadmap is a May snapshot and still
+describes already-closed DF-004 work as pending. Do not paste its archived
+prompts or treat its repository table as current without a new cross-repo
+audit. Session 1 shipped in 0.3.0 and the former Session 6 shipped in 0.3.1.
+The residual architectural reconciliation that may eventually produce
+`docs/ECOSYSTEM_MAP.md` remains deferred and is not the next protocol gate.
 
 ## Current Status
 
-- Last Updated: 2026-07-16 - GPT-5 Codex.
-- Session Focus: Protocol 0.10.1 hardens DF-014 and records its cross-project
-  adoption matrix. The producer owns `next_run_at`, the consumer may render
-  it, and only `observed_at + stale_after` determines freshness. Plaud Mirror
-  is deployed, ForumVault is the next periodic producer in this rollout,
-  msgvault remains explicitly pending, and event/manual jobs omit countdowns.
-  DF-013 remains open.
+- Last Updated: 2026-07-18 - GPT-5 Codex.
+- Session Focus: pre-shutdown cold-start reconciliation for published protocol
+  0.10.1. The repository remains in draft 0.x adopter-hardening: DF-014 and its
+  first producer/consumer audit are closed, ForumVault is accepted after its
+  schedule soak, msgvault remains explicitly pending, and DF-013 remains in
+  evidence incubation. This session changes documentation only.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -399,16 +479,22 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Keep DF-013 open until a second real proxied-service recovery exercises the
+1. Complete msgvault's separate 0.24.0 deploy-observe-promote gate; do not make
+   the protocol repo the runtime executor.
+2. Keep DF-013 open until a second real proxied-service recovery exercises the
    private all-surface closure model.
-2. Author a separate sanitized proposal only if the neutral shape survives
+3. Author a separate sanitized proposal only if the neutral shape survives
    both adopter cases; do not promote private host or workflow details.
-3. Continue real adoption of project-owned sync and telemetry contracts.
-4. Keep any future `infra-agent` stats contract evidence-gated and independent
+4. Sync LLM-DocKit 4.13.1 in a dedicated tooling patch after operator review of
+   the global hook boundary.
+5. Continue real adoption of project-owned sync and telemetry contracts.
+6. Keep any future `infra-agent` stats contract evidence-gated and independent
    from authentication placement and recovery incubation.
 
 ## Files To Read First
 
+- `LLM_START_HERE.md`
+- `docs/llm/HANDOFF.md`
 - `README.md`
 - `SPEC.md`
 - `docs/PROJECT_CONTEXT.md`
@@ -416,3 +502,4 @@ is `infra-portal`.
 - `docs/COMPLETION_RULE.md`
 - `docs/GOVERNANCE.md`
 - `docs/PROJECT_CONTRACTS.md`
+- `docs/llm/DECISIONS.md`

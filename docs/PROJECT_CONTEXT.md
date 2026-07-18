@@ -57,27 +57,28 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 
-## Current Status (2026-07-16)
+## Current Status (2026-07-18)
 
-Protocol 0.10.0 adds optional producer-owned `next_run_at` scheduling evidence
-to status snapshots after a real consumer lost useful countdowns when it
-stopped deriving unsupported wall-clock plans from cadence. Freshness remains
-strictly derived from `observed_at + stale_after`. DF-013 remains open and its
-second proxied-service recovery gate is unchanged.
+Protocol 0.10.1 is published with optional producer-owned `next_run_at`,
+assertion-independent UTC-Z validation, explicit expired-plan semantics, and
+schedule-mode presentation rules. Freshness remains strictly derived from
+`observed_at + stale_after`. Infra Portal and the Plaud/ForumVault producers
+have completed the first rollout; msgvault remains at its deploy-observe-
+promote gate. DF-013 remains open and its second proxied-service recovery gate
+is unchanged.
 
 ## Upcoming Milestones
 
-1. Keep first-adopter evidence healthy: Plaud Mirror 0.13.1 publishes the live
-   plan and Infra Portal 0.20.2 falls back to cadence after expiry without an
-   incident or freshness claim.
-2. Harden the status schema so UTC-Z validity does not depend on a validator's
-   optional format assertion, and define `next_run_at <= now` as expired plan
-   evidence without prescribing consumer copy.
-3. Exercise the private all-surface closure model on one other proxied service.
-4. Promote only recovery fields that survive both cases into a separate sanitized
-   proposal; keep host identity, proxy products, secrets, backups, and commands
-   private.
-4. Keep later status and recovery vocabulary adopter-driven rather than adding
+1. Reconcile and deploy msgvault's isolated 0.24.0 schedule-evidence branch,
+   observe a future producer-owned `next_run_at`, then let Home Infra promote
+   it from `pending` to `required`.
+2. Exercise the private all-surface closure model on one other proxied service.
+3. Promote only recovery fields that survive both cases into a separate
+   sanitized proposal; keep host identity, proxy products, secrets, backups,
+   and commands private.
+4. Sync LLM-DocKit 4.13.1 as a dedicated tooling patch after reviewing its
+   session-gate and global Codex hook-installation boundary.
+5. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References
