@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.1 -->
+<!-- doc-version: 0.10.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1078,3 +1078,106 @@ the value from cadence, treat an expired value as due, or let it override
   owns an exact next-tick timestamp.
 - Infra Portal consumes the field through strict egress, retains static cadence
   as fallback, and tests that expired plans never manufacture `DUE`.
+
+## DF-015 — Time-bounded operator obligations need honest pre-telemetry visibility
+
+- Source: `nas-backup` 1.2.1 + Home Infra 0.11.0 + Infra Portal 0.22.0
+- Date observed: 2026-07-28
+- Category: field-gap, process, usability
+- Status: open — private incubation; review evidence due 2026-08-04 before any
+  proposal or normative change
+- Related: DF-009, DF-010, DF-014
+
+### Observation
+
+A real backup producer entered a bounded activation trial before its first
+runtime status snapshot existed. The operator still needed the portal to show
+that a supervised first run and a dated review were pending. Treating the
+service as neutral would hide a real obligation; fabricating producer
+telemetry would falsely claim runtime evidence or backup health.
+
+The source-of-truth repo therefore incubates a private
+`services[].operational_review` declaration. It contains bounded display text,
+a phase, an explicit next action, and UTC action/review timestamps. The portal
+derives an active attention state before the deadline and an overdue risk state
+after it. It never converts the declaration into producer evidence or infers
+that the backup succeeded.
+
+The same consumer already handles a related but narrower pattern for
+development previews: `preview.expires_at` supports expiring and expired
+operator-visible states. This is a second use case and implementation path
+inside the same consumer, not a second independent protocol adopter. The two
+paths may share a reusable concept, but that has not yet been demonstrated.
+
+### Protocol implication
+
+Record a candidate abstraction for a time-bounded operator obligation without
+adding fields yet. Any future shape must keep three authorities separate:
+
+1. source-of-truth intent states what the operator must do and by when;
+2. runtime evidence states what a producer or probe actually observed; and
+3. consumer policy derives attention or overdue presentation from intent plus
+   its own clock.
+
+An operational review must not override status-snapshot `condition`,
+`severity`, `observed_at`, consumer-derived freshness, or deployment evidence.
+An expired review means that an operator decision is overdue; it does not prove
+that the underlying service failed.
+
+The candidate may eventually unify operational trials and preview expiry, or
+the evidence may show that their ownership, lifecycle, and resolution semantics
+are different enough to remain separate. Do not choose a field name, schema
+location, enum, or migration path while this DF remains open.
+
+### Evidence to review on 2026-08-04
+
+Before promoting DF-015, record sanitized answers to these questions:
+
+1. Did the portal expose the pending first run before telemetry existed without
+   manufacturing runtime health?
+2. After accepted first-run evidence, did the source-of-truth explicitly
+   advance the review phase rather than letting the consumer infer success?
+3. Could runtime telemetry and the operator-review state coexist without one
+   masking or overriding the other?
+4. Did the deadline produce an honest overdue state, and did resolution require
+   an explicit keep, revert, or extend decision?
+5. Did catalog and consumer validation reject invalid phases, unsafe display
+   text, malformed timestamps, and impossible timestamp ordering?
+6. Which concepts survive unchanged across the activation trial and
+   `preview.expires_at`: owner, subject, phase, next action, deadline,
+   resolution, and derived presentation?
+7. Which concepts are specific to a backup trial or a development preview and
+   therefore must stay outside a public contract?
+8. Is there an independent adopter or recovery/safety reason strong enough to
+   justify promotion under `docs/GOVERNANCE.md`, or should private incubation
+   continue?
+
+Useful evidence includes source revisions, schema/auditor and consumer test
+results, timestamped active/overdue observations, the first real status
+snapshot if one exists, and the explicit operator decision at review. Keep
+private infrastructure facts, data paths, credentials, provider details,
+notification endpoints, and adopter-specific policy out of this public log.
+
+### Promotion gate
+
+After the dated review:
+
+1. summarize the trial outcome and any false-positive, ambiguity, or stale-state
+   behavior without copying private operational data;
+2. compare the two existing consumer paths and identify only the semantics that
+   remain stable across both;
+3. seek an independent adopter when practical, as preferred by protocol
+   governance, or document the concrete safety/recovery gap that justifies an
+   earlier proposal;
+4. author a separate sanitized, implementation-neutral proposal with
+   compatibility and consumer-honesty rules; and
+5. leave SPEC, schemas, examples, and validators unchanged until that proposal
+   is explicitly accepted.
+
+### Mitigation in source projects
+
+The private source-of-truth declaration and strict portal consumer remain the
+incubation boundary. The producer continues to publish only runtime evidence
+through the existing status-snapshot contract, and active notification remains
+deployment-specific. This feedback entry does not authorize any runtime,
+catalog, producer, consumer, or alerting change.

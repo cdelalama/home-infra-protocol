@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.1 -->
+<!-- doc-version: 0.10.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -66,44 +66,53 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.10.1 is published and closes the independent-audit hardening for
-DF-014:
-`observed_at` and `next_run_at` now carry assertion-independent UTC RFC3339
-patterns, a plan at or before the consumer clock is explicitly expired, and
-the schedule-mode matrix distinguishes periodic plans from webhook/manual
-triggers in `schemas/status-snapshot.schema.json` and `SPEC.md`. Plaud Mirror
-remains the first deployed producer, ForumVault has completed its soak, and
-msgvault remains the only pending periodic adoption in this rollout. DF-013
-remains open on its independent second proxied-service recovery gate.
+Protocol 0.10.2 records DF-015 from the first real pre-telemetry operational
+review without changing SPEC, schemas, examples, validators, or protocol
+semantics. A private source-of-truth declaration makes a bounded backup
+activation trial visible before the producer has emitted its first status
+snapshot. The portal derives active attention or overdue risk from that
+operator intent while keeping runtime evidence and backup health separate.
+The durable evidence questions and promotion gate live in
+`docs/DOWNSTREAM_FEEDBACK.md`.
 
-Current ecosystem state:
+DF-015 also records `preview.expires_at` as a related second use case inside
+the same consumer. It is not represented as a second independent adopter.
+Whether both paths justify one reusable time-bounded operator-obligation
+contract remains an evidence question, not an accepted design.
 
-1. Protocol 0.10.1 is the published contract. Infra Portal 0.20.3,
-   ForumVault 0.16.0, Plaud Mirror 0.14.2, and Home Infra 0.7.6 are the current
-   coordinated releases relevant to this rollout. Msgvault 0.24.0 remains
-   branch-only until its occupied primary worktree is reconciled, the runtime
-   is deployed, and a future plan is observed.
-2. Home Infra 0.6.5 and private pi-fleet 0.4.5 are the final hardened first
-   recovery adopter pair after independent Fable review; Infra Portal remains
-   a generic observer and required no special code.
-3. A second proxied service must exercise the same closure model before a
-   sanitized proposal is authored.
-4. Keep private addresses, hardware identity, products, backup references,
-   commands, and policy outside this public repository.
-5. DF-012 remains implemented in 0.9.0; optional producer label adoption is not
-   blocked by this feedback-only patch.
+Current DF-015 gate:
+
+1. Preserve the private incubation until its dated 2026-08-04 operator review.
+2. Collect only sanitized evidence: active/overdue behavior, explicit phase
+   advancement, coexistence with real telemetry, validation results, and the
+   final keep/revert/extend decision.
+3. Compare the activation-trial and preview-expiry paths for stable neutral
+   concepts without choosing a field name or schema location.
+4. Prefer an independent adopter before promotion unless the review identifies
+   a concrete safety or recovery gap that warrants earlier proposal work.
+5. Do not edit SPEC, schemas, examples, or validators until a separate
+   implementation-neutral proposal is authored and explicitly accepted.
+
+DF-013 remains independently open on its second proxied-service recovery gate.
+The existing DF-014 status-snapshot and next-run semantics remain unchanged.
+Keep private addresses, hardware identity, products, secret material, backup
+locations, commands, notification endpoints, and adopter policy outside this
+public repository.
 
 ## Open decisions after restart
 
-1. Resume the msgvault deploy-observe-promote gate, or schedule the separate
-   LLM-DocKit 4.13.1 tooling sync first. Do not combine them; msgvault is the
-   current ecosystem rollout gate, while the DocKit sync is repository hygiene.
-2. Select the second real proxied service for DF-013 only in the private
+1. After the 2026-08-04 review, decide whether DF-015 remains private, proceeds
+   to a sanitized proposal, or waits for an independent adopter. Do not infer
+   promotion merely because one consumer implements two related paths.
+2. Resume the msgvault deploy-observe-promote gate, or schedule the separate
+   LLM-DocKit 4.13.1 tooling sync. Do not combine those runtime/tooling concerns
+   with DF-015 protocol incubation.
+3. Select the second real proxied service for DF-013 only in the private
    source-of-truth workflow. This public repo must not guess the service or
    pre-author the recovery proposal.
-3. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
+4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.10.1 is authoritative today; do not silently rewrite the
+   Project SemVer 0.10.2 is authoritative today; do not silently rewrite the
    core spec during an operational checkpoint.
 
 ## Deferred ecosystem reconciliation backlog
@@ -123,12 +132,12 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-07-18 - GPT-5 Codex.
-- Session Focus: pre-shutdown cold-start reconciliation for published protocol
-  0.10.1. The repository remains in draft 0.x adopter-hardening: DF-014 and its
-  first producer/consumer audit are closed, ForumVault is accepted after its
-  schedule soak, msgvault remains explicitly pending, and DF-013 remains in
-  evidence incubation. This session changes documentation only.
+- Last Updated: 2026-07-28 - GPT-5 Codex.
+- Session Focus: file DF-015 as protocol 0.10.2 from a real private
+  pre-telemetry operational-review incubation and the related
+  `preview.expires_at` consumer path. The dated 2026-08-04 review is the next
+  evidence gate. No protocol semantics, schema, SPEC, example, validator,
+  runtime, or sibling repository changed.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -256,6 +265,12 @@ consumer-side extension it surfaces — `infra-portal` reading
   consumer, observer, publication, or security surfaces remain broken. Filed
   2026-07-15 from Home Infra 0.6.0 and pi-fleet 0.4.0. Status: `open`; requires
   a second real proxied-service recovery before any proposal or schema work.
+- **DF-014** — Consumers need authoritative next-execution evidence. Filed
+  2026-07-16 from Plaud Mirror and Infra Portal. Status: `implemented (0.10.0)`.
+- **DF-015** — Time-bounded operator obligations need honest pre-telemetry
+  visibility. Filed 2026-07-28 from a private backup activation trial, its
+  source-of-truth declaration, and Infra Portal 0.22.0. Status: `open`; review
+  sanitized evidence on 2026-08-04 before any proposal or normative work.
 
 (DF-001 through DF-006 except DF-005, plus DF-008 through DF-012, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;
@@ -479,16 +494,19 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Complete msgvault's separate 0.24.0 deploy-observe-promote gate; do not make
-   the protocol repo the runtime executor.
-2. Keep DF-013 open until a second real proxied-service recovery exercises the
+1. Review DF-015's sanitized activation-trial evidence on 2026-08-04 and
+   compare it with the existing preview-expiry path. Do not promote a field
+   merely because the same consumer implements both.
+2. Complete msgvault's separate deploy-observe-promote gate; do not make the
+   protocol repo the runtime executor.
+3. Keep DF-013 open until a second real proxied-service recovery exercises the
    private all-surface closure model.
-3. Author a separate sanitized proposal only if the neutral shape survives
+4. Author any separate sanitized proposal only if the neutral shape survives
    both adopter cases; do not promote private host or workflow details.
-4. Sync LLM-DocKit 4.13.1 in a dedicated tooling patch after operator review of
+5. Sync LLM-DocKit in a dedicated tooling patch after operator review of
    the global hook boundary.
-5. Continue real adoption of project-owned sync and telemetry contracts.
-6. Keep any future `infra-agent` stats contract evidence-gated and independent
+6. Continue real adoption of project-owned sync and telemetry contracts.
+7. Keep any future `infra-agent` stats contract evidence-gated and independent
    from authentication placement and recovery incubation.
 
 ## Files To Read First

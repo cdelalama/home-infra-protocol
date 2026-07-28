@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.1 -->
+<!-- doc-version: 0.10.2 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-07-28 - GPT-5 Codex - **Filed DF-015 from the first real pre-telemetry operational-review incubation.** Recorded the bounded private source-of-truth declaration and Infra Portal consumer behavior that make an operator trial visible before runtime telemetry exists, while preserving the separation between intent, runtime evidence, derived freshness, and service health. Identified `preview.expires_at` as a related second use case in the same consumer, explicitly not a second independent adopter. Defined the sanitized evidence questions and 2026-08-04 promotion gate without choosing a field, proposal shape, schema location, or migration path. No SPEC, schema, example, validator, runtime, or sibling-repository semantics changed. - Files: [VERSION, CHANGELOG.md, docs/DOWNSTREAM_FEEDBACK.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, doc-version targets] - Version impact: yes (0.10.1 -> 0.10.2 patch: proposal-free downstream feedback and orientation only)
 
 - 2026-07-18 - GPT-5 Codex - **Prepared a durable cold-start checkpoint before the VM/NAS shutdown.** Verified the published 0.10.1 baseline at `0dce100` against `origin/main`, confirmed the other tmux panes for this repo contained no unrecorded work, reconciled current adopter handoffs read-only, corrected ForumVault/Plaud/msgvault rollout orientation, marked the May ecosystem roadmap as historical, recorded LLM-DocKit 4.13.1 sync debt, and added exact restart and do-not-touch gates. No protocol semantic, schema, example, runtime, or sibling-repo change was made. - Files: [LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md] - Version impact: no (documentation-only shutdown/restart continuity for existing 0.10.1)
 

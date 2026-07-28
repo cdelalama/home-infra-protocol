@@ -2,6 +2,20 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.10.2] - 2026-07-28
+
+### Added
+
+- DF-015 records the first real pre-telemetry operational-review incubation
+  and the related development-preview expiry pattern.
+
+### Changed
+
+- Define the sanitized evidence questions and dated promotion gate that must be
+  reviewed before any proposal, schema, SPEC, or semantic change.
+- Clarify that two related paths in one consumer are useful evidence but do not
+  constitute two independent protocol adopters.
+
 ## [0.10.1] - 2026-07-16
 
 ### Changed
