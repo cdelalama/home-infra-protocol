@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -20,7 +20,8 @@ extracts the reusable pattern without publishing private operational details.
 - Document the completion rule for human and LLM-assisted infrastructure
   changes.
 - Provide sanitized examples that private repos can copy.
-- Defer runtime tooling until the specification has stabilized.
+- Provide a canonical, side-effect-free validator that projects and
+  orchestrators invoke without copying.
 
 ## Stakeholders
 
@@ -56,29 +57,35 @@ authorities over inventory or intent.
 | `examples/` | Sanitized example repos/contracts | No real LAN details |
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
+| `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
+| `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-07-18)
+## Current Status (2026-07-28)
 
-Protocol 0.10.1 is published with optional producer-owned `next_run_at`,
-assertion-independent UTC-Z validation, explicit expired-plan semantics, and
-schedule-mode presentation rules. Freshness remains strictly derived from
-`observed_at + stale_after`. Infra Portal and the Plaud/ForumVault producers
-have completed the first rollout; msgvault remains at its deploy-observe-
-promote gate. DF-013 remains open and its second proxied-service recovery gate
-is unchanged.
+Protocol 0.11.0 adds the first canonical executable validator for project
+contracts and representative status snapshots. The homelab profile now reflects
+the proven `sync_jobs[]` / `telemetry_jobs[]` interface instead of its stale May
+prototype, and ForgeOS invokes the validator rather than copying it. This is a
+validator/profile release, not a new status or job semantic.
+
+DF-015 remains privately incubated until its 2026-08-04 evidence review.
+`operational_review` is deliberately absent from the reusable profile and
+validator. Existing `next_run_at`, freshness, recovery, and authority semantics
+remain unchanged.
 
 ## Upcoming Milestones
 
-1. Reconcile and deploy msgvault's isolated 0.24.0 schedule-evidence branch,
-   observe a future producer-owned `next_run_at`, then let Home Infra promote
-   it from `pending` to `required`.
-2. Exercise the private all-surface closure model on one other proxied service.
-3. Promote only recovery fields that survive both cases into a separate
+1. Exercise the canonical validator through ForgeOS project creation and the
+   dedicated interface-implementation workflow; fix validator bugs here rather
+   than copying patches downstream.
+2. Review DF-015 on 2026-08-04 without pre-promoting its private field.
+3. Exercise the private all-surface closure model on one other proxied service.
+4. Promote only recovery fields that survive both cases into a separate
    sanitized proposal; keep host identity, proxy products, secrets, backups,
    and commands private.
-4. Sync LLM-DocKit 4.13.1 as a dedicated tooling patch after reviewing its
+5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
-5. Keep later status and recovery vocabulary adopter-driven rather than adding
+6. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References

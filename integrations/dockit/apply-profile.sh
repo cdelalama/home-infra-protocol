@@ -10,6 +10,7 @@
 #   apply-profile.sh <target-dir>    # apply to <target-dir>
 #
 # What it does:
+#   - Validate the canonical profile template against this protocol checkout
 #   - Copy templates/AGENTS.md to <target>/AGENTS.md
 #   - Symlink <target>/CLAUDE.md -> AGENTS.md (Claude Code's loader path)
 #   - Copy templates/infra.contract.yml to <target>/infra.contract.yml
@@ -18,18 +19,29 @@
 #
 # What it does NOT do:
 #   - Edit ~/src/home-infra/ in any way
-#   - Validate the contract or run any check
+#   - Claim that a TODO-bearing template is a completed project contract
 #   - Overwrite any file already present in the target
 
 set -eu
 
 TARGET="${1:-.}"
 PROFILE_DIR=$(cd "$(dirname "$0")" && pwd)
+PROTOCOL_ROOT=$(cd "$PROFILE_DIR/../.." && pwd)
+INTERFACE_VALIDATOR="$PROTOCOL_ROOT/scripts/validate-project-interface.py"
 
 if [ ! -d "$TARGET" ]; then
     echo "ERROR: target directory not found: $TARGET" >&2
     exit 1
 fi
+
+if [ ! -x "$INTERFACE_VALIDATOR" ]; then
+    echo "ERROR: canonical project-interface validator is unavailable: $INTERFACE_VALIDATOR" >&2
+    exit 1
+fi
+
+"$INTERFACE_VALIDATOR" \
+    --contract "$PROFILE_DIR/templates/infra.contract.yml" \
+    --template >/dev/null
 
 cd "$TARGET"
 TARGET_ABS=$(pwd)

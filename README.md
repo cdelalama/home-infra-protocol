@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -16,7 +16,7 @@ agents without turning any one consumer into the source of truth.
 The protocol started from the `home-infra` and `infra-portal` split:
 `home-infra` owns durable truth, while `infra-portal` renders that truth and
 adds observed telemetry. This repository extracts that pattern into reusable
-specification material, schemas, examples, and future validation tooling.
+specification material, schemas, examples, and executable validation tooling.
 
 ## Ecosystem map
 
@@ -50,6 +50,18 @@ Start with [SPEC.md](SPEC.md), then compare the example catalog under
 [examples/home-infra](examples/home-infra) with the JSON Schemas under
 [schemas](schemas).
 
+Validate a real project interface from the canonical protocol checkout:
+
+```bash
+scripts/validate-project-interface.py \
+  --contract /path/to/project/infra.contract.yml \
+  --status <job-id>=/path/to/project/status.json
+```
+
+Use `--template` only for the TODO-bearing homelab profile starter. Strict mode
+rejects TODO values, joins each supplied snapshot to a declared job, enforces
+periodic `stale_after > cadence`, and keeps freshness consumer-derived.
+
 ## Documentation
 
 | Document | Purpose |
@@ -59,6 +71,7 @@ Start with [SPEC.md](SPEC.md), then compare the example catalog under
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Protocol components and roadmap |
 | [docs/COMPLETION_RULE.md](docs/COMPLETION_RULE.md) | Definition of done for infrastructure changes |
 | [docs/PROJECT_CONTRACTS.md](docs/PROJECT_CONTRACTS.md) | Project-level contract direction |
+| [integrations/dockit/INTEGRATION.md](integrations/dockit/INTEGRATION.md) | Reusable homelab profile and validation workflow |
 | [docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md](docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md) | Standard Telemetry Source status output |
 | [docs/SYNC_JOB_CONTRACT_PROPOSAL.md](docs/SYNC_JOB_CONTRACT_PROPOSAL.md) | Project-owned sync and telemetry job declarations |
 | [docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md](docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md) | Development runtime lifecycle and side-effect ownership |

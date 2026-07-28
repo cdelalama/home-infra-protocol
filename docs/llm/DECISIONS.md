@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -56,3 +56,26 @@ wall-clock schedule. An expired plan never means `due`; only the declaration's
 
 This restores useful scheduling visibility without making the consumer an
 authority over producer execution or creating a second health signal.
+
+## D-006: Keep Project-Interface Validation Canonical And Cross-Repo
+
+**Date:** 2026-07-28
+**Status:** Accepted
+
+The executable validator for `infra.contract.yml` and status snapshots lives
+only in `home-infra-protocol`, beside the schemas it enforces. ForgeOS,
+profile application, and adopter projects invoke that canonical script across
+the repository boundary. They do not copy or fork it.
+
+The reusable homelab profile has a protocol-version marker and contains both
+removable sync and telemetry examples. Template validation proves that the
+starter matches the current protocol; strict validation proves that a concrete
+contract and representative snapshots have the required shape. Neither path
+proves deployment, runtime health, or Home Infra acceptance.
+
+This converts a passive profile promise into an executable contract while
+preserving the five-layer ownership model: protocol owns schemas and
+validation; ForgeOS owns workflow; projects own producers; Home Infra owns
+accepted intent; consumers derive presentation. Private incubation from
+DF-015, including `operational_review`, remains outside the reusable profile
+until its separate evidence gate authorizes proposal work.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-07-28 - GPT-5 Codex - **Minor 0.11.0 - made Home Infra project-interface adoption mechanically verifiable.** Added the canonical side-effect-free project contract/status validator, strict semantic checks and nine focused regression cases; refreshed the stale homelab profile with current removable `sync_jobs[]` and `telemetry_jobs[]` examples; made profile application validate its source template; replaced false May claims in AGENTS/checklist/integration guidance; and recorded D-006 so ForgeOS and adopters invoke rather than copy validation logic. Preserved explicit Home Infra acceptance and kept DF-015 `operational_review` incubation outside the reusable profile. Local validation passed 20/20 tests, canonical and copied-profile smokes, Python compilation, 34/34 version sync, DocKit 10/10, and diff hygiene. No runtime, private source-of-truth, Portal, adopter, or protocol field semantic changed. - Files: [VERSION, CHANGELOG.md, README.md, HOW_TO_USE.md, scripts/validate-project-interface.py, tests/test_project_interface_validator.py, integrations/dockit/apply-profile.sh, integrations/dockit/templates/AGENTS.md, integrations/dockit/templates/infra.contract.yml, integrations/dockit/checklists/PROJECT_CHECKLIST.md, integrations/dockit/INTEGRATION.md, docs/PROJECT_CONTEXT.md, docs/ARCHITECTURE.md, docs/PROJECT_CONTRACTS.md, docs/STRUCTURE.md, docs/llm/DECISIONS.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.10.2 -> 0.11.0 minor: new validator capability and current reusable profile)
 
 - 2026-07-28 - GPT-5 Codex - **Filed DF-015 from the first real pre-telemetry operational-review incubation.** Recorded the bounded private source-of-truth declaration and Infra Portal consumer behavior that make an operator trial visible before runtime telemetry exists, while preserving the separation between intent, runtime evidence, derived freshness, and service health. Identified `preview.expires_at` as a related second use case in the same consumer, explicitly not a second independent adopter. Defined the sanitized evidence questions and 2026-08-04 promotion gate without choosing a field, proposal shape, schema location, or migration path. No SPEC, schema, example, validator, runtime, or sibling-repository semantics changed. - Files: [VERSION, CHANGELOG.md, docs/DOWNSTREAM_FEEDBACK.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, doc-version targets] - Version impact: yes (0.10.1 -> 0.10.2 patch: proposal-free downstream feedback and orientation only)
 

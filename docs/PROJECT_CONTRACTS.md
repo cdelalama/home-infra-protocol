@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they
@@ -26,6 +26,12 @@ repo remains the authority after ingesting, copying, or validating them.
 - `secret_refs`
 
 Secret references name variables and stores only. They never include values.
+
+The reusable homelab profile installs a TODO-bearing starter contract. A
+starter is orientation, not implementation evidence. A real interface is ready
+for review only when TODOs are gone, irrelevant examples are removed, each
+declared job has a representative sanitized status snapshot, and the canonical
+validator passes.
 
 When a project lists service objects under `services` rather than just ids,
 each object's `interface` field follows the same convention as the catalog's
@@ -78,6 +84,36 @@ Consumer policy:
   freshness is stale.
 - Consumers must gate alertability by intent: disabled production services and
   `environment: development` previews are not production incidents.
+
+## Canonical Validation
+
+The validator belongs to this protocol repository:
+
+```bash
+~/src/home-infra-protocol/scripts/validate-project-interface.py \
+  --contract /path/to/project/infra.contract.yml \
+  --status <job-id>=/path/to/status.json
+```
+
+`--status` is repeatable. Each job id must exist in either `sync_jobs[]` or
+`telemetry_jobs[]`. Strict validation:
+
+- rejects unresolved TODO values;
+- validates the contract and snapshots against the canonical schemas;
+- rejects duplicate job ids and duplicate stable check names;
+- enforces `stale_after > cadence` for periodic jobs;
+- rejects producer-authored `freshness`, `stale`, or `is_stale`;
+- performs no network access and mutates no repository or runtime.
+
+Use `--template` only to validate the canonical profile starter. It verifies
+the profile-version marker, the presence of both removable job examples, and
+the deliberate absence of private incubating fields such as
+`operational_review`.
+
+Passing validation proves shape, not runtime truth. Home Infra accepts a
+project interface only through its own explicit operator-controlled registry
+change with project provenance. ForgeOS and adopters invoke this validator
+across the repository boundary; they do not copy it.
 
 ## Example
 

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -66,7 +66,29 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.10.2 records DF-015 from the first real pre-telemetry operational
+Protocol 0.11.0 closes the stale homelab-profile and passive-validation gap.
+`scripts/validate-project-interface.py` is now the single executable authority
+for project contracts and representative status snapshots. The profile
+contains current sync and telemetry examples, checks its version against the
+protocol checkout, and keeps private incubation out. ForgeOS and adopters must
+invoke this tool across the repository boundary; they must not copy it or infer
+Home Infra acceptance from a pass.
+
+The local candidate passes 20/20 protocol tests, canonical and copied-profile
+smokes, 34/34 version sync, DocKit 10/10, Python compilation, and diff hygiene.
+Publication remains a separate operator gate; no commit or push is implied by
+these local results.
+
+The next useful gate is adopter evidence, not another validator feature:
+
+1. Exercise ForgeOS project creation against the versioned profile template.
+2. Exercise the dedicated ForgeOS interface-implementation skill on a real
+   project contract plus sanitized representative status.
+3. Fix any validator defect here and keep downstream repos copy-free.
+4. Do not mutate Home Infra automatically; explicit operator acceptance with
+   project provenance remains a separate control-plane slice.
+
+Protocol 0.10.2 recorded DF-015 from the first real pre-telemetry operational
 review without changing SPEC, schemas, examples, validators, or protocol
 semantics. A private source-of-truth declaration makes a bounded backup
 activation trial visible before the producer has emitted its first status
@@ -112,7 +134,7 @@ public repository.
    pre-author the recovery proposal.
 4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.10.2 is authoritative today; do not silently rewrite the
+   Project SemVer 0.11.0 is authoritative today; do not silently rewrite the
    core spec during an operational checkpoint.
 
 ## Deferred ecosystem reconciliation backlog
@@ -133,11 +155,13 @@ The residual architectural reconciliation that may eventually produce
 ## Current Status
 
 - Last Updated: 2026-07-28 - GPT-5 Codex.
-- Session Focus: file DF-015 as protocol 0.10.2 from a real private
-  pre-telemetry operational-review incubation and the related
-  `preview.expires_at` consumer path. The dated 2026-08-04 review is the next
-  evidence gate. No protocol semantics, schema, SPEC, example, validator,
-  runtime, or sibling repository changed.
+- Session Focus: implement protocol 0.11.0 as the canonical executable
+  project-interface validation layer and refresh the homelab profile from
+  passive May guidance to the current sync/telemetry contract. ForgeOS
+  integration is a separate commit in its own isolated branch; no Home Infra,
+  Portal, adopter, or runtime was changed. DF-015 remains privately incubated
+  until 2026-08-04 and `operational_review` did not enter this profile. Local
+  validation is complete; the next gate is review and ordered publication.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

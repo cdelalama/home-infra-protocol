@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Repository Structure
 
 ```text
@@ -45,6 +45,7 @@ home-infra-protocol/
 ├── scripts/
 │   ├── bump-version.sh
 │   ├── check-version-sync.sh
+│   ├── validate-project-interface.py
 │   ├── pre-commit-hook.sh
 │   ├── dockit-generate-external-context.sh
 │   └── dockit-validate-session.sh
@@ -53,6 +54,7 @@ home-infra-protocol/
 └── tests/
     ├── .gitkeep
     ├── test_authentication_placement.py
+    ├── test_project_interface_validator.py
     ├── test_status_snapshot_next_run.py
     └── test_status_snapshot_labels.py
 ```
@@ -61,6 +63,8 @@ home-infra-protocol/
 
 - `schemas/` contains protocol schema drafts.
 - `examples/` must stay sanitized and generic.
-- `src/` is reserved for future validator or reference tooling.
+- `scripts/validate-project-interface.py` is the canonical project
+  contract/status validator; downstream repos invoke it without copying.
+- `src/` is reserved for future reference tooling.
 - `tests/` contains focused protocol/schema regression tests.
 - `docs/llm/` is working memory for LLM-assisted maintenance.

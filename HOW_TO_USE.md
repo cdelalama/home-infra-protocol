@@ -1,7 +1,8 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # How To Use This Repository
 
-Home Infra Protocol is currently a draft specification repository.
+Home Infra Protocol is a specification and executable contract-validation
+repository.
 
 ## Read First
 
@@ -21,7 +22,8 @@ Home Infra Protocol is currently a draft specification repository.
 1. Stabilize the v0.1 protocol vocabulary.
 2. Add JSON Schemas for catalog and project contract entities.
 3. Add sanitized examples.
-4. Add a validator CLI.
+4. Validate project contracts and their representative status snapshots with
+   `scripts/validate-project-interface.py`.
 5. Make private implementations such as `home-infra` declare which protocol
    version they implement.
 6. Make consumers such as `infra-portal` declare which protocol version they
@@ -36,3 +38,24 @@ Every meaningful change should update:
 - relevant specification, schema, example, or architecture docs
 
 The protocol's value depends on keeping the spec, schemas, and examples aligned.
+
+## Validate A Project Interface
+
+For a completed project-owned contract:
+
+```bash
+scripts/validate-project-interface.py \
+  --contract /path/to/project/infra.contract.yml \
+  --status <job-id>=/path/to/project/status.json
+```
+
+Repeat `--status` for each representative job snapshot. The validator never
+contacts a runtime or Home Infra and does not prove deployment or acceptance.
+
+For the canonical starter only:
+
+```bash
+scripts/validate-project-interface.py \
+  --contract integrations/dockit/templates/infra.contract.yml \
+  --template
+```

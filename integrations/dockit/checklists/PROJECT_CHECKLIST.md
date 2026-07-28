@@ -84,16 +84,28 @@ forgotten).
   (`scripts/check-version-sync.sh`).
 - [ ] Project repo committed and pushed.
 
-## Optional: Project contract (experimental)
+## Project interface
 
 - [ ] `infra.contract.yml` declared at the project root, with `TODO`
-  placeholders replaced by real values.
-- [ ] Validated against `~/src/home-infra-protocol/schemas/` (when a
-  validator exists; today this is a manual sanity check against
-  `docs/PROJECT_CONTRACTS.md`).
-- [ ] No secret values in the contract; only Doppler references.
+      placeholders replaced by real values.
+- [ ] Every project-owned loop classified correctly:
+      `sync_jobs[]` for an external source of truth,
+      `telemetry_jobs[]` for self/host observation.
+- [ ] Every declared job has a sanitized representative status snapshot.
+- [ ] Canonical validation passes without a copied validator:
+      `~/src/home-infra-protocol/scripts/validate-project-interface.py
+      --contract infra.contract.yml
+      --status <job-id>=<representative-status.json>`.
+- [ ] Periodic jobs declare `stale_after > cadence`; producer snapshots do not
+      self-declare freshness.
+- [ ] No secret values in the contract; only approved store and variable
+      references.
 - [ ] Note in `docs/llm/DECISIONS.md` recording that this project
-  declares a contract and which protocol version it targets.
+      declares a contract and which protocol version it targets.
+- [ ] Contract and status provenance presented to the operator; Home Infra was
+      not edited or treated as accepting the interface automatically.
+- [ ] Private incubating fields such as `operational_review` were not copied
+      into the reusable project contract.
 
 ## Final smoke check
 

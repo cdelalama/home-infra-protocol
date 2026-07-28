@@ -19,15 +19,15 @@ loader picks it up; the content stays LLM-neutral on purpose.
    host.
 4. `.claude/checklists/homelab-project.md` — local deploy checklist
    for this project (installed by the homelab profile).
-5. (Optional, if declaring an `infra.contract.yml`)
-   `~/src/home-infra-protocol/docs/PROJECT_CONTRACTS.md` and
-   `~/src/home-infra-protocol/SPEC.md`.
+5. `~/src/home-infra-protocol/docs/PROJECT_CONTRACTS.md` and
+   `~/src/home-infra-protocol/SPEC.md` before completing or changing
+   `infra.contract.yml`.
 
 ## Mandatory updates
 
-When this project's changes affect the homelab — deployment target,
-exposed URL, secrets, host placement, runtime version, image tag —
-the agent must update in the same session, in `~/src/home-infra/`:
+When an operator-authorized deployment or acceptance changes the homelab —
+deployment target, exposed URL, secrets, host placement, runtime version, image
+tag — its control-plane slice must update `~/src/home-infra/`:
 
 - `docs/INVENTORY.md` — when hosts, IPs, or ports change.
 - `docs/SERVICES.md` — when a service is added, removed, or
@@ -41,24 +41,42 @@ the agent must update in the same session, in `~/src/home-infra/`:
 - `catalog/services.yml` — only if the service is portal-visible
   (`infra-portal` will render it).
 
-These updates are not optional. The operator's global rule
-(`~/.claude/CLAUDE.md`) classifies them as mandatory.
+These updates are not optional for a completed deployment, but contract
+validation does not authorize them automatically. The operator's global rule
+(`~/.claude/CLAUDE.md`) classifies the updates as mandatory while the protocol
+keeps acceptance as a separate gate.
 
-## Project Contract (optional, experimental)
+## Project interface
 
-This project may ship an `infra.contract.yml` describing how it
-participates in the infrastructure. The format is documented in
+This project ships a starter `infra.contract.yml` describing how it may
+participate in the infrastructure. The reusable format is documented in
 `~/src/home-infra-protocol/docs/PROJECT_CONTRACTS.md`.
 
-As of 2026-05, the contract is **experimental**: no project has
-implemented one yet, and `infra-portal` does not consume it.
-`home-infra/catalog/services.yml` remains the authoritative input.
-Filling this contract validates the protocol shape on a real project;
-it does not yet replace any operational step.
+Real projects now use `sync_jobs[]` and `telemetry_jobs[]` to publish
+sanitized status snapshots consumed by Home Infra and Infra Portal. The
+project contract still does not become infrastructure truth automatically:
+Home Infra remains authoritative only after explicit operator acceptance.
 
-Compliance with `home-infra-protocol` is **not claimed** until the
-protocol stabilizes and the implementation is audited
-(see `home-infra-protocol/docs/GOVERNANCE.md` *Compliance Claims*).
+Before claiming the interface is implemented:
+
+1. classify each loop as sync (external source of truth) or telemetry
+   (self/host observation);
+2. replace every TODO and remove examples that do not apply;
+3. produce a sanitized representative status snapshot for every declared job;
+4. run the canonical validator from the protocol checkout:
+
+   ```sh
+   ~/src/home-infra-protocol/scripts/validate-project-interface.py \
+     --contract infra.contract.yml \
+     --status <job-id>=<representative-status.json>
+   ```
+
+The validator is invoked across the repo boundary and must not be copied here.
+Passing validation proves contract shape only. It does not prove deployment,
+freshness, successful backup, or Home Infra acceptance.
+
+Private adopter-only fields under incubation, including
+`operational_review`, must not be added to this reusable project template.
 
 ## Anti-rules
 
@@ -71,6 +89,11 @@ protocol stabilizes and the implementation is audited
   `.claude/checklists/homelab-project.md`. Every checked item is a
   guarantee.
 - Do not put secret values in this file or in `infra.contract.yml`.
-  Secrets are referenced by Doppler variable name only.
+  Secrets are referenced only by approved store and variable name (normally
+  Doppler in this homelab).
+- Do not copy the protocol validator into this project. Invoke the canonical
+  script from `~/src/home-infra-protocol`.
+- Do not edit Home Infra automatically after validation. Present the contract,
+  status location, and provenance for explicit operator acceptance.
 - Do not edit `home-infra` from inside this project's automation. The
   operator does it during deploy, with the checklist as the gate.

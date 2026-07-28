@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Architecture
 
 ## Overview
@@ -38,7 +38,7 @@ source-of-truth repo
         |
         +--> portal
         +--> MCP server
-        +--> validators
+        +--> canonical validators
         +--> recovery workflow
 ```
 
@@ -61,11 +61,29 @@ Protocol versions use SemVer.
 
 ### Phase 1 - Validator
 
-- CLI validates source-of-truth catalogs and project contracts.
-- Examples run in CI.
+- `scripts/validate-project-interface.py` validates project contracts and
+  representative status snapshots without network or runtime access.
+- ForgeOS and adopters invoke the canonical script across the repo boundary.
+- Source-of-truth catalog validation remains separate work.
 
 ### Phase 2 - Reference Integrations
 
 - Document how a portal consumes the protocol.
 - Document how an MCP server queries the protocol.
 - Document how project repos export contracts.
+
+## Validator Ownership
+
+Validation logic lives only in this repository beside the schemas. ForgeOS owns
+operator workflow and invokes it. A project repo owns its concrete contract and
+status producer and invokes it. Home Infra owns explicit acceptance of the
+result. Infra Portal consumes accepted declarations and runtime snapshots.
+
+No higher or lower layer copies the validator. This prevents a new class of
+drift where each scaffold or project silently enforces a different protocol
+version.
+
+The reusable template marker is checked against `VERSION` whenever the profile
+is applied or ForgeOS creates a project. Real contracts use strict validation.
+Neither path grants authority to edit Home Infra or to claim a runtime is
+healthy.

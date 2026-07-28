@@ -1,4 +1,4 @@
-<!-- doc-version: 0.10.2 -->
+<!-- doc-version: 0.11.0 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -15,8 +15,10 @@ or any future tool) immediately sees:
 - the mandatory `home-infra` updates that infrastructure changes
   trigger,
 - a deploy checklist that lists what "deploy is done" really means,
-- an optional `infra.contract.yml` template aligned with the
-  protocol's `docs/PROJECT_CONTRACTS.md`.
+- an `infra.contract.yml` starter aligned with the protocol's current
+  `sync_jobs[]`, `telemetry_jobs[]`, and status-snapshot interface;
+- a mechanical validation path that always executes the canonical validator
+  from this protocol checkout.
 
 The profile is **not mandatory** for any project. It is the
 recommended starting point for projects that will run on a homelab
@@ -60,15 +62,17 @@ operator-toolbox orchestration.
 |----------------|--------|-------|
 | `AGENTS.md` | `templates/AGENTS.md` | Canonical, LLM-neutral context for any agent. |
 | `CLAUDE.md` | symlink → `AGENTS.md` | Claude Code's loader path; same content. |
-| `infra.contract.yml` | `templates/infra.contract.yml` | Optional, has `TODO:` placeholders. |
+| `infra.contract.yml` | `templates/infra.contract.yml` | Starter contract with explicit removable sync/telemetry examples and `TODO` placeholders. |
 | `.claude/checklists/homelab-project.md` | `checklists/PROJECT_CHECKLIST.md` | Operational deploy checklist. |
 
 Existing files are never overwritten. The script can be re-run
-safely; it reports what it created and what it skipped.
+safely; it reports what it created and what it skipped. Before copying, it
+validates the canonical template marker and required sections with
+`scripts/validate-project-interface.py --template`.
 
 ## How to apply
 
-There are three entry points, all converging on the same five files
+There are four entry points, all converging on the same five files
 (`AGENTS.md`, `CLAUDE.md` symlink, `infra.contract.yml`,
 `.claude/checklists/homelab-project.md`).
 
@@ -142,9 +146,31 @@ Or with an explicit target:
 ~/src/home-infra-protocol/integrations/dockit/apply-profile.sh ~/src/<existing-project>
 ```
 
-`apply-profile.sh` is POSIX `sh`, idempotent, and only runs `cp`,
-`mkdir`, and `ln`. It never touches `~/src/home-infra/` and never
-edits files that already exist in the target.
+`apply-profile.sh` is POSIX `sh` and idempotent. It runs the canonical
+side-effect-free template check, then uses only `cp`, `mkdir`, and `ln` for the
+target. It never touches `~/src/home-infra/` and never edits files that already
+exist in the target. It validates the source template; it does not pretend an
+existing target contract is complete.
+
+### 4. Implement the interface in an existing project
+
+ForgeOS owns the operator workflow
+`skills/implement-home-infra-interface/SKILL.md`. Use it after the project has
+a real producer/status design. The skill reads the target project's own
+onboarding, classifies each loop as sync or telemetry, replaces/removes the
+starter examples, validates the real contract plus representative snapshots,
+and stops before any Home Infra or runtime mutation unless separately
+authorized.
+
+The skill calls the canonical validator here:
+
+```sh
+~/src/home-infra-protocol/scripts/validate-project-interface.py \
+  --contract ~/src/<project>/infra.contract.yml \
+  --status <job-id>=<representative-status.json>
+```
+
+The validator is not copied into ForgeOS or the adopter.
 
 ## Multi-LLM rationale (`AGENTS.md` is canonical)
 
@@ -162,12 +188,13 @@ copies that can drift.
 - Does not edit `~/src/home-infra/`. Catalog and inventory updates
   remain the operator's job during deploy, surfaced by the
   checklist.
-- Does not validate `infra.contract.yml`. No schema validator runs
-  yet; that is planned for a later iteration of
-  `home-infra-protocol/scripts/`.
-- Does not declare protocol compliance. Any project that adopts this
-  profile remains a candidate consumer until at least one full
-  deploy cycle through the checklist proves the shape works.
+- Does not treat a TODO-bearing starter as a valid real contract. Strict
+  validation is a later project-owned implementation gate.
+- Does not declare runtime success or protocol adoption from schema validation.
+  A full deploy/evidence cycle and explicit source-of-truth acceptance remain
+  separate.
+- Does not add private adopter-only incubation such as `operational_review` to
+  the reusable profile.
 - Does not embed homelab content in `LLM-DocKit`. `LLM-DocKit` stays
   general-purpose; this profile is the homelab-specific layer.
 
@@ -179,9 +206,10 @@ repo for the homelab layer. The skill calls the orchestrator; the
 orchestrator calls `dockit-init-project.sh` (LLM-DocKit) and then
 `apply-profile.sh` (this repo) via a configurable cross-repo path.
 There is exactly one place where "what the homelab profile installs"
-is decided: `apply-profile.sh`. Higher layers add concerns
+is decided: `apply-profile.sh`, and one place where the contract/status shape
+is validated: `scripts/validate-project-interface.py`. Higher layers add concerns
 (orchestrator adds GitHub creation; skill adds the PROJECTS.md edit)
-without duplicating profile logic.
+without duplicating profile or validation logic.
 
 If `cdelalama/LLM-DocKit` later grows a native profile mechanism
 (for example `dockit init --profile <path>` reading a `~/.dockitrc`

@@ -1,44 +1,73 @@
+# home-infra-protocol-profile: 0.11.0
 # infra.contract.yml — Project contract for home-infra-protocol
 #
 # Spec:    ~/src/home-infra-protocol/SPEC.md
 # Format:  ~/src/home-infra-protocol/docs/PROJECT_CONTRACTS.md
 # Schemas: ~/src/home-infra-protocol/schemas/
+# Check:   ~/src/home-infra-protocol/scripts/validate-project-interface.py
 #
-# As of 2026-05 this file is OPTIONAL and EXPERIMENTAL. The portal does
-# not consume it yet; ~/src/home-infra/catalog/services.yml remains the
-# authoritative input for portal rendering. Filling this contract
-# validates the protocol shape on a real project.
+# This contract is the project-owned declaration consumed only after explicit
+# acceptance by the private Home Infra source of truth. It does not replace
+# Home Infra, prove deployment, or prove runtime health.
 #
 # Replace every TODO with a concrete value. Leave fields out entirely
-# if they do not apply to this project (rather than committing TODO).
+# if they do not apply. Delete the sync or telemetry example that does not
+# match the project. Strict validation rejects unresolved TODO values.
 #
-# Secrets: never commit values. Reference Doppler variables by name in
-# `secret_refs` using the form `doppler://<project>/<config>/<VAR>`.
+# Secrets: never commit values. `secret_refs` names only the store and variable.
 
-id: TODO-slug                          # short slug, [a-z0-9-]+
+id: TODO-project-slug
 name: TODO Project Display Name
-repository: TODO https://github.com/cdelalama/<project>
+repository: TODO-https://example.invalid/project
 
 services:
-  - id: TODO-service-id                # cross-references home-infra/catalog/services.yml if portal-visible
-    name: TODO Display Name
-    url: TODO https://<service>.lamanoriega.com  # remove if no UI/API
+  - TODO-service-id
 
-runtime: docker                        # docker | systemd | other
+# Keep this example only when local state is synchronized from an external
+# authority. A sync job requires source.
+sync_jobs:
+  - id: TODO-sync-job
+    source:
+      kind: TODO-source-kind
+      authority: TODO-external-authority
+    schedule:
+      mode: cron
+      cadence: PT24H
+    stale_after: PT27H
+    runtime:
+      host_id: TODO-host-id
+      service_id: TODO-service-id
+    status_url: https://status.example.invalid/TODO-sync-status.json
+    safety:
+      idempotent: true
+      lock: TODO-lock-strategy
+      max_runtime: PT2H
+      backoff: fixed
 
-deploy:
-  host: TODO                           # nas | dev-vm | pihas | zwave | zigbee
-  method: docker-save-load             # docker-save-load | git-pull | manual
-  compose: TODO                        # path on target host, e.g. /share/Container/compose/<project>/
+# Keep this example only when the project observes its own runtime or host.
+# A telemetry job must not declare source.
+telemetry_jobs:
+  - id: TODO-telemetry-job
+    schedule:
+      mode: cron
+      cadence: PT24H
+    stale_after: PT27H
+    runtime:
+      host_id: TODO-host-id
+      service_id: TODO-service-id
+    status_url: https://status.example.invalid/TODO-telemetry-status.json
+    safety:
+      idempotent: true
+      max_runtime: PT2H
+      backoff: fixed
 
 runbooks:
-  rebuild: TODO                        # link or relative path to rebuild instructions
-  restore: TODO                        # how to restore data from backup
-  verify:  TODO                        # smoke-test or healthcheck recipe
-  rollback: TODO                       # revert to previous image / version
+  deploy: TODO-docs/operations/DEPLOY_PLAYBOOK.md
+  restore: TODO-docs/operations/RESTORE_PLAYBOOK.md
+  verify: TODO-docs/operations/VERIFY.md
+  rollback: TODO-docs/operations/ROLLBACK.md
 
 secret_refs:
-  # Reference Doppler variables by name; never include values.
-  # Example:
-  #   DATABASE_URL: doppler://my-project/dev/DATABASE_URL
-  TODO_VAR: doppler://TODO-project/TODO-config/TODO_VAR
+  - name: TODO_VARIABLE_NAME
+    store: TODO-secret-store
+    notes: Variable name only; never commit its value.

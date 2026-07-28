@@ -2,6 +2,34 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.11.0] - 2026-07-28
+
+### Added
+
+- Canonical `scripts/validate-project-interface.py` for strict project-contract
+  and representative status-snapshot validation.
+- Focused regression tests for profile-version drift, unresolved TODOs,
+  periodic freshness windows, job joins, duplicate check identity, and
+  producer-authored freshness.
+- D-006 establishing protocol-only ownership of the executable validator.
+
+### Changed
+
+- Refresh the homelab profile from its obsolete May prototype to the proven
+  `sync_jobs[]` / `telemetry_jobs[]` interface, with one removable example of
+  each and a protocol-version marker.
+- Make profile application invoke the canonical validator and expose the same
+  cross-repository validation path to ForgeOS and adopter workflows.
+- Document the dedicated interface-implementation workflow while preserving
+  explicit Home Infra acceptance and keeping `operational_review` out of the
+  reusable profile.
+
+### Fixed
+
+- Remove stale claims that no project or Portal consumes project contracts.
+- Align the starter's `services` and `secret_refs` shapes with the current
+  project-contract schema.
+
 ## [0.10.2] - 2026-07-28
 
 ### Added
