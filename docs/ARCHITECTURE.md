@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Architecture
 
 ## Overview
@@ -27,6 +27,11 @@ Producer-owned runtime plans such as `next_run_at` flow through the telemetry
 snapshot. Consumers may render them, but cadence remains declaration metadata
 and freshness remains a separate consumer derivation.
 
+Project-owned capability declarations flow through the project contract.
+Optional availability evidence flows through the referenced telemetry
+snapshot. Consumers join both by exact id, but never rewrite policy from
+runtime evidence or infer availability from declared support.
+
 ## Data Flow
 
 ```text
@@ -37,6 +42,7 @@ source-of-truth repo
   docs + catalogs + decisions
         |
         +--> portal
+        +--> agent capability self-description
         +--> MCP server
         +--> canonical validators
         +--> recovery workflow
@@ -87,3 +93,7 @@ The reusable template marker is checked against `VERSION` whenever the profile
 is applied or ForgeOS creates a project. Real contracts use strict validation.
 Neither path grants authority to edit Home Infra or to claim a runtime is
 healthy.
+
+Capability validation extends the same boundary: the protocol validates shape
+and cross-object joins; the project owns declarations and observations; Home
+Infra accepts the interface; Portal and Hermes consume a sanitized projection.

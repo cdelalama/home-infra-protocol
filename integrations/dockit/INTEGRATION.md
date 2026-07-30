@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -16,7 +16,8 @@ or any future tool) immediately sees:
   trigger,
 - a deploy checklist that lists what "deploy is done" really means,
 - an `infra.contract.yml` starter aligned with the protocol's current
-  `sync_jobs[]`, `telemetry_jobs[]`, and status-snapshot interface;
+  `sync_jobs[]`, `telemetry_jobs[]`, capability-transparency, and
+  status-snapshot interfaces;
 - a mechanical validation path that always executes the canonical validator
   from this protocol checkout.
 
@@ -62,7 +63,7 @@ operator-toolbox orchestration.
 |----------------|--------|-------|
 | `AGENTS.md` | `templates/AGENTS.md` | Canonical, LLM-neutral context for any agent. |
 | `CLAUDE.md` | symlink → `AGENTS.md` | Claude Code's loader path; same content. |
-| `infra.contract.yml` | `templates/infra.contract.yml` | Starter contract with explicit removable sync/telemetry examples and `TODO` placeholders. |
+| `infra.contract.yml` | `templates/infra.contract.yml` | Starter contract with explicit removable sync, telemetry, and capability examples plus `TODO` placeholders. |
 | `.claude/checklists/homelab-project.md` | `checklists/PROJECT_CHECKLIST.md` | Operational deploy checklist. |
 
 Existing files are never overwritten. The script can be re-run
@@ -157,8 +158,9 @@ existing target contract is complete.
 ForgeOS owns the operator workflow
 `skills/implement-home-infra-interface/SKILL.md`. Use it after the project has
 a real producer/status design. The skill reads the target project's own
-onboarding, classifies each loop as sync or telemetry, replaces/removes the
-starter examples, validates the real contract plus representative snapshots,
+onboarding, classifies each loop as sync or telemetry, makes capability
+restrictions and enablement paths explicit, replaces/removes the starter
+examples, validates the real contract plus representative snapshots,
 and stops before any Home Infra or runtime mutation unless separately
 authorized.
 

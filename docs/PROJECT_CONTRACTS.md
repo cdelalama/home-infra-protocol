@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they
@@ -22,6 +22,7 @@ repo remains the authority after ingesting, copying, or validating them.
 - `deploy`
 - `sync_jobs`
 - `telemetry_jobs`
+- `capabilities`
 - `runbooks`
 - `secret_refs`
 
@@ -63,6 +64,21 @@ Examples: host capacity, disk pressure, UPS telemetry, hardware temperature.
 Both arrays publish the same status snapshot shape at `status_url`. The
 snapshot schema is `schemas/status-snapshot.schema.json`.
 
+## Capability Transparency
+
+Use `capabilities[]` to declare what the project supports, how current policy
+constrains it, what scope and risk apply, and how a restriction may evolve.
+Capabilities are not jobs and do not represent health.
+
+A capability may reference a `telemetry_jobs[]` entry through
+`observation_job_id`. That job's status snapshot then publishes matching
+runtime `capabilities[]` evidence. The declaration owns support, policy, scope,
+risk, reason, enablement, and review intent. The snapshot owns only observed
+availability and verification evidence.
+
+See `docs/CAPABILITY_TRANSPARENCY.md` for the complete declaration, observation,
+join, presentation, and security contract.
+
 Freshness is never self-declared inside the snapshot. The producer writes
 `observed_at`; the declaration writes `stale_after`; consumers derive freshness
 by joining the two.
@@ -101,14 +117,18 @@ The validator belongs to this protocol repository:
 - rejects unresolved TODO values;
 - validates the contract and snapshots against the canonical schemas;
 - rejects duplicate job ids and duplicate stable check names;
+- rejects duplicate capability declarations or observations;
+- joins capability observations to the declared telemetry job and requires its
+  complete declared set;
+- rejects runtime evidence that repeats project capability policy;
 - enforces `stale_after > cadence` for periodic jobs;
 - rejects producer-authored `freshness`, `stale`, or `is_stale`;
 - performs no network access and mutates no repository or runtime.
 
 Use `--template` only to validate the canonical profile starter. It verifies
-the profile-version marker, the presence of both removable job examples, and
-the deliberate absence of private incubating fields such as
-`operational_review`.
+the profile-version marker, the presence of both removable job examples and
+one removable capability example, and the deliberate absence of private
+incubating fields such as `operational_review`.
 
 Passing validation proves shape, not runtime truth. Home Infra accepts a
 project interface only through its own explicit operator-controlled registry

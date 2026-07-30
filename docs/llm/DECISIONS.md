@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -79,3 +79,25 @@ validation; ForgeOS owns workflow; projects own producers; Home Infra owns
 accepted intent; consumers derive presentation. Private incubation from
 DF-015, including `operational_review`, remains outside the reusable profile
 until its separate evidence gate authorizes proposal work.
+
+## D-007: Make Capability Restrictions Visible And Evolvable
+
+**Date:** 2026-07-30
+**Status:** Accepted for protocol 0.12.0
+
+Project contracts declare operator-visible capabilities separately from
+runtime health. Each declaration distinguishes product support, operator
+policy, scope, risk, and the explicit path for changing a restriction. Every
+non-enabled policy requires a stable reason code and an enablement block;
+`not_planned` is an explicit outcome rather than an omitted capability.
+
+Runtime proof remains project-owned telemetry. A capability may name one
+telemetry job, whose snapshot carries only typed availability and deployment
+lifecycle evidence. Runtime output never repeats or overrides support, policy,
+scope, risk, enablement, or review intent.
+
+Consumers join declaration and observation by exact id, render restrictions as
+policy rather than incidents, and keep roadmap state separate. This prevents a
+temporary safety choice from becoming an invisible product limitation while
+preserving the protocol's intent/evidence and non-authoritative-consumer
+boundaries.

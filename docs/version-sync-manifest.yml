@@ -17,6 +17,7 @@ targets:
 - path: docs/STRUCTURE.md          marker: html-comment
 - path: docs/COMPLETION_RULE.md    marker: html-comment
 - path: docs/PROJECT_CONTRACTS.md  marker: html-comment
+- path: docs/CAPABILITY_TRANSPARENCY.md marker: html-comment
 - path: docs/GOVERNANCE.md         marker: html-comment
 - path: docs/SECURITY_MODEL.md     marker: html-comment
 - path: docs/RECOVERY_MODEL.md     marker: html-comment

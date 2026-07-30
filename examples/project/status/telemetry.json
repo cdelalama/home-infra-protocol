@@ -1,0 +1,28 @@
+{
+  "observed_at": "2026-07-30T12:00:00Z",
+  "next_run_at": "2026-07-30T12:05:00Z",
+  "condition": "ok",
+  "severity": "none",
+  "summary": "The example telemetry observation completed successfully.",
+  "checks": [
+    {
+      "name": "service-reachable",
+      "label": "Service reachable",
+      "condition": "ok"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "messaging.channels",
+      "availability": "available",
+      "verification": "serving",
+      "summary": "Authenticated channel messaging passed."
+    },
+    {
+      "id": "workflows.execute",
+      "availability": "available",
+      "verification": "serving",
+      "summary": "The sandbox runner accepted its canary."
+    }
+  ]
+}

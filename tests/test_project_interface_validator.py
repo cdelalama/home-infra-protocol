@@ -1,5 +1,6 @@
 import json
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,7 +32,43 @@ def valid_contract() -> dict:
                 "status_url": "https://status.example.invalid/example.json",
             }
         ],
-        "runbooks": {"verify": "docs/operations/VERIFY.md"},
+        "capabilities": [
+            {
+                "id": "messaging.channels",
+                "label": "Channel messaging",
+                "category": "messaging",
+                "support": "supported",
+                "policy": "enabled",
+                "risk": "low",
+                "scope": {"mode": "all"},
+                "observation_job_id": "example-telemetry",
+            },
+            {
+                "id": "workflows.execute",
+                "label": "Workflow execution",
+                "category": "automation",
+                "support": "supported",
+                "policy": "sandbox_only",
+                "risk": "high",
+                "scope": {
+                    "mode": "sandbox",
+                    "targets": ["example-playground"],
+                },
+                "reason_code": "production-runner-not-approved",
+                "enablement": {
+                    "mode": "operator_approval",
+                    "target_policy": "approval_required",
+                    "gate": "verify-runner-isolation",
+                    "runbook": "capabilities",
+                },
+                "review_at": "2026-09-30T12:00:00Z",
+                "observation_job_id": "example-telemetry",
+            },
+        ],
+        "runbooks": {
+            "verify": "docs/operations/VERIFY.md",
+            "capabilities": "docs/operations/CAPABILITIES.md",
+        },
         "secret_refs": [],
     }
 
@@ -50,13 +87,27 @@ def valid_status() -> dict:
                 "condition": "ok",
             }
         ],
+        "capabilities": [
+            {
+                "id": "messaging.channels",
+                "availability": "available",
+                "verification": "serving",
+                "summary": "Authenticated channel messaging passed.",
+            },
+            {
+                "id": "workflows.execute",
+                "availability": "available",
+                "verification": "serving",
+                "summary": "The isolated workflow runner accepted its canary.",
+            },
+        ],
     }
 
 
 class ProjectInterfaceValidatorTest(unittest.TestCase):
     def run_validator(self, *args: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
-            [str(VALIDATOR), *args],
+            [sys.executable, str(VALIDATOR), *args],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -184,6 +235,91 @@ class ProjectInterfaceValidatorTest(unittest.TestCase):
             )
         self.assertEqual(result.returncode, 1)
         self.assertIn("duplicate stable check names", result.stderr)
+
+    def test_duplicate_capability_declarations_fail(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            candidate = valid_contract()
+            candidate["capabilities"].append(dict(candidate["capabilities"][0]))
+            contract = self.write_yaml(directory, candidate)
+            result = self.run_validator("--contract", str(contract))
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("duplicate capability id", result.stderr)
+
+    def test_capability_observation_must_join_declared_job(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            candidate = valid_contract()
+            candidate["capabilities"][0]["observation_job_id"] = "missing-job"
+            contract = self.write_yaml(directory, candidate)
+            result = self.run_validator("--contract", str(contract))
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("must reference a telemetry job", result.stderr)
+
+    def test_restricted_capability_requires_reason_and_enablement(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            candidate = valid_contract()
+            del candidate["capabilities"][1]["reason_code"]
+            del candidate["capabilities"][1]["enablement"]
+            contract = self.write_yaml(directory, candidate)
+            result = self.run_validator("--contract", str(contract))
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("'reason_code' is a required property", result.stderr)
+        self.assertIn("'enablement' is a required property", result.stderr)
+
+    def test_status_rejects_undeclared_capability(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            contract = self.write_yaml(directory, valid_contract())
+            snapshot = valid_status()
+            snapshot["capabilities"].append(
+                {
+                    "id": "unknown.capability",
+                    "availability": "available",
+                }
+            )
+            status = self.write_json(directory, snapshot)
+            result = self.run_validator(
+                "--contract",
+                str(contract),
+                "--status",
+                f"example-telemetry={status}",
+            )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("is not declared in the contract", result.stderr)
+
+    def test_status_rejects_policy_fields_in_runtime_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            contract = self.write_yaml(directory, valid_contract())
+            snapshot = valid_status()
+            snapshot["capabilities"][0]["policy"] = "enabled"
+            status = self.write_json(directory, snapshot)
+            result = self.run_validator(
+                "--contract",
+                str(contract),
+                "--status",
+                f"example-telemetry={status}",
+            )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("must not redeclare project policy fields", result.stderr)
+
+    def test_status_requires_every_capability_assigned_to_job(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            directory = Path(raw)
+            contract = self.write_yaml(directory, valid_contract())
+            snapshot = valid_status()
+            snapshot["capabilities"].pop()
+            status = self.write_json(directory, snapshot)
+            result = self.run_validator(
+                "--contract",
+                str(contract),
+                "--status",
+                f"example-telemetry={status}",
+            )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("missing observations declared for this job", result.stderr)
 
 
 if __name__ == "__main__":

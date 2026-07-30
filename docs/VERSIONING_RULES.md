@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Versioning Rules
 
 Home Infra Protocol uses Semantic Versioning.

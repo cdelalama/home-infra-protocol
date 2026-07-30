@@ -2,6 +2,34 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.12.0] - 2026-07-30
+
+### Added
+
+- Optional project `capabilities[]` declarations that keep product support,
+  operator policy, scope, risk, restriction reason, and the enablement path
+  visible as separate typed fields.
+- Optional runtime capability observations in status snapshots, joined through
+  a declared telemetry job without allowing runtime evidence to rewrite policy.
+- A canonical capability-transparency specification, sanitized contract/status
+  examples, decision D-007, and focused schema/validator regression coverage.
+
+### Changed
+
+- Extend the canonical project-interface validator to reject duplicate or
+  undeclared capabilities, wrong telemetry joins, incomplete observation sets,
+  hidden restrictions, invalid sandbox scope, and missing enablement runbooks.
+- Extend the reusable LLM-DocKit homelab profile and checklist so new projects
+  start with an explicit capability inventory rather than an invisible
+  allow/deny implementation.
+
+### Fixed
+
+- Invoke the Python validator through the active interpreter in regression
+  tests so the suite is portable to Windows as well as POSIX hosts.
+- Quote RFC3339 timestamps in YAML examples so YAML loaders preserve the
+  protocol's string type.
+
 ## [0.11.0] - 2026-07-28
 
 ### Added

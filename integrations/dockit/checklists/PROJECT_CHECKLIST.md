@@ -92,6 +92,10 @@ forgotten).
       `sync_jobs[]` for an external source of truth,
       `telemetry_jobs[]` for self/host observation.
 - [ ] Every declared job has a sanitized representative status snapshot.
+- [ ] Operator-visible capabilities are declared in `capabilities[]`; every
+      restricted capability has a stable reason and explicit enablement path.
+- [ ] Capabilities that require runtime proof reference a telemetry job, and
+      its representative snapshot publishes the complete observation set.
 - [ ] Canonical validation passes without a copied validator:
       `~/src/home-infra-protocol/scripts/validate-project-interface.py
       --contract infra.contract.yml
@@ -106,6 +110,8 @@ forgotten).
       not edited or treated as accepting the interface automatically.
 - [ ] Private incubating fields such as `operational_review` were not copied
       into the reusable project contract.
+- [ ] Capability observations contain availability evidence only and do not
+      repeat policy, scope, risk, secret, identity, command, or message data.
 
 ## Final smoke check
 

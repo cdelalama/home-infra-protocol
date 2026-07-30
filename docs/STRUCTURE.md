@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Repository Structure
 
 ```text
@@ -22,6 +22,8 @@ home-infra-protocol/
 │   │   └── HANDOFF.md
 │   └── project/
 │       ├── infra.contract.yml
+│       ├── status/
+│       │   └── telemetry.json
 │       └── docs/
 │           └── INFRA_CONTRACT.md
 ├── docs/
@@ -29,6 +31,7 @@ home-infra-protocol/
 │   ├── ARCHITECTURE.md
 │   ├── COMPLETION_RULE.md
 │   ├── PROJECT_CONTRACTS.md
+│   ├── CAPABILITY_TRANSPARENCY.md
 │   ├── GOVERNANCE.md
 │   ├── SECURITY_MODEL.md
 │   ├── RECOVERY_MODEL.md
@@ -54,6 +57,7 @@ home-infra-protocol/
 └── tests/
     ├── .gitkeep
     ├── test_authentication_placement.py
+    ├── test_capability_transparency.py
     ├── test_project_interface_validator.py
     ├── test_status_snapshot_next_run.py
     └── test_status_snapshot_labels.py

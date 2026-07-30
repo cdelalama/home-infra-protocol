@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,18 +81,13 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-18 - GPT-5 Codex.
-- Working on: preserve published protocol 0.10.1 as the authoritative
-  schedule-evidence contract while the final pending periodic adopter,
-  msgvault, completes its deploy-observe-promote gate.
-- Status: DF-014 and its first independent producer/consumer audit are closed.
-  Infra Portal 0.20.3 is deployed; ForumVault 0.16.0 completed a real hourly
-  soak and is accepted; Plaud Mirror is now deployed at 0.14.2 and retains the
-  periodic producer contract. Home Infra 0.7.6 keeps msgvault 0.24.0 pending
-  until its isolated branch is reconciled, deployed, and observed. DF-013
-  remains open on its second-recovery evidence gate. LLM-DocKit 4.13.1 sync is
-  known tooling debt and must remain a separate patch; see the pre-shutdown
-  checkpoint in `docs/llm/HANDOFF.md`.
+- Last Updated: 2026-07-30 - GPT-5 Codex.
+- Working on: publish protocol 0.12.0 as the reusable capability-transparency
+  contract, then implement and verify its ordered adoption in Infra Portal,
+  buzz-lab, Hermes, and the private Home Infra control plane.
+- Status: protocol producer semantics, examples, validator, and tests are
+  complete locally. Consumer and runtime support are not yet claimed; they are
+  the next gates in Carlos's active Buzz pilot goal.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

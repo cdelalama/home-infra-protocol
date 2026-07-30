@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Security Model
 
 Home Infra Protocol assumes catalogs may be consumed by internal tools and LLM
@@ -12,6 +12,11 @@ secret values.
 - Public examples must be sanitized.
 - Consumers must not infer authority to mutate infrastructure from read access.
 - Telemetry endpoints are not automatically trusted sources of inventory.
+- Capability declarations and observations must not contain secret values,
+  private identity material, message bodies, raw commands, raw exception text,
+  or hidden policy detail.
+- Runtime capability observations must not restate declaration policy.
+  Browser-facing consumers should expose only a strict allowlisted projection.
 
 ## Exposure
 

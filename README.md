@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -71,6 +71,7 @@ periodic `stale_after > cadence`, and keeps freshness consumer-derived.
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Protocol components and roadmap |
 | [docs/COMPLETION_RULE.md](docs/COMPLETION_RULE.md) | Definition of done for infrastructure changes |
 | [docs/PROJECT_CONTRACTS.md](docs/PROJECT_CONTRACTS.md) | Project-level contract direction |
+| [docs/CAPABILITY_TRANSPARENCY.md](docs/CAPABILITY_TRANSPARENCY.md) | Visible project capability declaration, runtime evidence, and evolution path |
 | [integrations/dockit/INTEGRATION.md](integrations/dockit/INTEGRATION.md) | Reusable homelab profile and validation workflow |
 | [docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md](docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md) | Standard Telemetry Source status output |
 | [docs/SYNC_JOB_CONTRACT_PROPOSAL.md](docs/SYNC_JOB_CONTRACT_PROPOSAL.md) | Project-owned sync and telemetry job declarations |

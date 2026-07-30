@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # LLM Workflow
 
 LLM agents using this protocol should follow a simple discipline.
@@ -37,6 +37,23 @@ broken affordance (DF-004 root cause: between protocol 0.2.0 and 0.3.0 the
 `interface: web` default fired silently for `unifi-mcp` because the original
 "MUST declare explicitly" rule covered only non-HTTP URLs, leaving HTTPS APIs
 without HTML on the wrong side of the line).
+
+## When Restricting Project Capabilities
+
+Do not leave a product or agent restriction only in Compose, environment
+variables, operator memory, or prose. Add or update the project's
+`capabilities[]` declaration with:
+
+- current support and policy;
+- scope and risk;
+- a stable reason code;
+- an explicit enablement mode and gate;
+- an observation job when runtime proof matters.
+
+Before telling an operator that a project "cannot" do something, distinguish
+unsupported, disabled by policy, not evaluated, unavailable at runtime, and
+missing integration. Consumers and agents must not collapse these states into
+one generic refusal.
 
 ## Before Claiming Completion
 

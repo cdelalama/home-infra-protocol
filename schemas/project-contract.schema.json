@@ -29,6 +29,12 @@
       "default": [],
       "description": "Project-owned loops that publish self-observation or host/runtime telemetry. A telemetry job must not declare `source`."
     },
+    "capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capability" },
+      "default": [],
+      "description": "Project-owned capability declarations. They distinguish product support, operator policy, scope, and the explicit path for changing a restriction."
+    },
     "runbooks": {
       "type": "object",
       "additionalProperties": { "type": "string" }
@@ -181,6 +187,147 @@
           "type": "object",
           "properties": {
             "source": false
+          }
+        }
+      ]
+    },
+    "capability_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$",
+      "maxLength": 120
+    },
+    "capability_policy": {
+      "type": "string",
+      "enum": [
+        "enabled",
+        "approval_required",
+        "sandbox_only",
+        "disabled",
+        "not_evaluated"
+      ]
+    },
+    "capability_scope": {
+      "type": "object",
+      "required": ["mode"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["all", "allowlist", "sandbox", "none"]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "uniqueItems": true,
+          "default": []
+        }
+      }
+    },
+    "capability_enablement": {
+      "type": "object",
+      "required": ["mode"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "automatic",
+            "operator_approval",
+            "planned",
+            "not_planned"
+          ]
+        },
+        "target_policy": { "$ref": "#/$defs/capability_policy" },
+        "gate": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$",
+          "maxLength": 120
+        },
+        "runbook": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$",
+          "maxLength": 80,
+          "description": "Key in the project contract runbooks map, not an arbitrary path or URL."
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "category",
+        "support",
+        "policy",
+        "risk"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "$ref": "#/$defs/capability_id" },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "category": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+          "maxLength": 80
+        },
+        "support": {
+          "type": "string",
+          "enum": ["supported", "unsupported", "unknown"]
+        },
+        "policy": { "$ref": "#/$defs/capability_policy" },
+        "risk": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "scope": { "$ref": "#/$defs/capability_scope" },
+        "reason_code": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$",
+          "maxLength": 120
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "description": "Sanitized display-only operator summary. Consumers must not parse it for policy."
+        },
+        "enablement": { "$ref": "#/$defs/capability_enablement" },
+        "review_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+        },
+        "observation_job_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Telemetry job whose status snapshot carries runtime evidence for this capability."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "policy": {
+                "enum": [
+                  "approval_required",
+                  "sandbox_only",
+                  "disabled",
+                  "not_evaluated"
+                ]
+              }
+            },
+            "required": ["policy"]
+          },
+          "then": {
+            "required": ["reason_code", "enablement"]
           }
         }
       ]

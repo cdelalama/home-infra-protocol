@@ -46,6 +46,16 @@ FIXED_DURATION_RE = re.compile(
     r")?$"
 )
 FORBIDDEN_PRODUCER_FRESHNESS_FIELDS = {"freshness", "is_stale", "stale"}
+FORBIDDEN_CAPABILITY_OBSERVATION_FIELDS = {
+    "support",
+    "policy",
+    "risk",
+    "scope",
+    "reason_code",
+    "enablement",
+    "review_at",
+    "observation_job_id",
+}
 
 
 @dataclass(frozen=True)
@@ -155,6 +165,25 @@ def jobs_from_contract(contract: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return jobs
 
 
+def capabilities_from_contract(
+    contract: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    capabilities: dict[str, dict[str, Any]] = {}
+    for index, capability in enumerate(contract.get("capabilities", [])):
+        if not isinstance(capability, dict):
+            continue
+        capability_id = capability.get("id")
+        if not isinstance(capability_id, str):
+            continue
+        if capability_id in capabilities:
+            raise ValueError(
+                "$.capabilities"
+                f"[{index}].id: duplicate capability id {capability_id!r}"
+            )
+        capabilities[capability_id] = capability
+    return capabilities
+
+
 def contract_semantic_errors(contract: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     try:
@@ -184,6 +213,56 @@ def contract_semantic_errors(contract: dict[str, Any]) -> list[str]:
                 f"job {job_id!r}: stale_after ({stale_after}) must be greater "
                 f"than cadence ({cadence})"
             )
+
+    try:
+        capabilities = capabilities_from_contract(contract)
+    except ValueError as exc:
+        errors.append(str(exc))
+        capabilities = {}
+
+    telemetry_job_ids = {
+        job.get("id")
+        for job in contract.get("telemetry_jobs", [])
+        if isinstance(job, dict) and isinstance(job.get("id"), str)
+    }
+    runbooks = contract.get("runbooks")
+    runbook_keys = set(runbooks) if isinstance(runbooks, dict) else set()
+
+    for capability_id, capability in capabilities.items():
+        observation_job_id = capability.get("observation_job_id")
+        if (
+            isinstance(observation_job_id, str)
+            and observation_job_id not in telemetry_job_ids
+        ):
+            errors.append(
+                f"capability {capability_id!r}: observation_job_id "
+                f"{observation_job_id!r} must reference a telemetry job"
+            )
+
+        support = capability.get("support")
+        policy = capability.get("policy")
+        if support == "unsupported" and policy != "disabled":
+            errors.append(
+                f"capability {capability_id!r}: unsupported capabilities "
+                "must use policy 'disabled'"
+            )
+
+        scope = capability.get("scope")
+        if policy == "sandbox_only":
+            if not isinstance(scope, dict) or scope.get("mode") != "sandbox":
+                errors.append(
+                    f"capability {capability_id!r}: sandbox_only policy requires "
+                    "scope.mode 'sandbox'"
+                )
+
+        enablement = capability.get("enablement")
+        if isinstance(enablement, dict):
+            runbook = enablement.get("runbook")
+            if isinstance(runbook, str) and runbook not in runbook_keys:
+                errors.append(
+                    f"capability {capability_id!r}: enablement runbook "
+                    f"{runbook!r} is not declared in $.runbooks"
+                )
     return errors
 
 
@@ -216,6 +295,7 @@ def validate_template(
         "services": list,
         "sync_jobs": list,
         "telemetry_jobs": list,
+        "capabilities": list,
         "runbooks": dict,
         "secret_refs": list,
     }
@@ -233,6 +313,11 @@ def validate_template(
             errors.append(
                 f"$.{collection}: profile template must include one removable example"
             )
+    capabilities = data.get("capabilities")
+    if isinstance(capabilities, list) and not capabilities:
+        errors.append(
+            "$.capabilities: profile template must include one removable example"
+        )
 
     if "operational_review" in text:
         errors.append(
@@ -269,6 +354,7 @@ def parse_status_arg(raw: str) -> StatusInput:
 def validate_status(
     status_input: StatusInput,
     jobs: dict[str, dict[str, Any]],
+    declared_capabilities: dict[str, dict[str, Any]],
     status_schema: Any,
 ) -> list[str]:
     if status_input.job_id not in jobs:
@@ -303,6 +389,66 @@ def validate_status(
                     "$.checks: duplicate stable check names: "
                     + ", ".join(duplicates)
                 )
+
+        observations = snapshot.get("capabilities")
+        observed_ids: list[str] = []
+        if isinstance(observations, list):
+            for index, observation in enumerate(observations):
+                if not isinstance(observation, dict):
+                    continue
+                capability_id = observation.get("id")
+                if not isinstance(capability_id, str):
+                    continue
+                observed_ids.append(capability_id)
+                declaration = declared_capabilities.get(capability_id)
+                if declaration is None:
+                    errors.append(
+                        f"$.capabilities[{index}].id: capability "
+                        f"{capability_id!r} is not declared in the contract"
+                    )
+                elif declaration.get("observation_job_id") != status_input.job_id:
+                    errors.append(
+                        f"$.capabilities[{index}].id: capability "
+                        f"{capability_id!r} belongs to observation job "
+                        f"{declaration.get('observation_job_id')!r}, not "
+                        f"{status_input.job_id!r}"
+                    )
+                forbidden = sorted(
+                    FORBIDDEN_CAPABILITY_OBSERVATION_FIELDS.intersection(
+                        observation
+                    )
+                )
+                if forbidden:
+                    errors.append(
+                        f"$.capabilities[{index}]: runtime capability evidence "
+                        "must not redeclare project policy fields: "
+                        + ", ".join(forbidden)
+                    )
+
+            duplicates = sorted(
+                {
+                    capability_id
+                    for capability_id in observed_ids
+                    if observed_ids.count(capability_id) > 1
+                }
+            )
+            if duplicates:
+                errors.append(
+                    "$.capabilities: duplicate capability ids: "
+                    + ", ".join(duplicates)
+                )
+
+        expected_ids = sorted(
+            capability_id
+            for capability_id, declaration in declared_capabilities.items()
+            if declaration.get("observation_job_id") == status_input.job_id
+        )
+        missing_ids = sorted(set(expected_ids).difference(observed_ids))
+        if missing_ids:
+            errors.append(
+                "$.capabilities: missing observations declared for this job: "
+                + ", ".join(missing_ids)
+            )
     return errors
 
 
@@ -362,14 +508,24 @@ def main(argv: list[str] | None = None) -> int:
         errors.extend(contract_semantic_errors(contract))
 
     jobs: dict[str, dict[str, Any]] = {}
+    declared_capabilities: dict[str, dict[str, Any]] = {}
     if isinstance(contract, dict):
         try:
             jobs = jobs_from_contract(contract)
         except ValueError:
             pass
+        try:
+            declared_capabilities = capabilities_from_contract(contract)
+        except ValueError:
+            pass
 
     for status_input in args.status:
-        status_errors = validate_status(status_input, jobs, status_schema)
+        status_errors = validate_status(
+            status_input,
+            jobs,
+            declared_capabilities,
+            status_schema,
+        )
         errors.extend(
             f"status[{status_input.job_id}] {error}" for error in status_errors
         )

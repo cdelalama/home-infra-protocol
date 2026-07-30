@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Status Snapshot Contract Proposal
 
 ## Status
@@ -69,6 +69,13 @@ Optional fields:
   `condition`; `label`, `severity`, and `summary` are optional. `name` is the
   stable machine identifier. `label` is concise operator-facing copy for
   consumers that render the check.
+- `capabilities[]`: runtime evidence for capabilities declared by the owning
+  project and assigned to this telemetry job. Each observation has `id` and
+  typed `availability`; `verification` and display-only `summary` are optional.
+
+Capability observations never repeat support, policy, risk, scope, restriction
+reason, enablement, or review intent. Consumers join those fields from the
+project declaration. See `docs/CAPABILITY_TRANSPARENCY.md`.
 
 ## Condition
 
@@ -156,6 +163,10 @@ The same boundary applies to `checks[].label` and `checks[].summary`. Producers
 SHOULD write plain-language operator copy instead of exposing implementation
 fields such as `error_class=none`. Consumers use `checks[].name` for joins and
 may humanize that identifier only as a display fallback when `label` is absent.
+
+The same display-only rule applies to `capabilities[].summary`. Capability
+availability comes only from the typed `availability` field, and capability
+policy comes only from the project contract.
 
 ## Consumer Alert Gate
 

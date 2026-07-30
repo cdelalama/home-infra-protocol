@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -481,6 +481,24 @@ For periodic jobs, validators SHOULD enforce `stale_after > cadence`. If
 `safety.max_runtime` is present, validators SHOULD recommend
 `stale_after >= cadence + max_runtime`.
 
+Project contracts may also declare `capabilities[]`. Capability declarations
+separate product support, operator policy, policy scope, risk, and the explicit
+path for changing a restriction. Every policy other than `enabled` requires a
+machine-readable `reason_code` and an `enablement` block; a capability with no
+planned expansion uses `enablement.mode: not_planned` rather than disappearing
+from the contract.
+
+When runtime proof is useful, a capability references one declared telemetry
+job through `observation_job_id`. That job's status snapshot may publish a
+matching `capabilities[]` observation set. Runtime evidence records
+availability and the highest evidenced deployment lifecycle state; it MUST NOT
+repeat or override policy, scope, risk, enablement, or review intent.
+
+The formal declarations and observations live in
+`schemas/project-contract.schema.json` and
+`schemas/status-snapshot.schema.json`. Normative join and presentation rules
+live in `docs/CAPABILITY_TRANSPARENCY.md`.
+
 ### Status Snapshot
 
 A status snapshot is the standard machine-readable output of a Telemetry
@@ -536,6 +554,17 @@ Optional `checks[]` split machine identity from presentation:
 Consumers MUST use typed fields and `name` for logic. They MAY display `label`
 when present and derive a cosmetic fallback from `name` when it is absent. They
 MUST NOT parse `label` or `summary`.
+
+Optional `capabilities[]` records runtime evidence for project-declared
+capabilities. Each observation requires the exact capability `id` and one
+typed `availability` value: `available | unavailable | degraded | unknown`.
+It may include the highest evidenced deployment lifecycle `verification` and a
+sanitized display-only `summary`.
+
+Capability policy never belongs in a status snapshot. Validators and consumers
+join observations to the project declaration and its `observation_job_id`.
+They reject or quarantine undeclared, duplicate, wrong-job, or incomplete
+capability observations.
 
 `severity` is ordered:
 

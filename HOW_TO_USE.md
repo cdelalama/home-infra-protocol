@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # How To Use This Repository
 
 Home Infra Protocol is a specification and executable contract-validation
@@ -51,6 +51,12 @@ scripts/validate-project-interface.py \
 
 Repeat `--status` for each representative job snapshot. The validator never
 contacts a runtime or Home Infra and does not prove deployment or acceptance.
+
+When a project intentionally limits a product or agent feature, declare it in
+`capabilities[]` rather than leaving the restriction only in environment
+variables or prose. Non-enabled policies require a stable reason and explicit
+enablement path. Runtime proof is published by the referenced telemetry job
+and joined by exact capability id.
 
 For the canonical starter only:
 

@@ -38,11 +38,43 @@ telemetry_jobs:
       max_runtime: PT1M
       backoff: fixed
 
+capabilities:
+  - id: messaging.channels
+    label: Channel messaging
+    category: messaging
+    support: supported
+    policy: enabled
+    risk: low
+    scope:
+      mode: all
+    observation_job_id: example-host-capacity
+
+  - id: workflows.execute
+    label: Workflow execution
+    category: automation
+    support: supported
+    policy: sandbox_only
+    risk: high
+    scope:
+      mode: sandbox
+      targets:
+        - example-playground
+    reason_code: production-runner-not-approved
+    summary: Workflows are limited to the disposable project runner.
+    enablement:
+      mode: operator_approval
+      target_policy: approval_required
+      gate: verify-runner-isolation
+      runbook: capabilities
+    review_at: "2026-09-30T12:00:00Z"
+    observation_job_id: example-host-capacity
+
 runbooks:
   deploy: docs/DEPLOY.md
   restore: docs/RESTORE.md
   verify: docs/VERIFY.md
   rollback: docs/ROLLBACK.md
+  capabilities: docs/CAPABILITIES.md
 
 secret_refs:
   - name: EXAMPLE_APP_TOKEN

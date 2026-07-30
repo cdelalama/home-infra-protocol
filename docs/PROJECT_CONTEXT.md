@@ -1,4 +1,4 @@
-<!-- doc-version: 0.11.0 -->
+<!-- doc-version: 0.12.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -22,6 +22,8 @@ extracts the reusable pattern without publishing private operational details.
 - Provide sanitized examples that private repos can copy.
 - Provide a canonical, side-effect-free validator that projects and
   orchestrators invoke without copying.
+- Make project capabilities and intentional restrictions visible, explainable,
+  runtime-verifiable, and evolvable without turning consumers into authorities.
 
 ## Stakeholders
 
@@ -57,16 +59,22 @@ authorities over inventory or intent.
 | `examples/` | Sanitized example repos/contracts | No real LAN details |
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
+| `docs/CAPABILITY_TRANSPARENCY.md` | Capability declaration and runtime-evidence contract | Policy stays separate from availability |
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-07-28)
+## Current Status (2026-07-30)
 
-Protocol 0.11.0 adds the first canonical executable validator for project
-contracts and representative status snapshots. The homelab profile now reflects
-the proven `sync_jobs[]` / `telemetry_jobs[]` interface instead of its stale May
-prototype, and ForgeOS invokes the validator rather than copying it. This is a
-validator/profile release, not a new status or job semantic.
+Protocol 0.12.0 adds optional project capability declarations and runtime
+capability observations. It makes support, policy, scope, risk, restriction
+reason, and enablement path explicit while keeping runtime availability in a
+project-owned telemetry snapshot. The canonical validator enforces declaration
+and observation identity, job ownership, completeness, and the policy/evidence
+boundary.
+
+This first publication defines the producer contract and reusable profile.
+Consumer support remains unclaimed until a real Infra Portal release passes
+strict-ingress, strict-egress, stale, mismatch, and operator-UI evidence.
 
 DF-015 remains privately incubated until its 2026-08-04 evidence review.
 `operational_review` is deliberately absent from the reusable profile and
@@ -75,17 +83,17 @@ remain unchanged.
 
 ## Upcoming Milestones
 
-1. Exercise the canonical validator through ForgeOS project creation and the
-   dedicated interface-implementation workflow; fix validator bugs here rather
-   than copying patches downstream.
-2. Review DF-015 on 2026-08-04 without pre-promoting its private field.
-3. Exercise the private all-surface closure model on one other proxied service.
-4. Promote only recovery fields that survive both cases into a separate
+1. Exercise capability transparency through one real project producer, Home
+   Infra acceptance, Infra Portal rendering, and Hermes self-description.
+2. Record consumer support only after runtime evidence exists.
+3. Review DF-015 on 2026-08-04 without pre-promoting its private field.
+4. Exercise the private all-surface closure model on one other proxied service.
+5. Promote only recovery fields that survive both cases into a separate
    sanitized proposal; keep host identity, proxy products, secrets, backups,
    and commands private.
-5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
+6. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
-6. Keep later status and recovery vocabulary adopter-driven rather than adding
+7. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References
