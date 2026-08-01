@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.0 -->
+<!-- doc-version: 0.12.1 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -971,7 +971,10 @@ or `key=value` expressions as primary UI copy.
   (`1dc56e67d628`) + deployed Infra Portal 0.19.2
 - Date observed: 2026-07-15
 - Category: field-gap, process, usability
-- Status: open
+- Status: accepted — the second proxied-service case satisfied the promotion
+  gate and `docs/RECOVERY_ACCEPTANCE_PROPOSAL.md` records the sanitized shape;
+  schemas, SPEC, examples, and validators remain unchanged pending explicit
+  implementation acceptance.
 - Related: DF-003, DF-006
 
 ### Observation
@@ -1005,26 +1008,26 @@ private adopter now incubates:
 - a closure rule that fails when any required target, integration, operator,
   observer, or publication surface fails.
 
-Do not promote that private shape yet. A second real proxied-service recovery
-must exercise it first so the protocol can distinguish reusable concepts from
-host-specific workflow. Any future proposal must remain implementation-neutral
-and sanitized. Private addresses, MACs, backup locations, secret references,
-proxy products, role commands, and operator policy do not belong in the public
-contract.
+That private shape remained unpromoted until a second real proxied-service
+recovery exercised it, allowing the protocol to distinguish reusable concepts
+from host-specific workflow. The resulting proposal remains
+implementation-neutral and sanitized. Private addresses, MACs, backup
+locations, secret references, proxy products, role commands, and operator
+policy do not belong in the public contract.
 
-### Promotion gate
+### Promotion evidence
 
-Before moving DF-013 to `accepted`:
+DF-013 moved to `accepted` on 2026-08-01 after all four gates passed:
 
-1. Run the same all-surface closure model for one other service with canonical
-   ingress and at least one independent consumer.
-2. Record which acceptance fields and observation-point names survive both
-   cases unchanged.
-3. Define how security regression is represented without claiming that an
-   acceptance declaration proves runtime protection.
-4. Produce a separate sanitized proposal with compatibility and consumer
+1. The same all-surface closure model ran for another service with canonical
+   ingress and an independent consumer.
+2. The acceptance fields and observation-point concepts that survived both
+   cases were recorded.
+3. Security regression was represented without claiming that an acceptance
+   declaration proves runtime protection.
+4. A separate sanitized proposal now carries compatibility and consumer
    honesty rules; schema, SPEC, examples, and validators remain untouched until
-   that proposal is accepted.
+   implementation is explicitly accepted.
 
 ### Mitigation in source projects
 
@@ -1040,9 +1043,26 @@ closed; follow-up patches added fixture-tested Compose evidence, bounded
 rollbacks, unpredictable staging paths, post-snapshot all-surface verification,
 and explicit incomplete outcomes. The automatic backup follow-up is correctly
 scoped as role multisurface verification; Home Infra adds HA entities and local
-TLS SNI for all-surface closure. This strengthens implementation evidence but
-does not satisfy the required second proxied-service case or change DF-013 from
-`open`.
+TLS SNI for all-surface closure. This strengthened implementation evidence but
+did not by itself satisfy the required second proxied-service case.
+
+On 2026-08-01, a second proxied service supplied the missing evidence. After a
+planned host restart, its core database process failed while a separate web
+surface remained healthy. The canonical machine status URL simultaneously
+returned HTML with HTTP 200 because a generic proxy route shadowed the JSON
+route. The independent consumer detected the semantic mismatch within its
+declared probe interval, but recovery still required distinct proof of data
+integrity, core runtime, producer freshness, canonical JSON ingress, operator
+UI, consumer state, and notification delivery. Stable fields across both cases
+were acceptance id, surface class, observation point, check kind, expected
+result, and required/optional status. Product, host, address, path, credential,
+and command details did not survive sanitization and remain adopter-owned.
+
+The second case also proved that security and routing expectations must be
+declared separately from observed results: a declaration says what must hold;
+only a timestamped acceptance observation can say what did hold. The proposal
+therefore keeps `complete`, `incomplete`, and `rolled_back`, and forbids a
+consumer from manufacturing completion from a subset of required surfaces.
 
 ## DF-014 — Consumers need authoritative next-execution evidence
 
@@ -1181,3 +1201,55 @@ incubation boundary. The producer continues to publish only runtime evidence
 through the existing status-snapshot contract, and active notification remains
 deployment-specific. This feedback entry does not authorize any runtime,
 catalog, producer, consumer, or alerting change.
+
+## DF-016 — Detection, notification, acknowledgement, and closure were collapsed into one incident label
+
+- Source: Home Infra + Infra Portal + a proxied status producer (2026-08-01)
+- Date observed: 2026-08-01
+- Category: field-gap, process, usability
+- Status: accepted — proposal-only incubation in
+  `docs/INCIDENT_LIFECYCLE_PROPOSAL.md`; no schema or normative semantics yet
+- Related: DF-013, DF-015
+
+### Observation
+
+A semantic HTTP probe correctly changed a service to down within one declared
+poll interval. The dashboard persisted the transition and showed an active
+incident, but no independent delivery path notified the operator. A planned
+maintenance checklist also remained open after restart, so the absence of a
+post-change acceptance run did not escalate. The incident was visible to
+someone looking at the dashboard yet remained operationally silent.
+
+The UI also offered a session-local dismiss control. Hiding the banner did not
+record acknowledgement, assign an owner, verify recovery, or close the
+maintenance operation. One visual state was therefore carrying at least five
+different meanings.
+
+### Protocol implication
+
+Incubate a neutral lifecycle that keeps these facts separate:
+
+1. observation and detection, owned by the probe consumer;
+2. notification delivery, owned by an independent notifier;
+3. acknowledgement, an explicit operator action;
+4. recovery observation across all required acceptance surfaces; and
+5. closure, which requires the declared recovery gate and cannot be inferred
+   from dismissal or one healthy surface.
+
+A bounded maintenance window may suppress delivery, but it must have a UTC
+deadline. Suppression must not suppress observation or persistence. If the
+deadline expires while the failure remains, delivery becomes immediately due.
+
+Notification provider names, addresses, credentials, recipients, retry
+policy, and private escalation rules remain deployment-owned. A public
+contract may eventually carry only provider-neutral delivery evidence and
+timestamps.
+
+### Mitigation in source projects
+
+The source deployment now runs an external one-minute watcher that consumes
+the aggregate Portal state and one critical producer contract directly. Live
+acceptance exercised alert delivery, duplicate suppression, and recovery
+delivery. The Portal preserves semantic detection and no longer offers a local
+dismiss action that could be mistaken for acknowledgement. Those are adopter
+mitigations and do not constitute protocol implementation.

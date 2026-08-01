@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.0 -->
+<!-- doc-version: 0.12.1 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -76,6 +76,8 @@ periodic `stale_after > cadence`, and keeps freshness consumer-derived.
 | [docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md](docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md) | Standard Telemetry Source status output |
 | [docs/SYNC_JOB_CONTRACT_PROPOSAL.md](docs/SYNC_JOB_CONTRACT_PROPOSAL.md) | Project-owned sync and telemetry job declarations |
 | [docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md](docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md) | Development runtime lifecycle and side-effect ownership |
+| [docs/RECOVERY_ACCEPTANCE_PROPOSAL.md](docs/RECOVERY_ACCEPTANCE_PROPOSAL.md) | All-surface recovery completion model grounded in two incidents |
+| [docs/INCIDENT_LIFECYCLE_PROPOSAL.md](docs/INCIDENT_LIFECYCLE_PROPOSAL.md) | Separation of detection, delivery, acknowledgement, recovery, and closure |
 | [docs/GOVERNANCE.md](docs/GOVERNANCE.md) | Field policy, ownership, bootstrap, compliance claims |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Exposure and trust model |
 | [docs/RECOVERY_MODEL.md](docs/RECOVERY_MODEL.md) | Rebuilding the knowledge system |

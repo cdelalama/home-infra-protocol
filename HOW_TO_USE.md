@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.0 -->
+<!-- doc-version: 0.12.1 -->
 # How To Use This Repository
 
 Home Infra Protocol is a specification and executable contract-validation

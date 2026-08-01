@@ -1,10 +1,10 @@
-<!-- doc-version: 0.12.0 -->
+<!-- doc-version: 0.12.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
-## Pre-shutdown cold-start checkpoint (2026-07-18)
+## Historical pre-shutdown cold-start checkpoint (2026-07-18)
 
 This checkpoint is the durable replacement for the VM's ephemeral terminal
 state. The protocol implementation baseline is published protocol 0.10.1 at
@@ -53,76 +53,46 @@ Read-only ecosystem reconciliation performed for this checkpoint:
   reinstall behind the operator-controlled backup, diff, trust, and
   fresh-session checks required by LLM-DocKit.
 
-## Do Not Touch Without Explicit Operator Approval
+## Current safety boundaries
 
-- Do not edit or deploy `home-infra`, Infra Portal, Plaud Mirror, ForumVault,
-  msgvault, pi-fleet, or any NAS/VM runtime from a protocol-only session. The
-  active 2026-07-30 operator goal explicitly authorizes the ordered
-  cross-repository Buzz pilot work; each owning repository must still validate,
-  version, publish, and record its own evidence.
-- Do not merge or deploy msgvault's isolated 0.24.0 branch from here.
-- Do not add recovery fields or author a sanitized DF-013 proposal before a
-  second real proxied-service recovery passes the existing evidence gate.
+- The 2026-08-01 operator authorization covered the coordinated MsgVault,
+  Portal, Home Infra, and protocol recovery. Future cross-repository or runtime
+  mutations still require scope in the owning project and its own gates.
+- Do not merge MsgVault's isolated recovery branch into its dirty primary
+  worktree mechanically; preserve the branch boundary until the unrelated
+  primary-worktree changes are reconciled.
+- Do not add recovery or incident-lifecycle fields to SPEC or schemas until the
+  accepted proposals pass their explicit implementation/adoption gates.
 - Do not combine a DocKit 4.13.1 sync with protocol-semantic work.
 - Do not copy private addresses, host identity, products, secrets, backup
   locations, commands, or adopter policy into this public repository.
 
 ## Open work — next concrete step
 
-Protocol 0.12.0 adds the portable capability-transparency contract required by
-the Buzz pilot. Product support, operator policy, policy scope, risk,
-restriction reason, and the path for changing that restriction are now
-separate declarations. Runtime availability remains evidence owned by one
-declared telemetry job and cannot silently become policy.
+Protocol 0.12.1 is a proposal-only safety patch. A second real proxied-service
+incident satisfied DF-013's evidence gate: core runtime, canonical machine
+ingress, operator UI, producer publication, consumer state, and notification
+delivery failed or recovered independently. `docs/RECOVERY_ACCEPTANCE_PROPOSAL.md`
+records only the fields that survived both cases.
 
-The local candidate passes 31/31 protocol tests, canonical template validation,
-a representative contract/status join, JSON parsing, and version sync. It does
-not yet claim downstream consumer or live runtime support.
+DF-016 records the adjacent process failure: the consumer detected the bad
+state within its poll interval, but no independent notifier delivered it and
+the planned-maintenance recovery gate was never closed. The accepted
+`docs/INCIDENT_LIFECYCLE_PROPOSAL.md` separates detection, delivery,
+acknowledgement, all-surface recovery, and closure.
 
-The next ordered gates are:
+No SPEC, schema, example, validator, or compliance claim changed. The next
+ordered protocol gates are:
 
-1. Publish protocol 0.12.0.
-2. Implement declaration/runtime rendering in Infra Portal without conflating
-   restrictions, incidents, and roadmap state.
-3. Scaffold `buzz-lab` through ForgeOS plus LLM-DocKit, declare the full Buzz
-   capability inventory, and publish truthful telemetry.
-4. Integrate Hermes and accept the project in Home Infra, then deploy through
-   the private NAS control plane with LAN/WireGuard-only exposure.
-5. Reconcile consumer-support evidence here only after each downstream
-   repository and runtime has independently passed its own gates.
-
-Protocol 0.10.2 recorded DF-015 from the first real pre-telemetry operational
-review without changing SPEC, schemas, examples, validators, or protocol
-semantics. A private source-of-truth declaration makes a bounded backup
-activation trial visible before the producer has emitted its first status
-snapshot. The portal derives active attention or overdue risk from that
-operator intent while keeping runtime evidence and backup health separate.
-The durable evidence questions and promotion gate live in
-`docs/DOWNSTREAM_FEEDBACK.md`.
-
-DF-015 also records `preview.expires_at` as a related second use case inside
-the same consumer. It is not represented as a second independent adopter.
-Whether both paths justify one reusable time-bounded operator-obligation
-contract remains an evidence question, not an accepted design.
-
-Current DF-015 gate:
-
-1. Preserve the private incubation until its dated 2026-08-04 operator review.
-2. Collect only sanitized evidence: active/overdue behavior, explicit phase
-   advancement, coexistence with real telemetry, validation results, and the
-   final keep/revert/extend decision.
-3. Compare the activation-trial and preview-expiry paths for stable neutral
-   concepts without choosing a field name or schema location.
-4. Prefer an independent adopter before promotion unless the review identifies
-   a concrete safety or recovery gap that warrants earlier proposal work.
-5. Do not edit SPEC, schemas, examples, or validators until a separate
-   implementation-neutral proposal is authored and explicitly accepted.
-
-DF-013 remains independently open on its second proxied-service recovery gate.
-The existing DF-014 status-snapshot and next-run semantics remain unchanged.
-Keep private addresses, hardware identity, products, secret material, backup
-locations, commands, notification endpoints, and adopter policy outside this
-public repository.
+1. Observe a real bounded maintenance window through suppression, deadline or
+   explicit close, and all-surface recovery.
+2. Decide incident identity and recurrence semantics from that evidence.
+3. Obtain explicit maintainer acceptance before an additive recovery contract
+   minor; do not bundle the recovery and incident schemas by default.
+4. Keep notification providers, endpoints, recipients, credentials, commands,
+   hosts, and private policy in the deployment layer.
+5. Review DF-015 separately on 2026-08-04; this incident does not pre-decide its
+   operator-obligation abstraction.
 
 ## Open decisions after restart
 
@@ -132,9 +102,8 @@ public repository.
 2. Resume the msgvault deploy-observe-promote gate, or schedule the separate
    LLM-DocKit 4.13.1 tooling sync. Do not combine those runtime/tooling concerns
    with DF-015 protocol incubation.
-3. Select the second real proxied service for DF-013 only in the private
-   source-of-truth workflow. This public repo must not guess the service or
-   pre-author the recovery proposal.
+3. Decide whether the accepted DF-013 proposal should progress to an additive
+   minor only after its implementation gate is reviewed explicitly.
 4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
    Project SemVer 0.12.0 is authoritative today; do not silently rewrite the
@@ -157,13 +126,14 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-07-30 - GPT-5 Codex.
-- Working on: publish protocol 0.12.0 as the reusable capability-transparency
-  contract, then implement and verify its ordered adoption in Infra Portal,
-  buzz-lab, Hermes, and the private Home Infra control plane.
-- Status: protocol producer semantics, examples, validator, and tests are
-  complete locally. Consumer and runtime support are not yet claimed; they are
-  the next gates in Carlos's active Buzz pilot goal.
+- Last Updated: 2026-08-01 - GPT-5 Codex.
+- Working on: publish protocol 0.12.1 as a proposal-only recovery and incident
+  lifecycle safety patch.
+- Status: DF-013 is accepted after its second real proxied-service recovery;
+  DF-016 is accepted for private lifecycle incubation. SPEC, schemas,
+  examples, validators, and compliance claims are unchanged. The next gate is
+  a real bounded-maintenance lifecycle observation, followed by an explicit
+  decision on whether either proposal should become normative.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -289,14 +259,17 @@ consumer-side extension it surfaces — `infra-portal` reading
   2026-07-13 from ForumVault and Infra Portal. Status: `implemented (0.9.0)`.
 - **DF-013** — Host recovery can restore a backend while required canonical,
   consumer, observer, publication, or security surfaces remain broken. Filed
-  2026-07-15 from Home Infra 0.6.0 and pi-fleet 0.4.0. Status: `open`; requires
-  a second real proxied-service recovery before any proposal or schema work.
+  2026-07-15 from Home Infra 0.6.0 and pi-fleet 0.4.0. Status: `accepted` after
+  the 2026-08-01 second proxied-service case; schema work remains gated.
 - **DF-014** — Consumers need authoritative next-execution evidence. Filed
   2026-07-16 from Plaud Mirror and Infra Portal. Status: `implemented (0.10.0)`.
 - **DF-015** — Time-bounded operator obligations need honest pre-telemetry
   visibility. Filed 2026-07-28 from a private backup activation trial, its
   source-of-truth declaration, and Infra Portal 0.22.0. Status: `open`; review
   sanitized evidence on 2026-08-04 before any proposal or normative work.
+- **DF-016** — Detection, delivery, acknowledgement, recovery, and closure
+  require separate evidence. Filed and accepted as proposal-only incubation on
+  2026-08-01; no normative schema semantics yet.
 
 (DF-001 through DF-006 except DF-005, plus DF-008 through DF-012, are closed: DF-001 + DF-002 implemented in production
 via `protocol 0.2.0 + infra-portal 0.8.0`; DF-003 implemented in 0.3.0;

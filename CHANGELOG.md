@@ -2,6 +2,25 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.12.1] - 2026-08-01
+
+### Added
+
+- Sanitized recovery-acceptance proposal grounded in two independent
+  proxied-service recoveries, plus DF-013 promotion evidence.
+- DF-016 and an incident-lifecycle proposal separating detection,
+  notification delivery, acknowledgement, recovery, and closure.
+
+### Changed
+
+- Define proposal gates for bounded maintenance windows, all-surface closure,
+  and security expectations that remain distinct from observed proof.
+
+### Fixed
+
+- Remove the protocol backlog ambiguity that allowed a dashboard incident to
+  be mistaken for delivered notification or operational closure.
+
 ## [0.12.0] - 2026-07-30
 
 ### Added

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.0 -->
+<!-- doc-version: 0.12.1 -->
 # Repository Structure
 
 ```text
@@ -39,6 +39,8 @@ home-infra-protocol/
 │   ├── STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md
 │   ├── SYNC_JOB_CONTRACT_PROPOSAL.md
 │   ├── AUTHENTICATION_PLACEMENT_PROPOSAL.md
+│   ├── RECOVERY_ACCEPTANCE_PROPOSAL.md
+│   ├── INCIDENT_LIFECYCLE_PROPOSAL.md
 │   ├── LLM_WORKFLOW.md
 │   ├── STRUCTURE.md
 │   ├── VERSIONING_RULES.md
