@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Proposal: Deployment Evidence Contract
 
 > Status: **Draft — Ready for Implementation**

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -63,42 +63,52 @@ Read-only ecosystem reconciliation performed for this checkpoint:
   primary-worktree changes are reconciled.
 - Do not add recovery or incident-lifecycle fields to SPEC or schemas until the
   accepted proposals pass their explicit implementation/adoption gates.
+- Do not add operational-obligation fields to SPEC, schemas, normative
+  examples, validator, or templates until the maintainer explicitly accepts
+  `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`.
 - Do not combine a DocKit 4.13.1 sync with protocol-semantic work.
 - Do not copy private addresses, host identity, products, secrets, backup
   locations, commands, or adopter policy into this public repository.
 
 ## Open work — next concrete step
 
-Protocol 0.12.1 is a proposal-only safety patch. A second real proxied-service
-incident satisfied DF-013's evidence gate: core runtime, canonical machine
-ingress, operator UI, producer publication, consumer state, and notification
-delivery failed or recovered independently. `docs/RECOVERY_ACCEPTANCE_PROPOSAL.md`
-records only the fields that survived both cases.
+Protocol 0.12.2 closes DF-015's overdue dated review and publishes
+`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. The review verified a complete
+private trial lifecycle: visible intent before telemetry, explicit phase
+advance from accepted evidence, honest overdue state, and explicit
+project-evidenced resolution. A second real private pilot demonstrates another
+action and a longer window, and exposes consumer wording coupled to the first
+case. It is not an independent implementation stack.
 
-DF-016 records the adjacent process failure: the consumer detected the bad
-state within its poll interval, but no independent notifier delivered it and
-the planned-maintenance recovery gate was never closed. The accepted
-`docs/INCIDENT_LIFECYCLE_PROPOSAL.md` separates detection, delivery,
-acknowledgement, all-surface recovery, and closure.
+The proposal assigns policy and action to the project, acceptance and durable
+preservation to Home Infra, real evidence to the project producer, timing
+derivation to consumers, and delivery/acknowledgement to Hermes. Only matching
+verified project evidence may satisfy an occurrence. Recurrence grammar stays
+private: projects materialize stable occurrences with absolute UTC windows.
 
-No SPEC, schema, example, validator, or compliance claim changed. The next
-ordered protocol gates are:
+No SPEC, schema, normative example, validator, template, sibling repository,
+runtime, or compliance claim changed. The next ordered protocol gates are:
 
-1. Observe a real bounded maintenance window through suppression, deadline or
-   explicit close, and all-surface recovery.
-2. Decide incident identity and recurrence semantics from that evidence.
-3. Obtain explicit maintainer acceptance before an additive recovery contract
-   minor; do not bundle the recovery and incident schemas by default.
-4. Keep notification providers, endpoints, recipients, credentials, commands,
+Local release evidence passed 38/38 version targets, DocKit 10/10 checks,
+31/31 unit tests, and whitespace/diff hygiene. The required release-version
+markers changed, including the profile marker; no normative content did.
+
+1. Present the architectural verdict and obtain explicit maintainer acceptance
+   or rejection of the operational-obligations proposal.
+2. If accepted, ship one additive protocol minor containing only the optional
+   project declaration, sanitized projection, canonical validation, examples,
+   and compatibility tests.
+3. Keep Home Infra, Portal, Hermes, ForgeOS, and project adoption behind later
+   explicit repository and runtime gates.
+4. Keep `preview.expires_at`, `next_run_at`, capability review dates, service
+   health, recovery acceptance, and DF-016 incidents separate.
+5. Keep providers, endpoints, recipients, credentials, retries, commands,
    hosts, and private policy in the deployment layer.
-5. Review DF-015 separately on 2026-08-04; this incident does not pre-decide its
-   operator-obligation abstraction.
 
 ## Open decisions after restart
 
-1. After the 2026-08-04 review, decide whether DF-015 remains private, proceeds
-   to a sanitized proposal, or waits for an independent adopter. Do not infer
-   promotion merely because one consumer implements two related paths.
+1. Decide whether to accept `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` for a
+   normative additive minor. Proposal publication does not pre-authorize it.
 2. Resume the msgvault deploy-observe-promote gate, or schedule the separate
    LLM-DocKit 4.13.1 tooling sync. Do not combine those runtime/tooling concerns
    with DF-015 protocol incubation.
@@ -106,7 +116,7 @@ ordered protocol gates are:
    minor only after its implementation gate is reviewed explicitly.
 4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.12.0 is authoritative today; do not silently rewrite the
+   Project SemVer 0.12.2 is authoritative today; do not silently rewrite the
    core spec during an operational checkpoint.
 
 ## Deferred ecosystem reconciliation backlog
@@ -126,14 +136,14 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-01 - GPT-5 Codex.
-- Working on: publish protocol 0.12.1 as a proposal-only recovery and incident
-  lifecycle safety patch.
-- Status: DF-013 is accepted after its second real proxied-service recovery;
-  DF-016 is accepted for private lifecycle incubation. SPEC, schemas,
-  examples, validators, and compliance claims are unchanged. The next gate is
-  a real bounded-maintenance lifecycle observation, followed by an explicit
-  decision on whether either proposal should become normative.
+- Last Updated: 2026-08-07 - GPT-5 Codex.
+- Working on: publish protocol 0.12.2 as the DF-015 dated-review closure and
+  proposal-only operational-obligations design.
+- Status: DF-015 is accepted at proposal level. Projects materialize absolute
+  occurrences; Home Infra accepts intent; producers publish evidence;
+  consumers derive timing; Hermes delivery and acknowledgement never complete
+  the action. SPEC, schemas, examples, validators, templates, adopters, and
+  runtimes are unchanged. Explicit maintainer acceptance is the next gate.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -214,6 +224,10 @@ The residual architectural reconciliation that may eventually produce
 
 ## Pending Proposals (for the next session)
 
+`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` (DF-015) is the immediate decision
+gate. It is complete at proposal level and requires explicit maintainer
+acceptance before the additive 0.13.0 normative slice.
+
 `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is implemented in protocol 0.8.0.
 No authentication proposal remains immediately dispatchable.
 
@@ -265,8 +279,9 @@ consumer-side extension it surfaces — `infra-portal` reading
   2026-07-16 from Plaud Mirror and Infra Portal. Status: `implemented (0.10.0)`.
 - **DF-015** — Time-bounded operator obligations need honest pre-telemetry
   visibility. Filed 2026-07-28 from a private backup activation trial, its
-  source-of-truth declaration, and Infra Portal 0.22.0. Status: `open`; review
-  sanitized evidence on 2026-08-04 before any proposal or normative work.
+  source-of-truth declaration, and Infra Portal 0.22.0. Status: `accepted` at
+  proposal level after the dated review closed on 2026-08-07; no normative
+  schema semantics yet.
 - **DF-016** — Detection, delivery, acknowledgement, recovery, and closure
   require separate evidence. Filed and accepted as proposal-only incubation on
   2026-08-01; no normative schema semantics yet.
@@ -493,15 +508,14 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Review DF-015's sanitized activation-trial evidence on 2026-08-04 and
-   compare it with the existing preview-expiry path. Do not promote a field
-   merely because the same consumer implements both.
-2. Complete msgvault's separate deploy-observe-promote gate; do not make the
+1. Obtain an explicit maintainer decision on
+   `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` before touching normative files.
+2. If accepted, implement an additive 0.13.0 declaration and sanitized
+   projection slice, then stop before any adopter or runtime mutation.
+3. Complete msgvault's separate deploy-observe-promote gate; do not make the
    protocol repo the runtime executor.
-3. Keep DF-013 open until a second real proxied-service recovery exercises the
-   private all-surface closure model.
-4. Author any separate sanitized proposal only if the neutral shape survives
-   both adopter cases; do not promote private host or workflow details.
+4. Keep DF-013 recovery acceptance and DF-016 incident lifecycle behind their
+   own evidence and acceptance gates.
 5. Sync LLM-DocKit in a dedicated tooling patch after operator review of
    the global hook boundary.
 6. Continue real adoption of project-owned sync and telemetry contracts.

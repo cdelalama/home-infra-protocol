@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Architecture
 
 ## Overview
@@ -32,6 +32,14 @@ Optional availability evidence flows through the referenced telemetry
 snapshot. Consumers join both by exact id, but never rewrite policy from
 runtime evidence or infer availability from declared support.
 
+The proposal in `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` applies the same
+authority discipline to required human work. A project declares each action
+and absolute occurrence window, Home Infra accepts and preserves the intent,
+the project publishes evidence, and consumers derive timing with their own
+clocks. Hermes delivery and acknowledgement remain deployment evidence, never
+proof that the action was completed. This shape is proposal-only until a
+separate normative GO.
+
 ## Data Flow
 
 ```text
@@ -42,6 +50,7 @@ source-of-truth repo
   docs + catalogs + decisions
         |
         +--> portal
+        +--> notification agent
         +--> agent capability self-description
         +--> MCP server
         +--> canonical validators

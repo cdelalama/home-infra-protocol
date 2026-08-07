@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1104,9 +1104,10 @@ the value from cadence, treat an expired value as due, or let it override
 - Source: `nas-backup` 1.2.1 + Home Infra 0.11.0 + Infra Portal 0.22.0
 - Date observed: 2026-07-28
 - Category: field-gap, process, usability
-- Status: open — private incubation; review evidence due 2026-08-04 before any
-  proposal or normative change
-- Related: DF-009, DF-010, DF-014
+- Status: accepted — dated review closed with sanitized evidence on 2026-08-07;
+  proposal-only design in `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`, with no
+  schema or normative semantics yet
+- Related: DF-009, DF-010, DF-014, DF-016
 
 ### Observation
 
@@ -1126,81 +1127,99 @@ that the backup succeeded.
 The same consumer already handles a related but narrower pattern for
 development previews: `preview.expires_at` supports expiring and expired
 operator-visible states. This is a second use case and implementation path
-inside the same consumer, not a second independent protocol adopter. The two
-paths may share a reusable concept, but that has not yet been demonstrated.
+inside the same consumer, not a second independent protocol adopter.
+
+A later private pilot then became a second real project case for
+`operational_review`. It uses a different action and a longer review window.
+Its consumer presentation still contains wording coupled to the first backup
+trial, which demonstrates reusable demand and the cost of private-field
+overfitting. It remains the same Home Infra and Portal implementation pair, so
+it is not evidence of independent consumer compatibility.
+
+### Dated evidence review closed on 2026-08-07
+
+The review due on 2026-08-04 was completed against source history, current
+accepted state, consumer behavior, runtime projection, and focused test suites.
+Only sanitized conclusions are retained here:
+
+1. The pending first action was visible before producer telemetry without
+   manufacturing runtime health.
+2. Home Infra advanced the private review phase only after accepted producer
+   evidence. The portal did not infer success.
+3. Runtime telemetry and the operational review coexisted without overriding
+   one another.
+4. The deadline produced a real overdue state. The project later published an
+   explicit operator decision, Home Infra removed the accepted private review,
+   and the portal cleared the issue without altering producer health.
+5. Focused post-resolution suites passed for the project, Home Infra, and
+   Portal. Their existing guards continued to reject invalid private phases,
+   unsafe display text, malformed timestamps, and impossible ordering.
+6. Stable concepts were identity, responsible role, human action, runbook
+   reference, absolute window, evidence requirement, explicit resolution, and
+   consumer-clock derivation.
+7. Trial phases, backup policy, preview lifecycle, providers, destinations,
+   retries, commands, and private notification policy did not generalize.
+8. The second real pilot demonstrates another genuine action obligation, while
+   the planned multi-frequency verification program supplies a concrete
+   recurring safety case. Neither is yet an independent implementation stack.
+
+The resolved backup review is absent from current accepted state while its
+runtime telemetry remains independent. A current preview can likewise be
+expired while its service is healthy. These observations prove that lifecycle
+debt and service failure must remain separate; they do not prove that preview
+expiry and project obligations have the same owner or closure semantics.
 
 ### Protocol implication
 
-Record a candidate abstraction for a time-bounded operator obligation without
-adding fields yet. Any future shape must keep three authorities separate:
-
-1. source-of-truth intent states what the operator must do and by when;
-2. runtime evidence states what a producer or probe actually observed; and
-3. consumer policy derives attention or overdue presentation from intent plus
-   its own clock.
+Proceed to the neutral, non-normative operational-obligations design in
+`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. Any future implementation must keep
+project declaration, Home Infra acceptance, project runtime evidence, consumer
+clock derivation, Hermes delivery, Hermes acknowledgement, and evidence-based
+completion as separate authorities.
 
 An operational review must not override status-snapshot `condition`,
 `severity`, `observed_at`, consumer-derived freshness, or deployment evidence.
 An expired review means that an operator decision is overdue; it does not prove
 that the underlying service failed.
 
-The candidate may eventually unify operational trials and preview expiry, or
-the evidence may show that their ownership, lifecycle, and resolution semantics
-are different enough to remain separate. Do not choose a field name, schema
-location, enum, or migration path while this DF remains open.
+The proposal deliberately keeps `preview.expires_at`, producer-owned
+`next_run_at`, capability reviews, and DF-016 incidents in their existing
+domains. A consumer may share presentation components, but the protocol must
+not erase their different authorities and completion semantics.
 
-### Evidence to review on 2026-08-04
+### Recurrence and compatibility decision
 
-Before promoting DF-015, record sanitized answers to these questions:
+Projects materialize each occurrence with absolute UTC timestamps. The public
+contract does not encode weekly, monthly, quarterly, timezone, month-end,
+catch-up, or retry rules. Stable series and occurrence identities let all
+consumers derive the same next, pending, or overdue state without implementing
+equivalent schedulers.
 
-1. Did the portal expose the pending first run before telemetry existed without
-   manufacturing runtime health?
-2. After accepted first-run evidence, did the source-of-truth explicitly
-   advance the review phase rather than letting the consumer infer success?
-3. Could runtime telemetry and the operator-review state coexist without one
-   masking or overriding the other?
-4. Did the deadline produce an honest overdue state, and did resolution require
-   an explicit keep, revert, or extend decision?
-5. Did catalog and consumer validation reject invalid phases, unsafe display
-   text, malformed timestamps, and impossible timestamp ordering?
-6. Which concepts survive unchanged across the activation trial and
-   `preview.expires_at`: owner, subject, phase, next action, deadline,
-   resolution, and derived presentation?
-7. Which concepts are specific to a backup trial or a development preview and
-   therefore must stay outside a public contract?
-8. Is there an independent adopter or recovery/safety reason strong enough to
-   justify promotion under `docs/GOVERNANCE.md`, or should private incubation
-   continue?
-
-Useful evidence includes source revisions, schema/auditor and consumer test
-results, timestamped active/overdue observations, the first real status
-snapshot if one exists, and the explicit operator decision at review. Keep
-private infrastructure facts, data paths, credentials, provider details,
-notification endpoints, and adopter-specific policy out of this public log.
+The proposal is additive: a future project-owned optional declaration and
+sanitized accepted projection can coexist with existing contracts. The current
+private pilot should be dual-read during migration. The closed backup case
+becomes a regression fixture, not a reopened obligation. Existing clients may
+ignore the optional section.
 
 ### Promotion gate
 
-After the dated review:
+The dated review and proposal gate are complete. The next gate is explicit
+maintainer acceptance of `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. Until that
+GO, leave SPEC, schemas, normative examples, validator, templates, sibling
+repositories, and runtimes unchanged.
 
-1. summarize the trial outcome and any false-positive, ambiguity, or stale-state
-   behavior without copying private operational data;
-2. compare the two existing consumer paths and identify only the semantics that
-   remain stable across both;
-3. seek an independent adopter when practical, as preferred by protocol
-   governance, or document the concrete safety/recovery gap that justifies an
-   earlier proposal;
-4. author a separate sanitized, implementation-neutral proposal with
-   compatibility and consumer-honesty rules; and
-5. leave SPEC, schemas, examples, and validators unchanged until that proposal
-   is explicitly accepted.
+If accepted, the first normative slice is an additive minor defining only the
+optional project declaration, sanitized accepted projection, canonical
+validation, examples, and compatibility tests. Home Infra, Portal, Hermes,
+ForgeOS, and project runtime adoption remain separately authorized gates.
 
 ### Mitigation in source projects
 
 The private source-of-truth declaration and strict portal consumer remain the
-incubation boundary. The producer continues to publish only runtime evidence
-through the existing status-snapshot contract, and active notification remains
-deployment-specific. This feedback entry does not authorize any runtime,
-catalog, producer, consumer, or alerting change.
+migration boundary. The producer continues to publish only project evidence
+through its existing runtime path, and active notification remains
+deployment-specific. This feedback entry and its proposal do not authorize any
+runtime, catalog, producer, consumer, or alerting change.
 
 ## DF-016 — Detection, notification, acknowledgement, and closure were collapsed into one incident label
 

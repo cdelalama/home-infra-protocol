@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Parallel Environments and Side-Effect Ownership Proposal
 
 ## Status

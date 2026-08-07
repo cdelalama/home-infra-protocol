@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -78,6 +78,7 @@ periodic `stale_after > cadence`, and keeps freshness consumer-derived.
 | [docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md](docs/PARALLEL_ENVIRONMENTS_PROPOSAL.md) | Development runtime lifecycle and side-effect ownership |
 | [docs/RECOVERY_ACCEPTANCE_PROPOSAL.md](docs/RECOVERY_ACCEPTANCE_PROPOSAL.md) | All-surface recovery completion model grounded in two incidents |
 | [docs/INCIDENT_LIFECYCLE_PROPOSAL.md](docs/INCIDENT_LIFECYCLE_PROPOSAL.md) | Separation of detection, delivery, acknowledgement, recovery, and closure |
+| [docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md](docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md) | Project-owned human actions, absolute occurrences, and evidence-only completion |
 | [docs/GOVERNANCE.md](docs/GOVERNANCE.md) | Field policy, ownership, bootstrap, compliance claims |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Exposure and trust model |
 | [docs/RECOVERY_MODEL.md](docs/RECOVERY_MODEL.md) | Rebuilding the knowledge system |

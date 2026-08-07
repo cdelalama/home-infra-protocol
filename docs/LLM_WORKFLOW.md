@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # LLM Workflow
 
 LLM agents using this protocol should follow a simple discipline.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-08-07 - GPT-5 Codex - **Patch 0.12.2 - closed DF-015's dated evidence review and proposed operational obligations.** Audited the complete resolved backup trial, current Home Infra acceptance, Portal derivation, preview expiry, Hermes deployment boundary, a second real private pilot, and the planned multi-frequency verification case; recorded sanitized closure evidence; and proposed project-declared human actions with stable absolute occurrences, project-owned evidence, consumer-clock state, and Hermes acknowledgement explicitly separate from completion. Kept preview lifecycle, scheduler evidence, capability review, service health, recovery, incidents, providers, recipients, retries, commands, private policy, normative SPEC/schema/example/validator/template semantics, sibling repos, and runtimes unchanged; only required release-version markers, including the profile marker, moved to 0.12.2. Validation passed 38/38 version targets, DocKit 10/10, and 31/31 unit tests. - Files: [VERSION, CHANGELOG.md, README.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/ARCHITECTURE.md, docs/STRUCTURE.md, docs/DOWNSTREAM_FEEDBACK.md, docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md, docs/version-sync-manifest.yml, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, integrations/dockit/templates/infra.contract.yml, version markers] - Version impact: yes (0.12.1 -> 0.12.2 patch: dated review closure and proposal-only architecture)
 
 - 2026-08-01 - GPT-5 Codex - **Patch 0.12.1 - promoted DF-013 from two real recovery cases and separated incident lifecycle evidence.** Recorded the sanitized second proxied-service evidence that satisfied the all-surface recovery promotion gate; added accepted proposal-only recovery and incident-lifecycle designs; filed DF-016 so detection, notification delivery, acknowledgement, recovery, and closure cannot be collapsed into one dashboard label; and preserved the governance boundary by leaving SPEC, schemas, examples, validators, providers, private infrastructure facts, and normative semantics unchanged. - Files: [VERSION, CHANGELOG.md, README.md, docs/STRUCTURE.md, docs/DOWNSTREAM_FEEDBACK.md, docs/RECOVERY_ACCEPTANCE_PROPOSAL.md, docs/INCIDENT_LIFECYCLE_PROPOSAL.md, docs/version-sync-manifest.yml, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.12.0 -> 0.12.1 patch: proposal-only safety evidence and orientation)
 

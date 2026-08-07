@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # Repository Structure
 
 ```text
@@ -41,6 +41,7 @@ home-infra-protocol/
 │   ├── AUTHENTICATION_PLACEMENT_PROPOSAL.md
 │   ├── RECOVERY_ACCEPTANCE_PROPOSAL.md
 │   ├── INCIDENT_LIFECYCLE_PROPOSAL.md
+│   ├── OPERATIONAL_OBLIGATIONS_PROPOSAL.md
 │   ├── LLM_WORKFLOW.md
 │   ├── STRUCTURE.md
 │   ├── VERSIONING_RULES.md

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.1 -->
+<!-- doc-version: 0.12.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,13 +81,13 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-07-30 - GPT-5 Codex.
-- Working on: publish protocol 0.12.0 as the reusable capability-transparency
-  contract, then implement and verify its ordered adoption in Infra Portal,
-  buzz-lab, Hermes, and the private Home Infra control plane.
-- Status: protocol producer semantics, examples, validator, and tests are
-  complete locally. Consumer and runtime support are not yet claimed; they are
-  the next gates in Carlos's active Buzz pilot goal.
+- Last Updated: 2026-08-07 - GPT-5 Codex.
+- Working on: close DF-015's dated review and publish protocol 0.12.2 as a
+  proposal-only operational-obligations design.
+- Status: the resolved backup trial and a second real private pilot support a
+  neutral proposal with absolute materialized occurrences and project-owned
+  evidence. SPEC, schemas, examples, validator, templates, consumers, and
+  runtimes are unchanged. Explicit maintainer acceptance is the next gate.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist
@@ -111,6 +111,7 @@ Source of truth: `docs/llm/HANDOFF.md`.
 - Architecture: `docs/ARCHITECTURE.md`
 - Completion Rule: `docs/COMPLETION_RULE.md`
 - Project Contracts: `docs/PROJECT_CONTRACTS.md`
+- Operational Obligations Proposal: `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`
 - Security Model: `docs/SECURITY_MODEL.md`
 - Recovery Model: `docs/RECOVERY_MODEL.md`
 - LLM Workflow: `docs/LLM_WORKFLOW.md`

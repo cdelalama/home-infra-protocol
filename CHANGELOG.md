@@ -2,6 +2,31 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.12.2] - 2026-08-07
+
+### Added
+
+- A sanitized, non-normative operational-obligations proposal grounded in the
+  completed DF-015 backup trial and a second real private pilot.
+- Acceptance scenarios and a migration/validation plan for single actions,
+  recurring multi-frequency work, evidence failure, acknowledgement, and
+  bounded program completion.
+
+### Changed
+
+- Close DF-015's overdue dated review with sanitized evidence and advance it
+  from private incubation to proposal-level acceptance.
+- Choose project-materialized absolute UTC occurrences instead of public
+  recurrence grammar, preserving deterministic consumer-clock derivation.
+- Synchronize the profile template's protocol-version marker only; its fields
+  and semantics are unchanged.
+
+### Fixed
+
+- Separate overdue human work, Hermes delivery acknowledgement, preview
+  expiry, scheduler plans, incidents, and service health so none can be
+  mistaken for project-verified completion.
+
 ## [0.12.1] - 2026-08-01
 
 ### Added
