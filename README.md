@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -55,12 +55,16 @@ Validate a real project interface from the canonical protocol checkout:
 ```bash
 scripts/validate-project-interface.py \
   --contract /path/to/project/infra.contract.yml \
-  --status <job-id>=/path/to/project/status.json
+  --status <job-id>=/path/to/project/status.json \
+  --obligations-projection /path/to/operational-obligations.json \
+  --previous-obligations-projection /path/to/previous-operational-obligations.json
 ```
 
 Use `--template` only for the TODO-bearing homelab profile starter. Strict mode
 rejects TODO values, joins each supplied snapshot to a declared job, enforces
-periodic `stale_after > cadence`, and keeps freshness consumer-derived.
+periodic `stale_after > cadence`, validates accepted obligation projections,
+rejects stable identity reuse with changed windows when a prior projection is
+supplied, and keeps freshness and obligation state consumer-derived.
 
 ## Documentation
 

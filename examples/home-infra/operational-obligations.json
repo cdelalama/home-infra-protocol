@@ -1,0 +1,125 @@
+{
+  "publisher": {
+    "id": "home-infra",
+    "generated_at": "2027-01-20T12:00:00Z",
+    "stale_after": "PT15M"
+  },
+  "scope": {
+    "complete": true,
+    "project_ids": [
+      "example-app"
+    ]
+  },
+  "projects": [
+    {
+      "id": "example-app",
+      "declaration_revision": "example-revision-1",
+      "accepted_at": "2027-01-01T00:05:00Z",
+      "obligations": [
+        {
+          "id": "pilot-review",
+          "kind": "one_time",
+          "responsible": "operator",
+          "action": "Decide whether the bounded pilot should remain enabled.",
+          "runbook_ref": "operational-readiness",
+          "evidence": {
+            "ref": "pilot-decision-record",
+            "requirement": "A project decision record for this exact pilot review."
+          },
+          "occurrences": [
+            {
+              "id": "pilot-review-2027-01",
+              "starts_at": "2027-01-01T00:00:00Z",
+              "due_at": "2027-01-15T23:59:59Z",
+              "evidence": {
+                "result": "verified",
+                "authority": "example-app",
+                "observed_at": "2027-01-16T10:00:00Z",
+                "ref": "decision-record-2027-01",
+                "summary": "The project recorded the operator decision."
+              }
+            }
+          ]
+        },
+        {
+          "id": "restore-readiness-weekly",
+          "kind": "recurring",
+          "responsible": "operator",
+          "action": "Complete the weekly restore-readiness verification.",
+          "runbook_ref": "operational-readiness",
+          "horizon_at": "2027-07-01T00:00:00Z",
+          "evidence": {
+            "ref": "restore-readiness-weekly",
+            "requirement": "A verified project result for this exact weekly occurrence."
+          },
+          "occurrences": [
+            {
+              "id": "2027-w02",
+              "starts_at": "2027-01-11T00:00:00Z",
+              "due_at": "2027-01-18T23:59:59Z",
+              "evidence": {
+                "result": "verified",
+                "authority": "example-app",
+                "observed_at": "2027-01-18T12:00:00Z",
+                "ref": "weekly-result-2027-w02",
+                "summary": "The weekly restore-readiness verification passed."
+              }
+            },
+            {
+              "id": "2027-w03",
+              "starts_at": "2027-01-18T00:00:00Z",
+              "due_at": "2027-01-25T23:59:59Z",
+              "evidence": {
+                "result": "missing"
+              }
+            }
+          ]
+        },
+        {
+          "id": "restore-readiness-monthly",
+          "kind": "recurring",
+          "responsible": "operator",
+          "action": "Complete the monthly full restore-readiness verification.",
+          "runbook_ref": "operational-readiness",
+          "horizon_at": "2027-07-01T00:00:00Z",
+          "evidence": {
+            "ref": "restore-readiness-monthly",
+            "requirement": "A verified project result for this exact monthly occurrence."
+          },
+          "occurrences": [
+            {
+              "id": "2027-01",
+              "starts_at": "2027-01-01T00:00:00Z",
+              "due_at": "2027-01-31T23:59:59Z",
+              "evidence": {
+                "result": "missing"
+              }
+            }
+          ]
+        },
+        {
+          "id": "restore-readiness-quarterly",
+          "kind": "recurring",
+          "responsible": "operator",
+          "action": "Complete the quarterly clean-client recovery drill.",
+          "runbook_ref": "operational-readiness",
+          "horizon_at": "2027-07-01T00:00:00Z",
+          "evidence": {
+            "ref": "restore-readiness-quarterly",
+            "requirement": "A verified project result for this exact quarterly occurrence."
+          },
+          "occurrences": [
+            {
+              "id": "2027-q1",
+              "starts_at": "2027-01-01T00:00:00Z",
+              "due_at": "2027-03-31T23:59:59Z",
+              "evidence": {
+                "result": "missing"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # How To Use This Repository
 
 Home Infra Protocol is a specification and executable contract-validation
@@ -15,7 +15,8 @@ repository.
 7. `docs/PROJECT_CONTRACTS.md`
 8. `docs/STATUS_SNAPSHOT_CONTRACT_PROPOSAL.md`
 9. `docs/SYNC_JOB_CONTRACT_PROPOSAL.md`
-10. `docs/llm/HANDOFF.md`
+10. `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`
+11. `docs/llm/HANDOFF.md`
 
 ## Intended Build Path
 
@@ -46,7 +47,9 @@ For a completed project-owned contract:
 ```bash
 scripts/validate-project-interface.py \
   --contract /path/to/project/infra.contract.yml \
-  --status <job-id>=/path/to/project/status.json
+  --status <job-id>=/path/to/project/status.json \
+  --obligations-projection /path/to/operational-obligations.json \
+  --previous-obligations-projection /path/to/previous-operational-obligations.json
 ```
 
 Repeat `--status` for each representative job snapshot. The validator never
@@ -57,6 +60,20 @@ When a project intentionally limits a product or agent feature, declare it in
 variables or prose. Non-enabled policies require a stable reason and explicit
 enablement path. Runtime proof is published by the referenced telemetry job
 and joined by exact capability id.
+
+When a project requires dated human work, declare optional
+`operational_obligations[]`. Materialize one-time or recurring occurrences as
+absolute UTC windows, name the runbook and evidence requirement, and keep
+commands out of `action`. Home Infra publishes the complete sanitized
+projection; use `--obligations-projection` to validate its scope, authority,
+declaration joins, evidence, and supersession against the project contract.
+During Home Infra acceptance, also pass the previous accepted projection so a
+stable series cannot change kind and a stable occurrence cannot silently
+change its window; changed deadlines require a new superseding occurrence id.
+
+The validator does not execute an action, acknowledge a notification,
+calculate consumer state for a live clock, or prove Home Infra acceptance.
+Passing shape and join validation is not deployment evidence.
 
 For the canonical starter only:
 

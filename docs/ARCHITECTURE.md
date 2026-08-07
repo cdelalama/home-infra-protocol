@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Architecture
 
 ## Overview
@@ -32,13 +32,18 @@ Optional availability evidence flows through the referenced telemetry
 snapshot. Consumers join both by exact id, but never rewrite policy from
 runtime evidence or infer availability from declared support.
 
-The proposal in `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` applies the same
-authority discipline to required human work. A project declares each action
-and absolute occurrence window, Home Infra accepts and preserves the intent,
-the project publishes evidence, and consumers derive timing with their own
-clocks. Hermes delivery and acknowledgement remain deployment evidence, never
-proof that the action was completed. This shape is proposal-only until a
-separate normative GO.
+The operational-obligations contract applies the same authority discipline to
+required human work. A project declares each action and absolute occurrence
+window, Home Infra accepts and preserves the intent, the project publishes
+evidence, and consumers derive timing with their own clocks. Home Infra owns
+the freshness budget for its complete sanitized publication channel. Hermes
+delivery and acknowledgement remain deployment evidence, never proof that the
+action was completed.
+
+One-time and recurring obligations share the same nested series/occurrence
+shape. Projects materialize absolute UTC windows; no consumer interprets a
+calendar grammar. Completion derives only from verified project evidence,
+while cancellation and supersession remain explicit non-completion decisions.
 
 ## Data Flow
 
@@ -56,6 +61,12 @@ source-of-truth repo
         +--> canonical validators
         +--> recovery workflow
 ```
+
+If the operational-obligations projection becomes stale, invalid, partial, or
+unavailable, consumers do not replace it with an empty list. Stateful
+operational consumers retain their last valid attributed projection; stateless
+clients expose channel failure. Only a fresh, valid, complete projection can
+authoritatively withdraw an obligation by omission.
 
 ## Versioning Model
 

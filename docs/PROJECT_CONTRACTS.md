@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they
@@ -23,6 +23,7 @@ repo remains the authority after ingesting, copying, or validating them.
 - `sync_jobs`
 - `telemetry_jobs`
 - `capabilities`
+- `operational_obligations`
 - `runbooks`
 - `secret_refs`
 
@@ -83,6 +84,37 @@ Freshness is never self-declared inside the snapshot. The producer writes
 `observed_at`; the declaration writes `stale_after`; consumers derive freshness
 by joining the two.
 
+## Operational Obligations
+
+Use optional `operational_obligations[]` when a project requires a human action
+within a dated window and can name the project-owned evidence that proves it.
+An obligation is not a job, incident, health check, notification, or command.
+
+Each stable series declares `kind: one_time | recurring`, a responsible role,
+plain-language action, runbook key, evidence requirement, and one or more
+absolute UTC occurrences. A one-time series has exactly one occurrence. A
+recurring series may have multiple materialized occurrences and an optional
+horizon, but it never carries calendar or retry grammar.
+
+The source-of-truth repo accepts the declaration and publishes a complete
+sanitized projection conforming to
+`schemas/operational-obligations-projection.schema.json`. It owns that
+projection channel's `generated_at` and `stale_after`; the project continues to
+own the action and evidence. Consumers derive future, pending, overdue,
+completed, on-time, late, materialization-required, period-ended, and channel
+integrity without writing those values back into either source.
+
+Matching `verified` evidence completes an occurrence. `missing` or `failed`
+evidence does not. Project resolutions are limited to `cancelled` and
+`superseded`; neither is completion. Hermes acknowledgement remains a separate
+deployment-private delivery record.
+
+An unreadable projection is never an empty obligation list. Stateful
+operational consumers retain the last valid projection with attribution;
+stateless clients report channel failure instead of claiming that nothing is
+pending. See `SPEC.md` *`operational_obligations[]`* and
+`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` for the complete rules.
+
 Schedule rules:
 
 - `cron` and `internal-loop` are periodic. They require `cadence` and
@@ -108,7 +140,9 @@ The validator belongs to this protocol repository:
 ```bash
 ~/src/home-infra-protocol/scripts/validate-project-interface.py \
   --contract /path/to/project/infra.contract.yml \
-  --status <job-id>=/path/to/status.json
+  --status <job-id>=/path/to/status.json \
+  --obligations-projection /path/to/operational-obligations.json \
+  --previous-obligations-projection /path/to/previous-operational-obligations.json
 ```
 
 `--status` is repeatable. Each job id must exist in either `sync_jobs[]` or
@@ -118,6 +152,14 @@ The validator belongs to this protocol repository:
 - validates the contract and snapshots against the canonical schemas;
 - rejects duplicate job ids and duplicate stable check names;
 - rejects duplicate capability declarations or observations;
+- rejects duplicate obligation series and occurrence ids;
+- validates absolute occurrence windows, horizons, declared runbooks, and
+  non-executable action text;
+- validates complete sanitized projections and exact project/evidence joins;
+- optionally compares the previous accepted projection to reject stable series
+  kind changes or occurrence-window mutation under an existing id;
+- rejects evidence/resolution authority drift, invalid supersession, and
+  verified evidence combined with cancellation or supersession;
 - joins capability observations to the declared telemetry job and requires its
   complete declared set;
 - rejects runtime evidence that repeats project capability policy;
@@ -127,8 +169,10 @@ The validator belongs to this protocol repository:
 
 Use `--template` only to validate the canonical profile starter. It verifies
 the profile-version marker, the presence of both removable job examples and
-one removable capability example, and the deliberate absence of private
-incubating fields such as `operational_review`.
+one removable capability example, and the deliberate absence of both legacy
+private `operational_review` and optional `operational_obligations`. Normative
+obligation examples live under `examples/`; the reusable starter does not add
+date placeholders to projects that have no operational obligations.
 
 Passing validation proves shape, not runtime truth. Home Infra accepts a
 project interface only through its own explicit operator-controlled registry

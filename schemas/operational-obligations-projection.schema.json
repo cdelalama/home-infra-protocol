@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://home-infra-protocol.example/schemas/operational-obligations-projection.schema.json",
+  "title": "Home Infra Protocol Operational Obligations Projection",
+  "description": "Complete sanitized projection of project-declared operational obligations accepted and published by a source-of-truth repository. Consumers derive channel integrity, timing, completion, and timeliness; the projection never carries notification delivery or acknowledgement state.",
+  "type": "object",
+  "required": ["publisher", "scope", "projects"],
+  "additionalProperties": false,
+  "properties": {
+    "publisher": { "$ref": "#/$defs/publisher" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/project" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$",
+      "maxLength": 160
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "duration": {
+      "type": "string",
+      "format": "duration",
+      "pattern": "^P",
+      "description": "Publisher-owned freshness budget for this accepted projection channel."
+    },
+    "publisher": {
+      "type": "object",
+      "required": ["id", "generated_at", "stale_after"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "generated_at": { "$ref": "#/$defs/timestamp" },
+        "stale_after": { "$ref": "#/$defs/duration" }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["complete", "project_ids"],
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "const": true,
+          "description": "The projection is a complete snapshot for every listed project id. Only a fresh, valid, complete projection can authoritatively withdraw an omitted obligation."
+        },
+        "project_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "evidence_requirement": {
+      "type": "object",
+      "required": ["ref", "requirement"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": { "$ref": "#/$defs/id" },
+        "requirement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[^\\r\\n`]+$"
+        }
+      }
+    },
+    "evidence_observation": {
+      "type": "object",
+      "required": ["result"],
+      "additionalProperties": false,
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": ["missing", "verified", "failed"]
+        },
+        "authority": { "$ref": "#/$defs/id" },
+        "observed_at": { "$ref": "#/$defs/timestamp" },
+        "ref": { "$ref": "#/$defs/id" },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[^\\r\\n`]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "result": { "const": "missing" } },
+            "required": ["result"]
+          },
+          "then": {
+            "properties": {
+              "authority": false,
+              "observed_at": false,
+              "ref": false,
+              "summary": false
+            }
+          },
+          "else": {
+            "required": ["authority", "ref", "summary"]
+          }
+        }
+      ]
+    },
+    "resolution": {
+      "type": "object",
+      "required": ["type", "authority", "resolved_at", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["cancelled", "superseded"]
+        },
+        "authority": { "$ref": "#/$defs/id" },
+        "resolved_at": { "$ref": "#/$defs/timestamp" },
+        "ref": { "$ref": "#/$defs/id" },
+        "replacement_occurrence_id": { "$ref": "#/$defs/id" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "superseded" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["replacement_occurrence_id"] },
+          "else": {
+            "properties": { "replacement_occurrence_id": false }
+          }
+        }
+      ]
+    },
+    "occurrence": {
+      "type": "object",
+      "required": ["id", "starts_at", "due_at", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "starts_at": { "$ref": "#/$defs/timestamp" },
+        "due_at": { "$ref": "#/$defs/timestamp" },
+        "evidence": { "$ref": "#/$defs/evidence_observation" },
+        "resolution": { "$ref": "#/$defs/resolution" }
+      }
+    },
+    "obligation": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "responsible",
+        "action",
+        "runbook_ref",
+        "evidence",
+        "occurrences"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "enum": ["one_time", "recurring"]
+        },
+        "responsible": { "$ref": "#/$defs/id" },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[^\\r\\n`]+$"
+        },
+        "runbook_ref": { "$ref": "#/$defs/id" },
+        "horizon_at": { "$ref": "#/$defs/timestamp" },
+        "evidence": { "$ref": "#/$defs/evidence_requirement" },
+        "occurrences": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/occurrence" }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "one_time" } },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": { "occurrences": { "maxItems": 1 } },
+            "not": { "required": ["horizon_at"] }
+          }
+        }
+      ]
+    },
+    "project": {
+      "type": "object",
+      "required": ["id", "declaration_revision", "accepted_at", "obligations"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "declaration_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^[^\\r\\n`]+$"
+        },
+        "accepted_at": { "$ref": "#/$defs/timestamp" },
+        "obligations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/obligation" }
+        }
+      }
+    }
+  }
+}

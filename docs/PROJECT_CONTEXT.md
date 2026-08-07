@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -60,46 +60,48 @@ authorities over inventory or intent.
 | `docs/COMPLETION_RULE.md` | Definition of done for infrastructure changes | Core LLM discipline |
 | `docs/PROJECT_CONTRACTS.md` | Project-level contract direction | Future ingestion from project repos |
 | `docs/CAPABILITY_TRANSPARENCY.md` | Capability declaration and runtime-evidence contract | Policy stays separate from availability |
-| `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` | Non-normative human-action obligation design | Absolute occurrences; evidence completion stays project-owned |
+| `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` | Evidence and rationale for the normative human-action contract | Absolute occurrences; evidence completion stays project-owned |
+| `schemas/operational-obligations-projection.schema.json` | Strict sanitized accepted egress | Complete scope, publisher freshness, project evidence, no notification detail |
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
 ## Current Status (2026-08-07)
 
-Protocol 0.12.2 closes DF-015's dated evidence review and publishes a
-proposal-only operational-obligations design. The resolved backup trial and a
-second real private pilot justify a neutral abstraction, while the lack of a
-second independent implementation prevents a consumer-support claim.
+Protocol 0.13.0 implements DF-015 as an optional additive project declaration
+and complete sanitized accepted projection. The resolved backup trial, a
+second real private pilot, and a documented multi-frequency recovery workflow
+ground the contract without claiming downstream adoption.
 
-The proposal assigns declaration to the project, acceptance and preservation
+The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
 each consumer, and delivery/acknowledgement to Hermes. Only matching verified
 project evidence may satisfy an occurrence. Recurring policy stays private;
 each occurrence is materialized with absolute UTC timestamps.
 
-No normative semantics changed. `operational_review` remains absent from the
-reusable profile and validator, and no obligation field exists in SPEC,
-schemas, examples, templates, or validation. Existing `preview.expires_at`,
-`next_run_at`, capability reviews, DF-016 incidents, freshness, recovery, and
-health semantics remain separate.
+The canonical validator now enforces nested series/occurrence identity,
+absolute windows, runbook joins, non-executable actions, complete projection
+scope, project authority, evidence, and supersession. Completion, timeliness,
+time state, and channel integrity remain derived. Legacy
+`operational_review` and the optional declaration both remain absent from the
+reusable starter template. Existing `preview.expires_at`, `next_run_at`,
+capability reviews, DF-016 incidents, freshness, recovery, and health semantics
+remain separate.
 
 ## Upcoming Milestones
 
-1. Obtain explicit maintainer acceptance or rejection of
-   `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` before normative work.
-2. If accepted, implement one additive protocol minor for the optional project
-   declaration, sanitized projection, canonical validation, examples, and
-   compatibility tests only.
-3. Gate Home Infra, Infra Portal, Hermes, ForgeOS, and project adoption as
+1. Gate Home Infra, Infra Portal, Hermes, ForgeOS, and project adoption as
    separately authorized follow-up work.
-4. Preserve the resolved backup trial as a regression fixture and use the
+2. Preserve the resolved backup trial as a regression fixture and use the
    current private pilot plus a real multi-frequency program for adoption
    evidence.
-5. Keep recovery and DF-016 incident lifecycle work separate from operational
+3. Require project declaration and Home Infra acceptance before Portal or
+   Hermes claims support; require a real recurrent program before recurrent
+   adoption is claimed.
+4. Keep recovery and DF-016 incident lifecycle work separate from operational
    obligations.
-6. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
+5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
-7. Keep later status and recovery vocabulary adopter-driven rather than adding
+6. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References

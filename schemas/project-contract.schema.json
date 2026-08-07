@@ -35,6 +35,12 @@
       "default": [],
       "description": "Project-owned capability declarations. They distinguish product support, operator policy, scope, and the explicit path for changing a restriction."
     },
+    "operational_obligations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operational_obligation" },
+      "default": [],
+      "description": "Project-owned declarations of human actions with absolute UTC occurrence windows and project-verifiable completion evidence."
+    },
     "runbooks": {
       "type": "object",
       "additionalProperties": { "type": "string" }
@@ -328,6 +334,104 @@
           },
           "then": {
             "required": ["reason_code", "enablement"]
+          }
+        }
+      ]
+    },
+    "obligation_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
+      "maxLength": 120
+    },
+    "obligation_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "obligation_evidence_requirement": {
+      "type": "object",
+      "required": ["ref", "requirement"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$",
+          "maxLength": 160,
+          "description": "Stable sanitized selector for project-owned evidence. It is not an endpoint, token, command, or private path."
+        },
+        "requirement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[^\\r\\n`]+$",
+          "description": "Bounded human explanation of what matching verified evidence proves."
+        }
+      }
+    },
+    "obligation_occurrence": {
+      "type": "object",
+      "required": ["id", "starts_at", "due_at"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/obligation_id" },
+        "starts_at": { "$ref": "#/$defs/obligation_timestamp" },
+        "due_at": { "$ref": "#/$defs/obligation_timestamp" }
+      }
+    },
+    "operational_obligation": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "responsible",
+        "action",
+        "runbook_ref",
+        "evidence",
+        "occurrences"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/obligation_id" },
+        "kind": {
+          "type": "string",
+          "enum": ["one_time", "recurring"]
+        },
+        "responsible": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$",
+          "maxLength": 80,
+          "description": "Stable sanitized role, not a person, recipient, provider, or notification destination."
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240,
+          "pattern": "^[^\\r\\n`]+$",
+          "description": "Plain-language human outcome. It must not carry an executable command, request, credential, or mutation payload."
+        },
+        "runbook_ref": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$",
+          "maxLength": 80,
+          "description": "Key in the project contract runbooks map."
+        },
+        "horizon_at": { "$ref": "#/$defs/obligation_timestamp" },
+        "evidence": { "$ref": "#/$defs/obligation_evidence_requirement" },
+        "occurrences": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/obligation_occurrence" }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "one_time" } },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": { "occurrences": { "maxItems": 1 } },
+            "not": { "required": ["horizon_at"] }
           }
         }
       ]

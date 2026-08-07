@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -195,8 +195,10 @@ copies that can drift.
 - Does not declare runtime success or protocol adoption from schema validation.
   A full deploy/evidence cycle and explicit source-of-truth acceptance remain
   separate.
-- Does not add private adopter-only incubation such as `operational_review` to
-  the reusable profile.
+- Does not add private adopter-only incubation such as `operational_review` or
+  optional `operational_obligations` to the reusable profile. Projects add the
+  normative section only when they have real dated work; the starter avoids
+  placeholder obligations.
 - Does not embed homelab content in `LLM-DocKit`. `LLM-DocKit` stays
   general-purpose; this profile is the homelab-specific layer.
 

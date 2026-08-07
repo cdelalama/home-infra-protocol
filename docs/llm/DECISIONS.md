@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -76,9 +76,10 @@ proves deployment, runtime health, or Home Infra acceptance.
 This converts a passive profile promise into an executable contract while
 preserving the five-layer ownership model: protocol owns schemas and
 validation; ForgeOS owns workflow; projects own producers; Home Infra owns
-accepted intent; consumers derive presentation. Private incubation from
-DF-015, including `operational_review`, remains outside the reusable profile
-until its separate evidence gate authorizes proposal work.
+accepted intent; consumers derive presentation. At 0.11.0, private incubation
+from DF-015, including `operational_review`, remained outside the reusable
+profile pending its separate evidence gate. D-008 later implemented the public
+contract while preserving the template's deliberate absence by default.
 
 ## D-007: Make Capability Restrictions Visible And Evolvable
 
@@ -101,3 +102,31 @@ policy rather than incidents, and keep roadmap state separate. This prevents a
 temporary safety choice from becoming an invisible product limitation while
 preserving the protocol's intent/evidence and non-authoritative-consumer
 boundaries.
+
+## D-008: Materialize Operational Obligations As Absolute Occurrences
+
+**Date:** 2026-08-07
+**Status:** Accepted for protocol 0.13.0
+
+Projects may declare optional one-time or recurring operational obligations as
+stable series containing absolute UTC occurrence windows. The public contract
+does not contain cron, RRULE, timezone, month-end, catch-up, retry, or
+notification policy. Calendar interpretation stays with the project; every
+consumer receives the same materialized timestamps and opaque identities.
+
+Home Infra accepts project intent and publishes a complete sanitized
+projection with revision attribution and a freshness budget for its own
+publication channel. A stale, invalid, partial, or unavailable projection never
+means that no obligations exist. Stateful operational consumers retain the last
+valid attributed projection; stateless clients expose channel failure.
+
+Completion derives only from matching project evidence with `result: verified`.
+Cancellation and supersession are explicit project decisions that close work
+without proving completion. Completed timeliness derives from evidence time,
+not the reader's current clock. Hermes delivery and acknowledgement remain a
+separate deployment ledger and never complete an occurrence.
+
+Obligation actions are bounded non-executable explanations linked to runbooks.
+Operational obligations remain separate from preview expiry, scheduler plans,
+capability reviews, status freshness, service health, recovery acceptance, and
+incident lifecycle.

@@ -2,6 +2,43 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.0] - 2026-08-07
+
+### Added
+
+- Optional project `operational_obligations[]` with stable one-time or
+  recurring series, absolute UTC occurrence windows, responsible role,
+  non-executable human action, runbook reference, optional horizon, and an
+  evidence requirement.
+- A strict complete sanitized accepted-projection schema carrying Home
+  Infra-owned publication freshness, accepted revision attribution,
+  project-owned evidence, and administrative resolution.
+- Sanitized declaration/projection examples, decision D-008, and 24 focused
+  regression cases covering compatibility, identity, derivation, recurrence,
+  evidence, channel integrity, retention, and strict egress.
+
+### Changed
+
+- Extend the canonical project-interface validator with obligation schema and
+  semantic validation, exact declaration/evidence joins, deterministic next
+  selection, timeliness, recurrence-gap, period-end, channel-freshness, and
+  authoritative-withdrawal derivation helpers.
+- Implement DF-015's accepted architecture without calendar grammar: projects
+  materialize absolute occurrences; consumers use their clocks; Home Infra,
+  Portal, Hermes, ForgeOS, MCP, and runtime adoption remain later gates.
+- Update only the reusable profile's version marker; projects without real
+  operational obligations still receive no placeholder obligation block.
+
+### Fixed
+
+- Prevent stale, invalid, partial, or unavailable projections from being read
+  as an authoritative empty obligation set or from withdrawing accepted work.
+- Derive completion exclusively from matching verified project evidence and
+  keep cancellation, supersession, Hermes acknowledgement, service health,
+  incidents, preview expiry, and scheduler plans as separate states.
+- Derive completed timeliness from evidence `observed_at`, preserving stable
+  `on_time` or `late` results independently of the consumer read time.
+
 ## [0.12.2] - 2026-08-07
 
 ### Added

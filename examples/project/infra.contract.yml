@@ -69,12 +69,72 @@ capabilities:
     review_at: "2026-09-30T12:00:00Z"
     observation_job_id: example-host-capacity
 
+operational_obligations:
+  - id: pilot-review
+    kind: one_time
+    responsible: operator
+    action: Decide whether the bounded pilot should remain enabled.
+    runbook_ref: operational-readiness
+    evidence:
+      ref: pilot-decision-record
+      requirement: A project decision record for this exact pilot review.
+    occurrences:
+      - id: pilot-review-2027-01
+        starts_at: "2027-01-01T00:00:00Z"
+        due_at: "2027-01-15T23:59:59Z"
+
+  - id: restore-readiness-weekly
+    kind: recurring
+    responsible: operator
+    action: Complete the weekly restore-readiness verification.
+    runbook_ref: operational-readiness
+    horizon_at: "2027-07-01T00:00:00Z"
+    evidence:
+      ref: restore-readiness-weekly
+      requirement: A verified project result for this exact weekly occurrence.
+    occurrences:
+      - id: 2027-w02
+        starts_at: "2027-01-11T00:00:00Z"
+        due_at: "2027-01-18T23:59:59Z"
+      - id: 2027-w03
+        starts_at: "2027-01-18T00:00:00Z"
+        due_at: "2027-01-25T23:59:59Z"
+
+  - id: restore-readiness-monthly
+    kind: recurring
+    responsible: operator
+    action: Complete the monthly full restore-readiness verification.
+    runbook_ref: operational-readiness
+    horizon_at: "2027-07-01T00:00:00Z"
+    evidence:
+      ref: restore-readiness-monthly
+      requirement: A verified project result for this exact monthly occurrence.
+    occurrences:
+      - id: 2027-01
+        starts_at: "2027-01-01T00:00:00Z"
+        due_at: "2027-01-31T23:59:59Z"
+
+  - id: restore-readiness-quarterly
+    kind: recurring
+    responsible: operator
+    action: Complete the quarterly clean-client recovery drill.
+    runbook_ref: operational-readiness
+    horizon_at: "2027-07-01T00:00:00Z"
+    evidence:
+      ref: restore-readiness-quarterly
+      requirement: A verified project result for this exact quarterly occurrence.
+    occurrences:
+      - id: 2027-q1
+        starts_at: "2027-01-01T00:00:00Z"
+        due_at: "2027-03-31T23:59:59Z"
+
 runbooks:
   deploy: docs/DEPLOY.md
   restore: docs/RESTORE.md
   verify: docs/VERIFY.md
   rollback: docs/ROLLBACK.md
   capabilities: docs/CAPABILITIES.md
+  operational-readiness: docs/OPERATIONAL_READINESS.md
 
 secret_refs:
   - name: EXAMPLE_APP_TOKEN

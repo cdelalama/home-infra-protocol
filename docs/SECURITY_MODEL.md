@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Security Model
 
 Home Infra Protocol assumes catalogs may be consumed by internal tools and LLM
@@ -17,6 +17,16 @@ secret values.
   or hidden policy detail.
 - Runtime capability observations must not restate declaration policy.
   Browser-facing consumers should expose only a strict allowlisted projection.
+- Operational-obligation actions are bounded explanatory text, never commands,
+  requests, credentials, endpoints, or mutation payloads. Runbook execution
+  keeps its own authorization gate.
+- Accepted obligation projections use strict allowlisted egress. They exclude
+  provider, recipient, token, endpoint, retry, private path, notification
+  policy, and acknowledgement detail.
+- An invalid, stale, partial, or unavailable obligation channel must not be
+  converted into an empty list. Stateful operational consumers retain and
+  attribute their last valid projection; stateless clients expose channel
+  failure rather than manufacturing absence.
 
 ## Exposure
 

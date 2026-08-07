@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Incident Lifecycle Proposal
 
 Status: accepted for private incubation; not yet normative.

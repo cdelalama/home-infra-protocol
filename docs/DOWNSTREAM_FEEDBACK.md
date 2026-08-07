@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1104,9 +1104,9 @@ the value from cadence, treat an expired value as due, or let it override
 - Source: `nas-backup` 1.2.1 + Home Infra 0.11.0 + Infra Portal 0.22.0
 - Date observed: 2026-07-28
 - Category: field-gap, process, usability
-- Status: accepted — dated review closed with sanitized evidence on 2026-08-07;
-  proposal-only design in `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`, with no
-  schema or normative semantics yet
+- Status: implemented (0.13.0) — dated review closed with sanitized evidence
+  and the accepted design shipped as an additive project declaration, strict
+  sanitized projection, canonical validation, and compatibility tests
 - Related: DF-009, DF-010, DF-014, DF-016
 
 ### Observation
@@ -1169,20 +1169,20 @@ expired while its service is healthy. These observations prove that lifecycle
 debt and service failure must remain separate; they do not prove that preview
 expiry and project obligations have the same owner or closure semantics.
 
-### Protocol implication
+### Protocol resolution
 
-Proceed to the neutral, non-normative operational-obligations design in
-`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. Any future implementation must keep
-project declaration, Home Infra acceptance, project runtime evidence, consumer
-clock derivation, Hermes delivery, Hermes acknowledgement, and evidence-based
-completion as separate authorities.
+Protocol 0.13.0 implements the neutral operational-obligations contract
+described in `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. The published contract
+keeps project declaration, Home Infra acceptance, project runtime evidence,
+consumer clock derivation, Hermes delivery, Hermes acknowledgement, and
+evidence-based completion as separate authorities.
 
 An operational review must not override status-snapshot `condition`,
 `severity`, `observed_at`, consumer-derived freshness, or deployment evidence.
 An expired review means that an operator decision is overdue; it does not prove
 that the underlying service failed.
 
-The proposal deliberately keeps `preview.expires_at`, producer-owned
+The contract deliberately keeps `preview.expires_at`, producer-owned
 `next_run_at`, capability reviews, and DF-016 incidents in their existing
 domains. A consumer may share presentation components, but the protocol must
 not erase their different authorities and completion semantics.
@@ -1195,31 +1195,31 @@ catch-up, or retry rules. Stable series and occurrence identities let all
 consumers derive the same next, pending, or overdue state without implementing
 equivalent schedulers.
 
-The proposal is additive: a future project-owned optional declaration and
-sanitized accepted projection can coexist with existing contracts. The current
+The implementation is additive: the project-owned optional declaration and
+sanitized accepted projection coexist with existing contracts. The current
 private pilot should be dual-read during migration. The closed backup case
 becomes a regression fixture, not a reopened obligation. Existing clients may
 ignore the optional section.
 
-### Promotion gate
+### Implementation and adoption gate
 
-The dated review and proposal gate are complete. The next gate is explicit
-maintainer acceptance of `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md`. Until that
-GO, leave SPEC, schemas, normative examples, validator, templates, sibling
-repositories, and runtimes unchanged.
+The dated review, proposal acceptance, and normative protocol gate are
+complete in 0.13.0. The reusable profile template intentionally gains no
+obligations example: projects without obligations should omit the optional
+section, and timestamp placeholders would create misleading work.
 
-If accepted, the first normative slice is an additive minor defining only the
-optional project declaration, sanitized accepted projection, canonical
-validation, examples, and compatibility tests. Home Infra, Portal, Hermes,
-ForgeOS, and project runtime adoption remain separately authorized gates.
+Home Infra, Portal, Hermes, ForgeOS, and project runtime adoption remain
+separately authorized gates. A recurring support claim also remains gated on
+an approved real recurring program, and broad consumer compatibility remains
+gated on a second independent consumer stack.
 
 ### Mitigation in source projects
 
 The private source-of-truth declaration and strict portal consumer remain the
 migration boundary. The producer continues to publish only project evidence
 through its existing runtime path, and active notification remains
-deployment-specific. This feedback entry and its proposal do not authorize any
-runtime, catalog, producer, consumer, or alerting change.
+deployment-specific. Protocol publication does not authorize any runtime,
+catalog, producer, consumer, or alerting change.
 
 ## DF-016 — Detection, notification, acknowledgement, and closure were collapsed into one incident label
 

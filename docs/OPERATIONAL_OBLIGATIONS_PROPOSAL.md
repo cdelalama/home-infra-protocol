@@ -1,17 +1,24 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Operational Obligations Proposal
 
 ## Status
 
-Proposed after the dated DF-015 evidence review on 2026-08-07. This document
-is implementation-neutral and non-normative. It does not add protocol fields,
-schemas, examples, validator behavior, consumer support, or compliance claims.
-Normative work requires a separate explicit maintainer GO.
+Implemented in Home Infra Protocol 0.13.0 after explicit maintainer acceptance
+on 2026-08-07. This document preserves the evidence and design rationale; the
+normative contract now lives in `SPEC.md`,
+`schemas/project-contract.schema.json`, and
+`schemas/operational-obligations-projection.schema.json`.
+
+Protocol publication does not claim Home Infra, Portal, Hermes, ForgeOS, MCP,
+or project runtime adoption. Those remain separately authorized gates.
 
 ## Verdict
 
-Proceed from private incubation to a sanitized proposal. Do not reject the
-abstraction, and do not promote it directly into the protocol.
+The abstraction was accepted and published as one additive, backward-
+compatible contract slice. Recurrence remains included because the documented
+recovery workflow requires weekly, monthly, and quarterly proof, while the
+optional six-month horizon is an explicit maintainer scenario. Real recurring
+adoption and broad consumer-support claims remain gated.
 
 The first bounded backup trial demonstrated a safety-relevant obligation before
 runtime telemetry existed, an honest overdue state, and explicit evidence-based
@@ -113,129 +120,101 @@ its horizon, its latest occurrence is terminal, and no successor is available,
 consumers surface `materialization_required`; they do not silently assume that
 recurrence ended.
 
-## Candidate declaration shape
+## Published declaration shape
 
-The smallest reusable project declaration contains the following concepts.
-Names and exact nesting remain proposal-level until schema work is authorized.
+The published project contract nests occurrences under a stable series so
+series metadata is not repeated and cardinality is unambiguous:
 
-| Concept | Candidate field | Rule |
+| Concept | Published field | Rule |
 |---------|-----------------|------|
-| Stable series identity | `id` | Stable within the project across recurring occurrences. |
-| Stable occurrence identity | `occurrence_id` | Unique and immutable within the series; used by evidence, delivery, and acknowledgement joins. |
-| Occurrence kind | `kind` | `one_time` or `recurring`; this is not recurrence grammar. |
-| Responsible role | `responsible` | Sanitized stable role, not a notification destination or secret identity. |
-| Human action | `action` | Bounded explanatory text describing what the operator must achieve; no executable command. |
-| Runbook reference | `runbook_ref` | Stable key into the project's declared runbooks. |
-| Action window | `starts_at`, `due_at` | Absolute UTC timestamps; `starts_at < due_at`. |
-| Optional series horizon | `horizon_at` | Last boundary at which the project may materialize a new occurrence; it never closes an already-open occurrence. |
-| Evidence contract | `evidence.ref`, `evidence.requirement` | Stable project-owned evidence selector plus bounded text explaining what valid evidence proves. |
+| Stable series identity | `id` | Unique within the project. |
+| Occurrence kind | `kind` | `one_time` or `recurring`; never calendar grammar. |
+| Responsible role | `responsible` | Sanitized stable role, not a notification destination. |
+| Human action | `action` | Bounded single-line outcome; no executable material. |
+| Runbook reference | `runbook_ref` | Key in the declared `runbooks` map. |
+| Optional horizon | `horizon_at` | Recurring series only; stops later materialization, not open work. |
+| Evidence contract | `evidence.ref`, `evidence.requirement` | Stable selector and the proof that may complete an occurrence. |
+| Materialized occurrences | `occurrences[].id`, `starts_at`, `due_at` | Unique immutable id and absolute UTC window. |
 
-An illustrative, non-normative declaration is:
+`one_time` has exactly one occurrence and no horizon. `recurring` may have
+multiple, including overlapping windows. Every join uses
+`(project id, series id, occurrence id)`. The normative sanitized example is
+`examples/project/infra.contract.yml`.
 
-```yaml
-operational_obligations:
-  - id: restore-readiness-weekly
-    occurrence_id: 2026-period-01
-    kind: recurring
-    responsible: operator
-    action: Complete the weekly restore-readiness verification.
-    runbook_ref: restore-readiness
-    starts_at: "2026-01-05T00:00:00Z"
-    due_at: "2026-01-12T00:00:00Z"
-    horizon_at: "2026-07-05T00:00:00Z"
-    evidence:
-      ref: restore-readiness-weekly
-      requirement: A verified project result for this exact occurrence.
-```
+The action explains the human outcome and points to a runbook. It cannot carry
+commands, requests, credentials, endpoints, or mutation payloads. Execution
+retains its own authorization gate.
 
-The action explains the desired human outcome and points to a runbook. It must
-not contain shell commands, API requests, credentials, or mutation payloads.
-Following the runbook or executing any mutation retains its own authorization
-gate outside this contract.
+## Evidence and administrative resolution
 
-## Evidence and resolution
+Each projected occurrence carries evidence `result: missing | verified |
+failed`. Verified and failed results require project authority, sanitized
+`ref`, and bounded summary; a strict UTC `observed_at` is optional when the
+evidence source can attest the event time. Missing evidence carries no
+observation fields.
 
-The project evidence projection joins by project, obligation `id`, and
-`occurrence_id`. Its minimal reusable concepts are:
+Completion is derived exclusively from matching `verified` evidence. Neither
+`satisfied` nor `completed` is published as a project-maintained mirror.
+Missing or failed evidence leaves the occurrence open.
 
-- evidence result: `missing`, `verified`, or `failed`;
-- evidence `observed_at`, sanitized `ref`, and bounded `summary` when present;
-- resolution: `open`, `satisfied`, `cancelled`, or `superseded`;
-- `resolved_at` for terminal resolution;
-- `replacement_occurrence_id` when resolution is `superseded`.
-
-The following invariants are load-bearing:
-
-- `satisfied` requires matching `verified` evidence for the exact occurrence;
-- matching completion evidence and `satisfied` resolution are published
-  together; disagreement is invalid rather than a consumer choice;
-- `failed` evidence leaves the occurrence open and visible;
-- `cancelled` and `superseded` are explicit project resolutions but never mean
-  that the action was completed;
-- changing a due date does not mutate an accepted occurrence: the project
-  supersedes it and publishes a new occurrence identity;
-- a decision can satisfy an obligation only when the declared action was to
-  make that decision and the project publishes a verifiable decision record;
-- absence of the required evidence projection, staleness, parse failure, or
-  join failure is `unknown` evidence, never successful evidence. An explicit
-  evidence result of `missing` is valid and leaves timing derivation intact.
+Administrative resolution is optional and limited to `cancelled` or
+`superseded`. Both require project attribution and a decision reference;
+supersession also requires a distinct replacement occurrence in the same
+series. Neither means the action completed, and neither may coexist with
+verified completion evidence.
 
 ## Sanitized machine projection
 
-Home Infra should expose an accepted, sanitized projection without requiring
-consumers to read private project repositories. The exact envelope remains for
-the normative slice, but it must contain:
+The accepted egress conforms to
+`schemas/operational-obligations-projection.schema.json`. Its publisher block
+contains Home Infra's `generated_at` and publisher-owned `stale_after`; its
+complete scope names the exact projects covered. Each project carries accepted
+declaration revision and `accepted_at` attribution plus matching project-owned
+evidence.
 
-- projection `generated_at`;
-- project id and accepted declaration revision;
-- declaration authority and Home Infra `accepted_at` attribution;
-- the neutral declaration fields above;
-- matching project evidence attribution, evidence result, and resolution;
-- enough retained terminal state to detect a missing recurring successor.
+Only a fresh, valid, complete projection may withdraw an omitted obligation. A
+stale, invalid, partial, or unavailable channel never proves an empty list,
+withdrawal, or completion. Stateful operational consumers retain their last
+valid projection with original attribution. Stateless consumers report channel
+failure rather than saying no action is pending.
 
-It must not contain:
-
-- provider names, recipients, tokens, endpoints, delivery retries, or private
-  notification policy;
-- private infrastructure addresses, data paths, secret locations, or commands;
-- consumer-derived future/pending/overdue state as if it were producer truth;
-- Hermes acknowledgement state as if it were project evidence;
-- a recurrence expression that consumers must interpret.
-
-Portal, Hermes, MCP, and other consumers derive time state from the accepted
-absolute timestamps using their own clocks. `generated_at` and attribution let
-them reject stale or ambiguous projections without pretending an obligation
-was satisfied.
+The strict egress excludes providers, recipients, tokens, endpoints, retries,
+private notification policy, private paths, commands, Hermes acknowledgement,
+recurrence expressions, and consumer-derived state presented as producer
+truth. The normative sanitized example is
+`examples/home-infra/operational-obligations.json`.
 
 ## Consumer derivation
 
-For each occurrence, a consumer applies this order:
+Consumers keep independent axes for open-occurrence time
+(`future | pending | overdue`), result
+(`open | completed | cancelled | superseded`), evidence
+(`missing | verified | failed`), channel integrity
+(`fresh | stale | invalid | unavailable`), and completed timeliness
+(`on_time | late | indeterminate`). There is no temporal `unknown`.
 
-1. Matching `satisfied` plus matching `verified` evidence -> `completed`.
-2. `cancelled` or `superseded` -> terminal but not completed.
-3. Missing, stale, invalid, or mismatched declaration/projection input ->
-   `unknown`. An explicit evidence result of `missing` or `failed` does not
-   prevent time-state derivation.
-4. `now < starts_at` -> `future`.
-5. `starts_at <= now <= due_at` -> `pending`.
-6. `now > due_at` -> `overdue`.
+Only `open` receives a temporal state. Completion comes from verified evidence;
+cancellation and supersession come from the separately attributed project
+resolution object and never mean completion.
 
-`next` is a consumer view, not a producer state: it selects the earliest
-unresolved occurrence by window and due time. Overdue occurrences remain in a
-separate higher-priority list and must not be hidden merely because a future
-occurrence exists. A consumer may use private thresholds to call a pending
-item "upcoming", but that wording does not change protocol state.
+Completed timeliness is derived from `evidence.observed_at` against `due_at`,
+so `on_time` and `late` remain stable regardless of when a consumer reads the
+record. If `observed_at` is absent, timeliness is `indeterminate`, never
+implicitly `on_time`. Failed evidence does not stop future, pending, or
+overdue derivation.
 
-For a recurring series, consumers also derive:
+`next` uses the total order `due_at`, `starts_at`, series id, occurrence id.
+Ids are opaque tie-breakers. Overdue work remains separately visible.
 
-- `materialization_required` when the horizon remains open, the latest
-  occurrence is terminal, and no successor has been accepted;
-- `period_ended` only when the horizon has passed, no occurrence remains open,
-  and the last materialized occurrence has an explicit terminal resolution.
+Within one recurring series, the last materialized occurrence is the maximum
+by `due_at`, then `starts_at`, then occurrence id. This remains deterministic
+for overlapping windows and tied timestamps. Materialization is required only
+after every accepted occurrence, including that last occurrence, is terminal.
 
-An open occurrence remains pending or overdue even after `horizon_at`. The
-horizon stops creation of later occurrences; it does not waive unfinished
-work.
+A recurring series is `active` while any occurrence is open,
+`materialization_required` when every occurrence is terminal and the optional
+horizon has not been reached, and `period_ended` only after a declared horizon
+passes with every occurrence terminal. Open work survives the horizon.
 
 ## Hermes delivery and acknowledgement
 
@@ -249,7 +228,7 @@ Hermes may explain the action, current timing, evidence status, and runbook
 reference. It may record that the operator saw or acknowledged a message. It
 must not:
 
-- mark the occurrence satisfied;
+- mark the occurrence completed;
 - turn acknowledgement into project evidence;
 - infer completion from delivery success or silence;
 - embed or execute a command from the obligation;
@@ -305,20 +284,23 @@ manufactured.
 Given an overdue occurrence and a successful Hermes acknowledgement, Hermes
 records the acknowledgement against its delivery key. Portal and other
 consumers continue to show the occurrence as overdue until matching verified
-project evidence produces `satisfied` resolution.
+project evidence derives `completed`.
 
 ### Completed with evidence
 
-Given matching project evidence with result `verified` and resolution
-`satisfied`, consumers derive `completed` regardless of prior delivery or
-acknowledgement history. The evidence remains attributed to the project.
+Given matching project evidence with result `verified`, consumers derive
+`completed` regardless of prior delivery or acknowledgement history. They also
+derive `on_time` or `late` from evidence `observed_at` against `due_at`. The
+evidence remains attributed to the project.
 
 ### Evidence failure
 
-Given missing, invalid, stale, failed, or mismatched evidence, consumers never
-derive `completed`. The occurrence remains future, pending, overdue, or unknown
-according to accepted input. A consumer exposes the evidence problem without
-changing the service's health state.
+Given missing, failed, invalid, or mismatched evidence, consumers never derive
+`completed`. Explicit missing or failed evidence leaves the occurrence future,
+pending, or overdue; invalid or mismatched evidence is rejected. Stale,
+invalid, or unavailable projection input is a separate channel-integrity
+problem and can never become an empty obligation list. A consumer exposes
+either problem without changing service health.
 
 ### Weekly, monthly, and quarterly work together
 
@@ -332,15 +314,15 @@ one frequency has no effect on either of the others.
 The project materializes no occurrence starting beyond `horizon_at`. At the
 horizon, any open occurrence remains actionable and may become overdue. The
 series becomes `period_ended` only after the horizon passes and every
-materialized occurrence has an explicit terminal resolution. If the horizon
+materialized occurrence has a terminal result. If the horizon
 has not passed and a terminal recurring occurrence has no successor,
 `materialization_required` prevents a silent memory gap.
 
 ## Compatibility and migration plan
 
-1. **Protocol normative slice:** after explicit acceptance, add an optional
-   additive declaration and sanitized projection in a minor release. Existing
-   contracts and consumers continue to work unchanged.
+1. **Protocol normative slice:** protocol 0.13.0 publishes the optional
+   additive declaration, complete sanitized projection, canonical validation,
+   examples, and derivation rules. Existing contracts remain valid.
 2. **Project ownership:** project repositories publish obligation declarations
    and matching evidence. Home Infra explicitly accepts, attributes, and
    preserves them; it does not author project policy on their behalf.
@@ -366,9 +348,9 @@ has not passed and a terminal recurring occurrence has no successor,
    `preview.expires_at`, `next_run_at`, capability reviews, and incidents in
    their existing domains.
 
-## Validation plan for a normative slice
+## Normative validation coverage
 
-The normative implementation must add positive and negative coverage for:
+Protocol 0.13.0 adds positive and negative coverage for:
 
 - optional additive compatibility with existing project contracts;
 - stable and unique obligation and occurrence ids;
@@ -376,17 +358,19 @@ The normative implementation must add positive and negative coverage for:
 - horizon ordering and the rule that a horizon never closes open work;
 - declared runbook references and bounded, non-executable display text;
 - exact declaration/evidence joins and authority attribution;
-- `satisfied` and verified completion evidence agreeing for the exact
-  occurrence;
+- completion derived only from verified evidence for the exact occurrence;
 - failed, stale, missing, and mismatched evidence never completing work;
 - supersession requiring a replacement occurrence identity;
 - independent consumer-clock derivation at before/start/due/after boundaries;
+- on-time and late completion derived from evidence time, not read time;
 - missing successor detection for recurring work within its horizon;
 - three simultaneous frequency series and six-month horizon completion;
 - sanitized strict egress with no provider, recipient, endpoint, credential,
   command, private path, retry, or notification-policy leakage;
-- Portal separation of obligation and service-health presentation;
-- Hermes deterministic deduplication and acknowledgement non-equivalence;
+- channel failure never manufacturing an empty obligation list;
+- strict complete-scope withdrawal and last-valid retention semantics;
+- Portal separation of obligation and service-health presentation rules;
+- Hermes deterministic deduplication and acknowledgement non-equivalence rules;
 - old consumers safely ignoring the optional new declaration.
 
 The validation evidence must include one current single-action adopter and one
@@ -397,12 +381,14 @@ real recurring multi-frequency adopter before claiming broad consumer support.
 This proposal does not define a scheduler, cron expression, calendar language,
 notification provider, recipient model, retry algorithm, executable action,
 remote mutation interface, incident workflow, health severity, or private
-deployment policy. It does not authorize edits to SPEC, schemas, normative
-examples, validators, templates, sibling repositories, or runtimes.
+deployment policy. Its accepted implementation authorization covered this
+protocol's SPEC, schemas, normative examples, validator, and documentation
+only; it does not authorize edits to sibling repositories or runtimes.
 
-## Promotion gate
+## Adoption gate
 
-The maintainer must explicitly accept this proposal before a normative slice.
-That slice should be a single additive minor implementing only the declaration,
-sanitized projection, canonical validation, examples, and compatibility tests.
-Adopter and runtime changes remain separately authorized follow-up gates.
+The normative slice is complete in protocol 0.13.0. It does not itself modify
+or claim support from Home Infra, Infra Portal, Hermes, ForgeOS, MCP clients, or
+project runtimes. The next gate is separately authorized adoption, starting
+with project declaration and Home Infra acceptance before consumer delivery or
+legacy-field removal.

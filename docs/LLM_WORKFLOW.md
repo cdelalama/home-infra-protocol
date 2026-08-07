@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # LLM Workflow
 
 LLM agents using this protocol should follow a simple discipline.
@@ -54,6 +54,22 @@ Before telling an operator that a project "cannot" do something, distinguish
 unsupported, disabled by policy, not evaluated, unavailable at runtime, and
 missing integration. Consumers and agents must not collapse these states into
 one generic refusal.
+
+## When Handling Operational Obligations
+
+Read the accepted operational-obligations projection rather than relying on
+conversation memory. Keep project declaration, Home Infra acceptance, project
+evidence, consumer-clock state, and notification acknowledgement separate.
+
+- Explain the bounded human action and link its runbook; never turn `action`
+  into a command or mutation payload.
+- Do not claim there are no obligations when the projection is stale, invalid,
+  partial, or unavailable. Report channel integrity and, for a stateful
+  operational consumer, retain and attribute the last valid projection.
+- Treat Hermes acknowledgement only as delivery-ledger state.
+- Derive completion only from matching project evidence with
+  `result: verified`; failed or missing evidence leaves work open.
+- Keep overdue work separate from service health and incidents.
 
 ## Before Claiming Completion
 

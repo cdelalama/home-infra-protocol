@@ -1,4 +1,4 @@
-<!-- doc-version: 0.12.2 -->
+<!-- doc-version: 0.13.0 -->
 # Repository Structure
 
 ```text
@@ -13,12 +13,14 @@ home-infra-protocol/
 │   ├── services.schema.json
 │   ├── hosts.schema.json
 │   ├── project-contract.schema.json
-│   └── status-snapshot.schema.json
+│   ├── status-snapshot.schema.json
+│   └── operational-obligations-projection.schema.json
 ├── examples/
 │   ├── home-infra/
 │   │   ├── catalog/
 │   │   │   ├── services.yml
 │   │   │   └── hosts.yml
+│   │   ├── operational-obligations.json
 │   │   └── HANDOFF.md
 │   └── project/
 │       ├── infra.contract.yml
@@ -61,6 +63,7 @@ home-infra-protocol/
     ├── .gitkeep
     ├── test_authentication_placement.py
     ├── test_capability_transparency.py
+    ├── test_operational_obligations.py
     ├── test_project_interface_validator.py
     ├── test_status_snapshot_next_run.py
     └── test_status_snapshot_labels.py
