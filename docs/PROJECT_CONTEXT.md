@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.0 -->
+<!-- doc-version: 0.13.1 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -65,12 +65,15 @@ authorities over inventory or intent.
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-08-07)
+## Current Status (2026-08-08)
 
-Protocol 0.13.0 implements DF-015 as an optional additive project declaration
-and complete sanitized accepted projection. The resolved backup trial, a
-second real private pilot, and a documented multi-frequency recovery workflow
-ground the contract without claiming downstream adoption.
+Protocol 0.13.0 implemented DF-015 as an optional additive project declaration
+and complete sanitized accepted projection. Protocol 0.13.1 corrects the
+reference ordering so `due_at` and `starts_at` are compared as UTC instants,
+including mixed fractional-second encodings, before any adopter pins the
+contract. The resolved backup trial, a second real private pilot, and a
+documented multi-frequency recovery workflow ground the contract without
+claiming downstream adoption.
 
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
@@ -78,10 +81,12 @@ each consumer, and delivery/acknowledgement to Hermes. Only matching verified
 project evidence may satisfy an occurrence. Recurring policy stays private;
 each occurrence is materialized with absolute UTC timestamps.
 
-The canonical validator now enforces nested series/occurrence identity,
+The canonical validator enforces nested series/occurrence identity,
 absolute windows, runbook joins, non-executable actions, complete projection
 scope, project authority, evidence, and supersession. Completion, timeliness,
-time state, and channel integrity remain derived. Legacy
+time state, channel integrity, next selection, and recurring ordering remain
+derived. Recurring-series state is not applicable to one-time obligations.
+Legacy
 `operational_review` and the optional declaration both remain absent from the
 reusable starter template. Existing `preview.expires_at`, `next_run_at`,
 capability reviews, DF-016 incidents, freshness, recovery, and health semantics

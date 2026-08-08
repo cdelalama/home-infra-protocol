@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.0 -->
+<!-- doc-version: 0.13.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -642,11 +642,11 @@ Consumers keep five separate axes:
 
 | Axis | Values | Authority |
 |------|--------|-----------|
-| Time for an open occurrence | `future | pending | overdue` | Consumer clock plus accepted window |
-| Result | `open | completed | cancelled | superseded` | Verified evidence derives completion; project resolution supplies cancellation or supersession |
-| Evidence | `missing | verified | failed` | Project evidence publisher |
-| Channel integrity | `fresh | stale | invalid | unavailable` | Consumer clock plus publisher budget and validation |
-| Completed timeliness | `on_time | late | indeterminate` | Project evidence time compared with the accepted due time |
+| Time for an open occurrence | `future \| pending \| overdue` | Consumer clock plus accepted window |
+| Result | `open \| completed \| cancelled \| superseded` | Verified evidence derives completion; project resolution supplies cancellation or supersession |
+| Evidence | `missing \| verified \| failed` | Project evidence publisher |
+| Channel integrity | `fresh \| stale \| invalid \| unavailable` | Consumer clock plus publisher budget and validation |
+| Completed timeliness | `on_time \| late \| indeterminate` | Project evidence time compared with the accepted due time |
 
 `completed`, `cancelled`, and `superseded` are terminal result states. Only
 `open` receives a temporal state. Administrative resolution is still carried
@@ -675,16 +675,22 @@ whether the operator repeatedly missed a deadline.
 
 `next` is a consumer selection, not project evidence. Consumers order open
 occurrences by `due_at`, then `starts_at`, then series id, then occurrence id.
+Consumers MUST compare `due_at` and `starts_at` as parsed UTC instants, never
+as their textual representations. Optional fractional seconds can make
+lexicographic and chronological order diverge.
+
 The final id comparisons are opaque deterministic tie-breakers; consumers MUST
 NOT parse ids for calendar meaning. Overdue occurrences remain separately
 visible and MUST NOT be hidden by a later future occurrence.
 
 Within one recurring series, the last materialized occurrence is the maximum
 by `due_at`, then `starts_at`, then occurrence id. This order remains
-deterministic when windows overlap or timestamps tie; it does not grant ids
-calendar meaning. A materialization gap is evaluated only after confirming
-that every materialized occurrence, including that last occurrence, is
-terminal.
+deterministic when windows overlap or timestamps tie. Consumers MUST compare
+both timestamp fields as parsed UTC instants, never as strings; this is the
+same chronological rule used for `next`. The occurrence-id comparison is only
+the final opaque tie-breaker and does not grant ids calendar meaning. A
+materialization gap is evaluated only after confirming that every materialized
+occurrence, including that last occurrence, is terminal.
 
 A recurring series derives:
 
@@ -693,6 +699,10 @@ A recurring series derives:
   and either no horizon exists or the consumer clock is before the horizon;
 - `period_ended` only when a horizon exists, the consumer clock has reached it,
   and every materialized occurrence is terminal.
+
+These series states apply only to `kind: recurring`. A `one_time` obligation
+has an occurrence result but no recurring-series state; the reference helper
+returns `None` for that case.
 
 An occurrence that remains open after `horizon_at` remains pending or overdue.
 Multiple simultaneous weekly, monthly, and quarterly series are independent;

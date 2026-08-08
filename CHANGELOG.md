@@ -2,6 +2,29 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.1] - 2026-08-08
+
+### Added
+
+- Six focused regression cases covering chronological `due_at` ordering,
+  secondary `starts_at` ordering, mixed fractional-second encodings, and
+  one-time series-state behavior.
+
+### Changed
+
+- Clarify normatively that canonical `next` and last-occurrence ordering
+  compares parsed UTC instants rather than timestamp strings.
+- Change the reference `derive_series_state` return for `one_time` obligations
+  from invented `active | terminal` vocabulary to `None`; recurring-series
+  state is not applicable to one-time work.
+
+### Fixed
+
+- Prevent optional fractional seconds from inverting chronological ordering in
+  `occurrence_sort_key` and `latest_occurrence`.
+- Render the five-axis operational-obligations table correctly by escaping
+  enum separators inside table cells.
+
 ## [0.13.0] - 2026-08-07
 
 ### Added

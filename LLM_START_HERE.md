@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.0 -->
+<!-- doc-version: 0.13.1 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,14 +81,15 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-08-07 - GPT-5 Codex.
-- Working on: close protocol 0.13.0 as the full additive DF-015 normative
-  contract and stop before adopter or runtime mutation.
+- Last Updated: 2026-08-08 - GPT-5 Codex.
+- Working on: close protocol 0.13.1 as the canonical-ordering correction for
+  DF-015 and stop before adopter or runtime mutation.
 - Status: optional one-time and recurring operational obligations now use
   project-materialized absolute occurrences, a complete sanitized Home Infra
-  projection, project-owned evidence, and deterministic consumer derivation.
-  The reusable template has no obligation example. Home Infra, Portal, Hermes,
-  ForgeOS, MCP, project, and runtime adoption remain separate gates.
+  projection, project-owned evidence, and UTC-instant consumer ordering that
+  remains correct with fractional seconds. The reusable template has no
+  obligation example. Home Infra, Portal, Hermes, ForgeOS, MCP, project, and
+  runtime adoption remain separate gates.
 
 <!-- DOCKIT-TEMPLATE:START checklist -->
 ## Getting Started Checklist

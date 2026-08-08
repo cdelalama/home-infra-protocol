@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.0 -->
+<!-- doc-version: 0.13.1 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -63,7 +63,7 @@ Read-only ecosystem reconciliation performed for this checkpoint:
   primary-worktree changes are reconciled.
 - Do not add recovery or incident-lifecycle fields to SPEC or schemas until the
   accepted proposals pass their explicit implementation/adoption gates.
-- Do not extend the 0.13.0 operational-obligations vocabulary or add it to the
+- Do not extend the 0.13.1 operational-obligations vocabulary or add it to the
   reusable starter template without new adopter evidence and explicit scope.
 - Do not combine a DocKit 4.13.1 sync with protocol-semantic work.
 - Do not copy private addresses, host identity, products, secrets, backup
@@ -71,12 +71,15 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.13.0 implements DF-015 as one additive normative slice. Project
-contracts may declare stable one-time or recurring obligation series with
-absolute UTC occurrence windows. Home Infra publishes a complete sanitized
-accepted projection; only matching verified project evidence derives
-completion. Consumer-clock time state, projection-channel integrity,
-administrative resolution, and Hermes acknowledgement remain separate axes.
+Protocol 0.13.0 implemented DF-015 as one additive normative slice. Protocol
+0.13.1 corrects its reference ordering before adoption: consumers compare
+`due_at` and `starts_at` as parsed UTC instants, never strings, so optional
+fractional seconds cannot invert `next` or last-occurrence selection. One-time
+obligations now explicitly have no recurring-series state. Home Infra still
+publishes a complete sanitized accepted projection; only matching verified
+project evidence derives completion. Consumer-clock time state,
+projection-channel integrity, administrative resolution, and Hermes
+acknowledgement remain separate axes.
 The published contract is anchored in `SPEC.md`,
 `schemas/project-contract.schema.json`, and
 `schemas/operational-obligations-projection.schema.json`.
@@ -93,7 +96,7 @@ contain an obligation block. No Home Infra, Portal, Hermes, ForgeOS, project,
 MCP, or runtime support is claimed by this release.
 
 Local release evidence passed 38/38 version targets, DocKit 10/10 checks,
-68/68 unit tests, profile-template and representative
+74/74 unit tests, profile-template and representative
 contract/status/projection validation, Python compilation, JSON parsing, and
 diff hygiene.
 
@@ -120,7 +123,7 @@ The next ordered gate is adoption phase 1:
    minor only after its implementation gate is reviewed explicitly.
 4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.13.0 is authoritative today; do not silently rewrite the
+   Project SemVer 0.13.1 is authoritative today; do not silently rewrite the
    core spec during an operational checkpoint.
 
 ## Deferred ecosystem reconciliation backlog
@@ -140,12 +143,14 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-07 - GPT-5 Codex.
-- Working on: close protocol 0.13.0 as the full DF-015 normative contract and
-  stop before adopter or runtime mutation.
+- Last Updated: 2026-08-08 - GPT-5 Codex.
+- Working on: close protocol 0.13.1 as the canonical-ordering correction for
+  DF-015 and stop before adopter or runtime mutation.
 - Status: DF-015 is implemented in the protocol with an optional project
-  declaration, complete sanitized projection, deterministic derivation,
-  canonical validation, sanitized examples, and compatibility coverage.
+  declaration, complete sanitized projection, UTC-instant deterministic
+  derivation, canonical validation, sanitized examples, and compatibility
+  coverage. Fractional seconds no longer invert canonical ordering, and
+  one-time obligations expose no recurring-series state.
   Home Infra, Portal, Hermes, ForgeOS, MCP, and project adoption remain
   unclaimed. The next gate is separately authorized phase-1 project and Home
   Infra adoption of the current active one-time pilot.
@@ -230,8 +235,9 @@ The residual architectural reconciliation that may eventually produce
 ## Pending Proposals (for the next session)
 
 `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` (DF-015) is implemented in protocol
-0.13.0. Its project/Home Infra migration, Portal dual read, Hermes delivery,
-ForgeOS scaffolding, and recurring-program adoption remain separate gates.
+0.13.0 and its canonical UTC ordering is corrected in 0.13.1. Its project/Home
+Infra migration, Portal dual read, Hermes delivery, ForgeOS scaffolding, and
+recurring-program adoption remain separate gates.
 
 `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is implemented in protocol 0.8.0.
 No authentication proposal remains immediately dispatchable.
@@ -285,9 +291,9 @@ consumer-side extension it surfaces — `infra-portal` reading
 - **DF-015** — Time-bounded operator obligations need honest pre-telemetry
   visibility. Filed 2026-07-28 from a private backup activation trial, its
   source-of-truth declaration, and Infra Portal 0.22.0. Status:
-  `implemented (0.13.0)` after the dated review, explicit maintainer
-  acceptance, additive declaration/projection schemas, canonical validation,
-  sanitized examples, and compatibility tests.
+  `implemented (0.13.0; ordering corrected in 0.13.1)` after the dated review,
+  explicit maintainer acceptance, additive declaration/projection schemas,
+  canonical validation, sanitized examples, and compatibility tests.
 - **DF-016** — Detection, delivery, acknowledgement, recovery, and closure
   require separate evidence. Filed and accepted as proposal-only incubation on
   2026-08-01; no normative schema semantics yet.

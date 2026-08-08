@@ -172,11 +172,11 @@ def occurrence_is_terminal(occurrence: dict[str, Any]) -> bool:
 
 def occurrence_sort_key(
     series_id: str, occurrence: dict[str, Any]
-) -> tuple[str, str, str, str]:
+) -> tuple[datetime, datetime, str, str]:
     """Canonical total order for consumer selection; ids are opaque tie-breakers."""
     return (
-        str(occurrence.get("due_at", "")),
-        str(occurrence.get("starts_at", "")),
+        parse_utc_timestamp(occurrence.get("due_at")),
+        parse_utc_timestamp(occurrence.get("starts_at")),
         series_id,
         str(occurrence.get("id", "")),
     )
@@ -195,11 +195,7 @@ def latest_occurrence(
         return None
     return max(
         occurrences,
-        key=lambda occurrence: (
-            str(occurrence.get("due_at", "")),
-            str(occurrence.get("starts_at", "")),
-            str(occurrence.get("id", "")),
-        ),
+        key=lambda occurrence: occurrence_sort_key("", occurrence),
     )
 
 
@@ -264,21 +260,17 @@ def select_next_occurrence(
     )
 
 
-def derive_series_state(obligation: dict[str, Any], now: datetime) -> str:
+def derive_series_state(
+    obligation: dict[str, Any], now: datetime
+) -> str | None:
+    """Derive recurring-series state; one-time obligations have no series state."""
     if obligation.get("kind") != "recurring":
-        return "terminal" if all(
-            occurrence_is_terminal(occurrence)
-            for occurrence in obligation.get("occurrences", [])
-            if isinstance(occurrence, dict)
-        ) else "active"
+        return None
     occurrences = [
         occurrence
         for occurrence in obligation.get("occurrences", [])
         if isinstance(occurrence, dict)
     ]
-    latest = latest_occurrence(obligation)
-    if latest is None:
-        return "active"
     if any(not occurrence_is_terminal(occurrence) for occurrence in occurrences):
         return "active"
     horizon_at = obligation.get("horizon_at")

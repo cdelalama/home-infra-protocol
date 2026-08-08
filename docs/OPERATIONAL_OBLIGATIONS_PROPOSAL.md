@@ -1,11 +1,12 @@
-<!-- doc-version: 0.13.0 -->
+<!-- doc-version: 0.13.1 -->
 # Operational Obligations Proposal
 
 ## Status
 
 Implemented in Home Infra Protocol 0.13.0 after explicit maintainer acceptance
-on 2026-08-07. This document preserves the evidence and design rationale; the
-normative contract now lives in `SPEC.md`,
+on 2026-08-07, with canonical ordering clarified in protocol 0.13.1. This
+document preserves the evidence and design rationale; the normative contract
+now lives in `SPEC.md`,
 `schemas/project-contract.schema.json`, and
 `schemas/operational-obligations-projection.schema.json`.
 
@@ -387,8 +388,17 @@ only; it does not authorize edits to sibling repositories or runtimes.
 
 ## Adoption gate
 
-The normative slice is complete in protocol 0.13.0. It does not itself modify
-or claim support from Home Infra, Infra Portal, Hermes, ForgeOS, MCP clients, or
-project runtimes. The next gate is separately authorized adoption, starting
-with project declaration and Home Infra acceptance before consumer delivery or
+### Open evidence-timing question
+
+Recurring adoption must record whether a project may publish `verified`
+evidence whose `observed_at` precedes the occurrence `starts_at` when its
+`evidence.requirement` explicitly permits early satisfaction. Protocol 0.13.1
+does not decide or change that producer-owned semantic; the first real
+recurring adopter must supply the evidence needed to resolve it.
+
+The normative slice was published in protocol 0.13.0 and its canonical
+timestamp ordering was corrected in 0.13.1. Neither release modifies or claims
+support from Home Infra, Infra Portal, Hermes, ForgeOS, MCP clients, or project
+runtimes. The next gate is separately authorized adoption, starting with
+project declaration and Home Infra acceptance before consumer delivery or
 legacy-field removal.

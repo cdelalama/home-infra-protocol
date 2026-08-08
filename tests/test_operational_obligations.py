@@ -490,14 +490,76 @@ class OperationalObligationsDerivationTest(unittest.TestCase):
 
     def test_next_selection_has_stable_total_order(self) -> None:
         first = obligation("series-b", "recurring")
-        first["occurrences"][0]["id"] = "occurrence-b"
+        first["occurrences"][0]["id"] = "occurrence-a"
         second = obligation("series-a", "recurring")
-        second["occurrences"][0]["id"] = "occurrence-a"
+        second["occurrences"][0]["id"] = "occurrence-z"
         for value in (first, second):
             value["occurrences"][0]["evidence"] = {"result": "missing"}
         selected = MODULE.select_next_occurrence([first, second])
         self.assertIsNotNone(selected)
         self.assertEqual(selected[0], "series-a")
+
+    def test_next_selection_uses_occurrence_id_as_final_tie_breaker(self) -> None:
+        value = obligation("series-a", "recurring")
+        value["occurrences"] = [
+            {
+                **occurrence("occurrence-z"),
+                "evidence": {"result": "missing"},
+            },
+            {
+                **occurrence("occurrence-a"),
+                "evidence": {"result": "missing"},
+            },
+        ]
+        selected = MODULE.select_next_occurrence([value])
+        self.assertIsNotNone(selected)
+        self.assertEqual(selected[1]["id"], "occurrence-a")
+
+    def test_next_selection_compares_due_at_as_utc_instants(self) -> None:
+        value = obligation("series-a", "recurring")
+        value["occurrences"] = [
+            {
+                **occurrence(
+                    "earlier",
+                    due_at="2027-01-15T00:00:00Z",
+                ),
+                "evidence": {"result": "missing"},
+            },
+            {
+                **occurrence(
+                    "later-fractional",
+                    due_at="2027-01-15T00:00:00.500Z",
+                ),
+                "evidence": {"result": "missing"},
+            },
+        ]
+        selected = MODULE.select_next_occurrence([value])
+        self.assertIsNotNone(selected)
+        self.assertEqual(selected[1]["id"], "earlier")
+
+    def test_next_selection_compares_starts_at_as_secondary_utc_instant(
+        self,
+    ) -> None:
+        value = obligation("series-a", "recurring")
+        value["occurrences"] = [
+            {
+                **occurrence(
+                    "earlier-start",
+                    starts_at="2027-01-01T00:00:00Z",
+                ),
+                "evidence": {"result": "missing"},
+            },
+            {
+                **occurrence(
+                    "later-fractional-start",
+                    starts_at="2027-01-01T00:00:00.500Z",
+                ),
+                "evidence": {"result": "missing"},
+            },
+        ]
+        selected = MODULE.select_next_occurrence([value])
+        self.assertIsNotNone(selected)
+        self.assertEqual(selected[1]["id"], "earlier-start")
 
     def test_latest_occurrence_has_stable_reverse_total_order(self) -> None:
         value = obligation("restore-readiness-weekly", "recurring")
@@ -509,6 +571,44 @@ class OperationalObligationsDerivationTest(unittest.TestCase):
         latest = MODULE.latest_occurrence(value)
         self.assertIsNotNone(latest)
         self.assertEqual(latest["id"], "occurrence-c")
+
+    def test_latest_occurrence_compares_due_at_as_utc_instants(self) -> None:
+        value = obligation("restore-readiness-weekly", "recurring")
+        value["occurrences"] = [
+            occurrence("earlier", due_at="2027-01-15T00:00:00Z"),
+            occurrence(
+                "later-fractional",
+                due_at="2027-01-15T00:00:00.500Z",
+            ),
+        ]
+        latest = MODULE.latest_occurrence(value)
+        self.assertIsNotNone(latest)
+        self.assertEqual(latest["id"], "later-fractional")
+
+    def test_latest_occurrence_compares_starts_at_as_secondary_utc_instant(
+        self,
+    ) -> None:
+        value = obligation("restore-readiness-weekly", "recurring")
+        value["occurrences"] = [
+            occurrence(
+                "earlier-start",
+                starts_at="2027-01-01T00:00:00Z",
+            ),
+            occurrence(
+                "later-fractional-start",
+                starts_at="2027-01-01T00:00:00.500Z",
+            ),
+        ]
+        latest = MODULE.latest_occurrence(value)
+        self.assertIsNotNone(latest)
+        self.assertEqual(latest["id"], "later-fractional-start")
+
+    def test_one_time_obligation_has_no_recurring_series_state(self) -> None:
+        value = obligation("pilot-review", "one_time")
+        state = MODULE.derive_series_state(
+            value, datetime(2027, 1, 10, tzinfo=timezone.utc)
+        )
+        self.assertIsNone(state)
 
     def test_recurring_gap_and_period_end_are_distinct(self) -> None:
         value = obligation("restore-readiness-weekly", "recurring")
