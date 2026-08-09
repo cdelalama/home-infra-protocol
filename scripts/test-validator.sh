@@ -193,7 +193,7 @@ EOF
 
 init_version_repo() {
     _repo="$1"
-    mkdir -p "$_repo/scripts" "$_repo/docs"
+    mkdir -p "$_repo/scripts" "$_repo/docs" "$_repo/integrations/dockit/templates"
     cp "$CHECK_VERSION" "$_repo/scripts/check-version-sync.sh"
     cp "$BUMP_VERSION" "$_repo/scripts/bump-version.sh"
     chmod +x "$_repo/scripts/check-version-sync.sh" "$_repo/scripts/bump-version.sh"
@@ -204,6 +204,12 @@ targets:
 - path: package.json       marker: json-version
 - path: openapi.yml        marker: yaml-info-version
 - path: package-lock.json  marker: package-lock-version
+- path: integrations/dockit/templates/infra.contract.yml marker: protocol-profile-comment
+EOF
+    cat >"$_repo/integrations/dockit/templates/infra.contract.yml" <<'EOF'
+# home-infra-protocol-profile: 1.2.3
+project:
+  id: version-smoke
 EOF
     write_version_files "$_repo" "1.2.3"
 }
@@ -671,8 +677,21 @@ expect_fail "trace-protocol enabled requires since date" \
 VERSION_REPO="$TMP_ROOT/version"
 init_version_repo "$VERSION_REPO"
 
-expect_pass "version-sync accepts matching json/yaml/package-lock markers" \
+expect_pass "version-sync accepts matching json/yaml/package-lock/profile markers" \
     sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+
+sed 's/home-infra-protocol-profile: 1.2.3/home-infra-protocol-profile: 9.9.9/' \
+    "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml" \
+    >"$VERSION_REPO/integrations/dockit/templates/infra.contract.yml.tmp"
+mv "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml.tmp" \
+    "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml"
+expect_fail "version-sync detects protocol profile marker drift" \
+    sh -c "cd '$VERSION_REPO' && scripts/check-version-sync.sh"
+sed 's/home-infra-protocol-profile: 9.9.9/home-infra-protocol-profile: 1.2.3/' \
+    "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml" \
+    >"$VERSION_REPO/integrations/dockit/templates/infra.contract.yml.tmp"
+mv "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml.tmp" \
+    "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml"
 
 write_version_files "$VERSION_REPO" "1.2.3"
 sed 's/"version": "1.2.3"/"version": "9.9.9"/' "$VERSION_REPO/package.json" >"$VERSION_REPO/package.json.tmp"
@@ -713,19 +732,22 @@ expect_fail "version-sync rejects unknown marker type" \
 mv "$VERSION_REPO/docs/version-sync-manifest.yml.good" "$VERSION_REPO/docs/version-sync-manifest.yml"
 
 write_version_files "$VERSION_REPO" "1.2.3"
-expect_pass "bump-version updates json/yaml/package-lock markers" \
+expect_pass "bump-version updates json/yaml/package-lock/profile markers" \
     sh -c "cd '$VERSION_REPO' && scripts/bump-version.sh 2.0.0"
 
 if grep -q '"version": "2.0.0"' "$VERSION_REPO/package.json" \
     && grep -q 'version: 2.0.0' "$VERSION_REPO/openapi.yml" \
-    && [ "$(grep -c '"version": "2.0.0"' "$VERSION_REPO/package-lock.json")" -ge 2 ]; then
-    note_pass "bump-version wrote package-lock top-level and root package versions"
+    && [ "$(grep -c '"version": "2.0.0"' "$VERSION_REPO/package-lock.json")" -ge 2 ] \
+    && grep -q '^# home-infra-protocol-profile: 2.0.0$' \
+        "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml"; then
+    note_pass "bump-version wrote package-lock and protocol profile versions"
 else
     {
-        echo "package.json/openapi.yml/package-lock.json did not all reach 2.0.0"
+        echo "versioned files and protocol profile did not all reach 2.0.0"
         sed -n '1,80p' "$VERSION_REPO/package-lock.json"
+        sed -n '1,10p' "$VERSION_REPO/integrations/dockit/templates/infra.contract.yml"
     } >"$OUT"
-    note_fail "bump-version wrote package-lock top-level and root package versions"
+    note_fail "bump-version wrote package-lock and protocol profile versions"
 fi
 
 if [ ! -x "$SYNC_TOOL" ]; then

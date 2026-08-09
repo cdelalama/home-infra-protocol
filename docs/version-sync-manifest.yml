@@ -41,3 +41,4 @@ targets:
 - path: docs/operations/API_CONTRACT.md marker: html-comment
 - path: docs/operations/DEPLOY_PLAYBOOK.md marker: html-comment
 - path: integrations/dockit/INTEGRATION.md marker: html-comment
+- path: integrations/dockit/templates/infra.contract.yml marker: protocol-profile-comment

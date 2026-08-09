@@ -2,6 +2,25 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.3] - 2026-08-09
+
+### Added
+
+- Add `protocol-profile-comment` as a first-class version-sync marker and
+  regression coverage for both drift detection and future automated bumps.
+
+### Changed
+
+- Track the reusable `infra.contract.yml` profile in the canonical version
+  manifest so release automation owns its marker instead of relying on a
+  manual follow-up.
+
+### Fixed
+
+- Repair the 0.13.2 release-integrity mismatch where `VERSION` advanced but
+  the reusable profile remained marked 0.13.1, causing ForgeOS project birth
+  validation to fail closed. No protocol or adopter semantics change.
+
 ## [0.13.2] - 2026-08-09
 
 ### Added

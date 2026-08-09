@@ -182,6 +182,20 @@ while read -r filepath markertype; do
                 FAILED=$((FAILED + 1))
             fi
             ;;
+        protocol-profile-comment)
+            # Replace # home-infra-protocol-profile: X.Y.Z marker
+            if grep -qE '^# home-infra-protocol-profile: [0-9]+\.[0-9]+\.[0-9]+$' "$filepath"; then
+                TMPOUT=$(mktemp)
+                sed "s/^# home-infra-protocol-profile: [0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$/# home-infra-protocol-profile: $NEW_VERSION/" \
+                    "$filepath" > "$TMPOUT"
+                mv "$TMPOUT" "$filepath"
+                printf "  %-40s OK (protocol-profile-comment)\n" "$filepath"
+                UPDATED=$((UPDATED + 1))
+            else
+                printf "  %-40s FAIL (no protocol profile marker found)\n" "$filepath"
+                FAILED=$((FAILED + 1))
+            fi
+            ;;
         changelog)
             # Insert new section before the first existing ## [ line
             if grep -q "^## \[$NEW_VERSION\]" "$filepath"; then
@@ -246,7 +260,7 @@ echo ""
 
 if [ "$FAILED" -gt 0 ]; then
     echo "WARNING: $FAILED file(s) failed to update. $UPDATED file(s) updated."
-    echo "Check files with missing markers and add <!-- doc-version: $NEW_VERSION --> manually."
+    echo "Check files with missing or malformed version markers."
     exit 1
 fi
 

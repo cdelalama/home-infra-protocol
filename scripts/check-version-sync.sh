@@ -149,6 +149,17 @@ while read -r filepath markertype; do
             fi
             CHECKED=$((CHECKED + 1))
             ;;
+        protocol-profile-comment)
+            FOUND=$(grep -o '^# home-infra-protocol-profile: [0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' "$filepath" 2>/dev/null | head -1 | sed 's/^# home-infra-protocol-profile: //')
+            if [ -z "$FOUND" ]; then
+                echo "DRIFT: $filepath missing # home-infra-protocol-profile: marker"
+                ERRORS=$((ERRORS + 1))
+            elif [ "$FOUND" != "$EXPECTED" ]; then
+                echo "DRIFT: $filepath has '$FOUND', expected '$EXPECTED'"
+                ERRORS=$((ERRORS + 1))
+            fi
+            CHECKED=$((CHECKED + 1))
+            ;;
         changelog)
             if ! grep -q "^## \[$EXPECTED\]" "$filepath" 2>/dev/null; then
                 echo "DRIFT: $filepath missing ## [$EXPECTED] section"

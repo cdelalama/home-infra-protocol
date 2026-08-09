@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.2 -->
+<!-- doc-version: 0.13.3 -->
 # LLM Session History
 
 Append-only record of meaningful LLM-assisted work on this project.
@@ -6,6 +6,8 @@ Append-only record of meaningful LLM-assisted work on this project.
 ## Format
 
 YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: <yes/no + details>
+
+- 2026-08-09 - GPT-5 Codex - **Patch 0.13.3 - made reusable-profile version integrity automatic after ForgeOS failed closed on the 0.13.2 mismatch.** The documentation-only 0.13.2 bump advanced `VERSION` but left `integrations/dockit/templates/infra.contract.yml` marked 0.13.1 because the profile was not a canonical version-manifest target. Added the dedicated `protocol-profile-comment` marker type to bump and check tooling, registered the profile in the manifest, and added regression coverage proving both drift rejection and future automatic updates. Restored the current canonical profile test without changing SPEC semantics, schemas, examples, authority, adopter pins, sibling repositories, or runtimes. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/version-sync-manifest.yml, scripts/bump-version.sh, scripts/check-version-sync.sh, scripts/test-validator.sh, integrations/dockit/templates/infra.contract.yml, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.13.2 -> 0.13.3 patch: release-integrity tooling and reusable-profile marker correction). - Trace: role=executor; commits=none; state=profile-version-integrity-restored-for-forgeos-revalidation; validation=74-unit-47-smoke-39-version-10-dockit; next=publish-then-forgeos-bc6a5ac-revalidation
 
 - 2026-08-09 - GPT-5 Codex - **Patch 0.13.2 - reconciled the first real recurring DF-015 adoption chain.** Sanitized evidence now records NAS Backup declaring three recovery series and 34 absolute occurrences under the still-accepted Protocol 0.13.1 contract, Home Infra accepting and continuously publishing the complete projection, and Infra Portal consuming it with restart-durable last-valid continuity. All 34 results remain open with missing evidence. No SPEC content, schema, normative example, validator, authority or runtime semantic changed; only the mandatory SPEC doc-version marker advanced. The next gate is Hermes read-only consumption and a private delivery/acknowledgement ledger, with proactive Buzz transport evaluated separately. - Files: [VERSION, CHANGELOG.md, LLM_START_HERE.md, docs/PROJECT_CONTEXT.md, docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md, docs/DOWNSTREAM_FEEDBACK.md, docs/llm/HANDOFF.md, docs/llm/HISTORY.md, version markers] - Version impact: yes (0.13.1 -> 0.13.2 patch: downstream adoption and roadmap documentation only). - Trace: role=executor; commits=none; state=df015-recurring-adoption-documented-hermes-next; validation=version-dockit-protocol-tests-protected-content-diff; next=home-infra-cross-repo-publication-then-hermes-consumer-go
 

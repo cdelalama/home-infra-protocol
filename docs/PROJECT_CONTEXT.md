@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.2 -->
+<!-- doc-version: 0.13.3 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -82,6 +82,12 @@ their complete sanitized projection, and Infra Portal 0.27.1 consumes it with
 restart-durable last-valid continuity. All projected evidence remains missing
 and no occurrence is completed. The adopter intentionally remains pinned to
 the accepted 0.13.1 contract revision; this patch is documentation only.
+
+Protocol 0.13.3 repairs the release-integrity defect exposed when ForgeOS
+validated the reusable profile against the 0.13.2 checkout: `VERSION` had
+advanced while the profile marker remained 0.13.1. The profile marker is now a
+first-class version-sync target updated by the official bump script. This
+tooling correction changes no contract, adopter pin, authority, or runtime.
 
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.2 -->
+<!-- doc-version: 0.13.3 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -71,31 +71,26 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.13.2 is a documentation-only reconciliation of the first real
-recurring DF-015 adoption chain. NAS Backup 1.3.0 declares three recovery
-series and 34 immutable absolute occurrences under the accepted Protocol
-0.13.1 revision. Home Infra 0.16.0 accepts and continuously publishes the
-complete sanitized projection. Infra Portal 0.27.1 consumes it, derives time
-with its own clock and preserves a persistent last valid projection through
-restart and unavailable-input recovery. All 34 occurrences remain open with
-missing evidence; no delivery, acknowledgement or health result completes
-one.
+Protocol 0.13.3 closes a release-integrity defect detected by the ForgeOS
+candidate at `bc6a5ac`. Protocol 0.13.2 advanced `VERSION` while the reusable
+profile remained marked 0.13.1 because
+`integrations/dockit/templates/infra.contract.yml` was absent from
+`docs/version-sync-manifest.yml`. The canonical profile validator failed
+closed, correctly blocking ForgeOS project creation from treating the checkout
+as current.
 
-The accepted 0.13.1 revision remains the adopter contract. Protocol 0.13.2
-changes no SPEC content, schema, normative example, validator, authority or
-runtime semantic. `operational_review` remains available during its separate
-migration.
+The profile marker is now a first-class `protocol-profile-comment` target.
+Both `scripts/bump-version.sh` and `scripts/check-version-sync.sh` handle it,
+and regression tests prove that drift is rejected and future bumps update it.
+No SPEC semantic, schema, normative example, adopter pin, authority, sibling
+repository, or runtime changes in this patch. Existing DF-015 adopters remain
+correctly pinned to the accepted Protocol 0.13.1 contract.
 
-The next ordered gate is Hermes adoption: audit and implement read-only
-projection consumption, deterministic selection/deduplication, and a private
-delivery/acknowledgement ledger keyed by project, series and occurrence. Keep
-acknowledgement separate from completion and evaluate proactive Buzz transport
-as an independent deployment capability.
-
-Within this repository, keep `SPEC.md`, the schemas and validator frozen; use
-`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` as the adoption-evidence record and
-update `docs/llm/HANDOFF.md` only when new downstream evidence changes the
-roadmap.
+The immediate external gate is ForgeOS revalidation of `bc6a5ac` against the
+published 0.13.3 checkout, followed by its independent audit before any 0.26.0
+decision. After that release-integrity check, the next functional protocol gate
+remains Hermes read-only obligation consumption, deterministic delivery and a
+private acknowledgement ledger. Acknowledgement never completes project work.
 
 ## Open decisions after restart
 
@@ -130,12 +125,12 @@ The residual architectural reconciliation that may eventually produce
 ## Current Status
 
 - Last Updated: 2026-08-09 - GPT-5 Codex.
-- Working on: publish protocol 0.13.2 documentation-only recurring-adoption
-  reconciliation and stop before Hermes implementation.
-- Status: DF-015 retains the 0.13.1 normative contract. NAS Backup declares,
-  Home Infra accepts/publishes and Infra Portal consumes one real recurrent
-  three-series/34-occurrence program with restart continuity. Evidence remains
-  missing and no occurrence is completed. Hermes adoption is the next gate.
+- Working on: publish protocol 0.13.3 as the reusable-profile
+  release-integrity patch detected by ForgeOS.
+- Status: the profile marker is owned by the canonical version manifest, bump
+  and checker; the 0.13.2 mismatch is repaired without contract or runtime
+  change. ForgeOS must revalidate `bc6a5ac` before its 0.26.0 decision; Hermes
+  adoption remains the next functional protocol gate afterward.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI

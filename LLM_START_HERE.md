@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.2 -->
+<!-- doc-version: 0.13.3 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -82,17 +82,15 @@ Recommended reading order:
 Source of truth: `docs/llm/HANDOFF.md`.
 
 - Last Updated: 2026-08-09 - Codex.
-- Working on: publish protocol 0.13.2 as documentation-only reconciliation of
-  the first real recurring DF-015 adoption chain.
-- Status: NAS Backup declares three recurring recovery series with 34 absolute
-  occurrences under the accepted Protocol 0.13.1 contract; Home Infra 0.16.0
-  accepts and continuously publishes the complete projection; Infra Portal
-  0.27.1 consumes it with restart-durable last-valid continuity. All 34
-  occurrences remain open with missing evidence. No SPEC, schema, example,
-  validator, authority, or runtime semantic changes in 0.13.2.
-- Next gate: Hermes read-only consumption, deterministic delivery and a
-  private delivery/acknowledgement ledger. Proactive Buzz transport remains a
-  separate evaluation and acknowledgement never completes project work.
+- Working on: close protocol 0.13.3 as the reusable-profile release-integrity
+  patch detected by ForgeOS.
+- Status: version-sync and the official bump now own the
+  `home-infra-protocol-profile` marker. The 0.13.2 mismatch is repaired without
+  changing SPEC semantics, schemas, examples, authorities, accepted adoption
+  revisions, sibling repositories, or runtimes.
+- Next gate: ForgeOS revalidates candidate `bc6a5ac` against published Protocol
+  0.13.3 and completes its independent audit before deciding 0.26.0. Hermes
+  read-only obligations adoption remains the next functional protocol gate.
 
 - Last Updated: 2026-08-08 - GPT-5 Codex.
 - Working on: close protocol 0.13.1 as the canonical-ordering correction for
