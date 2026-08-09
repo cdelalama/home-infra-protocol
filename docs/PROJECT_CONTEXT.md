@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.1 -->
+<!-- doc-version: 0.13.2 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -65,7 +65,7 @@ authorities over inventory or intent.
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-08-08)
+## Current Status (2026-08-09)
 
 Protocol 0.13.0 implemented DF-015 as an optional additive project declaration
 and complete sanitized accepted projection. Protocol 0.13.1 corrects the
@@ -74,6 +74,14 @@ including mixed fractional-second encodings, before any adopter pins the
 contract. The resolved backup trial, a second real private pilot, and a
 documented multi-frequency recovery workflow ground the contract without
 claiming downstream adoption.
+
+Protocol 0.13.2 records the first real recurring adoption chain without
+changing the contract. NAS Backup declares three recovery series containing
+34 absolute occurrences, Home Infra 0.16.0 accepts and continuously publishes
+their complete sanitized projection, and Infra Portal 0.27.1 consumes it with
+restart-durable last-valid continuity. All projected evidence remains missing
+and no occurrence is completed. The adopter intentionally remains pinned to
+the accepted 0.13.1 contract revision; this patch is documentation only.
 
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
@@ -94,14 +102,12 @@ remain separate.
 
 ## Upcoming Milestones
 
-1. Gate Home Infra, Infra Portal, Hermes, ForgeOS, and project adoption as
-   separately authorized follow-up work.
-2. Preserve the resolved backup trial as a regression fixture and use the
-   current private pilot plus a real multi-frequency program for adoption
-   evidence.
-3. Require project declaration and Home Infra acceptance before Portal or
-   Hermes claims support; require a real recurrent program before recurrent
-   adoption is claimed.
+1. Add Hermes read-only consumption, deterministic delivery and a private
+   acknowledgement ledger under a separately authorized adopter slice.
+2. Evaluate proactive Buzz transport separately from projection consumption
+   and keep delivery/acknowledgement distinct from project evidence.
+3. Preserve the resolved backup trial as a regression fixture and the current
+   recurring chain as the first real multi-frequency adoption record.
 4. Keep recovery and DF-016 incident lifecycle work separate from operational
    obligations.
 5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its

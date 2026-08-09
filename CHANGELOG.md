@@ -2,6 +2,28 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.2] - 2026-08-09
+
+### Added
+
+- Record sanitized recurring-adoption evidence for the first complete
+  DF-015 chain: a project declares three recovery series and 34 absolute
+  occurrences, Home Infra accepts and publishes them, and Infra Portal
+  consumes them with restart-durable last-valid continuity.
+
+### Changed
+
+- Reconcile the adoption roadmap so the next functional gate is Hermes
+  read-only consumption and its separate delivery/acknowledgement ledger.
+- Keep the accepted Protocol 0.13.1 contract revision authoritative for the
+  adopter even though this documentation-only patch advances the repository
+  version.
+
+### Fixed
+
+- Remove stale orientation that still described project declaration, Home
+  Infra acceptance, and Portal consumption as future work.
+
 ## [0.13.1] - 2026-08-08
 
 ### Added

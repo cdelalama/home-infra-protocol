@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.1 -->
+<!-- doc-version: 0.13.2 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -71,45 +71,31 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.13.0 implemented DF-015 as one additive normative slice. Protocol
-0.13.1 corrects its reference ordering before adoption: consumers compare
-`due_at` and `starts_at` as parsed UTC instants, never strings, so optional
-fractional seconds cannot invert `next` or last-occurrence selection. One-time
-obligations now explicitly have no recurring-series state. Home Infra still
-publishes a complete sanitized accepted projection; only matching verified
-project evidence derives completion. Consumer-clock time state,
-projection-channel integrity, administrative resolution, and Hermes
-acknowledgement remain separate axes.
-The published contract is anchored in `SPEC.md`,
-`schemas/project-contract.schema.json`, and
-`schemas/operational-obligations-projection.schema.json`.
+Protocol 0.13.2 is a documentation-only reconciliation of the first real
+recurring DF-015 adoption chain. NAS Backup 1.3.0 declares three recovery
+series and 34 immutable absolute occurrences under the accepted Protocol
+0.13.1 revision. Home Infra 0.16.0 accepts and continuously publishes the
+complete sanitized projection. Infra Portal 0.27.1 consumes it, derives time
+with its own clock and preserves a persistent last valid projection through
+restart and unavailable-input recovery. All 34 occurrences remain open with
+missing evidence; no delivery, acknowledgement or health result completes
+one.
 
-The canonical validator enforces strict declaration/projection joins,
-project authority, unique immutable identities, runbook references,
-non-executable action text, window and horizon ordering, evidence and
-supersession. Its derivation helpers provide deterministic next selection,
-on-time/late completion, recurring materialization gaps, period completion,
-channel freshness, and authoritative-withdrawal checks.
+The accepted 0.13.1 revision remains the adopter contract. Protocol 0.13.2
+changes no SPEC content, schema, normative example, validator, authority or
+runtime semantic. `operational_review` remains available during its separate
+migration.
 
-The reusable starter template has only its protocol marker updated: it does not
-contain an obligation block. No Home Infra, Portal, Hermes, ForgeOS, project,
-MCP, or runtime support is claimed by this release.
+The next ordered gate is Hermes adoption: audit and implement read-only
+projection consumption, deterministic selection/deduplication, and a private
+delivery/acknowledgement ledger keyed by project, series and occurrence. Keep
+acknowledgement separate from completion and evaluate proactive Buzz transport
+as an independent deployment capability.
 
-Local release evidence passed 38/38 version targets, DocKit 10/10 checks,
-74/74 unit tests, profile-template and representative
-contract/status/projection validation, Python compilation, JSON parsing, and
-diff hygiene.
-
-The next ordered gate is adoption phase 1:
-
-1. migrate the current active private one-time pilot in its owning project and
-   Home Infra, preserving project declaration/evidence authority and Home
-   Infra acceptance attribution;
-2. keep the resolved backup trial historical rather than recreating open work;
-3. do not modify Portal, Hermes, ForgeOS, MCP clients, or notification policy;
-4. require a separate approval for the real weekly/monthly/quarterly program
-   and horizon before claiming recurring adoption; and
-5. retain private `operational_review` until later Portal dual-read acceptance.
+Within this repository, keep `SPEC.md`, the schemas and validator frozen; use
+`docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` as the adoption-evidence record and
+update `docs/llm/HANDOFF.md` only when new downstream evidence changes the
+roadmap.
 
 ## Open decisions after restart
 
@@ -143,17 +129,13 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-08 - GPT-5 Codex.
-- Working on: close protocol 0.13.1 as the canonical-ordering correction for
-  DF-015 and stop before adopter or runtime mutation.
-- Status: DF-015 is implemented in the protocol with an optional project
-  declaration, complete sanitized projection, UTC-instant deterministic
-  derivation, canonical validation, sanitized examples, and compatibility
-  coverage. Fractional seconds no longer invert canonical ordering, and
-  one-time obligations expose no recurring-series state.
-  Home Infra, Portal, Hermes, ForgeOS, MCP, and project adoption remain
-  unclaimed. The next gate is separately authorized phase-1 project and Home
-  Infra adoption of the current active one-time pilot.
+- Last Updated: 2026-08-09 - GPT-5 Codex.
+- Working on: publish protocol 0.13.2 documentation-only recurring-adoption
+  reconciliation and stop before Hermes implementation.
+- Status: DF-015 retains the 0.13.1 normative contract. NAS Backup declares,
+  Home Infra accepts/publishes and Infra Portal consumes one real recurrent
+  three-series/34-occurrence program with restart continuity. Evidence remains
+  missing and no occurrence is completed. Hermes adoption is the next gate.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -235,9 +217,10 @@ The residual architectural reconciliation that may eventually produce
 ## Pending Proposals (for the next session)
 
 `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` (DF-015) is implemented in protocol
-0.13.0 and its canonical UTC ordering is corrected in 0.13.1. Its project/Home
-Infra migration, Portal dual read, Hermes delivery, ForgeOS scaffolding, and
-recurring-program adoption remain separate gates.
+0.13.0 and its canonical UTC ordering is corrected in 0.13.1. Project
+declaration, Home Infra acceptance/publication, Portal dual read and recurring
+adoption are complete for the first real chain. Hermes delivery, ForgeOS
+scaffolding, project evidence and independent-consumer adoption remain gates.
 
 `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is implemented in protocol 0.8.0.
 No authentication proposal remains immediately dispatchable.
@@ -520,11 +503,10 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Obtain explicit authorization for DF-015 adoption phase 1: the current
-   active one-time pilot declares its obligation and evidence, and Home Infra
-   accepts and publishes it without removing private `operational_review`.
-2. Keep Portal, Hermes, ForgeOS, MCP, and recurring-program work behind their
-   later independent gates.
+1. Audit and implement the separately authorized Hermes obligations consumer,
+   deterministic delivery and private acknowledgement ledger.
+2. Keep proactive Buzz transport, ForgeOS, MCP and project evidence behind
+   their independent gates.
 3. Complete msgvault's separate deploy-observe-promote gate; do not make the
    protocol repo the runtime executor.
 4. Keep DF-013 recovery acceptance and DF-016 incident lifecycle behind their

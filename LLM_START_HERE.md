@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.1 -->
+<!-- doc-version: 0.13.2 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -80,6 +80,19 @@ Recommended reading order:
 ## Current Focus
 
 Source of truth: `docs/llm/HANDOFF.md`.
+
+- Last Updated: 2026-08-09 - Codex.
+- Working on: publish protocol 0.13.2 as documentation-only reconciliation of
+  the first real recurring DF-015 adoption chain.
+- Status: NAS Backup declares three recurring recovery series with 34 absolute
+  occurrences under the accepted Protocol 0.13.1 contract; Home Infra 0.16.0
+  accepts and continuously publishes the complete projection; Infra Portal
+  0.27.1 consumes it with restart-durable last-valid continuity. All 34
+  occurrences remain open with missing evidence. No SPEC, schema, example,
+  validator, authority, or runtime semantic changes in 0.13.2.
+- Next gate: Hermes read-only consumption, deterministic delivery and a
+  private delivery/acknowledgement ledger. Proactive Buzz transport remains a
+  separate evaluation and acknowledgement never completes project work.
 
 - Last Updated: 2026-08-08 - GPT-5 Codex.
 - Working on: close protocol 0.13.1 as the canonical-ordering correction for

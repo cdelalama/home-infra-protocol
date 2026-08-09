@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.1 -->
+<!-- doc-version: 0.13.2 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1208,10 +1208,17 @@ complete in 0.13.0. The reusable profile template intentionally gains no
 obligations example: projects without obligations should omit the optional
 section, and timestamp placeholders would create misleading work.
 
-Home Infra, Portal, Hermes, ForgeOS, and project runtime adoption remain
-separately authorized gates. A recurring support claim also remains gated on
-an approved real recurring program, and broad consumer compatibility remains
-gated on a second independent consumer stack.
+The first recurring adoption chain is now observed. NAS Backup 1.3.0 declares
+three recovery series and 34 immutable absolute occurrences under Protocol
+0.13.1. Home Infra 0.16.0 accepts and continuously publishes the complete
+sanitized projection, and Infra Portal 0.27.1 consumes it with persistent
+last-valid continuity across restart and unavailable-input recovery. All 34
+results remain open, all evidence remains missing, and none is completed.
+
+Hermes, ForgeOS, MCP and project evidence production remain separately
+authorized gates. Broad consumer compatibility remains gated on a second
+independent consumer stack. The later Protocol 0.13.2 documentation commit
+does not replace the 0.13.1 revision accepted by Home Infra.
 
 ### Mitigation in source projects
 
