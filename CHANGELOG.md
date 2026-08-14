@@ -2,6 +2,33 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.4] - 2026-08-14
+
+### Added
+
+- Record the deployed Hermes Lab 0.10.3 deterministic consumer and Home
+  Infra's independent bounded status monitor as the second consumer path for
+  the first recurring DF-015 chain.
+
+### Changed
+
+- Reconcile the DF-015 roadmap so project-owned evidence acceptance,
+  deployment and a real `missing -> verified -> completed` transition are the
+  next functional evidence gate.
+- Attribute the current 34-open/34-missing/0-completed result counts to the
+  reconciled Home Infra source baseline instead of treating them as a durable
+  protocol invariant.
+- Keep ForgeOS profile revalidation, Hermes 0.11.0 transition visibility,
+  proactive transport, MCP adoption and legacy `operational_review` removal as
+  separate gates.
+
+### Fixed
+
+- Remove stale orientation that still described Hermes deterministic
+  consumption and the second independent consumer implementation as future
+  work. Protocol semantics, authorities and the accepted 0.13.1 revision are
+  unchanged.
+
 ## [0.13.3] - 2026-08-09
 
 ### Added

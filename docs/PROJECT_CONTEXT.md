@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.3 -->
+<!-- doc-version: 0.13.4 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -65,7 +65,7 @@ authorities over inventory or intent.
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-08-09)
+## Current Status (2026-08-14)
 
 Protocol 0.13.0 implemented DF-015 as an optional additive project declaration
 and complete sanitized accepted projection. Protocol 0.13.1 corrects the
@@ -79,15 +79,28 @@ Protocol 0.13.2 records the first real recurring adoption chain without
 changing the contract. NAS Backup declares three recovery series containing
 34 absolute occurrences, Home Infra 0.16.0 accepts and continuously publishes
 their complete sanitized projection, and Infra Portal 0.27.1 consumes it with
-restart-durable last-valid continuity. All projected evidence remains missing
-and no occurrence is completed. The adopter intentionally remains pinned to
-the accepted 0.13.1 contract revision; this patch is documentation only.
+restart-durable last-valid continuity. At that reconciliation, all projected
+evidence was missing and no occurrence was completed. The adopter intentionally
+remains pinned to the accepted 0.13.1 contract revision; that patch was
+documentation only.
 
 Protocol 0.13.3 repairs the release-integrity defect exposed when ForgeOS
 validated the reusable profile against the 0.13.2 checkout: `VERSION` had
 advanced while the profile marker remained 0.13.1. The profile marker is now a
 first-class version-sync target updated by the official bump script. This
 tooling correction changes no contract, adopter pin, authority, or runtime.
+
+Protocol 0.13.4 reconciles the later adopter reality without changing the
+contract. Infra Portal 0.27.1 remains the restart-durable dashboard consumer;
+Hermes Lab 0.10.3 is now a deployed deterministic consumer with its private
+ledger and delivery transport disabled; and Home Infra independently probes
+Hermes' machine-readable consumer status. Home Infra 0.18.1 revision
+`0a41f54a64c0880bcec8363d7e0af5177381cd48` records the accepted projection
+baseline with three series, 34 open occurrences, 34 missing evidence results
+and zero completed occurrences. Those result counts are attributed source
+evidence, not a permanent protocol invariant. The accepted contract remains
+Protocol 0.13.1 at
+`2664f49050720daea834fff5ef091c7fd9fff7d9`.
 
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
@@ -108,17 +121,22 @@ remain separate.
 
 ## Upcoming Milestones
 
-1. Add Hermes read-only consumption, deterministic delivery and a private
-   acknowledgement ledger under a separately authorized adopter slice.
-2. Evaluate proactive Buzz transport separately from projection consumption
+1. Accept and deploy the already implemented project-owned NAS Backup evidence
+   path, then observe the first real `missing -> verified -> completed`
+   transition without manufacturing completion in Home Infra or a consumer.
+2. Deploy and accept Hermes 0.11.0 transition visibility separately; its source
+   release does not replace the deployed 0.10.3 consumer evidence.
+3. Evaluate proactive Buzz transport separately from projection consumption
    and keep delivery/acknowledgement distinct from project evidence.
-3. Preserve the resolved backup trial as a regression fixture and the current
-   recurring chain as the first real multi-frequency adoption record.
-4. Keep recovery and DF-016 incident lifecycle work separate from operational
-   obligations.
-5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
+4. Preserve the resolved backup trial as a regression fixture and the current
+   recurring chain as the first real multi-frequency adoption record. Portal
+   and Hermes are two independent consumer implementations of that one private
+   chain, not evidence of universal compatibility.
+5. Keep ForgeOS profile revalidation, MCP adoption, recovery and DF-016
+   incident lifecycle work behind their separate gates.
+6. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
-6. Keep later status and recovery vocabulary adopter-driven rather than adding
+7. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References

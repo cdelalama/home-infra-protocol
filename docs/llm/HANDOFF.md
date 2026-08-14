@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.3 -->
+<!-- doc-version: 0.13.4 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -71,41 +71,49 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
-Protocol 0.13.3 closes a release-integrity defect detected by the ForgeOS
-candidate at `bc6a5ac`. Protocol 0.13.2 advanced `VERSION` while the reusable
-profile remained marked 0.13.1 because
-`integrations/dockit/templates/infra.contract.yml` was absent from
-`docs/version-sync-manifest.yml`. The canonical profile validator failed
-closed, correctly blocking ForgeOS project creation from treating the checkout
-as current.
+Protocol 0.13.4 reconciles the first recurring DF-015 chain after ER48's
+cross-repository audit. NAS Backup owns the declaration at
+`e99959240913ed677f59e58385ed7d6cbcbd3ccd`; Home Infra accepts and publishes
+it under Protocol 0.13.1 revision
+`2664f49050720daea834fff5ef091c7fd9fff7d9`; Infra Portal 0.27.1 consumes it
+with restart-durable last-valid continuity; and deployed Hermes Lab 0.10.3
+consumes it deterministically with transport disabled. Home Infra independently
+monitors the Hermes machine-readable status through its operator channel.
 
-The profile marker is now a first-class `protocol-profile-comment` target.
-Both `scripts/bump-version.sh` and `scripts/check-version-sync.sh` handle it,
-and regression tests prove that drift is rejected and future bumps update it.
-No SPEC semantic, schema, normative example, adopter pin, authority, sibling
-repository, or runtime changes in this patch. Existing DF-015 adopters remain
-correctly pinned to the accepted Protocol 0.13.1 contract.
+Home Infra 0.18.1 revision
+`0a41f54a64c0880bcec8363d7e0af5177381cd48` records the projection baseline
+with three series, 34 open occurrences, 34 missing evidence results and zero
+completed occurrences. This is attributed source evidence, not a permanent
+expected count. Monitor green proves Hermes consumer health and publication
+freshness only; it does not authenticate obligation intent or project evidence.
 
-The immediate external gate is ForgeOS revalidation of `bc6a5ac` against the
-published 0.13.3 checkout, followed by its independent audit before any 0.26.0
-decision. After that release-integrity check, the next functional protocol gate
-remains Hermes read-only obligation consumption, deterministic delivery and a
-private acknowledgement ledger. Acknowledgement never completes project work.
+The next functional DF-015 gate is project-owned NAS Backup evidence acceptance
+and deployment followed by an observed `missing -> verified -> completed`
+transition. Hermes 0.11.0 transition visibility, real delivery or
+acknowledgement, proactive Buzz transport, ForgeOS profile revalidation, MCP
+adoption and private `operational_review` removal retain separate owner gates.
+No protocol semantic work is justified unless real adopter evidence exposes a
+reusable gap. Keep `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` as the
+non-normative evidence record for that next review.
 
 ## Open decisions after restart
 
-1. Decide whether to authorize operational-obligations adoption phase 1 in the
-   current active pilot and Home Infra. Protocol publication does not
-   pre-authorize adopter or runtime changes.
-2. Resume the msgvault deploy-observe-promote gate, or schedule the separate
+1. Decide when to authorize NAS Backup evidence acceptance/deployment and the
+   first real recurring evidence transition. Protocol documentation does not
+   pre-authorize that project or runtime mutation.
+2. Revalidate the separate ForgeOS profile candidate against the published
+   protocol before its own release decision; do not treat it as DF-015
+   consumer adoption.
+3. Resume the msgvault deploy-observe-promote gate, or schedule the separate
    LLM-DocKit 4.13.1 tooling sync. Do not combine those runtime/tooling concerns
    with DF-015 adoption.
-3. Decide whether the accepted DF-013 proposal should progress to an additive
+4. Decide whether the accepted DF-013 proposal should progress to an additive
    minor only after its implementation gate is reviewed explicitly.
-4. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
+5. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.13.1 is authoritative today; do not silently rewrite the
-   core spec during an operational checkpoint.
+   Project SemVer 0.13.4 is the current documentation release; Protocol 0.13.1
+   remains the accepted DF-015 semantic pin. Do not silently rewrite the core
+   spec during an operational checkpoint.
 
 ## Deferred ecosystem reconciliation backlog
 
@@ -124,13 +132,14 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-09 - GPT-5 Codex.
-- Working on: publish protocol 0.13.3 as the reusable-profile
-  release-integrity patch detected by ForgeOS.
-- Status: the profile marker is owned by the canonical version manifest, bump
-  and checker; the 0.13.2 mismatch is repaired without contract or runtime
-  change. ForgeOS must revalidate `bc6a5ac` before its 0.26.0 decision; Hermes
-  adoption remains the next functional protocol gate afterward.
+- Last Updated: 2026-08-14 - GPT-5 Codex.
+- Working on: publish protocol 0.13.4 as the ER48 documentation-only adoption
+  reconciliation.
+- Status: declaration, Home Infra acceptance/publication, Portal continuity,
+  deployed deterministic Hermes consumption and the independent Home Infra
+  monitor are recorded as complete. The next DF-015 evidence gate is NAS
+  Backup evidence acceptance/deployment plus an observed completion transition;
+  transport and all other owner gates remain separate.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -214,8 +223,11 @@ The residual architectural reconciliation that may eventually produce
 `docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md` (DF-015) is implemented in protocol
 0.13.0 and its canonical UTC ordering is corrected in 0.13.1. Project
 declaration, Home Infra acceptance/publication, Portal dual read and recurring
-adoption are complete for the first real chain. Hermes delivery, ForgeOS
-scaffolding, project evidence and independent-consumer adoption remain gates.
+adoption are complete for the first real chain. Deployed Hermes 0.10.3 supplies
+the second independent consumer implementation with transport disabled, and
+Home Infra monitors it independently. Project evidence acceptance/deployment,
+real delivery and acknowledgement, ForgeOS scaffolding, MCP adoption and
+multi-adopter compatibility remain separate gates.
 
 `docs/AUTHENTICATION_PLACEMENT_PROPOSAL.md` is implemented in protocol 0.8.0.
 No authentication proposal remains immediately dispatchable.
@@ -498,18 +510,22 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Audit and implement the separately authorized Hermes obligations consumer,
-   deterministic delivery and private acknowledgement ledger.
-2. Keep proactive Buzz transport, ForgeOS, MCP and project evidence behind
-   their independent gates.
-3. Complete msgvault's separate deploy-observe-promote gate; do not make the
+1. Accept and deploy project-owned NAS Backup evidence under its own gate, then
+   observe the first real `missing -> verified -> completed` transition through
+   the existing projection and consumers.
+2. Deploy and accept Hermes 0.11.0 transition visibility separately. Keep real
+   delivery, acknowledgement and proactive Buzz transport disabled until their
+   own evidence-backed authorization.
+3. Keep ForgeOS profile revalidation, MCP adoption and private
+   `operational_review` removal behind their independent gates.
+4. Complete msgvault's separate deploy-observe-promote gate; do not make the
    protocol repo the runtime executor.
-4. Keep DF-013 recovery acceptance and DF-016 incident lifecycle behind their
+5. Keep DF-013 recovery acceptance and DF-016 incident lifecycle behind their
    own evidence and acceptance gates.
-5. Sync LLM-DocKit in a dedicated tooling patch after operator review of
+6. Sync LLM-DocKit in a dedicated tooling patch after operator review of
    the global hook boundary.
-6. Continue real adoption of project-owned sync and telemetry contracts.
-7. Keep any future `infra-agent` stats contract evidence-gated and independent
+7. Continue real adoption of project-owned sync and telemetry contracts.
+8. Keep any future `infra-agent` stats contract evidence-gated and independent
    from authentication placement and recovery incubation.
 
 ## Files To Read First

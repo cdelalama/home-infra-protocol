@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.3 -->
+<!-- doc-version: 0.13.4 -->
 # Architecture
 
 ## Overview
@@ -48,7 +48,7 @@ while cancellation and supersession remain explicit non-completion decisions.
 ## Data Flow
 
 ```text
-project repo contracts (future)
+project repo contracts
         |
         v
 source-of-truth repo
@@ -67,6 +67,15 @@ unavailable, consumers do not replace it with an empty list. Stateful
 operational consumers retain their last valid attributed projection; stateless
 clients expose channel failure. Only a fresh, valid, complete projection can
 authoritatively withdraw an obligation by omission.
+
+The first private recurring chain now exercises this flow through two distinct
+consumers. Infra Portal renders the accepted Home Infra projection and retains
+an integrity-checked last valid copy; deployed Hermes Lab 0.10.3 evaluates the
+same projection deterministically with a private ledger and transport disabled.
+Home Infra monitors Hermes through its bounded machine-readable status rather
+than inferring consumer health from Portal, publisher health, or Docker alone.
+That monitor proves consumer health and channel freshness, not declaration or
+evidence integrity, and none of these consumers gains project authority.
 
 ## Versioning Model
 

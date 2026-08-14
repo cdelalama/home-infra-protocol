@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.3 -->
+<!-- doc-version: 0.13.4 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1210,15 +1210,21 @@ section, and timestamp placeholders would create misleading work.
 
 The first recurring adoption chain is now observed. NAS Backup 1.3.0 declares
 three recovery series and 34 immutable absolute occurrences under Protocol
-0.13.1. Home Infra 0.16.0 accepts and continuously publishes the complete
-sanitized projection, and Infra Portal 0.27.1 consumes it with persistent
-last-valid continuity across restart and unavailable-input recovery. All 34
-results remain open, all evidence remains missing, and none is completed.
+0.13.1. Home Infra accepts and continuously publishes the complete sanitized
+projection, Infra Portal 0.27.1 consumes it with persistent last-valid
+continuity, and deployed Hermes Lab 0.10.3 independently consumes it with a
+private deterministic ledger and transport disabled. Home Infra monitors the
+Hermes status contract through a separate operator-alert path.
 
-Hermes, ForgeOS, MCP and project evidence production remain separately
-authorized gates. Broad consumer compatibility remains gated on a second
-independent consumer stack. The later Protocol 0.13.2 documentation commit
-does not replace the 0.13.1 revision accepted by Home Infra.
+Home Infra 0.18.1 revision
+`0a41f54a64c0880bcec8363d7e0af5177381cd48` records all 34 results open, all
+evidence missing and none completed. This is attributed downstream source
+evidence, not a protocol invariant. Project-owned evidence acceptance and
+deployment, a real evidence transition, ForgeOS, MCP and notification transport
+remain separately authorized gates. Portal and Hermes close the second-
+consumer implementation gate for this one private chain without proving
+universal compatibility. Protocol 0.13.2 through 0.13.4 documentation commits
+do not replace the 0.13.1 revision accepted by Home Infra.
 
 ### Mitigation in source projects
 

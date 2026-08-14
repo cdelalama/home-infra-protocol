@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.3 -->
+<!-- doc-version: 0.13.4 -->
 # Operational Obligations Proposal
 
 ## Status
@@ -10,12 +10,14 @@ now lives in `SPEC.md`,
 `schemas/project-contract.schema.json`, and
 `schemas/operational-obligations-projection.schema.json`.
 
-The separately authorized first recurring adoption is now complete through
-Infra Portal: NAS Backup declares three recovery series and 34 absolute
+The separately authorized first recurring adoption now has two deployed
+consumers. NAS Backup declares three recovery series and 34 absolute
 occurrences, Home Infra accepts and continuously publishes their complete
-sanitized projection, and Infra Portal consumes it with restart-durable
-last-valid continuity. Hermes, ForgeOS, MCP, project evidence production and
-notification transport remain separately authorized gates.
+sanitized projection, Infra Portal consumes it with restart-durable last-valid
+continuity, and Hermes Lab 0.10.3 consumes it deterministically with a private
+ledger while delivery transport remains disabled. Home Infra independently
+monitors the Hermes status contract. ForgeOS, MCP, project evidence deployment
+and notification transport remain separately authorized gates.
 
 ## Verdict
 
@@ -23,8 +25,10 @@ The abstraction was accepted and published as one additive, backward-
 compatible contract slice. Recurrence remains included because the documented
 recovery workflow requires weekly, monthly, and quarterly proof, while the
 optional six-month horizon is an explicit maintainer scenario. Real recurring
-adoption is now evidenced by one real multi-frequency chain. Broad independent
-consumer-support claims remain gated.
+adoption is now evidenced by one real multi-frequency chain and two independent
+consumer implementations. This supports cross-consumer interoperability for
+that private chain; it does not establish universal or multi-adopter
+compatibility.
 
 The first bounded backup trial demonstrated a safety-relevant obligation before
 runtime telemetry existed, an honest overdue state, and explicit evidence-based
@@ -342,18 +346,21 @@ has not passed and a terminal recurring occurrence has no successor,
    weekly, monthly, and quarterly recovery programs as three project-owned
    series containing 34 occurrences; Home Infra accepts them and Portal reads
    the complete projection. Evidence production remains separate.
-6. **Hermes adoption:** add read-only projection consumption, deterministic
-   delivery, reiteration, and a private acknowledgement ledger under a separate
-   deployment authorization. No execution capability follows from adoption.
+6. **Hermes consumption (complete):** deployed Hermes Lab 0.10.3 reads the
+   projection, derives deterministic notices and retains private state with
+   transport disabled. Home Infra independently monitors its status. Real
+   delivery, acknowledgement and proactive transport remain separate evidence
+   gates, and no execution capability follows from consumption.
 7. **ForgeOS adoption:** scaffold and validate declarations through the
    canonical protocol validator. ForgeOS does not copy validation logic or
    automatically execute obligations.
 8. **New projects:** use only the protocol declaration after the normative
    release and explicit Home Infra acceptance.
-9. **Legacy removal:** remove private `operational_review` only after project,
-   Home Infra, Portal, and Hermes acceptance evidence is complete. Keep
-   `preview.expires_at`, `next_run_at`, capability reviews, and incidents in
-   their existing domains.
+9. **Legacy removal:** project, Home Infra, Portal and Hermes consumption now
+   provide the prerequisite adoption evidence, but private
+   `operational_review` removal still requires its own authorized migration.
+   Keep `preview.expires_at`, `next_run_at`, capability reviews, and incidents
+   in their existing domains.
 
 ## Normative validation coverage
 
@@ -381,9 +388,10 @@ Protocol 0.13.0 adds positive and negative coverage for:
 - old consumers safely ignoring the optional new declaration.
 
 The validation evidence now includes one real recurring multi-frequency
-adopter through project declaration, Home Infra publication and Portal
-consumption. A second independent consumer stack remains required before
-claiming broad consumer support.
+adopter through project declaration, Home Infra publication and two independent
+consumer implementations: Portal and Hermes. This closes the second-consumer
+implementation gate for the private chain, but does not justify a universal
+compatibility claim across unrelated adopters.
 
 ## Explicit non-goals
 
@@ -405,9 +413,13 @@ does not decide or change that producer-owned semantic; the first real
 recurring adopter must supply the evidence needed to resolve it.
 
 The normative slice was published in protocol 0.13.0 and its canonical
-timestamp ordering was corrected in 0.13.1. NAS Backup, Home Infra and Infra
-Portal have since completed the first recurring declaration, acceptance,
-publication and restart-durable consumer chain while keeping all 34
-occurrences open with missing evidence. The next gate is separately authorized
-Hermes consumption and delivery/acknowledgement accounting; proactive Buzz
-transport remains an independent deployment decision.
+timestamp ordering was corrected in 0.13.1. NAS Backup, Home Infra, Infra
+Portal and Hermes have since completed declaration, acceptance, publication
+and two distinct read-only consumer paths. Home Infra 0.18.1 revision
+`0a41f54a64c0880bcec8363d7e0af5177381cd48` records all 34 occurrences open
+with missing evidence; that count is attributed source evidence rather than a
+permanent expectation.
+The next real evidence gate is project-owned NAS Backup evidence acceptance and
+deployment followed by an observed `missing -> verified -> completed`
+transition. Real delivery/acknowledgement and proactive Buzz transport remain
+independent deployment decisions.
