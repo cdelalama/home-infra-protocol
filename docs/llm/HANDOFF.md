@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.4 -->
+<!-- doc-version: 0.13.5 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -71,6 +71,13 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 
 ## Open work — next concrete step
 
+Protocol 0.13.5 closes the separate ForgeOS profile-revalidation gate. The
+DocKit integration now matches published ForgeOS 0.25.1: typed Project Birth
+acceptance, the contract-only interface skill, clean Home Infra publication
+before shared apply/sync, declarative edge operation, and canonical Portal
+input synchronization. Regression tests prohibit the displaced procedures.
+No SPEC, schema, authority, deployment-state, or adopter-pin semantic changed.
+
 Protocol 0.13.4 reconciles the first recurring DF-015 chain after ER48's
 cross-repository audit. NAS Backup owns the declaration at
 `e99959240913ed677f59e58385ed7d6cbcbd3ccd`; Home Infra accepts and publishes
@@ -101,9 +108,8 @@ non-normative evidence record for that next review.
 1. Decide when to authorize NAS Backup evidence acceptance/deployment and the
    first real recurring evidence transition. Protocol documentation does not
    pre-authorize that project or runtime mutation.
-2. Revalidate the separate ForgeOS profile candidate against the published
-   protocol before its own release decision; do not treat it as DF-015
-   consumer adoption.
+2. ForgeOS profile revalidation is closed by ForgeOS 0.25.1 and Protocol
+   0.13.5; do not treat that tooling repair as DF-015 consumer adoption.
 3. Resume the msgvault deploy-observe-promote gate, or schedule the separate
    LLM-DocKit 4.13.1 tooling sync. Do not combine those runtime/tooling concerns
    with DF-015 adoption.
@@ -132,10 +138,13 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-14 - GPT-5 Codex.
-- Working on: publish protocol 0.13.4 as the ER48 documentation-only adoption
-  reconciliation.
-- Status: declaration, Home Infra acceptance/publication, Portal continuity,
+- Last Updated: 2026-08-15 - Codex (GPT-5.6).
+- Working on: publish protocol 0.13.5 as the coordinated reusable-profile
+  integration repair.
+- Status: typed project acceptance, contract-only interface implementation,
+  declarative edge handling, clean-before-apply publication, and canonical
+  Portal synchronization are aligned with ForgeOS 0.25.1 and current Home
+  Infra. Declaration, Home Infra acceptance/publication, Portal continuity,
   deployed deterministic Hermes consumption and the independent Home Infra
   monitor are recorded as complete. The next DF-015 evidence gate is NAS
   Backup evidence acceptance/deployment plus an observed completion transition;

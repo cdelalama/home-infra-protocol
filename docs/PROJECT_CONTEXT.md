@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.4 -->
+<!-- doc-version: 0.13.5 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -101,6 +101,14 @@ and zero completed occurrences. Those result counts are attributed source
 evidence, not a permanent protocol invariant. The accepted contract remains
 Protocol 0.13.1 at
 `2664f49050720daea834fff5ef091c7fd9fff7d9`.
+
+Protocol 0.13.5 repairs the reusable DocKit profile integration without
+changing SPEC or schema semantics. Newborn projects use Home Infra's typed
+registry and acceptance catalog, project contracts can be implemented through
+ForgeOS's contract-only interface skill, and full deliveries remain a separate
+explicit workflow. Clean Home Infra sources are validated, committed and
+pushed before shared edge apply or Portal synchronization; direct NAS proxy
+patching and the legacy Portal sync command are prohibited by regression tests.
 
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to

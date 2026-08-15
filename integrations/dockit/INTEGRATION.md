@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.4 -->
+<!-- doc-version: 0.13.5 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -73,7 +73,7 @@ validates the canonical template marker and required sections with
 
 ## How to apply
 
-There are four entry points, all converging on the same five files
+There are four entry points, all converging on the same profile files
 (`AGENTS.md`, `CLAUDE.md` symlink, `infra.contract.yml`,
 `.claude/checklists/homelab-project.md`).
 
@@ -99,8 +99,9 @@ By default the orchestrator creates the new project at
 `~/src/<name>`, defaults to language `Spanish`, and **does not**
 create a GitHub repository unless `--github` is passed (effects
 visible to others stay opt-in). It deliberately does not edit
-`~/src/home-infra/`; the corresponding `docs/PROJECTS.md` entry is
-the operator's responsibility (or the
+`~/src/home-infra/`; the corresponding typed `docs/PROJECTS.yml` acceptance
+and generated `docs/PROJECTS.md` projection are the operator's responsibility
+(or the
 `/new-homelab-project` Claude skill below).
 
 By default the orchestrator looks for the homelab profile at
@@ -119,10 +120,12 @@ Run with `--help` to see all flags:
 `~/src/forgeos/skills/new-homelab-project/SKILL.md` ships a
 conversational wrapper around the orchestrator. When the operator
 says they want to start a new project for the homelab, the skill
-asks five questions (name, description, host, exposes-UI, GitHub
-now?), prints a literal plan, confirms, runs the orchestrator, then
-edits `~/src/home-infra/docs/PROJECTS.md` to register the project
-and commits + pushes in `home-infra`. One-time setup:
+asks for the Project Birth, placement, interface, authentication and remote
+inputs, prints a literal plan, confirms, and runs the orchestrator. After
+explicit acceptance it applies the emitted typed bundle to
+`~/src/home-infra/docs/PROJECTS.yml` and
+`catalog/project-acceptances.yml`, regenerates `docs/PROJECTS.md`, validates,
+then commits and pushes Home Infra. One-time setup:
 
 ```sh
 ln -s ~/src/forgeos/skills/new-homelab-project \
@@ -155,16 +158,21 @@ existing target contract is complete.
 
 ### 4. Implement the interface in an existing project
 
-ForgeOS owns the operator workflow
+ForgeOS owns the contract-only operator workflow at
 `skills/implement-home-infra-interface/SKILL.md`. Use it after the project has
-a real producer/status design. The skill reads the target project's own
-onboarding, classifies each loop as sync or telemetry, makes capability
-restrictions and enablement paths explicit, replaces/removes the starter
-examples, validates the real contract plus representative snapshots,
-and stops before any Home Infra or runtime mutation unless separately
-authorized.
+a real producer/status design. The skill reads the target project's onboarding,
+classifies each loop as sync or telemetry, makes capability restrictions and
+enablement paths explicit, replaces/removes starter examples, validates the
+real contract plus representative sanitized snapshots, and stops before Home
+Infra or runtime mutation.
 
-The skill calls the canonical validator here:
+For an operator request that also requires a functional homelab deployment,
+ForgeOS owns the broader continuous workflow at
+`skills/ship-homelab-app/SKILL.md`; it continues through immutable artifact,
+Home Infra acceptance, runtime, private ingress, Portal projection and live
+verification.
+
+Both skills invoke, rather than copy, the canonical validator here:
 
 ```sh
 ~/src/home-infra-protocol/scripts/validate-project-interface.py \
@@ -204,15 +212,16 @@ copies that can drift.
 
 ## Layering and the single source of truth
 
-All three entry points (orchestrator in ForgeOS, skill in ForgeOS,
-profile-only here) converge on the same `apply-profile.sh` in this
+All entry points (orchestrator, interface and delivery skills in ForgeOS,
+profile-only application here) converge on the same `apply-profile.sh` in this
 repo for the homelab layer. The skill calls the orchestrator; the
 orchestrator calls `dockit-init-project.sh` (LLM-DocKit) and then
 `apply-profile.sh` (this repo) via a configurable cross-repo path.
 There is exactly one place where "what the homelab profile installs"
 is decided: `apply-profile.sh`, and one place where the contract/status shape
 is validated: `scripts/validate-project-interface.py`. Higher layers add concerns
-(orchestrator adds GitHub creation; skill adds the PROJECTS.md edit)
+(the orchestrator adds GitHub creation and emits a typed Home Infra candidate;
+the operator accepts it into `PROJECTS.yml` and regenerates `PROJECTS.md`)
 without duplicating profile or validation logic.
 
 If `cdelalama/LLM-DocKit` later grows a native profile mechanism

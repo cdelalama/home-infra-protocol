@@ -2,6 +2,26 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.5] - 2026-08-15
+
+### Added
+
+- A regression suite for the DocKit profile's current ForgeOS and Home Infra
+  integration authorities and publication order.
+
+### Changed
+
+- Document the now-published ForgeOS contract-only interface workflow separately
+  from the broader homelab delivery workflow.
+- Require Home Infra source inputs to validate, commit, and push before DNS,
+  shared edge apply, or Infra Portal synchronization.
+
+### Fixed
+
+- Replace stale generated-project-registry, direct NAS edge restart, legacy
+  Portal sync, and workspace-specific secret instructions in the reusable
+  homelab profile.
+
 ## [0.13.4] - 2026-08-14
 
 ### Added

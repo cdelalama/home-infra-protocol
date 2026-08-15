@@ -7,15 +7,17 @@ forgotten).
 
 ## Build and image
 
-- [ ] Built on dev-vm (`docker build -t <project>:v<semver> .`).
-- [ ] Image transferred to target host via
-  `docker save <project>:v<semver> | ssh <host> docker load`.
-- [ ] Tag follows the convention `<project>-<service>:v<semver>` from
-  `~/src/home-infra/docs/CONVENTIONS.md` *Docker Image Management*.
+- [ ] Artifact provenance is immutable. A first-party image is built and pushed
+  to the private registry with a version tag and recorded digest; an upstream
+  image is pinned to the reviewed platform digest. `docker save | ssh docker
+  load` is a documented fallback only.
+- [ ] The target host can resolve and fetch the exact declared image digest.
+- [ ] Image naming and transfer follow the current
+  `~/src/home-infra/docs/CONVENTIONS.md` *Docker Image Management* rules.
 
 ## Secrets
 
-- [ ] Doppler project + config exist in workspace `Xibstar`.
+- [ ] Doppler project + config exist in the operator-approved workspace.
 - [ ] On dev-vm: Doppler CLI authenticated (`doppler login`).
 - [ ] On NAS: service token configured (Doppler CLI not installed on
   NAS; use `dopplerhq/cli` Docker image with `DOPPLER_TOKEN`).
@@ -32,44 +34,50 @@ forgotten).
 - [ ] On NAS, verified the docker-compose path workaround:
   `/usr/local/lib/docker/cli-plugins/docker-compose up -d`.
 
+## Home Infra source publication gate (`~/src/home-infra/`)
+
+- [ ] `docs/INVENTORY.md` updated when hosts, ports, or IPs change.
+- [ ] `docs/SERVICES.md` updated with the new or relocated service.
+- [ ] Canonical `docs/PROJECTS.yml` updated and validated; generated
+  `docs/PROJECTS.md` refreshed only through
+  `python3 scripts/project-registry.py render --write`.
+- [ ] Project Birth acceptance recorded in
+  `catalog/project-acceptances.yml` when applicable.
+- [ ] `catalog/services.yml` updated **only if portal-visible**
+  (will be rendered by `infra-portal`).
+- [ ] `catalog/project-contracts.yml` and the Portal contract bundler updated
+  when the project contract is portal-visible.
+- [ ] The vhost is declared in Home Infra's source-controlled edge-caddy
+  configuration with the narrowest backend route.
+- [ ] Catalog, project registry, generated projection, contract joins and edge
+  candidate all validate.
+- [ ] All Home Infra source inputs committed and pushed before DNS, edge apply,
+  runtime catalog synchronization, or Portal readback.
+
 ## Network and TLS (only if the project exposes UI / API / status)
 
-- [ ] DNS configured: UDM static `A` record
+- [ ] DNS configured through Home Infra's current bounded UniFi procedure:
   `<service>.lamanoriega.com → <host-ip>` (TTL 300).
-- [ ] `edge-caddy` Caddyfile patched on NAS:
-  - new `@<service>` matcher,
-  - `handle` block with `reverse_proxy http://127.0.0.1:<port>`
-    (or `https://<host>:<port>` for hosts with their own TLS),
-  - Caddyfile backup saved as
-    `Caddyfile.bak.before-<service>-<YYYYMMDD>-<HHMM>`.
-- [ ] `edge-caddy` restarted on NAS using the **full path** of the
-  compose plugin (the `docker compose` subcommand is not available
-  on QNAP; see `~/src/home-infra/docs/CONVENTIONS.md` *Docker Image
-  Management*):
+- [ ] The Home Infra edge helper passed check and apply from the clean published
+  Home Infra revision:
   ```sh
-  /usr/local/lib/docker/cli-plugins/docker-compose \
-      -f /share/Container/compose/edge-caddy/docker-compose.yml \
-      restart edge-caddy
+  scripts/edge-caddy-config --check
+  scripts/edge-caddy-config --apply
   ```
-  Use `restart`, not `caddy reload`. Reload alone may not pick up a
-  newly added vhost depending on how Caddy was started; restart is
-  the safer pattern documented in past TLS Hub sessions.
+  The helper owns candidate validation, backup, bounded recreation, adjacent
+  ingress checks and automatic rollback; do not patch the NAS Caddyfile or
+  restart the shared proxy manually.
 - [ ] HTTPS verified from LAN
   (`curl -fsS https://<service>.lamanoriega.com/...`).
 - [ ] Cert chain confirmed
   (`*.lamanoriega.com` wildcard, currently valid).
 
-## Source of truth (`~/src/home-infra/`)
+## Infra Portal (only if portal-visible)
 
-- [ ] `docs/INVENTORY.md` updated when hosts, ports, or IPs change.
-- [ ] `docs/SERVICES.md` updated with the new or relocated service.
-- [ ] `docs/PROJECTS.md` updated (project entry, version, status).
-- [ ] `catalog/services.yml` updated **only if portal-visible**
-  (will be rendered by `infra-portal`).
-- [ ] If portal-visible: ran
-  `~/src/infra-portal/scripts/sync-catalog-to-nas.sh` to sync the
-  runtime catalog copy and write `CATALOG_COMMIT`.
-- [ ] All `home-infra` changes committed and pushed.
+- [ ] Ran Home Infra's canonical `scripts/sync-portal-inputs-to-nas.sh` only
+  after the Home Infra and project contract revisions were clean and pushed.
+- [ ] Verified catalog, contracts and provenance readback without restarting
+  Infra Portal.
 
 ## Documentation in this project
 

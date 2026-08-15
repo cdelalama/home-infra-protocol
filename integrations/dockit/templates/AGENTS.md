@@ -32,14 +32,18 @@ tag — its control-plane slice must update `~/src/home-infra/`:
 - `docs/INVENTORY.md` — when hosts, IPs, or ports change.
 - `docs/SERVICES.md` — when a service is added, removed, or
   relocated to another host.
-- `docs/PROJECTS.md` — when **deployed reality** changes: the
-  project is created or retired, the deployed version on a host
-  changes, status changes, host placement changes, exposure (UI /
-  API / URL) changes. Internal patch releases that never reach a
-  host do not warrant a PROJECTS.md update — the table tracks
-  observed state, not repo HEAD.
+- `docs/PROJECTS.yml` — the canonical typed project registry, when a project is
+  created or retired or when accepted source/runtime/lifecycle reality changes.
+  Regenerate `docs/PROJECTS.md` through
+  `python3 scripts/project-registry.py render --write`; never hand-edit the
+  generated projection. Internal patch releases that never reach an accepted
+  source or runtime do not warrant a registry update.
+- `catalog/project-acceptances.yml` — when Home Infra explicitly accepts a
+  Project Birth transition or other declared project interface.
 - `catalog/services.yml` — only if the service is portal-visible
   (`infra-portal` will render it).
+- `catalog/project-contracts.yml` — when a portal-visible project contract or
+  its bundled status/capability inputs are accepted.
 
 These updates are not optional for a completed deployment, but contract
 validation does not authorize them automatically. The operator's global rule
@@ -97,3 +101,11 @@ Private adopter-only fields under incubation, including
   status location, and provenance for explicit operator acceptance.
 - Do not edit `home-infra` from inside this project's automation. The
   operator does it during deploy, with the checklist as the gate.
+- Do not patch or restart shared edge-caddy manually. Use Home Infra's
+  source-controlled configuration and `scripts/edge-caddy-config` helper.
+- Do not sync Portal inputs from the consumer repo. Use Home Infra's
+  `scripts/sync-portal-inputs-to-nas.sh` and verify provenance without a Portal
+  restart.
+- Commit and push clean Home Infra and project-contract source inputs before
+  either shared edge apply or Portal synchronization; both runtime paths must
+  be traceable to published revisions.
