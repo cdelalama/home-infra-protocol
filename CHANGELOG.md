@@ -2,6 +2,25 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.6] - 2026-08-22
+
+### Added
+
+- A current trace anchor recording the accepted first evidence transition and
+  deployed Hermes 0.11.0 transition-visibility consumer.
+
+### Changed
+
+- Reconcile the DF-015 roadmap around normal monitored operation and a
+  separately authorized proactive-delivery gate.
+- Record the current fail-closed Home Infra publication drift as channel
+  staleness, never authoritative withdrawal or an empty obligation set.
+
+### Fixed
+
+- Remove current-orientation text that still described NAS Backup evidence
+  deployment, the first completed occurrence, and Hermes Phase 2D as future.
+
 ## [0.13.5] - 2026-08-15
 
 ### Added

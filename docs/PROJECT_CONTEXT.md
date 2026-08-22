@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.5 -->
+<!-- doc-version: 0.13.6 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -65,7 +65,7 @@ authorities over inventory or intent.
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-08-14)
+## Current Status (2026-08-22)
 
 Protocol 0.13.0 implemented DF-015 as an optional additive project declaration
 and complete sanitized accepted projection. Protocol 0.13.1 corrects the
@@ -110,6 +110,20 @@ explicit workflow. Clean Home Infra sources are validated, committed and
 pushed before shared edge apply or Portal synchronization; direct NAS proxy
 patching and the legacy Portal sync command are prohibited by regression tests.
 
+Protocol 0.13.6 reconciles completed downstream adoption without changing the
+contract. NAS Backup's project-owned evidence implementation is accepted and
+deployed, and the first recurring occurrence is verified and completed on
+time. Deployed Hermes Lab 0.11.0 migrated its private ledger to schema v2,
+seeded the accepted 34-occurrence baseline without inventing historical
+events, and retains transition visibility with every proactive transport
+  disabled. The last valid accepted projection contains one completed occurrence
+  and 33 open occurrences with missing evidence. These are attributed live
+  adopter facts, not permanent protocol counts. The 2026-08-22 publisher then
+  failed closed as `publisher_head_not_published` after its local Home Infra
+  checkout fell behind `origin/main`; the channel became stale and Hermes
+  reported `input_stale` while retaining prior state. This is channel failure,
+  not authoritative withdrawal or absence of obligations.
+
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
 each consumer, and delivery/acknowledgement to Hermes. Only matching verified
@@ -129,22 +143,22 @@ remain separate.
 
 ## Upcoming Milestones
 
-1. Accept and deploy the already implemented project-owned NAS Backup evidence
-   path, then observe the first real `missing -> verified -> completed`
-   transition without manufacturing completion in Home Infra or a consumer.
-2. Deploy and accept Hermes 0.11.0 transition visibility separately; its source
-   release does not replace the deployed 0.10.3 consumer evidence.
-3. Evaluate proactive Buzz transport separately from projection consumption
+1. Restore Home Infra publication freshness under the owning project's
+   authority, then continue normal monitored operation of the first recurring
+   adopter and use
+   later evidence changes to exercise Hermes transition history without
+   manufacturing completion in Home Infra or a consumer.
+2. Evaluate proactive delivery separately from projection consumption
    and keep delivery/acknowledgement distinct from project evidence.
-4. Preserve the resolved backup trial as a regression fixture and the current
+3. Preserve the resolved backup trial as a regression fixture and the current
    recurring chain as the first real multi-frequency adoption record. Portal
    and Hermes are two independent consumer implementations of that one private
    chain, not evidence of universal compatibility.
-5. Keep ForgeOS profile revalidation, MCP adoption, recovery and DF-016
+4. Keep ForgeOS profile revalidation, MCP adoption, recovery and DF-016
    incident lifecycle work behind their separate gates.
-6. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
+5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
-7. Keep later status and recovery vocabulary adopter-driven rather than adding
+6. Keep later status and recovery vocabulary adopter-driven rather than adding
    speculative fields.
 
 ## References

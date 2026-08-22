@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.5 -->
+<!-- doc-version: 0.13.6 -->
 # Architecture
 
 ## Overview
@@ -70,8 +70,11 @@ authoritatively withdraw an obligation by omission.
 
 The first private recurring chain now exercises this flow through two distinct
 consumers. Infra Portal renders the accepted Home Infra projection and retains
-an integrity-checked last valid copy; deployed Hermes Lab 0.10.3 evaluates the
-same projection deterministically with a private ledger and transport disabled.
+an integrity-checked last valid copy; deployed Hermes Lab 0.11.0 evaluates the
+same projection deterministically with a schema-v2 private ledger, evidence-
+transition visibility, and transport disabled. The first project-owned
+verified result completed its exact occurrence on time; neither consumer nor
+Home Infra authored that result.
 Home Infra monitors Hermes through its bounded machine-readable status rather
 than inferring consumer health from Portal, publisher health, or Docker alone.
 That monitor proves consumer health and channel freshness, not declaration or

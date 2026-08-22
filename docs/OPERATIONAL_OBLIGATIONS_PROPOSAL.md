@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.5 -->
+<!-- doc-version: 0.13.6 -->
 # Operational Obligations Proposal
 
 ## Status
@@ -14,10 +14,11 @@ The separately authorized first recurring adoption now has two deployed
 consumers. NAS Backup declares three recovery series and 34 absolute
 occurrences, Home Infra accepts and continuously publishes their complete
 sanitized projection, Infra Portal consumes it with restart-durable last-valid
-continuity, and Hermes Lab 0.10.3 consumes it deterministically with a private
-ledger while delivery transport remains disabled. Home Infra independently
-monitors the Hermes status contract. ForgeOS, MCP, project evidence deployment
-and notification transport remain separately authorized gates.
+continuity, and Hermes Lab 0.11.0 consumes it deterministically with a schema-v2
+private ledger and transition visibility while delivery transport remains
+disabled. Home Infra independently monitors the Hermes status contract. The
+first verified project-owned result completed its exact occurrence on time.
+ForgeOS, MCP and notification transport remain separately authorized gates.
 
 ## Verdict
 
@@ -346,11 +347,13 @@ has not passed and a terminal recurring occurrence has no successor,
    weekly, monthly, and quarterly recovery programs as three project-owned
    series containing 34 occurrences; Home Infra accepts them and Portal reads
    the complete projection. Evidence production remains separate.
-6. **Hermes consumption (complete):** deployed Hermes Lab 0.10.3 reads the
-   projection, derives deterministic notices and retains private state with
-   transport disabled. Home Infra independently monitors its status. Real
-   delivery, acknowledgement and proactive transport remain separate evidence
-   gates, and no execution capability follows from consumption.
+6. **Hermes consumption and transition visibility (complete):** deployed
+   Hermes Lab 0.11.0 reads the projection, derives deterministic notices,
+   retains schema-v2 private state, and seeds the admitted baseline without
+   fabricated historical events. Transport remains disabled. Home Infra
+   independently monitors its status. Real delivery, acknowledgement and
+   proactive transport remain separate evidence gates, and no execution
+   capability follows from consumption.
 7. **ForgeOS adoption:** scaffold and validate declarations through the
    canonical protocol validator. ForgeOS does not copy validation logic or
    automatically execute obligations.
@@ -409,17 +412,20 @@ only; it does not authorize edits to sibling repositories or runtimes.
 Recurring adoption must record whether a project may publish `verified`
 evidence whose `observed_at` precedes the occurrence `starts_at` when its
 `evidence.requirement` explicitly permits early satisfaction. Protocol 0.13.1
-does not decide or change that producer-owned semantic; the first real
-recurring adopter must supply the evidence needed to resolve it.
+does not decide or change that producer-owned semantic. The first real
+recurring evidence was observed inside its declared window and therefore does
+not resolve the optional early-satisfaction question.
 
 The normative slice was published in protocol 0.13.0 and its canonical
 timestamp ordering was corrected in 0.13.1. NAS Backup, Home Infra, Infra
 Portal and Hermes have since completed declaration, acceptance, publication
-and two distinct read-only consumer paths. Home Infra 0.18.1 revision
-`0a41f54a64c0880bcec8363d7e0af5177381cd48` records all 34 occurrences open
-with missing evidence; that count is attributed source evidence rather than a
-permanent expectation.
-The next real evidence gate is project-owned NAS Backup evidence acceptance and
-deployment followed by an observed `missing -> verified -> completed`
-transition. Real delivery/acknowledgement and proactive Buzz transport remain
-independent deployment decisions.
+and two distinct consumer paths. Project-owned evidence acceptance/deployment,
+one observed `missing -> verified -> completed` transition, and Hermes 0.11.0
+transition visibility are complete. The last valid accepted projection contains
+one completed occurrence and 33 open occurrences with missing evidence; those
+counts are attributed source evidence rather than permanent expectations. A
+later `publisher_head_not_published` failure made the channel stale; consumers
+retained prior state and did not interpret the failure as authoritative
+withdrawal.
+Real delivery/acknowledgement and proactive Buzz transport remain independent
+deployment decisions.

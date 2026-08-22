@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.5 -->
+<!-- doc-version: 0.13.6 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,23 +81,26 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-08-15 - Codex (GPT-5.6).
-- Working on: close protocol 0.13.5 as the coordinated ForgeOS/Home Infra
-  profile-integration repair.
-- Status: the profile now targets canonical typed project/acceptance inputs,
-  the source-controlled edge helper, and Home Infra's Portal input sync. It
-  separates contract-only interface implementation from explicitly authorized
-  runtime delivery and publishes clean source revisions before runtime apply.
-  NAS Backup owns the accepted declaration, Home Infra accepts and
-  publishes it, Infra Portal consumes it with restart-durable last-valid
-  continuity, Hermes Lab 0.10.3 runs the deterministic consumer with transport
-  disabled, and Home Infra independently monitors that consumer. Protocol
-  semantics and the accepted 0.13.1 revision remain unchanged.
-- Next gate: accept and deploy project-owned NAS Backup evidence, then observe
-  a real `missing -> verified -> completed` transition across the existing
-  consumers. Do not add protocol semantics unless that evidence exposes a
-  reusable gap. Proactive transport remains a separate gate; ForgeOS profile
-  revalidation is closed by ForgeOS 0.25.1 and this 0.13.5 companion patch.
+- Last Updated: 2026-08-22 - Codex (GPT-5.6).
+- Working on: close protocol 0.13.6 as a documentation-only reconciliation of
+  the completed first DF-015 evidence and Hermes transition-visibility gates.
+- Status: NAS Backup still owns the accepted declaration and evidence, Home
+  Infra accepts and publishes them, Infra Portal retains restart-durable
+  last-valid continuity, and deployed Hermes Lab 0.11.0 consumes the same
+  projection with transition visibility and transport disabled. The current
+  last valid accepted projection contains three series and 34 occurrences: one verified
+  occurrence is completed on time and the remaining 33 are open with missing
+  evidence. At the 2026-08-22 closing observation, Home Infra's local checkout
+  was three commits behind `origin/main`; publication failed closed as
+  `publisher_head_not_published`, the PT15M channel became stale, and Hermes
+  correctly reported `input_stale`. No consumer may turn that into an empty
+  obligation set. Protocol semantics and the accepted 0.13.1 revision remain
+  unchanged.
+- Next gate: restore Home Infra publication freshness in the owning project,
+  then resume normal monitored adopter operation and separately authorized
+  proactive delivery. Do not add protocol semantics unless a real adopter
+  exposes a reusable contract gap; delivery and acknowledgement remain
+  deployment-private and never complete an occurrence.
 
 - Last Updated: 2026-08-08 - GPT-5 Codex.
 - Working on: close protocol 0.13.1 as the canonical-ordering correction for
