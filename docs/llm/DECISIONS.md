@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -130,3 +130,27 @@ Obligation actions are bounded non-executable explanations linked to runbooks.
 Operational obligations remain separate from preview expiry, scheduler plans,
 capability reviews, status freshness, service health, recovery acceptance, and
 incident lifecycle.
+
+## D-009: Keep Incident Lifecycle Proposal-Only After The Second Private Case
+
+**Date:** 2026-08-23
+**Status:** Accepted for protocol 0.13.7 documentation
+
+The second private DF-016 case validates stable incident identity, separate
+detected/acknowledged/recovered/closed facts, private evidence custody,
+fact/inference/unknown separation, candidate recurrence classification, and an
+all-surface recovery planning gate. It does not exercise independent notification,
+maintenance-window expiry, all-surface recovery, explicit closure, or a second
+lifecycle consumer.
+
+Protocol 0.13.7 therefore records sanitized evidence and tightens the promotion
+gate without adding fields to SPEC, schemas, examples, validators, or reusable
+templates. Promotion requires one evidenced detected-to-closed case, a
+prospectively assigned identity exercised by a later qualifying observation, a
+real maintenance-window path, independent delivery/deduplication/recovery
+notification, and a second implementation or a documented safety/recovery
+exception with equivalent evidence.
+
+Private providers, endpoints, recipients, credentials, raw evidence locations,
+payloads, and runtime actions remain outside the protocol. Additional evidence
+can close the proposal gate; private urgency or a plausible shape cannot.

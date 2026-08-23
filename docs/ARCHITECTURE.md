@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # Architecture
 
 ## Overview
@@ -44,6 +44,13 @@ One-time and recurring obligations share the same nested series/occurrence
 shape. Projects materialize absolute UTC windows; no consumer interprets a
 calendar grammar. Completion derives only from verified project evidence,
 while cancellation and supersession remain explicit non-completion decisions.
+
+Incident lifecycle remains a separate proposal-only rail. Detection,
+notification delivery, acknowledgement, all-surface recovery, and closure have
+distinct evidence owners and cannot be derived from one health banner. The
+second private case adds stable identity, the requirement that recurrence rules
+be declared prospectively, and private raw-evidence custody, but it does not
+authorize a public field or make consumers incident authorities.
 
 ## Data Flow
 

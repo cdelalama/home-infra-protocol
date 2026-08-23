@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -65,7 +65,7 @@ authorities over inventory or intent.
 | `scripts/validate-project-interface.py` | Canonical contract/status validation | No network or runtime mutation; invoked across repo boundaries |
 | `integrations/dockit/` | Current homelab profile | Starter template includes sync and telemetry paths |
 
-## Current Status (2026-08-22)
+## Current Status (2026-08-23)
 
 Protocol 0.13.0 implemented DF-015 as an optional additive project declaration
 and complete sanitized accepted projection. Protocol 0.13.1 corrects the
@@ -124,6 +124,17 @@ events, and retains transition visibility with every proactive transport
   reported `input_stale` while retaining prior state. This is channel failure,
   not authoritative withdrawal or absence of obligations.
 
+Protocol 0.13.7 adds the sanitized second private DF-016 case without changing
+the contract. A shared-runtime failure now grounds stable incident identity,
+separate lifecycle facts, private evidence custody, explicit unknowns,
+candidate recurrence classification, and all-surface recovery planning. The
+incident is detected and acknowledged but not independently notified,
+recovered, or closed. D-009 therefore keeps the lifecycle proposal-only and
+makes promotion falsifiable: one complete evidenced lifecycle, prospective
+identity/recurrence, maintenance-window behavior, independent notification
+semantics, and a second implementation or documented safety exception with
+equivalent retained evidence must pass first.
+
 The contract assigns declaration to the project, acceptance and preservation
 to Home Infra, runtime evidence to the project producer, time derivation to
 each consumer, and delivery/acknowledgement to Hermes. Only matching verified
@@ -155,7 +166,9 @@ remain separate.
    and Hermes are two independent consumer implementations of that one private
    chain, not evidence of universal compatibility.
 4. Keep ForgeOS profile revalidation, MCP adoption, recovery and DF-016
-   incident lifecycle work behind their separate gates.
+   incident lifecycle work behind their separate gates. For DF-016, exercise
+   one complete detected-to-closed case and a second implementation before any
+   public schema proposal.
 5. Sync LLM-DocKit as a dedicated tooling patch after reviewing its
    session-gate and global Codex hook-installation boundary.
 6. Keep later status and recovery vocabulary adopter-driven rather than adding
