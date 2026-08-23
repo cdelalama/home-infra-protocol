@@ -1,34 +1,35 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
 
-## Current trace anchor (2026-08-22)
+## Current trace anchor (2026-08-23)
 
-- Protocol 0.13.6 is a documentation-only adoption reconciliation. It changes
-  no SPEC, schema, validator, example, authority rule, accepted declaration,
-  adopter pin, or runtime.
-- NAS Backup's evidence implementation is accepted and deployed. Its first
-  exact recurring occurrence changed from missing evidence to verified and is
-  completed on time by project-owned evidence.
-- Home Infra's last valid projection contains three
-  series, 34 occurrences, one completed result, and 33 open results with
-  missing evidence. Those counts are attributed adopter evidence, not protocol
-  invariants. At the 2026-08-22 closing observation, its local checkout was
-  three commits behind `origin/main`; the publisher failed closed with
-  `publisher_head_not_published` and the PT15M channel became stale.
-- Hermes Lab 0.11.0 at `056fa7d3e09e38e511bdf0308bd5bb0f2d8ceddf`
-  is deployed and live-accepted. Its schema-v2 ledger seeded all 34 current
-  observations without fabricating a historical transition event. Delivery
-  and acknowledgement remain at zero and all proactive transports are
-  disabled. It now reports `input_stale` and the independent monitor reports
-  down, while the last accepted ledger remains retained.
-- The next protocol gate is not more DF-015 design. Restore the Home Infra
-  publisher in its owning project, then continue monitored adopter operation
-  and change public semantics only if a real reusable gap appears.
-  Proactive delivery, acknowledgement, MCP adoption, and private
-  `operational_review` retirement remain separate owner gates.
+- Role: executor
+- Sent: 2026-08-23 12:36:25 CEST (10:36:25 UTC)
+- Subject: record the sanitized second DF-016 incident case and make its
+  proposal-promotion gate falsifiable without normative protocol changes.
+- Resulting state: HEAD=unchanged (`1600330`); version=0.13.7; gate=blocked;
+  protocol 0.13.7 remains proposal-only under D-009 in
+  `docs/llm/DECISIONS.md`. The second case
+  validates stable identity, independent lifecycle facts, private evidence
+  custody, candidate recurrence, and all-surface recovery planning, but not
+  notification, recovery, closure, maintenance-window expiry, or a second
+  lifecycle consumer.
+- Repo state: the dedicated branch starts from published `origin/main` revision
+  `1600330c842e11457abca0ad68dae2573464deba`, subject `docs: reconcile DF-015
+  deployed reality`, committed 2026-08-22T16:10:39Z. The primary checkout and
+  unrelated worktrees remain untouched.
+- Validation: Home Infra's private record and audit are complete; protocol
+  version sync, DocKit, 77 unit tests, 47 validator smokes, Python compilation,
+  diff hygiene, and the private-identifier scan pass. The second Claude Opus
+  exact-diff audit cleared the gate with zero blockers and zero majors; its
+  published-surface editorial findings were addressed before commit. No sibling runtime, consumer,
+  schema, SPEC semantic, example, validator, template contract, or private
+  evidence artifact changed.
+- Next gate: validate and publish 0.13.7, then keep DF-016 incubating until every
+  adoption condition in `docs/INCIDENT_LIFECYCLE_PROPOSAL.md` passes.
 
 ## Historical pre-shutdown cold-start checkpoint (2026-07-18)
 
@@ -142,7 +143,7 @@ evidence record.
    minor only after its implementation gate is reviewed explicitly.
 5. Normalize the legacy `Draft v0.1` maturity labels in `SPEC.md`, `README.md`,
    and `docs/PROJECT_CONTEXT.md` only as an intentional versioned clarification.
-   Project SemVer 0.13.6 is the current documentation release; Protocol 0.13.1
+   Project SemVer 0.13.7 is the current documentation release; Protocol 0.13.1
    remains the accepted DF-015 semantic pin. Do not silently rewrite the core
    spec during an operational checkpoint.
 
@@ -163,17 +164,15 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-22 - Codex (GPT-5.6).
-- Working on: restore the stale Home Infra publication channel in its owning
-  project, then return to normal monitored operation. Protocol 0.13.6
-  reconciles the completed first evidence and Hermes transition-visibility
-  gates without altering their semantics.
-- Status: declaration, Home Infra acceptance/publication, Portal continuity,
-  project-owned verified evidence, one completed occurrence, deployed Hermes
-  0.11.0 transition visibility, and the independent Home Infra monitor are
-  recorded as complete. The current publisher channel is fail-closed stale and
-  Hermes reports `input_stale`; transport and every other owner gate remain
-  separate.
+- Last Updated: 2026-08-23 - GPT-5 Codex.
+- Working on: publish protocol 0.13.7 as a proposal-only DF-016 evidence and
+  promotion-gate correction.
+- Status: the second private case validates stable identity, separate lifecycle
+  facts, private evidence custody, explicit unknowns, candidate recurrence, and
+  all-surface recovery planning. Notification, recovery, closure,
+  maintenance-window expiry, and a second lifecycle consumer remain unproven.
+  D-009 keeps SPEC, schemas, examples, validators, templates, authorities and
+  runtimes unchanged.
 
 - Previous: 2026-06-20 - GPT-5 Codex (DocKit v4.12.1 sync, 0.6.2) - Closed **protocol 0.6.2** as a DocKit-only tooling patch:
   adopted the v4.12.1 validator/version-sync/test updates, Codex CLI
@@ -546,23 +545,26 @@ is `infra-portal`.
 
 ## Next Concrete Steps
 
-1. Restore Home Infra publication freshness in that owning repository; do not
-   weaken stale-input handling or interpret the failure as an empty set.
-2. Continue monitored operation and retain the first completed occurrence as
-   adopter evidence without turning its current counts into protocol constants.
-3. Keep real delivery, acknowledgement and proactive Buzz transport disabled
-   until their own evidence-backed authorization.
-4. Keep MCP adoption and private
-   `operational_review` removal behind their independent gates.
-5. Complete msgvault's separate deploy-observe-promote gate; do not make the
-   protocol repo the runtime executor.
-6. Keep DF-013 recovery acceptance and DF-016 incident lifecycle behind their
-   own evidence and acceptance gates.
-6. Sync LLM-DocKit in a dedicated tooling patch after operator review of
-   the global hook boundary.
-7. Continue real adoption of project-owned sync and telemetry contracts.
-8. Keep any future `infra-agent` stats contract evidence-gated and independent
-   from authentication placement and recovery incubation.
+1. Publish the sanitized second DF-016 case without copying any private host,
+   endpoint, evidence location, payload, or runtime action into the protocol.
+2. Keep DF-016 proposal-only until one real incident retains evidence for
+   detected, notified, acknowledged, all-surface recovered, and explicitly
+   closed transitions.
+3. Exercise a prospectively assigned identity through a later qualifying
+   observation and document whether it is recurrence or a new incident under
+   written rules.
+4. Exercise maintenance suppression/deadline behavior and an independent
+   lifecycle consumer, or document a safety/recovery exception with equivalent
+   evidence.
+5. Restore Home Infra publication freshness under the owning project's
+   authority; DF-015 remains fail-closed stale until that gate reports fresh.
+6. Keep DF-015 operational obligations, proactive delivery, MCP adoption, and
+   private `operational_review` retirement behind their independent gates.
+7. Keep the protocol repo out of private runtime recovery; owning projects
+   observe, recover, and close their incidents.
+8. Sync LLM-DocKit in a dedicated tooling patch after operator review of the
+   global hook boundary.
+9. Continue real adoption of project-owned sync and telemetry contracts.
 
 ## Files To Read First
 

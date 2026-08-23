@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,26 +81,22 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-08-22 - Codex (GPT-5.6).
-- Working on: close protocol 0.13.6 as a documentation-only reconciliation of
-  the completed first DF-015 evidence and Hermes transition-visibility gates.
-- Status: NAS Backup still owns the accepted declaration and evidence, Home
-  Infra accepts and publishes them, Infra Portal retains restart-durable
-  last-valid continuity, and deployed Hermes Lab 0.11.0 consumes the same
-  projection with transition visibility and transport disabled. The current
-  last valid accepted projection contains three series and 34 occurrences: one verified
-  occurrence is completed on time and the remaining 33 are open with missing
-  evidence. At the 2026-08-22 closing observation, Home Infra's local checkout
-  was three commits behind `origin/main`; publication failed closed as
-  `publisher_head_not_published`, the PT15M channel became stale, and Hermes
-  correctly reported `input_stale`. No consumer may turn that into an empty
-  obligation set. Protocol semantics and the accepted 0.13.1 revision remain
-  unchanged.
-- Next gate: restore Home Infra publication freshness in the owning project,
-  then resume normal monitored adopter operation and separately authorized
-  proactive delivery. Do not add protocol semantics unless a real adopter
-  exposes a reusable contract gap; delivery and acknowledgement remain
-  deployment-private and never complete an occurrence.
+- Last Updated: 2026-08-23 - GPT-5 Codex.
+- Working on: publish protocol 0.13.7 as a proposal-only DF-016 evidence and
+  promotion-gate correction.
+- Status: a second private incident case now validates stable identity,
+  separate lifecycle facts, private evidence custody, explicit unknowns,
+  candidate recurrence classification, and all-surface recovery planning. It
+  does not validate notification, recovery, closure, maintenance-window expiry,
+  or a second lifecycle consumer. D-009 keeps SPEC, schemas, examples,
+  validators, templates, authority and runtime unchanged. The separate DF-015
+  publication channel remains fail-closed stale until its owning project
+  restores freshness.
+- Next gate: publish this sanitized evidence, then require one complete
+  detected-to-closed case, a prospectively exercised identity/recurrence rule,
+  maintenance-window behavior, independent delivery semantics, and a second
+  implementation or documented safety exception with equivalent retained
+  evidence before any schema proposal.
 
 - Last Updated: 2026-08-08 - GPT-5 Codex.
 - Working on: close protocol 0.13.1 as the canonical-ordering correction for

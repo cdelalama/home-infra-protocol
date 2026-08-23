@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.6 -->
+<!-- doc-version: 0.13.7 -->
 # Downstream Feedback
 
 Living log of observations collected from real adopters of `home-infra-protocol`.
@@ -1236,7 +1236,8 @@ catalog, producer, consumer, or alerting change.
 
 ## DF-016 — Detection, notification, acknowledgement, and closure were collapsed into one incident label
 
-- Source: Home Infra + Infra Portal + a proxied status producer (2026-08-01)
+- Source: Home Infra + Infra Portal + a proxied status producer (2026-08-01),
+  plus a private shared-runtime incident record (2026-08-23)
 - Date observed: 2026-08-01
 - Category: field-gap, process, usability
 - Status: accepted — proposal-only incubation in
@@ -1256,6 +1257,21 @@ The UI also offered a session-local dismiss control. Hiding the banner did not
 record acknowledgement, assign an owner, verify recovery, or close the
 maintenance operation. One visual state was therefore carrying at least five
 different meanings.
+
+A second private case exposed the same separation from the source-of-truth
+side. A host-wide failure automatically stopped one shared runtime and many
+dependent services. The private record has one stable identity, direct
+detection evidence, and explicit operator acknowledgement; notification is not
+evidenced, and recovery and closure remain false. A small process selected as
+the failure victim is not presented as the unknown root owner. Two older
+matching messages remain candidate occurrences because their detailed
+signatures were not retained.
+
+That source project preserved one allowlisted digest-verified evidence bundle
+outside Git and consumer output, then published only sanitized facts,
+inferences, unknowns, exclusions, and recovery gates. No private address,
+hostname, artifact location, provider, credential, payload, or raw log is
+required to carry the reusable lesson.
 
 ### Protocol implication
 
@@ -1277,6 +1293,13 @@ policy, and private escalation rules remain deployment-owned. A public
 contract may eventually carry only provider-neutral delivery evidence and
 timestamps.
 
+The second case adds stable identity, candidate recurrence classification and
+the requirement that recurrence rules be prospective, private evidence custody,
+and an all-surface recovery requirement to the incubation. It does not close the
+proposal gate: no full detected-to-closed case, prospectively exercised identity
+or recurrence decision, independent notification receipt, maintenance-window
+expiry, or second lifecycle consumer has yet passed.
+
 ### Mitigation in source projects
 
 The source deployment now runs an external one-minute watcher that consumes
@@ -1285,3 +1308,8 @@ acceptance exercised alert delivery, duplicate suppression, and recovery
 delivery. The Portal preserves semantic detection and no longer offers a local
 dismiss action that could be mistaken for acknowledgement. Those are adopter
 mitigations and do not constitute protocol implementation.
+
+The second source deployment now keeps a durable private incident record with
+independent lifecycle facts, stable identity, evidence classes, explicit
+unknowns, and an all-surface recovery gate. It remains open and authorizes no
+runtime recovery. This is additional adopter evidence, not schema adoption.

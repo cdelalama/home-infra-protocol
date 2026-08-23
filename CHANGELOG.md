@@ -2,6 +2,27 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.7] - 2026-08-23
+
+### Added
+
+- Sanitized second-case evidence for DF-016 covering stable incident identity,
+  private evidence custody, candidate recurrence, explicit unknowns, and
+  all-surface recovery planning.
+
+### Changed
+
+- Make the incident-lifecycle promotion gate falsifiable: require one complete
+  evidenced lifecycle, prospective identity/recurrence, maintenance-window
+  behavior, independent delivery semantics, and a second implementation or
+  documented safety exception with equivalent retained evidence.
+- Record D-009 to keep DF-016 proposal-only after the second private case.
+
+### Fixed
+
+- Remove ambiguity that a second detected/acknowledged case is sufficient for
+  schema promotion or that raw evidence pointers belong in the public protocol.
+
 ## [0.13.6] - 2026-08-22
 
 ### Added
