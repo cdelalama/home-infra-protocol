@@ -2,6 +2,19 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.8] - 2026-09-12
+
+### Added
+- Added the centrally managed Fable-preferred, exact-Opus fallback review
+  policy.
+
+### Changed
+- Preserved protocol semantics, schemas, validators, runtime authority, and
+  full-template provenance.
+
+### Fixed
+- None.
+
 ## [0.13.7] - 2026-08-23
 
 ### Added

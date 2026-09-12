@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.7 -->
+<!-- doc-version: 0.13.8 -->
 # LLM Start Guide - Home Infra Protocol
 
 ## Read This First
@@ -81,7 +81,7 @@ Recommended reading order:
 
 Source of truth: `docs/llm/HANDOFF.md`.
 
-- Last Updated: 2026-08-23 - GPT-5 Codex.
+- Last Updated: 2026-09-12 - GPT-5 Codex.
 - Working on: publish protocol 0.13.7 as a proposal-only DF-016 evidence and
   promotion-gate correction.
 - Status: a second private incident case now validates stable identity,
@@ -257,6 +257,42 @@ trace_protocol:
   enabled: false
 ```
 <!-- DOCKIT-TEMPLATE:END trace-protocol -->
+
+<!-- DOCKIT-TEMPLATE:START independent-review-policy -->
+### Independent Review Policy
+
+For consequential source candidates that require an independent model review,
+the operator-wide default is:
+
+1. Prefer Fable, exact model `claude-fable-5-1`, with high effort.
+2. If direct quota evidence shows that exact Fable is unavailable because its
+   quota is exhausted, Opus may complete the same review gate using exact model
+   `claude-opus-5[1m]`, with high effort. Record the quota evidence, effective
+   model, effort, command, candidate revision/tree, and validation packet in
+   `docs/llm/REVIEWS.md` when it exists, otherwise in the audited revision's
+   HISTORY entry. When durable Trace is enabled, keep non-commit object IDs such
+   as tree hashes as plain text in HISTORY and HANDOFF Trace Anchors:
+   backtick-quoted hashes are reserved for commit provenance and must resolve as
+   commits. Never remove backticks from a commit to bypass validation; classify
+   a cross-repository commit with the Trace `external=repo@hash` field instead.
+3. Never substitute Sonnet, Haiku, an ambiguous alias, or an unrecorded model.
+   If neither allowed exact model is available, freeze the candidate and audit
+   packet. Continue only work already authorized that does not depend on the
+   missing verdict.
+
+The auditor is independent and read-only: it reads primary files and evidence,
+does not edit the candidate, and returns evidence-backed findings. The executor
+must verify each finding, reconcile disagreements with the same auditor session
+where practical, and preserve explicit unresolved disagreement for the
+operator. A review verdict does not authorize build, deployment, runtime,
+secrets, infrastructure, lifecycle, or acceptance changes.
+
+This synchronized section is the fleet default, not permission to weaken an
+existing project contract. A stricter project-local accepted rule wins until
+the operator explicitly supersedes it. Projects that intentionally own a
+different policy may exclude `independent-review-policy` in
+`.dockit-config.yml`; the exception and rationale must remain visible locally.
+<!-- DOCKIT-TEMPLATE:END independent-review-policy -->
 
 <!-- DOCKIT-TEMPLATE:START footer -->
 ---

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.7 -->
+<!-- doc-version: 0.13.8 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -164,7 +164,7 @@ The residual architectural reconciliation that may eventually produce
 
 ## Current Status
 
-- Last Updated: 2026-08-23 - GPT-5 Codex.
+- Last Updated: 2026-09-12 - GPT-5 Codex.
 - Working on: publish protocol 0.13.7 as a proposal-only DF-016 evidence and
   promotion-gate correction.
 - Status: the second private case validates stable identity, separate lifecycle
