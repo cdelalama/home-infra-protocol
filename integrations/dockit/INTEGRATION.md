@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.8 -->
+<!-- doc-version: 0.13.9 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.8 -->
+<!-- doc-version: 0.13.9 -->
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
@@ -163,6 +163,11 @@ The residual architectural reconciliation that may eventually produce
 `docs/ECOSYSTEM_MAP.md` remains deferred and is not the next protocol gate.
 
 ## Current Status
+
+- Last Updated: 2026-09-23 - Codex (DocKit fleet update).
+- Source tooling: DocKit 4.16.2 adopted; see `docs/llm/DOCKIT_ADOPTION.md`.
+  Existing project work and runtime acceptance remain authoritative below.
+
 
 - Last Updated: 2026-09-12 - GPT-5 Codex.
 - Working on: publish protocol 0.13.7 as a proposal-only DF-016 evidence and
