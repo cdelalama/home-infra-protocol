@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 # Recovery Acceptance Proposal
 
 Status: accepted for protocol implementation design; not yet normative.

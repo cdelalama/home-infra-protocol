@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 # Project Contracts
 
 Project contracts let individual project repositories describe how they

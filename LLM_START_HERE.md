@@ -1,5 +1,22 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
+
 # LLM Start Guide - Home Infra Protocol
+
+## Portal/Dossier omission prevention - source candidate, 2026-10-01
+
+Last Updated: 2026-10-01 - Codex.
+Profile guidance resolves required consumers through owner policy instead of agent portal-visible selection. See `integrations/dockit/checklists/PROJECT_CHECKLIST.md`.
+Exact Opus 5.5/high advisor supported the owner wrapper with scoped corrections;
+independent source audit is in progress. The exact candidate passes 52 integration/route tests (including 12 owner routes),
+eight delivery-ledger tests, real native-capture build, birth/reentry and installers. Publication and installed acceptance
+remain pending; Windows read-only SSH authentication is unavailable from DEV.
+The existing Spitfire reader is separately usable and has a read-only pilot.
+This first slice does not close/reorder Portal Next Execution, fleet migration,
+Protocol drift or existing product milestones. Other work remains with its owner.
+Next: resolve source-audit findings, publish exact source, install and exercise
+bounded DEV routes, then record actual consumer/host proof and remaining Windows
+coverage. No runtime restart, corpus write or automatic Dossier capture.
+
 
 - Last Updated: 2026-09-23 - Codex (DocKit fleet update).
 - Tooling update: see `docs/llm/DOCKIT_ADOPTION.md`; historical project status below is preserved.

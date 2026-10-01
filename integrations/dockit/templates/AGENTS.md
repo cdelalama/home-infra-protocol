@@ -40,9 +40,9 @@ tag — its control-plane slice must update `~/src/home-infra/`:
   source or runtime do not warrant a registry update.
 - `catalog/project-acceptances.yml` — when Home Infra explicitly accepts a
   Project Birth transition or other declared project interface.
-- `catalog/services.yml` — only if the service is portal-visible
+- `catalog/services.yml` — when required by the resolved owner integration policy
   (`infra-portal` will render it).
-- `catalog/project-contracts.yml` — when a portal-visible project contract or
+- `catalog/project-contracts.yml` — when a required consumer project contract or
   its bundled status/capability inputs are accepted.
 
 These updates are not optional for a completed deployment, but contract
@@ -109,3 +109,22 @@ Private adopter-only fields under incubation, including
 - Commit and push clean Home Infra and project-contract source inputs before
   either shared edge apply or Portal synchronization; both runtime paths must
   be traceable to published revisions.
+
+## Required integration validation
+
+Resolve consumer obligations from the infrastructure owner's current policy and
+trusted subject admission, independently of the project plan. Invoke the owner
+integration gate at study intake, Project Birth, review and delivery closeout.
+Missing admission, missing complete plan, stale relevant policy, missing checker
+or a skipped required check cannot yield overall PASS. The owner's default
+applies to headless/API projects as well as browser interfaces. Exclusions need
+a scoped authentic operator instruction retained by the owner, never agent N/A.
+
+Use the canonical ForgeOS integration matrix in reviewer packets. Documentary
+validation is only one component of the owner's composed closeout. Required
+Portal evidence joins intended published catalog, accepted consumer input,
+project/service identity, rendered access and backend function. Required Dossier
+evidence distinguishes declaration, native capture, admitted reviewed publication,
+fixed reader, exact history/permalink and coherent recovery. Source planning
+requires no live runtime. Legacy adoption follows explicit owner dispositions;
+no inferred new obligation or historical receipt rewrite.

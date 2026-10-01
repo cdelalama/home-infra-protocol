@@ -1,0 +1,10 @@
+{
+  "artifacts": [],
+  "branch": "work/portal-integration-enforcement-20261001",
+  "id": "portal-integration-enforcement-20261001",
+  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "project": "home-infra-protocol",
+  "purpose": "Require owner-resolved Portal Dossier integration in homelab profile routes",
+  "schema": 1,
+  "state": "active"
+}

@@ -5,6 +5,9 @@ complete. If an item does not apply, mark `N/A` with one line of
 justification (so the next reader knows it was considered, not
 forgotten).
 
+Required consumer obligations are excluded from this N/A convention. They use
+the owner-resolved integration plan and authentic scoped operator exclusions.
+
 ## Build and image
 
 - [ ] Artifact provenance is immutable. A first-party image is built and pushed
@@ -43,10 +46,10 @@ forgotten).
   `python3 scripts/project-registry.py render --write`.
 - [ ] Project Birth acceptance recorded in
   `catalog/project-acceptances.yml` when applicable.
-- [ ] `catalog/services.yml` updated **only if portal-visible**
+- [ ] `catalog/services.yml` updated when required by the resolved owner integration policy
   (will be rendered by `infra-portal`).
 - [ ] `catalog/project-contracts.yml` and the Portal contract bundler updated
-  when the project contract is portal-visible.
+  when required by the resolved owner integration policy.
 - [ ] The vhost is declared in Home Infra's source-controlled edge-caddy
   configuration with the narrowest backend route.
 - [ ] Catalog, project registry, generated projection, contract joins and edge
@@ -72,7 +75,10 @@ forgotten).
 - [ ] Cert chain confirmed
   (`*.lamanoriega.com` wildcard, currently valid).
 
-## Infra Portal (only if portal-visible)
+## Required consumers (owner-resolved obligations)
+
+- [ ] Record the `delivery_gate.py check` integration verdict. Generic N/A is
+  forbidden for required Portal/Dossier obligations.
 
 - [ ] Ran Home Infra's canonical `scripts/sync-portal-inputs-to-nas.sh` only
   after the Home Infra and project contract revisions were clean and pushed.
@@ -128,3 +134,22 @@ forgotten).
 - [ ] From a WireGuard client: same as above.
 - [ ] No regression in adjacent services on the same host
   (spot-check at least one other vhost on `edge-caddy`).
+
+## Required integration validation
+
+Resolve consumer obligations from the infrastructure owner's current policy and
+trusted subject admission, independently of the project plan. Invoke the owner
+integration gate at study intake, Project Birth, review and delivery closeout.
+Missing admission, missing complete plan, stale relevant policy, missing checker
+or a skipped required check cannot yield overall PASS. The owner's default
+applies to headless/API projects as well as browser interfaces. Exclusions need
+a scoped authentic operator instruction retained by the owner, never agent N/A.
+
+Use the canonical ForgeOS integration matrix in reviewer packets. Documentary
+validation is only one component of the owner's composed closeout. Required
+Portal evidence joins intended published catalog, accepted consumer input,
+project/service identity, rendered access and backend function. Required Dossier
+evidence distinguishes declaration, native capture, admitted reviewed publication,
+fixed reader, exact history/permalink and coherent recovery. Source planning
+requires no live runtime. Legacy adoption follows explicit owner dispositions;
+no inferred new obligation or historical receipt rewrite.

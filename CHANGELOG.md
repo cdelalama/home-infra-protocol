@@ -2,6 +2,11 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.13.10] - 2026-10-01
+
+### Changed
+- Clarify that consumer inclusion follows owner policy; remove agent-selected portal-visible conditions.
+
 ## [0.13.9] - 2026-09-23
 
 ### Changed

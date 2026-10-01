@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 # Recovery Model
 
 The protocol distinguishes recovering the **knowledge system** from rebuilding

@@ -1,5 +1,9 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
+
 # LLM Session History
+
+- 2026-10-01 - Codex - Prepared Portal/Dossier mandatory integration source slice: Profile guidance resolves required consumers through owner policy instead of agent portal-visible selection. Added scoped parent work record and owner contract at integrations/dockit/checklists/PROJECT_CHECKLIST.md. Version 0.13.10; Exact candidate: 52 integration/route tests (12 owner routes), 8 delivery-ledger tests, real native-capture build, birth/reentry and installers pass. Exact Opus advisor verified; source audit/publication/installed pilot pending. Broad Portal Next Execution and other product work remain open. Trace: role=executor; commits=none; state=source candidate; validation=targeted regressions; next=independent source audit and installed proof.
+
 
 Append-only record of meaningful LLM-assisted work on this project.
 

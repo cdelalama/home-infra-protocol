@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -154,3 +154,17 @@ exception with equivalent evidence.
 Private providers, endpoints, recipients, credentials, raw evidence locations,
 payloads, and runtime actions remain outside the protocol. Additional evidence
 can close the proposal gate; private urgency or a plausible shape cannot.
+
+## Mandatory consumer integration routing - 2026-10-01
+
+The operator-authorized omission-prevention slice resolves requirements from
+Home Infra policy/admission independently of a project plan. ForgeOS owns the
+checked plan and ordinary birth/review/ship checks; the owner wrapper composes
+DocKit documentary validation with deterministic scope detection. An absent plan,
+agent-only exception or skipped required check is failure. Existing accepted
+Dossier obligations remain; other legacy migration is explicitly unresolved.
+No new project command hook belongs in generic DocKit. Source, installed route,
+consumer acceptance and physical recovery remain separate. This implements
+existing required-consumer intent and adds new commands without changing immutable
+Project Birth or public service schemas; the coordinated initial-development
+capability release is minor, with Protocol guidance a patch clarification.

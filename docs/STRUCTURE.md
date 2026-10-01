@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 # Repository Structure
 
 ```text
@@ -78,3 +78,5 @@ home-infra-protocol/
 - `src/` is reserved for future reference tooling.
 - `tests/` contains focused protocol/schema regression tests.
 - `docs/llm/` is working memory for LLM-assisted maintenance.
+
+- `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: required consumer integration contract and phase/owner boundaries.

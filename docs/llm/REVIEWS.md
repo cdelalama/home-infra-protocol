@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.9 -->
+<!-- doc-version: 0.13.10 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -216,3 +216,37 @@ Routine work does not produce REVIEWS entries.
   `infra.contract.yml` introduced informally on 2026-05-03.
 
 ---
+
+## 2026-10-01 - Mandatory Portal and Dossier integration controls
+
+Exact `claude-opus-5-5` with `--effort high`; actual modelUsage and
+canonicalModel verified. Separate advisory and independent tool-free packet
+reviews. SOURCE_GO covers reviewed source and bounded DEV pilot only; it does
+not establish installed, Windows, fleet or broader Portal roadmap acceptance.
+The author supplied source, real rendered operator text, tests and private
+probe receipts; the auditor did not run host commands. Earlier blocking rounds
+remain in private custody and were reconciled in subsequent exact-source packets.
+
+Validation: 52 integration tests (including 12 owner routes), 8 ship tests,
+birth/reentry, selective installer, 3 Protocol profile tests and live catalog
+CLI pass. Full Home suite: 301 run, 297 pass, 2 failures and 2 errors. The stale
+Plaud expectation and registry count (37 versus current38) reproduce on the
+published base. The archive fixture conflicts with managed TMPDIR nesting; a
+private rerun used the actual managed top-level staging root, retaining original
+assertions. The unrelated ingress executable mode was normalized from775 to755;
+its bytes were unchanged. Both environment cases passed their reruns. Four Home
+shell suites and final owner closeout pass. This is not a fully green raw suite.
+The verification review explicitly reconciles these results and preserves the
+source GO; reviewed source hashes remained unchanged. No automated executable
+caller of audit-catalog.py was found in scripts/.github/.agents (two tests only).
+
+Raw prompts/results, logs and captures remain outside Git/Dossier. Exact metadata:
+
+- advisor: session `1e2b6f07-d68f-41a6-bd56-60b729901c37`; prompt SHA256 `db965b1e8ef1ed25559efff1cb1bcdf1d5673341f0dd65a52d8487d3413c1f6f`; result SHA256 `4efde42000a4311f6bcf615a1f664017246f9f21566a3cf1888016901933f27e`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor: session `9885db25-68d8-48ab-8c5b-ac41a90e0bbc`; prompt SHA256 `fe30991d66cdaf0cf394d261de123b4962d436e581a2ba7aed9da63c7c9d025b`; result SHA256 `aa41ad9e38dda21c9c0188408fc353aa5c0fc08bec529950ffbf08535f80e470`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor-followup: session `d590094d-54e0-45d9-8d90-76350e8e7e4c`; prompt SHA256 `eaeb320ac5ab94d8a83378c2264d3b45bf715c68f0ec40ccfd88fc7f021ddd93`; result SHA256 `1084ff4e214e44461c2e5530b733bf85cadb6656de63870a87727c1f0b6b503c`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor-round3: session `97830343-c724-431b-a9d1-e0faaf5a3034`; prompt SHA256 `80fe4acd1a4476d43f690cd861ae3ccaab8ead7d6805461c404778e004f6a40a`; result SHA256 `c416c186aa98d0647847b9350ef055ecefdb90d43b5f6de15602c553c6a04757`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor-verification: session `56b6f3b5-8ea1-408d-9f80-7895440c0f34`; prompt SHA256 `e3c0b858f534f58c79c3dc479e30986632130567c355f46f3f30e2193628a4c0`; result SHA256 `02ba191669466a11726175aaa402f3aff94a1bfc1223d9bf35b00ab53cbbf787`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+
+Publication and installed/runtime results receive separate observed receipts;
+Windows SSH publickey denial leaves Windows acceptance open.
