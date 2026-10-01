@@ -2,9 +2,9 @@
   "artifacts": [],
   "branch": "work/portal-integration-enforcement-20261001",
   "id": "portal-integration-enforcement-20261001",
-  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "next_step": "Neutral profile source slice is published. Protocol owns future report-only installed-profile drift under Infra Portal Next Execution, outside this closed slice. Home Infra/ForgeOS own adopter inventory and migration; Infra Portal coordinates; adopters own host acceptance.",
   "project": "home-infra-protocol",
   "purpose": "Require owner-resolved Portal Dossier integration in homelab profile routes",
   "schema": 1,
-  "state": "active"
+  "state": "closed"
 }

@@ -2,6 +2,9 @@
 
 # LLM Session History
 
+- 2026-10-01 - Codex - Record published neutral integration-profile guidance and its independent source review. The Protocol source slice is complete; adopters own installation and host acceptance. Future report-only installed-profile drift detection is Protocol-owned under Infra Portal Next Execution, outside this closed source slice. Home Infra/ForgeOS own adopter inventory and migration; Infra Portal coordinates. Version impact: none for this documentary closure. Trace: role=executor; state=profile-source-complete-adoption-separate; validation=profile-regressions-and-independent-review; next=Protocol-future-drift-and-owner-migration-under-Portal-coordination.
+
+
 - 2026-10-01 - Codex - Prepared Portal/Dossier mandatory integration source slice: Profile guidance resolves required consumers through owner policy instead of agent portal-visible selection. Added scoped parent work record and owner contract at integrations/dockit/checklists/PROJECT_CHECKLIST.md. Version 0.13.10; Exact candidate: 52 integration/route tests (12 owner routes), 8 delivery-ledger tests, real native-capture build, birth/reentry and installers pass. Exact Opus advisor verified; source audit/publication/installed pilot pending. Broad Portal Next Execution and other product work remain open. Trace: role=executor; commits=none; state=source candidate; validation=targeted regressions; next=independent source audit and installed proof.
 
 

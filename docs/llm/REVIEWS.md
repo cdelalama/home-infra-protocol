@@ -250,3 +250,20 @@ Raw prompts/results, logs and captures remain outside Git/Dossier. Exact metadat
 
 Publication and installed/runtime results receive separate observed receipts;
 Windows SSH publickey denial leaves Windows acceptance open.
+
+## 2026-10-01 - Integration closure and coordinator receipt
+
+DOCUMENTATION_GO for neutral published profile guidance and source-slice closure.
+Adopters own installed host acceptance and retain their evidence separately.
+Protocol owns future report-only profile drift; Home Infra/ForgeOS own adopter
+inventory and migration; Infra Portal coordinates.
+Exact claude-opus-5-5/high; actual canonicalModel verified. Independent
+tool-free supplied-evidence review; no reviewer host execution. Earlier withheld
+documentation verdict and all raw packets remain private, outside Git/Dossier.
+Validation binds the final candidate manifest and includes exact run timestamps.
+Full Home suite remains non-green with recorded baseline/environment deviations.
+
+- auditor-closure: session `f12642f6-3efa-49f2-b7dd-547e196b6d2e`; prompt SHA256 `4b9e1ff7c5e062d3346fbaee8c57559ae57347b1033239369f8b3e53b09ddedc`; result JSON SHA256 `48b4f75ab721033437940d31d4b55bc2c1b6731f52a95549e737a30dc799d019`; response text SHA256 `816cb4f3ca73fed021d239227cba33acb6b9a50838eab48c9937851dfd2b5689`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor-closure-followup: session `3d32a8b0-7797-4e86-b353-d97c71efc0af`; prompt SHA256 `4613025618ba9e10b5305318c218cd112060b867463fb498db560d41fa905596`; result JSON SHA256 `0ed1c2f84f923da7f50e07470ec146707d5cc944387e065b5836e09b28d43b45`; response text SHA256 `76b6ce4c892b56ef502f4a34039c5f15cb3fc4ab60c951b5b5d2d35b52b59f2f`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- auditor-closure-final: session `6530c13d-3fab-498f-936f-d4dbbb93cc00`; prompt SHA256 `fb001afe862cb635417daed2e7bcd78a4dd7f431457b1d50558c998f6d1e5583`; result JSON SHA256 `db847b8279fa9804013c2046ec5a7369d9c335e990d7b1ad9733ec7987672f19`; response text SHA256 `de42ce94ccbdd4e8de62b80a5adadb2f32e830c8b54087acacff23c2029424d8`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
+- Final validation receipt SHA256 `4655947ed863b5bef31e8bc182cb0a1f1ac49092e8cb6c5d98b455796e15c375`.

@@ -1,24 +1,22 @@
 <!-- doc-version: 0.13.10 -->
 
-## Portal/Dossier omission prevention - source candidate, 2026-10-01
-
-Last Updated: 2026-10-01 - Codex.
-Profile guidance resolves required consumers through owner policy instead of agent portal-visible selection. See `integrations/dockit/checklists/PROJECT_CHECKLIST.md`.
-Exact Opus 5.5/high advisor supported the owner wrapper with scoped corrections;
-independent source audit is in progress. The exact candidate passes 52 integration/route tests (including 12 owner routes),
-eight delivery-ledger tests, real native-capture build, birth/reentry and installers. Publication and installed acceptance
-remain pending; Windows read-only SSH authentication is unavailable from DEV.
-The existing Spitfire reader is separately usable and has a read-only pilot.
-This first slice does not close/reorder Portal Next Execution, fleet migration,
-Protocol drift or existing product milestones. Other work remains with its owner.
-Next: resolve source-audit findings, publish exact source, install and exercise
-bounded DEV routes, then record actual consumer/host proof and remaining Windows
-coverage. No runtime restart, corpus write or automatic Dossier capture.
-
 # LLM Work Handoff
 
 This file is the current operational snapshot. Durable decisions live in
 `docs/llm/DECISIONS.md`.
+
+## Portal/Dossier integration profile - source complete
+
+Last Updated: 2026-10-01 - Codex.
+Profile guidance resolves required consumers through owner policy in
+`integrations/dockit/checklists/PROJECT_CHECKLIST.md`. It is published after
+independent exact Opus 5.5/high source review. Adopter installation and host
+verification, including Windows, are owned and recorded by each adopter.
+No further Protocol action is pending for this source slice. Report-only
+installed-profile drift detection is a future Protocol work line under Infra
+Portal Next Execution, outside this closed source slice. Home Infra/ForgeOS
+own adopter inventory and migration; Infra Portal coordinates. Existing
+Protocol priorities below keep their ownership and order.
 
 ## Current trace anchor (2026-08-23)
 
@@ -115,8 +113,7 @@ Read-only ecosystem reconciliation performed for this checkpoint:
 ## Open work — next concrete step
 
 
-**Portal/Dossier first slice.** Complete the source audit and installed pilot using
-`integrations/dockit/checklists/PROJECT_CHECKLIST.md`; preserve the broader coordinator priority and prior work below.
+**Portal/Dossier profile source.** This slice is published. Adopters own host acceptance. Follow `integrations/dockit/checklists/PROJECT_CHECKLIST.md`; Protocol owns future report-only installed-profile drift detection under Infra Portal Next Execution, outside this closed slice. Home Infra/ForgeOS own adopter inventory and migration; Infra Portal coordinates. Other Protocol priorities remain.
 
 Protocol 0.13.5 closes the separate ForgeOS profile-revalidation gate. The
 DocKit integration now matches published ForgeOS 0.25.1: typed Project Birth
@@ -605,6 +602,17 @@ is `infra-portal`.
 - `docs/llm/DECISIONS.md`
 
 ## Trace Anchor
+
+- Role: executor
+- Sent: 2026-10-01 21:10:38 CEST (19:10:38 UTC)
+- Subject: Published neutral Portal/Dossier integration profile; adopter verification separately owned.
+- Resulting state: base=817a2031dab621824db6387b2e983397382a5615; version=0.13.10; gate=next-slice; documentation closure audit pending.
+- Repo state: published source verified; task-scoped documentation update; unrelated work preserved.
+- Validation: profile regressions and documentation checks passed; source review is recorded in REVIEWS.md; adopter evidence remains adopter-owned.
+- Next gate: independent documentary closure audit; future report-only profile drift is Protocol-owned; Home Infra/ForgeOS own adopter migration; Infra Portal coordinates. Adopter host verification stays elsewhere.
+- Dossier: no Protocol capture or publication; adopter consumer evidence remains adopter-owned.
+
+## Previous Trace Anchor - preserved source checkpoint
 
 - Role: executor
 - Sent: 2026-10-01 20:30:30 CEST (18:30:30 UTC)
