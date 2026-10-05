@@ -5,7 +5,8 @@
 Last Updated: 2026-10-05 - Codex.
 Reviewed source is published and installed DEV routes are verified.
 Eight adopter primaries are current; MED/Travel Ledger dirty copies and fresh
-Windows readback remain pending. Home Dossier curation/readback is in progress.
+Windows readback remain pending. Home Dossier revision 11 incorporates the reviewed integration; actual reader
+and recovery pass with exact Opus delivery GO. See the final scoped receipt.
 See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
 Windows October 2 installation is partial; fresh host readback remains pending.
 Existing independent product priorities and runtime remain unchanged.

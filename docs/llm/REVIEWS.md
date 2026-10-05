@@ -1,3 +1,26 @@
+## 2026-10-05 - Final integration receipt, curation and render audit
+
+Exact claude-opus-5-5 / firstParty, high effort, independent read-only session
+ff604da6-2b28-40c7-9dd4-338714089b6d; actual modelUsage/canonicalModel verified.
+R3 HOLD: preserve historical MED text, prepend fourteen HISTORY additions,
+substantiate all curation facts in allowlisted Home HANDOFF and preserve salon
+limits. R4 RECEIPT_SOURCE_GO/CURATION_GO after corrections; all fourteen final
+checks, including composed Home documentation-only closeout, passed before push.
+R5 RENDER_GO/DELIVERY_GO for source, DEV and integration Dossier content only.
+Concurrent owner's S11 incorporated the exact reviewed integration; preserve its
+newer content and retain our superseded native draft without submitting again.
+Actual API/history/source pins, desktop/mobile five-tab reader and isolated
+backup/restore pass. Windows/fleet and broader Home/Portal tasks remain open.
+Portal's pre-existing project-wide blocker in milestone detail is a recorded
+reader limitation; no Windows-specific blocker rendering is claimed. Receipt
+updates are no_change and do not create recursive snapshots.
+
+Caller-retained native transcript SHA256 by round:
+- R3 ed916a26113b758ea470c4d4c7abb3c2280c8e258112c39b7664dafc98dd9b72.
+- R4 2b66834fb87ce3408e021d24d148123063b384bd1893647e13590aa9f09b1820.
+- R5 b671a63f6b5f81c71ba926e92473a1709139a482a59f3aad69cd59f4fe643c1e.
+Raw prompts, transcripts and recovery archives remain in private custody.
+
 ## 2026-10-05 - Independent source approval
 
 SOURCE_GO after R1 corrections and R2 reconciliation, exact claude-opus-5-5,

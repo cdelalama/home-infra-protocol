@@ -3,20 +3,21 @@
 ## Integration continuation Trace Anchor
 
 - Role: executor
-- Sent: 2026-10-05 13:09:56 CEST (11:09:56 UTC)
-- Subject: source publication and actual DEV instruction acceptance.
-- Resulting state: HEAD=d9b43eb; source published, DEV verified; broader Windows/fleet gate open.
-- Repo state: task checkout from published d9b43eb; documentary delivery receipt changes only.
-- Validation: exact Opus R2 SOURCE_GO; Protocol 93, Home 5 and coordinated pre-isolation Forge 52 plus ship 8; nine installed DEV probes; five expected skills discovered.
-- Next gate: independent Home Dossier curation/readback and receipt review; authorized Windows host verification and remaining inventory dispositions.
-- Dossier assessment: Home Infra refresh; source-only adopter receipts no_change.
+- Sent: 2026-10-05 13:40:28 CEST (11:40:28 UTC)
+- Subject: reviewed source, DEV and integration Dossier delivery receipt.
+- Resulting state: HEAD=93fdd796; scoped delivery verified; broader Windows/fleet gate open.
+- Repo state: clean task checkout at published 93fdd796 before factual receipt edits.
+- Validation: exact Opus R5 RENDER_GO/DELIVERY_GO; fourteen checks and composed Home closeout PASS; nine installed probes; live five-tab reader/API/history and isolated restore PASS.
+- Next gate: authorized Windows host verification, dirty-primary owner integration, remaining inventory and recorded reader limitations.
+- Dossier assessment: no_change; concurrent owner's shared revision 11 already includes reviewed integration; retained superseded draft must not be submitted.
 
 ## Integration guidance continuation - 2026-10-05
 
 Last Updated: 2026-10-05 - Codex.
 Reviewed source is published and installed DEV routes are verified.
 Eight adopter primaries are current; MED/Travel Ledger dirty copies and fresh
-Windows readback remain pending. Home Dossier curation/readback is in progress.
+Windows readback remain pending. Home Dossier revision 11 incorporates the reviewed integration; actual reader
+and recovery pass with exact Opus delivery GO. See the final scoped receipt.
 See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
 Windows October 2 installation is partial; fresh host readback remains pending.
 Existing independent product priorities and runtime remain unchanged.

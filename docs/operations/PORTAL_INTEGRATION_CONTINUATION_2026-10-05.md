@@ -56,10 +56,65 @@ remaining inventory owner actions stay open. Spitfire Docs preserves stable
 tech-library portable identity; host verify-parent alias reconciliation remains
 pending. No consumer is newly admitted and no runtime image is deployed.
 
-Home Infra Dossier refresh is prepared for independent curation review. Source
-publication and DEV verification do not claim its reader delivery. Prior salon,
+Home Infra Dossier integration is delivered in the concurrent owner's shared
+revision 11; actual reader and recovery verification are recorded below. Prior salon,
 irrigation, recovery and product gates retain owners; Spitfire calibration stays
 in its own project. The coordinator's broader Next Execution remains open.
 
 Exact source/installed receipts: Home Infra
 docs/operations/PORTAL_INTEGRATION_DELIVERY_2026-10-05.json.
+
+## Final scoped delivery receipt - 2026-10-05
+
+Exact Opus 5.5 high returned RENDER_GO and DELIVERY_GO for source, DEV and the
+integration content in Home Infra's Dossier. This does not close Next Execution.
+R3 HOLD corrected historical-text preservation, placement of HISTORY receipts
+and source-backed curation; R4 granted RECEIPT_SOURCE_GO/CURATION_GO after those
+corrections. Fourteen final repository checks and Home's composed documentation
+closeout passed before publishing the receipt commits.
+
+The concurrent Home Infra bulb-monitoring owner published shared revision 11:
+`shared:900e51e79f483ca7d1375e01a5230eefd55de04d6d72b06a1c6d1eb35e460e45`.
+Its reviewed integration milestones M11/M13/M18/M19/M20, D10, change records and
+integration-oct5 source exactly incorporate this task's approved content. The
+source remains pinned to Home commit 26bf55a97b3d3b05ad2161962d61b0be473432f0,
+HANDOFF SHA256 4a94e211f7261828d8b22bd94790d5f6ba578795ce77d70247dfd658589b649b.
+The newer owner's headline, next steps and bulb evidence are preserved; this
+task does not claim its runtime or physical acceptance.
+
+Our native L11 draft a0c163d8-d3ee-432e-a403-2e3c93e9e3c3 remains retained as
+`local:edbed0503a56053adc6256ff7ac90e656d73c200e1b3c4f5e1bc591f80c85b82`,
+superseded; do not submit. After successful capture/export, a wrapper tried to
+parse the successful plain-text trace as JSON and stopped before submission.
+A subsequent read-only status attempt failed transiently, before mutation.
+Fresh readback found the owner's S11 already incorporating the approved work;
+no duplicate shared write or recapture was made. Dossier assessment: no_change
+for these factual receipts, with reviewed integration refresh already delivered.
+
+Actual reader acceptance: all five tabs at 1440 and 390 pixels, Windows detail,
+prior-revision permalink, zero JavaScript errors and no horizontal overflow.
+The API, all eleven exact permalinks and all pinned source hashes pass. All ten
+prior records are identical. A coherent 536386-byte backup, SHA256
+28165d0e62a14070ba5ee60749f67cfae5583294751c91633bb97543aa33288d,
+restores all eleven records and exact revisions in isolated DEV custody.
+This remains the same physical NAS/DEV host; independent physical recovery is
+open. The other four readers retain exact histories and heads (4/7/14/2 records);
+the five-reader index reports zero unavailable.
+
+Reader limitations retained for the Portal owner: the Windows milestone detail
+labels the project-wide relay-power blocker as "Bloqueo". Its description has
+the correct Windows access prerequisite, but the displayed blocker is not
+Windows-specific. The pre-existing reader also dates historical decisions and
+sources with the selected snapshot's observation time. These presentation issues
+are follow-up work, not corrected by this delivery. M19/M20 are visible under
+changes/roadmap; the next Home content curation should restore them to the main
+next-step/blocker fields alongside the current owner's priorities. No additional
+content revision is required for this receipt.
+
+Next actions remain independently owned: a receiving authorized Windows session
+runs Home's PORTAL_INTEGRATION_WINDOWS_2026-10-05.md, inspecting installation
+before probes; MED/Travel Ledger owners reconcile dirty primaries; inventory
+owners resolve six unverified remotes and remaining admission/guidance evidence.
+Spitfire Docs helper alias and LLM-DocKit reader/catalog identity remain open.
+Home and Portal task states remain pending-integration. Spitfire calibration
+continues in its own project. No runtime image was deployed by this task.
