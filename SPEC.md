@@ -315,7 +315,7 @@ edge-caddy".
 
 | Consumer | Version | Support | Evidence boundary |
 |----------|---------|---------|-------------------|
-| infra-portal | 0.34.0 candidate | Original local SVG mapping, neutral fallback, strict browser egress, tolerant optional-field ingestion | Source/tests/browser preview reviewed in the coordinated release; production acceptance is recorded by the consumer deployment receipt, not inferred from this table. |
+| infra-portal | 0.34.1 deployed | Original local SVG mapping, neutral fallback, strict browser egress, tolerant optional-field ingestion | Source/tests and actual card browser checks pass in the coordinated release; exact production evidence remains in the consumer-owned CARD_ICONS_DELIVERY_2026-10-05 receipt. |
 
 #### Consumer support for authentication placement
 

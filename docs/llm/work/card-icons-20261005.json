@@ -2,9 +2,9 @@
   "artifacts": [],
   "branch": "work/card-icons-20261005",
   "id": "card-icons-20261005",
-  "next_step": "Complete reviewed source publication, icon runtime verification and required Dossier capture/publication/reader recovery; preserve independent work.",
+  "next_step": "Protocol 0.15.0 is published and consumed by deployed Portal 0.34.1; retain checkout and evidence. Portal/Home Infra own final Dossier and delivery receipts; existing fleet and physical gates remain open.",
   "project": "home-infra-protocol",
   "purpose": "Declare service icons and align Portal Dossier card actions with exact Opus editing and review",
   "schema": 1,
-  "state": "active"
+  "state": "closed"
 }

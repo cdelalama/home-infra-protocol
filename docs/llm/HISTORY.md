@@ -1,3 +1,5 @@
+- 2026-10-05 - Codex - Record published Protocol 0.15.0 consumption by deployed Portal 0.34.1 and close this contract slice while retaining its checkout/evidence. Exact runtime, Dossier and wider fleet gates remain consumer-owned. Trace: role=executor; state=published-contract-consumed; validation=95-tests-and-eight-actual-browser-combinations; next=consumer-closing-receipts.
+
 <!-- doc-version: 0.15.0 -->
 - 2026-10-05 - Codex - Add the optional portable Service.icon presentation token. Files: icon contract/UI/catalog as owned, adoption/admission, task record and governance. Version impact: 0.15.0. Trace: role=executor; sent=2026-10-05 22:42:57 CEST (20:42:57 UTC); state=source-candidate; validation=95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO; next=published-source-runtime-and-Dossier-delivery.
 

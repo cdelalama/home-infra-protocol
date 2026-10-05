@@ -9,19 +9,21 @@ Vocabulary stays open; no remote image/markup/path semantics. Consumer fallback
 cannot prevent otherwise valid catalogs loading. Infra Portal owns local glyphs;
 Home Infra owns explicit declarations and project agreement validation. Sanitized
 examples and schema rejection/compatibility tests accompany the contract.
-This source candidate does not prove deployment of every consumer. Prior owner
+Protocol 0.15.0 is published at f9a6ad3; Portal 0.34.1 consumes it in production,
+with 33 actual icon cards and eight grid/compact width checks passing. This
+bounded observation does not prove every consumer deployment. Prior owner
 adoption, public governance and recovery requirements remain unchanged.
 
 ### Trace Anchor
 
 - Role: executor
-- Sent: 2026-10-05 22:42:57 CEST (20:42:57 UTC)
+- Sent: 2026-10-05 23:46:28 CEST (21:46:28 UTC)
 - Subject: Add the optional portable Service.icon presentation token.
-- Resulting state: HEAD=284a6d6277f785bdf355e049a120d034e1ea1969; version=0.15.0 candidate; gate=opened.
-- Repo state: isolated registered task based on fetched origin/main; scoped source edits pending review.
+- Resulting state: HEAD=f9a6ad36d84db47866d64df99ec1fc54e5004624; version=0.15.0; gate=cleared for this contract slice.
+- Repo state: registered task retained; source published and consumer runtime observed.
 - Validation: 95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO.
-- Next gate: executing agent completes source and consumer delivery, preserving existing gates.
-- Dossier assessment: refresh required for meaningful feature/admission and changed execution priority; no delivery claim yet.
+- Next gate: Portal/Home Infra owners complete final Dossier/delivery receipts; prior fleet gates remain.
+- Dossier assessment: consumer owners retain the meaningful feature/admission capture and reviewed shared closeout; this Protocol receipt adds no new publication claim.
 
 
 ## Integration continuation Trace Anchor
