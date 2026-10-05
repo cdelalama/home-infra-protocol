@@ -1,5 +1,7 @@
 <!-- doc-version: 0.14.0 -->
 
+- 2026-10-05 - Codex - Source and DEV delivery checkpoint: fourteen reviewed slices published, eight adopter primaries current, skill bytes/links verified for both clients and Codex discovery verified; nine installed probes PASS. Windows, fleet dispositions and Home Dossier reader acceptance remain pending. See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
+
 - 2026-10-05 - Codex - Continue required consumer integration with scoped guidance drift, adopter reconciliation and preserved Windows limits. Source candidate; no runtime mutation. Trace: role=executor; state=candidate; validation=owner targeted checks and exact Opus advisor consensus; next=independent source audit, publication and installed reader evidence.
 
 # LLM Session History

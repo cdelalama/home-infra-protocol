@@ -2,9 +2,9 @@
   "artifacts": [],
   "branch": "work/portal-integration-closure-20261005",
   "id": "portal-integration-closure-20261005",
-  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "next_step": "Reviewed source published and effective DEV tools verified; retain dependency/evidence. Wider Windows/fleet acceptance remains coordinated by Infra Portal.",
   "project": "home-infra-protocol",
   "purpose": "Complete installed integration checks, adopter inventory and guidance drift with audited Portal closure",
   "schema": 1,
-  "state": "active"
+  "state": "closed"
 }

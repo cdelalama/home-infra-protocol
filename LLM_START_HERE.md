@@ -3,7 +3,9 @@
 ## Integration guidance continuation - 2026-10-05
 
 Last Updated: 2026-10-05 - Codex.
-Authorized scoped integration/guidance work has passed independent source review.
+Reviewed source is published and installed DEV routes are verified.
+Eight adopter primaries are current; MED/Travel Ledger dirty copies and fresh
+Windows readback remain pending. Home Dossier curation/readback is in progress.
 See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
 Windows October 2 installation is partial; fresh host readback remains pending.
 Existing independent product priorities and runtime remain unchanged.
