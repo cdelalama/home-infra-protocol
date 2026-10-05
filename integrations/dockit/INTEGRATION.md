@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
 # Home Infra Integration for LLM-DocKit projects
 
 This directory ships an opt-in profile that any project scaffolded
@@ -240,3 +240,23 @@ content lives in one place.
   compliance-claim policy.
 - `~/src/home-infra-protocol/SPEC.md` — protocol entities and
   required fields.
+
+## Installed guidance drift (report only)
+
+Run `python3 scripts/check-installed-profile.py --project <adopter-root>` from
+this trusted published Protocol checkout before reusing an installed profile.
+The JSON reports exact current/historical template matches, integration-critical
+section differences, retired routes/conditionals, local edits, line endings and
+Claude entrypoint differences. Customization is not proof of obsolescence.
+The command does not overwrite files, select consumer obligations or claim
+runtime acceptance. No installed profile is NOT_ADOPTED, not a passing adoption.
+Exit 0 means the report was produced, even with findings; exit 2 means inspection
+could not complete. Consumers must read `result` and file/section findings.
+
+`apply-profile.sh` emits this report after its existing non-overwriting copy
+loop, so skipped copies cannot be mistaken for updated instructions. A completed
+checklist may differ from the pristine template; review its annotations instead
+of replacing them. Home Infra's optional guidance field verifies this script
+and template bytes against its explicitly resolved Protocol origin/main before
+execution, and does not change the integration verdict. Report source equality
+and freshly fetched remote provenance separately. No background updater exists.

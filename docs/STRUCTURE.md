@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
 # Repository Structure
 
 ```text
@@ -80,3 +80,5 @@ home-infra-protocol/
 - `docs/llm/` is working memory for LLM-assisted maintenance.
 
 - `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: required consumer integration contract and phase/owner boundaries.
+
+- `docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md`: scoped owner continuation and coordinator reference.

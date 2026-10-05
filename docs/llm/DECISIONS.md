@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -168,3 +168,16 @@ consumer acceptance and physical recovery remain separate. This implements
 existing required-consumer intent and adds new commands without changing immutable
 Project Birth or public service schemas; the coordinated initial-development
 capability release is minor, with Protocol guidance a patch clarification.
+
+## 2026-10-05 - Report installed instruction drift separately from acceptance
+
+Existing apply-profile intentionally preserves adopter files; therefore applying
+a newer owner template cannot prove that an agent sees current requirements.
+Compare published historical bytes and critical sections, preserve local custom
+rules and checked items, and report ambiguity instead of rewriting automatically.
+The advisory guidance report is outside acceptance outcomes and exit status.
+Only an explicitly selected trusted Protocol checkout may supply executable
+checker bytes; Home Infra verifies them against its resolved published reference.
+The coordinator inventory keeps published source, installed host state and
+integration admission as separate evidence axes. This maintains legacy migration
+boundaries while making stale instructions visible at normal execution routes.

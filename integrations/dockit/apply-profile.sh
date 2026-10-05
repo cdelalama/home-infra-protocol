@@ -96,3 +96,8 @@ echo "Homelab profile applied to: $TARGET_ABS"
 echo "Created: $CREATED   Skipped: $SKIPPED"
 echo ""
 echo "Next: open AGENTS.md and follow the required reading order."
+
+# Existing files may be intentionally customized or stale. Never call a skipped
+# copy an update. The report is informational and preserves apply semantics.
+python3 "$PROTOCOL_ROOT/scripts/check-installed-profile.py" --project "$TARGET_ABS" \
+    || echo "WARNING: guidance report unavailable; profile copy/skip result unchanged" >&2

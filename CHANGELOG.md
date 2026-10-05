@@ -2,6 +2,11 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.14.0] - 2026-10-05
+
+### Changed
+- Add read-only installed-profile drift reports, preserving customized instructions and acceptance verdicts.
+
 ## [0.13.10] - 2026-10-01
 
 ### Changed

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
 # Governance
 
 Home Infra Protocol should stay grounded in real implementations. The protocol

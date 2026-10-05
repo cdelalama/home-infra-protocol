@@ -1,4 +1,13 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
+
+## Integration guidance continuation - 2026-10-05
+
+Last Updated: 2026-10-05 - Codex.
+Authorized scoped integration/guidance work has passed independent source review.
+See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
+Windows October 2 installation is partial; fresh host readback remains pending.
+Existing independent product priorities and runtime remain unchanged.
+
 
 # LLM Start Guide - Home Infra Protocol
 

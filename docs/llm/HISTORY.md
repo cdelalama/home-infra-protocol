@@ -1,4 +1,6 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
+
+- 2026-10-05 - Codex - Continue required consumer integration with scoped guidance drift, adopter reconciliation and preserved Windows limits. Source candidate; no runtime mutation. Trace: role=executor; state=candidate; validation=owner targeted checks and exact Opus advisor consensus; next=independent source audit, publication and installed reader evidence.
 
 # LLM Session History
 

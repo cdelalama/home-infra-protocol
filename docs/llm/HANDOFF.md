@@ -1,4 +1,25 @@
-<!-- doc-version: 0.13.10 -->
+<!-- doc-version: 0.14.0 -->
+
+## Integration continuation Trace Anchor
+
+- Role: executor
+- Sent: 2026-10-05 12:34:05 CEST (10:34:05 UTC)
+- Subject: mandatory Portal and Dossier integration continuation.
+- Resulting state: reviewed source; delivery not accepted; no runtime deployment.
+- Repo state: isolated task based on fetched origin/main; candidate changes only.
+- Validation: Protocol93 and Home guidance5 tests pass; all14 owner documentary checks pass; exact Opus R2 SOURCE_GO.
+- Next gate: reviewed source publication, effective DEV instructions and Home Infra Dossier readback; fresh Windows verification remains open.
+- Dossier assessment: Home Infra refresh for cross-owner outcome; other source-only owners no_change.
+
+
+## Integration guidance continuation - 2026-10-05
+
+Last Updated: 2026-10-05 - Codex.
+Authorized scoped integration/guidance work has passed independent source review.
+See docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md.
+Windows October 2 installation is partial; fresh host readback remains pending.
+Existing independent product priorities and runtime remain unchanged.
+
 
 # LLM Work Handoff
 

@@ -1,4 +1,38 @@
-<!-- doc-version: 0.13.10 -->
+## 2026-10-05 - Independent source approval
+
+SOURCE_GO after R1 corrections and R2 reconciliation, exact claude-opus-5-5,
+high effort, session ff604da6-2b28-40c7-9dd4-338714089b6d; canonicalModel
+and firstParty metadata verified. R2 native SHA256:
+117e3ed46795cc68ad328696688b8e402a9d4e6af5754f8856949185a3f6f1f5.
+The outstanding Home validation condition is now satisfied: all fourteen
+repositories passed version, portable work record, documentary and diff checks.
+Protocol93 tests and final Home guidance5 tests pass. Forge52 integration tests
+with the coordinated Home wrapper passed before the isolated-Python guidance
+change; the final5 Home tests include that import-isolation regression. Ship8
+tests also passed. No skipped integration tests are counted as accepted.
+This permits reviewed source publication, not Windows, runtime or Dossier
+delivery acceptance. Receipt-only additions and actual published SHA readback
+are allowed by R2; semantic changes require further review.
+
+## 2026-10-05 - Mandatory integration continuation source audit
+
+Exact claude-opus-5-5, high effort, independent read-only session
+ff604da6-2b28-40c7-9dd4-338714089b6d. R1 HOLD found stale adopter checklists,
+old regular CLAUDE copies, partial pristine-template migrations and an apply
+report failure changing copy semantics. Corrections preserve custom checked
+evidence, update both clients, replace proven pristine historical templates,
+keep the report advisory on error and isolate Python imports. Spitfire Docs
+keeps stable tech-library portable ownership; host alias proof stays pending.
+R2 acceptance is required before source publication. Advisor consensus from
+fd249107-8664-4169-a9f4-2830f8da2c55 did not substitute this source audit.
+Returned modelUsage/canonicalModel is claude-opus-5-5, firstParty; no fallback.
+Caller-captured R1 native SHA256:
+5b4e99eabd9526947319cb0fc6bc7ca2f4980c22b3ce2b94584912181d38ef1c.
+All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
+Windows installed acceptance, source installation and Home Infra Dossier
+curation/publication/actual-reader acceptance remain distinct follow-up gates.
+
+<!-- doc-version: 0.14.0 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
