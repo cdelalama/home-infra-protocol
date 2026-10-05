@@ -1,3 +1,14 @@
+## 2026-10-05 - Optional service icon contract
+
+Independent exact claude-opus-5-5 high, firstParty, returned SOURCE_GO for the
+portable schema, sanitized example, fallback semantics and downstream authoring
+validation. Actual modelUsage/canonicalModel and native transcript parity were
+verified. Reviewer session 2337afdd-17a4-4745-9038-2456cd8940a4; native R4 SHA256
+78240aadae4e4c33c4cb754316b8c6f9a823dcd18cce1ba2ed5119473bace493.
+Corrected first-line version markers, whole-string syntax wording and the decision
+to keep it portable. Full suite 95/95 and documentary/version/work-record checks
+pass. This approves source; consumer runtime acceptance remains separate.
+
 ## 2026-10-05 - Final integration receipt, curation and render audit
 
 Exact claude-opus-5-5 / firstParty, high effort, independent read-only session
@@ -55,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
 
 ## 2026-09-23 - DocKit fleet source update
 

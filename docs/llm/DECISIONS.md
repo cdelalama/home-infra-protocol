@@ -1,4 +1,4 @@
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -181,3 +181,16 @@ checker bytes; Home Infra verifies them against its resolved published reference
 The coordinator inventory keeps published source, installed host state and
 integration admission as separate evidence axes. This maintains legacy migration
 boundaries while making stale instructions visible at normal execution routes.
+
+
+## Optional local icon token - 2026-10-05
+
+Status: accepted; additive protocol contract.
+
+Define Service.icon as an optional bounded lowercase token with an open
+vocabulary. Consumers own local pictograms and use a generic fallback for
+missing or unsupported tokens. The field allows no fetchable references,
+paths, or markup and conveys no health or identity authority. Invalid optional
+decoration does not invalidate otherwise usable catalog data in consumers;
+authoring validators reject it. This is a portable contract justified by a real
+consumer, not a branding registry or a new service capability.

@@ -12,6 +12,7 @@ hosts:
 services:
   - id: infra
     name: Infra Portal
+    icon: portal
     category: infra
     url: https://infra.example.internal/
     interface: web

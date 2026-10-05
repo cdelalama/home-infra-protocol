@@ -2,6 +2,11 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.15.0] - 2026-10-05
+
+### Added
+- Define optional portable Service.icon tokens, safe local fallback semantics, sanitized example and schema compatibility tests.
+
 ## [0.14.0] - 2026-10-05
 
 ### Changed

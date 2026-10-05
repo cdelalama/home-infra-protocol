@@ -1,4 +1,4 @@
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -62,6 +62,7 @@ Minimum fields:
 
 Recommended fields:
 
+- `icon`
 - `interface`
 - `environment`
 - `project_id`
@@ -78,6 +79,29 @@ Recommended fields:
 - `runbook`
 - `secrets_source`
 - `deployment`
+
+#### `icon`
+
+`icon` is an optional presentation token: one to 32 lowercase ASCII letters,
+digits, or single hyphens separating nonempty groups
+(`^[a-z0-9]+(?:-[a-z0-9]+)*$` (whole string, with no trailing newline)). The vocabulary is open; consumer implementations
+own their supported token-to-pictogram mappings. A token such as `portal`,
+`database`, or `home-assistant` is neither a URL nor a file path. Raw SVG,
+markup, remote image URLs and data URLs are not permitted.
+
+Catalog authoring validators MUST reject malformed tokens. Consumers MUST use
+a generic local fallback when a token is absent or unsupported; a malformed
+optional decoration MUST NOT prevent otherwise valid catalog data from loading.
+Consumers MUST NOT fetch an image or interpolate markup from the token. The
+icon carries no health, authorization, admission, ownership or verified identity
+meaning and MUST NOT replace the visible service name or health indicator.
+
+For consumers that group services by `project_id`, adopters SHOULD use the same
+explicit icon on related records. The Home Infra adopter rejects disagreement
+between declared tokens (including hidden records). Infra Portal selects a
+project icon only when all visible services declare the same supported token;
+missing, mixed, unsupported, or observation-only groups use its generic icon.
+This grouping policy is consumer behavior, not an additional protocol enum.
 
 #### `interface`
 
@@ -286,6 +310,12 @@ The protocol deliberately does not name a DNS provider, reverse proxy, or
 certificate mechanism. Adopters may layer a local profile on top, such as
 "operator web URLs must be `https://*.example.internal/` and route through
 edge-caddy".
+
+#### Consumer support for `icon`
+
+| Consumer | Version | Support | Evidence boundary |
+|----------|---------|---------|-------------------|
+| infra-portal | 0.34.0 candidate | Original local SVG mapping, neutral fallback, strict browser egress, tolerant optional-field ingestion | Source/tests/browser preview reviewed in the coordinated release; production acceptance is recorded by the consumer deployment receipt, not inferred from this table. |
 
 #### Consumer support for authentication placement
 

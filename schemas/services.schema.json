@@ -18,6 +18,12 @@
           },
           "name": { "type": "string", "minLength": 1 },
           "category": { "type": "string", "minLength": 1 },
+          "icon": {
+            "type": "string",
+            "maxLength": 32,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])",
+            "description": "Optional presentation token for a consumer-owned local pictogram. Open vocabulary, not a URL, file path, SVG or markup. Consumers use a generic local fallback for absent or unsupported tokens; this field conveys no health, identity or authorization evidence."
+          },
           "url": { "type": "string", "minLength": 1 },
           "exposure": {
             "type": "object",

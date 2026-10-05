@@ -1,4 +1,4 @@
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
 
 ## Integration guidance continuation - 2026-10-05
 
@@ -107,6 +107,8 @@ Recommended reading order:
 - Schema evolution should be additive until a major version.
 
 ## Current Focus
+
+Current bounded execution (2026-10-05): Add the optional portable Service.icon presentation token. See the latest HANDOFF entry. Earlier independent work and gates remain open; source preparation is not runtime delivery.
 
 Source of truth: `docs/llm/HANDOFF.md`.
 

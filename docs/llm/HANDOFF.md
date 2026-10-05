@@ -1,4 +1,28 @@
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
+
+## Card icons and Dossier execution - 2026-10-05
+
+Last Updated: 2026-10-05 - Codex.
+
+The additive optional icon field is a bounded lowercase presentation token.
+Vocabulary stays open; no remote image/markup/path semantics. Consumer fallback
+cannot prevent otherwise valid catalogs loading. Infra Portal owns local glyphs;
+Home Infra owns explicit declarations and project agreement validation. Sanitized
+examples and schema rejection/compatibility tests accompany the contract.
+This source candidate does not prove deployment of every consumer. Prior owner
+adoption, public governance and recovery requirements remain unchanged.
+
+### Trace Anchor
+
+- Role: executor
+- Sent: 2026-10-05 22:42:57 CEST (20:42:57 UTC)
+- Subject: Add the optional portable Service.icon presentation token.
+- Resulting state: HEAD=284a6d6277f785bdf355e049a120d034e1ea1969; version=0.15.0 candidate; gate=opened.
+- Repo state: isolated registered task based on fetched origin/main; scoped source edits pending review.
+- Validation: 95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO.
+- Next gate: executing agent completes source and consumer delivery, preserving existing gates.
+- Dossier assessment: refresh required for meaningful feature/admission and changed execution priority; no delivery claim yet.
+
 
 ## Integration continuation Trace Anchor
 

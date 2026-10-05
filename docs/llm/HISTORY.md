@@ -1,4 +1,6 @@
-<!-- doc-version: 0.14.0 -->
+<!-- doc-version: 0.15.0 -->
+- 2026-10-05 - Codex - Add the optional portable Service.icon presentation token. Files: icon contract/UI/catalog as owned, adoption/admission, task record and governance. Version impact: 0.15.0. Trace: role=executor; sent=2026-10-05 22:42:57 CEST (20:42:57 UTC); state=source-candidate; validation=95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO; next=published-source-runtime-and-Dossier-delivery.
+
 
 - 2026-10-05 - Codex - Record exact Opus R4/R5 scoped delivery GO, concurrent Home S11 incorporation, actual reader/history and isolated recovery; preserve Windows/fleet gates and record reader limitations. Dossier no_change; superseded native draft retained without submission. Trace: role=executor; sent=2026-10-05 13:40:28 CEST (11:40:28 UTC); state=scoped-delivered-broader-open; validation=14-repositories-composed-Home-and-actual-reader-recovery-PASS; next=authorized-Windows-agent-and-owner-followups.
 
