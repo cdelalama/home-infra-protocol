@@ -2,6 +2,17 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.15.1] - 2026-10-07
+
+### Changed
+- Preserve project ideas through a pinned continuity index, session/CI checks and bounded historical recovery without changing product priorities.
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## [0.15.0] - 2026-10-05
 
 ### Added

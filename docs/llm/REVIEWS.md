@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.15.0 -->
+<!-- doc-version: 0.15.1 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -335,3 +335,29 @@ Full Home suite remains non-green with recorded baseline/environment deviations.
 - auditor-closure-followup: session `3d32a8b0-7797-4e86-b353-d97c71efc0af`; prompt SHA256 `4613025618ba9e10b5305318c218cd112060b867463fb498db560d41fa905596`; result JSON SHA256 `0ed1c2f84f923da7f50e07470ec146707d5cc944387e065b5836e09b28d43b45`; response text SHA256 `76b6ce4c892b56ef502f4a34039c5f15cb3fc4ab60c951b5b5d2d35b52b59f2f`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
 - auditor-closure-final: session `6530c13d-3fab-498f-936f-d4dbbb93cc00`; prompt SHA256 `fb001afe862cb635417daed2e7bcd78a4dd7f431457b1d50558c998f6d1e5583`; result JSON SHA256 `db847b8279fa9804013c2046ec5a7369d9c335e990d7b1ad9733ec7987672f19`; response text SHA256 `de42ce94ccbdd4e8de62b80a5adadb2f32e830c8b54087acacff23c2029424d8`; command SHA256 `8c5867491bf4a1cc665d978814365d12d1c01ac4ac7c079be33f57343786b2c8`.
 - Final validation receipt SHA256 `4655947ed863b5bef31e8bc182cb0a1f1ac49092e8cb6c5d98b455796e15c375`.
+
+## Idea continuity - 2026-10-07
+
+- Requested and actual model: claude-opus-5-5; high effort.
+- Advisor session: 139ec679-ca1a-4e18-824a-a16dfcda41b1, rounds 1-2.
+- Verdict: CONSENSUS_GO with explicit implementation conditions; advisory only.
+- Evidence: caller-side prompt/argv/result/stderr/native SHA256 and immutable
+  parent/round capture under private continuity implementation state.
+- Reconciled conditions: native versus authoritative references; no index
+  priority; explicit publication baseline; historical and newly closed task
+  distinction; pinned helper; strict exact-session capture; scoped recovery.
+- Independent source reviewer: 3677ad88-e970-484d-aafb-648aeca229e5,
+  rounds 1-2, actual claude-opus-5-5 canonical metadata/high effort verified.
+- Round1 withheld SOURCE_GO for malformed hook JSON, committed-index deletion
+  with a dirty tree, historical-only authority references and final test evidence.
+  All were corrected with regressions; nonblocking continuity/capture findings
+  were also incorporated. Round2 returned SOURCE_GO.
+- Prepublication conditions met: validation-02.json records zero-exit explicit
+  original-baseline checks with the full project map for all eight adopters;
+  final capture fixture archive dev-stage-t7ze66_6-1791384486936008847.tar.gz
+  was read back on NAS and staging finalized. Exact helper SHA256 is pinned in
+  each IDEA_INDEX; 16 idea, 14 capture and 96 existing validator tests pass.
+- Native rounds and growing parent snapshots are immutably captured outside Git;
+  legacy capture error history remains visible, not evidence of universal loss.
+- Source acceptance does not constitute installed-host or Dossier delivery.
+  Actual operator-view review and recovery receipts follow separately.

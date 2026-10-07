@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "project": "home-infra-protocol",
+  "validator_sha256": "b1fe8e98663e6d03b440ed05a35578ffee5787750ba4f5adef32e672db521def",
+  "registers": [
+    {
+      "path": "docs/llm/DECISIONS.md",
+      "pattern": "^#{2,6}\\s+(D-\\d{3})\\b"
+    }
+  ],
+  "batches": [
+    {
+      "id": "B001-audit-20261007",
+      "date": "2026-10-07",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "revision": "66fadf24c3ff023970cda8208a01a6c15a9d5224"
+        },
+        {
+          "path": "docs/llm/HANDOFF.md",
+          "revision": "66fadf24c3ff023970cda8208a01a6c15a9d5224",
+          "contains": "2026-05-04"
+        }
+      ],
+      "excluded": [
+        "Full contents of all historic commits and native conversations; no broad private corpus promotion."
+      ],
+      "unknown": [
+        "Other hosts, external chats, retired worktrees, and complete historical capture coverage."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Review further historical suggestions and retained work in bounded attributed batches. The initial audit inventoried 2343 commit metadata entries and 625 Markdown paths across eight repos; those counts are not semantic review.",
+      "cursor": "Resume from this batch sources and the remaining historical queue; no exhaustive scan has been claimed."
+    }
+  ],
+  "entries": [
+    {
+      "id": "REF-ECOSYSTEM",
+      "record": "reference",
+      "kind": "agent_suggestion",
+      "title": "Retained May ecosystem reconciliation and later superseding receipts",
+      "origin": {
+        "date": "2026-10-07",
+        "attribution": "Existing owner register, reviewed in bounded continuity audit",
+        "sources": [
+          {
+            "path": "docs/llm/HANDOFF.md",
+            "revision": "66fadf24c3ff023970cda8208a01a6c15a9d5224",
+            "contains": "2026-05-04"
+          }
+        ]
+      },
+      "batch": "B001-audit-20261007",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before resuming ecosystem reconciliation; check later sources so completed DF-004 work is not replayed.",
+      "ref": {
+        "path": "docs/llm/HANDOFF.md",
+        "contains": "2026-05-04"
+      }
+    },
+    {
+      "id": "REF-OBLIGATIONS",
+      "record": "reference",
+      "kind": "accepted_decision",
+      "title": "Operational obligations remain distinct from brainstorming ideas",
+      "origin": {
+        "date": "2026-10-07",
+        "attribution": "Existing owner register, reviewed in bounded continuity audit",
+        "sources": [
+          {
+            "path": "docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md",
+            "revision": "66fadf24c3ff023970cda8208a01a6c15a9d5224"
+          }
+        ]
+      },
+      "batch": "B001-audit-20261007",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before converting an accepted idea into an actual timed human obligation.",
+      "ref": {
+        "path": "docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md",
+        "contains": "# Operational Obligations Proposal"
+      }
+    }
+  ],
+  "task_reconciliations": []
+}

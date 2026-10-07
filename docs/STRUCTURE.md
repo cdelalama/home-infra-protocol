@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.0 -->
+<!-- doc-version: 0.15.1 -->
 # Repository Structure
 
 ```text
@@ -82,3 +82,9 @@ home-infra-protocol/
 - `integrations/dockit/checklists/PROJECT_CHECKLIST.md`: required consumer integration contract and phase/owner boundaries.
 
 - `docs/operations/PORTAL_INTEGRATION_CONTINUATION_2026-10-05.md`: scoped owner continuation and coordinator reference.
+
+## Idea continuity
+
+- `docs/IDEA_CONTINUITY.md`: shared capture, recall and closeout rules.
+- `docs/llm/IDEA_INDEX.json`: project-owned references, untracked ideas and bounded coverage batches.
+- `scripts/dockit-ideas.py`: pinned structural and baseline validation.

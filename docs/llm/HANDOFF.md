@@ -1,4 +1,17 @@
-<!-- doc-version: 0.15.0 -->
+<!-- doc-version: 0.15.1 -->
+
+## Idea continuity adoption - 2026-10-07
+
+Last Updated: 2026-10-07 - Codex.
+Carlos authorized durable idea continuity across the eight reviewed projects.
+Read `docs/llm/IDEA_INDEX.json` before relevant brainstorming and
+`docs/llm/IDEA_CONTINUITY_2026-10-07.md` for scope, validation and delivery.
+Requests/suggestions retain origins, owners and recall triggers; existing
+decision registers keep sole lifecycle authority. The first historical batch is
+bounded and remaining coverage stays explicit. Product priorities and runtime
+remain as recorded below. Independent exact Opus 5.5/high SOURCE_GO and final eight-project checks pass.
+Source publication and required Dossier readback remain separate delivery steps.
+
 
 ## Card icons and Dossier execution - 2026-10-05
 
@@ -670,3 +683,5 @@ is `infra-portal`.
 - Repo state: managed parent task from published owner main; unrelated work preserved.
 - Validation: 52 integration/route and 8 delivery-ledger tests pass on exact hashed code; source closeout refreshed for independent audit.
 - Next gate: independent exact Opus source review, source publication, installed pilot.
+
+Continuity source receipt (2026-10-07 14:55:57 UTC): independent SOURCE_GO; explicit baseline and pinned helper verified. Required Dossier delivery remains open in the owning continuity note.
