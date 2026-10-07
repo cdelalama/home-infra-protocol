@@ -10,4 +10,4 @@ Retained records never authorize deleting work or evidence.
 
 - [card-icons-20261005](work/card-icons-20261005.json): closed; Add the optional portable Service.icon presentation token.
 
-- [idea-continuity-20261007](work/idea-continuity-20261007.json): active; implement durable idea continuity and scoped historical recovery.
+- [idea-continuity-20261007](work/idea-continuity-20261007.json): closed; implement durable idea continuity and scoped historical recovery.
