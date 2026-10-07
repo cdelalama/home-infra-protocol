@@ -1,4 +1,13 @@
 
+
+## 2026-10-07 - Continuity publication and DEV installation witness
+
+- Recorded verified source publication, installed guidance and actual capture behavior.
+- Preserved the dirty ForgeOS primary and unclassified legacy capture history.
+- No feature/version change; Dossier/recovery closure remains in progress.
+- All eight dedicated CI checks pass; Media2Text current-version prose correction
+  and Portal inherited dependency-audit failure retain their explicit scope.
+
 - 2026-10-07 - Codex - Prepare project-owned idea continuity, pinned validation, bounded B001 historical recovery and explicit task reconciliation; preserve existing priorities and runtime. Exact Opus 5.5/high advisor consensus obtained; independent SOURCE_GO and final checks pass (16 idea, 14 capture, 96 validator regressions at their owners); source publication and required Dossier delivery tracked separately. See docs/llm/IDEA_CONTINUITY_2026-10-07.md.
 - 2026-10-05 - Codex - Record published Protocol 0.15.0 consumption by deployed Portal 0.34.1 and close this contract slice while retaining its checkout/evidence. Exact runtime, Dossier and wider fleet gates remain consumer-owned. Trace: role=executor; state=published-contract-consumed; validation=95-tests-and-eight-actual-browser-combinations; next=consumer-closing-receipts.
 
