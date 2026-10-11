@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.1 -->
+<!-- doc-version: 0.15.2 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -194,3 +194,23 @@ paths, or markup and conveys no health or identity authority. Invalid optional
 decoration does not invalidate otherwise usable catalog data in consumers;
 authoring validators reject it. This is a portable contract justified by a real
 consumer, not a branding registry or a new service capability.
+
+## D-010 - Distinct product identities within an evaluation project (2026-10-11)
+
+Status: accepted after exact Opus5.5/high R7 review and its two required corrections.
+Origin: Carlos, during an existing evaluation adoption on 2026-10-11, suggested
+allowing several icons when a project compares multiple applications. The
+operator simultaneously requires continuous availability of its three demos.
+
+Clarify the existing optional Service.icon contract: product identity, project
+ownership, evaluation purpose, availability intent and product acceptance are
+separate facts. A single service retains one token; separate candidate services
+may have different tokens under the same project. Owner-held explicit exact
+membership authorizes the distinction; mixed icons alone infer no evaluation.
+No icon array, speculative product registry, schema field, URL or markup is
+needed. Consumers retain neutral aggregate fallback and each candidate's name;
+consumer rendering and private owner policy need their own review and delivery.
+
+Recall: when grouping alternative products, authoring project-icon agreement
+checks, or interpreting continuously available demo status. This bounded source
+clarification does not reprioritize DF-015/DF-016 or adopt a Dossier for Protocol.

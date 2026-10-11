@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.15.1 -->
+<!-- doc-version: 0.15.2 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -374,3 +374,12 @@ were restored and compared; fifty desktop/mobile section checks passed.
 Remaining history, same-hardware recovery limits, source-only legacy integrations,
 Portal dependency audit and ForgeOS transport/backup limits stay explicit.
 Final receipts change no application code, priority, source allowlist or admission.
+
+## 2026-10-11 - Evaluation candidate icon clarification
+
+Exact claude-opus-5-5, effort high, session d505e7e3-7f55-400c-94c0-e594b3743740,
+round7. modelUsage canonicalModel verified; native strict parent/session/round
+capture retained privately. Reviewed baseline687cc1959c1417c8b9b8e43637c615daa20615d1
+plus candidate SPEC/D-010. PROTOCOL_SOURCE_GO conditional on changelog and neutral
+aggregate label rule; both applied. Added mixed-candidate schema compatibility
+test; existing rejection of icon arrays remains. Consumer source/runtime separate.

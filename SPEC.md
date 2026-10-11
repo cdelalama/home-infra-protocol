@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.1 -->
+<!-- doc-version: 0.15.2 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -96,12 +96,36 @@ Consumers MUST NOT fetch an image or interpolate markup from the token. The
 icon carries no health, authorization, admission, ownership or verified identity
 meaning and MUST NOT replace the visible service name or health indicator.
 
-For consumers that group services by `project_id`, adopters SHOULD use the same
-explicit icon on related records. The Home Infra adopter rejects disagreement
-between declared tokens (including hidden records). Infra Portal selects a
-project icon only when all visible services declare the same supported token;
-missing, mixed, unsupported, or observation-only groups use its generic icon.
-This grouping policy is consumer behavior, not an additional protocol enum.
+For records that represent environments or endpoints of the **same product**,
+adopters SHOULD use the same explicit icon. Sharing `project_id` alone does not
+prove product identity: an evaluation project may compare several distinct
+products. Those candidate services retain their own names, URLs and icon tokens.
+The owner records the candidate membership and rationale explicitly; a consumer
+must not infer an evaluation or selected winner from mixed icons, a name, a tag,
+a hostname, or runtime health. This uses the existing per-service `icon` field,
+not an array of interchangeable marks on one endpoint.
+
+A consumer grouping different candidates may show their icons beside their
+respective visible names. Its aggregate mark must be neutral unless the owner
+has explicitly declared an independent project identity through a supported
+contract. It MUST NOT choose the first candidate's mark as the project's mark.
+The aggregate label MUST NOT be a candidate's name; use an owner-declared
+project name or the `project_id`.
+Missing or unsupported candidate icons use the existing local fallback.
+Existing consumers remain compatible and may retain a neutral group icon.
+
+Evaluation purpose is independent of availability intent. A candidate may be
+expected continuously available while product selection and acceptance remain
+open. Do not infer dormant/optional availability merely from evaluation status,
+or product acceptance from an operational production classification. Existing
+preview expiry and environment rules still apply where declared; this
+clarification creates no new uptime or lifecycle field.
+
+Home Infra's adopter policy normally rejects disagreement, including hidden
+members. An explicit owner-held exact membership/icon declaration may permit
+distinct products in one project while preserving all token checks. Portal
+currently uses a neutral mark for mixed groups; per-candidate rendering and
+operator clarity require separate consumer verification, not a protocol PASS.
 
 #### `interface`
 

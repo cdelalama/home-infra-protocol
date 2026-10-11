@@ -2,6 +2,16 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.15.2] - 2026-10-11
+
+### Added
+
+### Changed
+- Clarify independent product icons within an evaluation project, neutral group
+  names and marks, and separate availability from product acceptance.
+
+### Fixed
+
 ## [0.15.1] - 2026-10-07
 
 ### Changed

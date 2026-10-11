@@ -32,6 +32,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Review further historical suggestions and retained work in bounded attributed batches. The initial audit inventoried 2343 commit metadata entries and 625 Markdown paths across eight repos; those counts are not semantic review.",
       "cursor": "Resume from this batch sources and the remaining historical queue; no exhaustive scan has been claimed."
+    },
+    {
+      "id": "B002-evaluation-identities-20261011",
+      "date": "2026-10-11",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "D-010"
+        }
+      ],
+      "excluded": [
+        "Private financial inputs, endpoints and native conversation content."
+      ],
+      "unknown": [
+        "Earlier unreviewed conversations remain outside this bounded batch."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Prior historical backfill remains as recorded in B001.",
+      "cursor": "D-010 and its consumer delivery when evaluation groups recur."
     }
   ],
   "entries": [
@@ -80,6 +99,29 @@
       "ref": {
         "path": "docs/OPERATIONAL_OBLIGATIONS_PROPOSAL.md",
         "contains": "# Operational Obligations Proposal"
+      }
+    },
+    {
+      "id": "REF-EVALUATION-IDENTITIES",
+      "record": "reference",
+      "kind": "operator_request",
+      "title": "Distinct candidate product icons within an evaluation project",
+      "origin": {
+        "date": "2026-10-11",
+        "attribution": "Carlos, current Nexo adoption conversation; sanitized summary in D-010",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "D-010"
+          }
+        ]
+      },
+      "batch": "B002-evaluation-identities-20261011",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before grouping alternative products or interpreting always-available evaluation demos.",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "D-010"
       }
     }
   ],

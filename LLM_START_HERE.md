@@ -1,4 +1,16 @@
-<!-- doc-version: 0.15.1 -->
+<!-- doc-version: 0.15.2 -->
+
+## Evaluation candidate identities - 2026-10-11
+
+Last Updated: 2026-10-11 - Codex.
+Current bounded work: clarify that distinct candidate products may retain their
+individual names and per-service icons within one evaluation project (D-010).
+Continuous availability does not accept a product or select a winner. Source
+review/publication and real consumer delivery remain separate gates. Existing
+independent Protocol priorities and retained work remain unchanged.
+Dossier assessment: Protocol has no native/shared admission; the private
+evaluation owner curates the operator-facing adoption result in its own scope.
+
 
 ## Idea continuity adoption - 2026-10-07
 
