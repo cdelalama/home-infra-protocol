@@ -12,4 +12,4 @@ Retained records never authorize deleting work or evidence.
 
 - [idea-continuity-20261007](work/idea-continuity-20261007.json): closed; implement durable idea continuity and scoped historical recovery.
 
-- [evaluation-identities-20261011](work/evaluation-identities-20261011.json): active; clarify distinct product identity within evaluation projects.
+- [evaluation-identities-20261011](work/evaluation-identities-20261011.json): closed; clarify distinct product identity within evaluation projects.

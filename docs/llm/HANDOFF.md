@@ -3,8 +3,9 @@
 ## Evaluation candidate identities - 2026-10-11
 
 Last Updated: 2026-10-11 - Codex.
-Current bounded work: clarify that distinct candidate products may retain their
-individual names and per-service icons within one evaluation project (D-010).
+Source-only D-010 is published at fe5ab443: distinct candidate products retain
+individual names and per-service icons within one evaluation project. The task
+is closed with checkout/evidence retained; no runtime delivery is implied.
 Continuous availability does not accept a product or select a winner. Source
 review/publication and real consumer delivery remain separate gates. Existing
 independent Protocol priorities and retained work remain unchanged.

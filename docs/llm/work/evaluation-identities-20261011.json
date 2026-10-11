@@ -2,9 +2,9 @@
   "artifacts": [],
   "branch": "work/evaluation-identities-20261011",
   "id": "evaluation-identities-20261011",
-  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "next_step": "Source-only clarification published at fe5ab443; retain this workspace and evidence. Portal/Home Infra own their separate consumer delivery; earlier Protocol work remains open.",
   "project": "home-infra-protocol",
   "purpose": "Clarify independent product icons within an evaluation project; source-only reusable contract and sanitized example",
   "schema": 1,
-  "state": "active"
+  "state": "closed"
 }
