@@ -133,6 +133,13 @@
         "REF-OBLIGATIONS"
       ],
       "no_ideas_reason": null
+    },
+    {
+      "task": "docs/llm/work/evaluation-identities-20261011.json",
+      "ideas": [
+        "REF-EVALUATION-IDENTITIES"
+      ],
+      "no_ideas_reason": null
     }
   ]
 }

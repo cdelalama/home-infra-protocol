@@ -1,3 +1,5 @@
+- 2026-10-11 - Codex - Add the explicit closed-task idea reconciliation after the event-baseline CI caught its omission. Validate against both the reviewed task start and pre-close publication baseline; preserve source-only scope. Trace: role=executor; commits=6ec5134775af21e005d01b3bb3734dabe9965e2d; state=continuity-receipt-corrected; validation=explicit-baselines; next=final-CI-readback
+
 - 2026-10-11 - Codex - Record published D-010 source-only task disposition; preserve consumer/runtime gates and retained work. Trace: role=executor; commits=fe5ab443f6990a184c9d584060cb860bbd3406c7; state=source-published; validation=three-icon-tests,DocKit,Opus-review; next=consumer-owned-delivery
 
 
