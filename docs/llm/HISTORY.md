@@ -1,3 +1,5 @@
+- 2026-10-12 - Codex - Retained-session retirement correction. Prepared 0.15.3 for D-011. Source review and applicable deployment/Dossier closure remain pending; preserve earlier evidence and unrelated work.
+
 - 2026-10-11 - Codex - Add the explicit closed-task idea reconciliation after the event-baseline CI caught its omission. Validate against both the reviewed task start and pre-close publication baseline; preserve source-only scope. Trace: role=executor; commits=6ec5134775af21e005d01b3bb3734dabe9965e2d; state=continuity-receipt-corrected; validation=explicit-baselines; next=final-CI-readback
 
 - 2026-10-11 - Codex - Record published D-010 source-only task disposition; preserve consumer/runtime gates and retained work. Trace: role=executor; commits=fe5ab443f6990a184c9d584060cb860bbd3406c7; state=source-published; validation=three-icon-tests,DocKit,Opus-review; next=consumer-owned-delivery
@@ -19,7 +21,7 @@
 - 2026-10-07 - Codex - Prepare project-owned idea continuity, pinned validation, bounded B001 historical recovery and explicit task reconciliation; preserve existing priorities and runtime. Exact Opus 5.5/high advisor consensus obtained; independent SOURCE_GO and final checks pass (16 idea, 14 capture, 96 validator regressions at their owners); source publication and required Dossier delivery tracked separately. See docs/llm/IDEA_CONTINUITY_2026-10-07.md.
 - 2026-10-05 - Codex - Record published Protocol 0.15.0 consumption by deployed Portal 0.34.1 and close this contract slice while retaining its checkout/evidence. Exact runtime, Dossier and wider fleet gates remain consumer-owned. Trace: role=executor; state=published-contract-consumed; validation=95-tests-and-eight-actual-browser-combinations; next=consumer-closing-receipts.
 
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.3 -->
 - 2026-10-05 - Codex - Add the optional portable Service.icon presentation token. Files: icon contract/UI/catalog as owned, adoption/admission, task record and governance. Version impact: 0.15.0. Trace: role=executor; sent=2026-10-05 22:42:57 CEST (20:42:57 UTC); state=source-candidate; validation=95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO; next=published-source-runtime-and-Dossier-delivery.
 
 

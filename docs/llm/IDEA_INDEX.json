@@ -51,6 +51,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Prior historical backfill remains as recorded in B001.",
       "cursor": "D-010 and its consumer delivery when evaluation groups recur."
+    },
+    {
+      "id": "B-SERVICE-RETIREMENT-20261012",
+      "date": "2026-10-12",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "D-011"
+        }
+      ],
+      "excluded": [
+        "Private financial material, raw sessions and unrelated historical work."
+      ],
+      "unknown": [
+        "Earlier historical coverage remains incomplete."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Preserve the existing historical queue.",
+      "cursor": "Before retiring services or accepting long-lived consumer refresh."
     }
   ],
   "entries": [
@@ -123,6 +142,29 @@
         "path": "docs/llm/DECISIONS.md",
         "contains": "D-010"
       }
+    },
+    {
+      "id": "REF-SERVICE-RETIREMENT-20261012",
+      "record": "reference",
+      "kind": "operator_request",
+      "title": "Complete service retirement including retained consumer sessions",
+      "origin": {
+        "date": "2026-10-12",
+        "attribution": "Carlos reported the removed Finmars still visible as Sin datos and requested complete cleanup and protocol correction.",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "D-011"
+          }
+        ]
+      },
+      "batch": "B-SERVICE-RETIREMENT-20261012",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before service removal, catalog refresh changes or retirement acceptance.",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "D-011"
+      }
     }
   ],
   "task_reconciliations": [
@@ -138,6 +180,13 @@
       "task": "docs/llm/work/evaluation-identities-20261011.json",
       "ideas": [
         "REF-EVALUATION-IDENTITIES"
+      ],
+      "no_ideas_reason": null
+    },
+    {
+      "task": "docs/llm/work/finmars-topology-20261012.json",
+      "ideas": [
+        "REF-SERVICE-RETIREMENT-20261012"
       ],
       "no_ideas_reason": null
     }

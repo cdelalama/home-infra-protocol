@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.3 -->
 # Project Context - Home Infra Protocol
 
 ## Vision

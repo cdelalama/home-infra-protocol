@@ -1,4 +1,10 @@
-<!-- doc-version: 0.15.2 -->
+## Retained-session retirement correction - 2026-10-12
+
+Last Updated: 2026-10-12 - Codex.
+
+Candidate 0.15.3 clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
+
+<!-- doc-version: 0.15.3 -->
 
 ## Evaluation candidate identities - 2026-10-11
 

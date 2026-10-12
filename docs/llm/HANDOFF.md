@@ -1,4 +1,21 @@
-<!-- doc-version: 0.15.2 -->
+## Trace Anchor - retirement correction
+
+- Role: executor
+- Sent: 2026-10-12 17:50:27 CEST (15:50:27 UTC)
+- Subject: D-011, retained-session service retirement
+- Resulting state: HEAD=c86c1876a41b0c4e264b75e05fa158921a78d57b; version=0.15.3; gate=opened; source candidate
+- Repo state: isolated managed task; baseline published; scoped edits under review
+- Validation: live stale-catalog reproduction and focused unit checks PASS; final delivery pending
+- Next gate: executor completes source review, publication and applicable consumer delivery
+- Dossier: refresh required for Home/Portal; existing revisions retained; Protocol admission unchanged
+
+## Retained-session retirement correction - 2026-10-12
+
+Last Updated: 2026-10-12 - Codex.
+
+Candidate 0.15.3 clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
+
+<!-- doc-version: 0.15.3 -->
 
 ## Evaluation candidate identities - 2026-10-11
 
