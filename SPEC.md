@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.3 -->
+<!-- doc-version: 0.15.4 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1

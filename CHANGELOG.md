@@ -2,6 +2,16 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.15.4] - 2026-10-12
+
+- Validate exact PR and published-main revisions with full continuity history.
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## [0.15.3] - 2026-10-12
 
 - Clarify and verify complete service retirement across fresh and retained consumer sessions.

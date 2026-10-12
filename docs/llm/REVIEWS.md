@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.15.3 -->
+<!-- doc-version: 0.15.4 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -406,3 +406,7 @@ Remaining execution conditions: exact release CI including browser step before
 build, actual deployed fresh/retained browser readback and separately reviewed
 meaningful Home/Portal Dossier publication. No runtime mutation by reviewer.
 Private evidence: ~/.local/state/home-infra/finmars-topology-20261012, R2/R3.
+
+R4 exact Opus5.5/high SOURCE_GO: repair inherited shallow documentation CI checkout with full history and exact PR/push revision. Both PR and published-main validation required; no bypass. Strict capture and actual model metadata retained.
+
+The mandatory local version hook required a separate patch bump for the CI repair after0.15.3 had been committed. Candidate0.15.4 changes only managed version markers and the reviewed workflow; earlier0.15.3 source remains in history.
