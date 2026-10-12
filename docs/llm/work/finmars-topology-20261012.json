@@ -1,0 +1,10 @@
+{
+  "artifacts": [],
+  "branch": "work/finmars-topology-20261012",
+  "id": "finmars-topology-20261012",
+  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "project": "home-infra-protocol",
+  "purpose": "Complete service retirement across retained Portal sessions and clarify removal verification without changing unrelated services",
+  "schema": 1,
+  "state": "active"
+}

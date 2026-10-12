@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.4 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -214,3 +214,9 @@ consumer rendering and private owner policy need their own review and delivery.
 Recall: when grouping alternative products, authoring project-icon agreement
 checks, or interpreting continuously available demo status. This bounded source
 clarification does not reprioritize DF-015/DF-016 or adopt a Dossier for Protocol.
+
+## D-011 - Complete retirement in retained consumer sessions (2026-10-12)
+
+Origin: Carlos, current Finmars cleanup request and attached topology screenshot.
+
+Clarify the existing completion rule with a scoped service-retirement checklist and explicit fresh/retained consumer acceptance. Cover runtime, access, credentials, producers, schedules, catalog relations and current presentations where applicable. Shared resources and immutable audit history survive; exclusive data destruction needs explicit authority. A consumer applies valid authoritative catalog changes within a stated bound or explicitly requires reload; failed telemetry never proves retirement. No schema, tombstone or new lifecycle state is introduced. Historical installed checklist matches remain report-only; no fleet reinstall is authorized.

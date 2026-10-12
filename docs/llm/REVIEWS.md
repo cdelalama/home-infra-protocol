@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.4 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -383,3 +383,30 @@ capture retained privately. Reviewed baseline687cc1959c1417c8b9b8e43637c615daa20
 plus candidate SPEC/D-010. PROTOCOL_SOURCE_GO conditional on changelog and neutral
 aggregate label rule; both applied. Added mixed-candidate schema compatibility
 test; existing rejection of icon arrays remains. Consumer source/runtime separate.
+
+## 2026-10-12 - Retained-session service retirement, R1
+
+Exact `claude-opus-5-5`, high effort, read-only native advisor returned
+CONSENSUS_GO with twelve mandatory conditions. Actual modelUsage/canonicalModel
+verified; strict native parent/session/round capture retained at
+`~/.local/state/home-infra/finmars-topology-20261012/review-r1-capture.json`.
+The source candidate covers valid catalog refresh, detail/filter/count cleanup,
+current Finmars icon removal, fresh/retained session acceptance and append-only
+owner correction. Source/deploy review remains pending.
+
+### R2 source/deploy review and R3 conditional delta closure
+
+Exact claude-opus-5-5/high returned SOURCE_GO and DEPLOY_GO, zero blocking
+findings. Returned canonicalModel and strict native captures verified for both
+rounds. R3 closed wording, final validation, source hash/receipt handling and
+real-catalog parser conditions. Live warning views were independently inspected
+at1440/390 in both themes. 242 Portal tests,3 browser cases,types/build,audit0;
+Protocol96 tests; all three DocKit and explicit-baseline idea checks PASS.
+Remaining execution conditions: exact release CI including browser step before
+build, actual deployed fresh/retained browser readback and separately reviewed
+meaningful Home/Portal Dossier publication. No runtime mutation by reviewer.
+Private evidence: ~/.local/state/home-infra/finmars-topology-20261012, R2/R3.
+
+R4 exact Opus5.5/high SOURCE_GO: repair inherited shallow documentation CI checkout with full history and exact PR/push revision. Both PR and published-main validation required; no bypass. Strict capture and actual model metadata retained.
+
+The mandatory local version hook required a separate patch bump for the CI repair after0.15.3 had been committed. Candidate0.15.4 changes only managed version markers and the reviewed workflow; earlier0.15.3 source remains in history.

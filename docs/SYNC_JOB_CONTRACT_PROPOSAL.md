@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.4 -->
 # Sync Job Contract Proposal
 
 ## Status

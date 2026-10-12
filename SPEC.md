@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.2 -->
+<!-- doc-version: 0.15.4 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -886,6 +886,14 @@ read by consumers such as Infra Portal, Hermes, MCP servers, or validators.
 - A consumer must tolerate unknown fields.
 - A consumer must fail loudly when no valid catalog is available on boot.
 - A consumer may keep the last valid catalog when a later reload is invalid.
+- Current service membership comes from a valid authoritative catalog, never
+  from telemetry presence. Missing health data does not retire a service.
+- Long-lived consumers must reconcile catalog additions, changes and removals
+  within a documented refresh bound or expose an explicit reload requirement.
+  Verification covers both fresh and previously open sessions; see
+  `docs/COMPLETION_RULE.md#service-retirement`.
+- When retaining the last valid catalog after refresh failure, consumers should
+  make the failure visible rather than claim successful retirement.
 - A consumer must not derive an empty operational-obligations set from an
   invalid, stale, partial, or unavailable projection.
 - A source-of-truth repo must document when generated or copied data is not

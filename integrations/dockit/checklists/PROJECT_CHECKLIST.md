@@ -153,3 +153,12 @@ evidence distinguishes declaration, native capture, admitted reviewed publicatio
 fixed reader, exact history/permalink and coherent recovery. Source planning
 requires no live runtime. Legacy adoption follows explicit owner dispositions;
 no inferred new obligation or historical receipt rewrite.
+
+## Retiring an existing service
+
+For removals, follow the published Protocol `docs/COMPLETION_RULE.md#service-retirement`
+and the infrastructure owner's execution runbook. Verify all applicable current
+consumer surfaces, including a session opened before the change, and state any
+one-time reload needed for an older application version. A fresh page alone
+does not establish retirement completion. Preserve shared resources and historical
+evidence; delete data or recovery copies only within explicit operator authority.
