@@ -1,3 +1,5 @@
+- 2026-10-12 - Codex - Protocol0.15.4 retirement clarification and full-history CI published; exact CI and96 tests PASS. Source-only task closed; consumer/runtime and legacy admission remain separate.
+
 - 2026-10-12 - Codex - Repair shallow CI checkout so idea-continuity validates the exact PR and published-main revisions; R4 SOURCE_GO.
 
 - 2026-10-12 - Codex - Retained-session retirement correction. Prepared 0.15.3 for D-011. Source review and applicable deployment/Dossier closure remain pending; preserve earlier evidence and unrelated work.

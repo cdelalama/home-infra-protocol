@@ -1,3 +1,26 @@
+## Trace Anchor - published retirement guidance
+
+- Role: executor
+- Sent: 2026-10-12 18:12:01 CEST (16:12:01 UTC)
+- Subject: published Protocol0.15.4 retirement clarification
+- Resulting state: HEAD=3de198d3e9bb2ad065abdc24f78fc159e9e5af0a; version=0.15.4; gate=cleared; source-only task
+- Repo state: published main; receipt-only closeout
+- Validation: exact CI,96tests,version,ideas,Opus R1-R4 PASS
+- Next gate: owner consumer delivery; prior unrelated priorities unchanged
+- Dossier: no new admission; source-only receipt
+
+## Retirement clarification published - 2026-10-12
+
+Last Updated: 2026-10-12 - Codex.
+Protocol0.15.4 source is published at 3de198d3e9bb2ad065abdc24f78fc159e9e5af0a; exact Documentation Validation and
+Idea continuity pass.96 regressions and local/version/idea checks pass. Exact
+Opus5.5/high R1-R4 source reviews and native captures are retained. Service
+retirement now explicitly covers fresh and retained consumers, data disposition,
+shared resources and immutable history. CI uses full history and exact revisions.
+Task closed and retained. Portal/Home own deployment and meaningful Dossier
+correction; Protocol admission remains unresolved legacy, not an overall
+integration PASS. Existing DF-015/DF-016 priorities and historical backfill stay.
+
 ## Trace Anchor - retirement correction
 
 - Role: executor

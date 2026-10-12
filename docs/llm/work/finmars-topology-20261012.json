@@ -2,9 +2,9 @@
   "artifacts": [],
   "branch": "work/finmars-topology-20261012",
   "id": "finmars-topology-20261012",
-  "next_step": "Complete this task and record its result or explicit pending disposition.",
+  "next_step": "Retirement clarification published with exact CI; source-only scope, prior owner consumer/admission work and historical backfill retained. No runtime or Dossier admission created.",
   "project": "home-infra-protocol",
   "purpose": "Complete service retirement across retained Portal sessions and clarify removal verification without changing unrelated services",
   "schema": 1,
-  "state": "active"
+  "state": "closed"
 }
