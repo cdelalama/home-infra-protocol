@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -299,6 +299,11 @@ Fields:
   - `application`: authentication is implemented inside the application,
     including built-in login supplied by upstream software.
   - `proxy`: authentication is enforced by ingress or reverse proxy.
+  - `login_method` is optional and separate from placement: `none`,
+    `local_credentials`, or `federated` (OAuth/OIDC). Omitting it leaves the
+    method undeclared, preserving existing catalogs. No value proves a real
+    login or selects a product/provider; those are owner policy and observed
+    acceptance. Adopters validate consistency with placement and their policy.
 
 Authentication placement is intent, not runtime evidence. A consumer MAY
 render the declared mode neutrally or compare it with separate adopter-owned

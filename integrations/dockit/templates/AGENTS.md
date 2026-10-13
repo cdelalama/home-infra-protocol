@@ -11,6 +11,16 @@ loader picks it up; the content stays LLM-neutral on purpose.
 
 ## Required reading (in this order)
 
+Project intake/adoption is mandatory for tests, reviews, betas, source preparation
+and VM/NAS previews. Use ForgeOS; a generic DocKit scaffold or a "source-only"
+label cannot create a homelab exclusion. Preserve existing files when adopting.
+Resolve the published Home Infra consumer policy, including Sentinel monitoring
+and the required OAuth/OIDC login method. Planning does not claim a running
+service. Before runtime and delivery use the installed integration checks;
+monitor self-health, a local password or HTTP 401 alone is insufficient.
+Follow `home-infra-protocol/docs/COMPLETION_RULE.md` for current evidence and
+explicit migration gaps; never silently waive these obligations.
+
 1. `~/src/home-infra/docs/CONVENTIONS.md` — homelab build, deploy,
    secrets (Doppler), and NAS/QNAP quirks.
 2. `~/src/home-infra/docs/INVENTORY.md` — current observed state of

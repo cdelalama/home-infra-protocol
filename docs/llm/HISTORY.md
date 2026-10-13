@@ -1,3 +1,7 @@
+- 2026-10-13 - Codex - Exact Opus5.5/high protocol correction SOURCE_GO after full onboarding; strict v2 round5 accepted. Source tests pass; installation and consumer delivery remain open. Trace: role=executor; sent=2026-10-13 22:54:23 CEST (20:54:23 UTC); state=reviewed-source; validation=targeted-and-regression-PASS; next=publish-then-install-and-readback.
+
+- 2026-10-13 - Codex - Monitoring and federated identity are explicit delivery obligations; preserve prior operation and source custody. Version impact: minor 0.16.0, additive policy support with explicit migration. Source review and installed/live delivery remain open. Trace: role=executor; sent=2026-10-13 22:11:29 CEST (20:11:29 UTC); commits=40e0387ff259520a866dc1249f514330f8b5a007; state=source-candidate; validation=targeted regression checks recorded in review packet; next=review source then publish/install and observe consumers.
+
 - 2026-10-12 - Codex - Protocol0.15.4 retirement clarification and full-history CI published; exact CI and96 tests PASS. Source-only task closed; consumer/runtime and legacy admission remain separate.
 
 - 2026-10-12 - Codex - Repair shallow CI checkout so idea-continuity validates the exact PR and published-main revisions; R4 SOURCE_GO.
@@ -25,7 +29,7 @@
 - 2026-10-07 - Codex - Prepare project-owned idea continuity, pinned validation, bounded B001 historical recovery and explicit task reconciliation; preserve existing priorities and runtime. Exact Opus 5.5/high advisor consensus obtained; independent SOURCE_GO and final checks pass (16 idea, 14 capture, 96 validator regressions at their owners); source publication and required Dossier delivery tracked separately. See docs/llm/IDEA_CONTINUITY_2026-10-07.md.
 - 2026-10-05 - Codex - Record published Protocol 0.15.0 consumption by deployed Portal 0.34.1 and close this contract slice while retaining its checkout/evidence. Exact runtime, Dossier and wider fleet gates remain consumer-owned. Trace: role=executor; state=published-contract-consumed; validation=95-tests-and-eight-actual-browser-combinations; next=consumer-closing-receipts.
 
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 - 2026-10-05 - Codex - Add the optional portable Service.icon presentation token. Files: icon contract/UI/catalog as owned, adoption/admission, task record and governance. Version impact: 0.15.0. Trace: role=executor; sent=2026-10-05 22:42:57 CEST (20:42:57 UTC); state=source-candidate; validation=95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO; next=published-source-runtime-and-Dossier-delivery.
 
 

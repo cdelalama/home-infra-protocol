@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 # Completion Rule
 
 An infrastructure change is not complete until the durable source-of-truth repo
@@ -8,6 +8,26 @@ This rule applies to infrastructure changes, not to protocol-only or
 consumer-only changes.
 
 ## Required Checklist
+
+Project intake follows the adopter workflow even for source preparation, tests,
+reviews, betas and temporary VM/NAS previews. A planning lifecycle defers runtime
+evidence; it does not waive admission, documentation, identity or consumer plans.
+An agent cannot create an ecosystem exclusion by labeling work "source-only".
+Any exclusion requires recorded operator authority in the adopter's policy.
+
+Every runtime resolves the adopter-designated monitoring consumer. Delivery
+requires the specific service's fresh observation and reviewed tests for observer
+loss, outage, expected stop and recovery. Monitor self-health or a catalog row
+alone cannot prove service coverage. Source-only planning does not invent health.
+Missing/stale evidence stays unknown; intentional stops are distinct from outages.
+
+Authentication placement and login method are separate. If the adopter requires
+OAuth 2.0/OIDC, local passwords or an API's 401 cannot satisfy it. Verify federated
+login, a protected operation, anonymous denial and logout against the declared
+issuer. Missing provider setup keeps delivery incomplete. Historical deployments
+retain their operation while newly required obligations remain unresolved.
+The adopter names its monitor, provider, authority and executable checks; this
+vendor-neutral contract does not install them or imply live verification.
 
 1. The live system was changed and verified, if applicable.
 2. Human-readable source-of-truth docs reflect the new observed state.

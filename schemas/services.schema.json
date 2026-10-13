@@ -53,6 +53,11 @@
                     "type": "string",
                     "enum": ["none", "application", "proxy"],
                     "description": "Authentication placement: none at this surface, inside the application, or at the ingress/reverse proxy. Upstream built-in login is application."
+                  },
+                  "login_method": {
+                    "type": "string",
+                    "enum": ["federated", "local_credentials", "none"],
+                    "description": "Optional provider-neutral method. Federated means an OAuth 2.0/OIDC identity flow; local_credentials means an application/proxy-local password. Placement does not prove the method or effective protection. Adopters may require federated login and independent runtime verification."
                   }
                 }
               }

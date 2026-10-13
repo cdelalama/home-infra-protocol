@@ -17,3 +17,5 @@ Retained records never authorize deleting work or evidence.
 - [finmars-topology-20261012](work/finmars-topology-20261012.json): active; reconcile retired services in retained browser sessions and verify end-to-end removal.
 
 - Final disposition: finmars-topology-20261012 closed; source-only correction published, checkout/evidence retained.
+
+- [project-protocol-20261013](work/project-protocol-20261013.json): active; corrective project intake, Sentinel and authentication protocol.

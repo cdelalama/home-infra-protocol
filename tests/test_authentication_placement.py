@@ -34,6 +34,15 @@ class AuthenticationPlacementSchemaTest(unittest.TestCase):
         with self.assertRaises(ValidationError):
             validate(catalog("better-auth"), SCHEMA)
 
+    def test_login_method_is_portable_and_separate_from_placement(self) -> None:
+        for method in ('federated', 'local_credentials', 'none'):
+            data = catalog('proxy')
+            data['services'][0]['exposure']['authentication']['login_method'] = method
+            validate(data, SCHEMA)
+        data['services'][0]['exposure']['authentication']['login_method'] = 'google'
+        with self.assertRaises(ValidationError):
+            validate(data, SCHEMA)
+
     def test_sanitized_services_example_validates(self) -> None:
         example = yaml.safe_load(
             (ROOT / "examples/home-infra/catalog/services.yml").read_text()

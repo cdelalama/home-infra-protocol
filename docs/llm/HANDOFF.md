@@ -1,3 +1,25 @@
+## Project protocol correction - 2026-10-13
+
+Last Updated: 2026-10-13 - Codex.
+D-012: Monitoring and federated identity are explicit delivery obligations. Source candidate; installation and consumer acceptance are
+not yet verified. Read `docs/COMPLETION_RULE.md`. The executor completes review, publication and
+DEV installation before claiming prevention. PriceBuddy remains stopped;
+Home Infra ADR-0075 selects Authelia/OIDC and oauth2-proxy for incompatible
+upstreams. The executor owns setup and real Sentinel lifecycle checks; only
+personal credential/MFA actions can require the operator. Do not ask him to choose a provider.
+Prior owner priorities and retained work below are unchanged by this correction.
+Dossier assessment: no_change in this legacy/unadmitted contract owner; no new
+admission or disclosure is implied. Existing migration remains unresolved.
+
+### Trace Anchor - project protocol correction
+
+- Role: executor
+- Subject: Monitoring and federated identity are explicit delivery obligations
+- State verified: 2026-10-13 22:11:29 CEST (20:11:29 UTC); source candidate
+- Repo state: isolated task checkout at 40e0387ff259520a866dc1249f514330f8b5a007; PriceBuddy uses its existing primary
+- Validation: focused regressions and exact Opus round 4/5 SOURCE_GO; installation pending
+- Next gate: executor reviews and publishes `docs/COMPLETION_RULE.md`, then verifies installed checks
+
 ## Trace Anchor - published retirement guidance
 
 - Role: executor
@@ -38,7 +60,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 
 ## Evaluation candidate identities - 2026-10-11
 
@@ -284,6 +306,8 @@ Read-only ecosystem reconciliation performed for this checkpoint:
   locations, commands, or adopter policy into this public repository.
 
 ## Open work — next concrete step
+
+Current correction: finish `docs/COMPLETION_RULE.md` and D-012 source review/rollout. The earlier work below is retained; this does not complete it.
 
 
 **Portal/Dossier profile source.** This slice is published. Adopters own host acceptance. Follow `integrations/dockit/checklists/PROJECT_CHECKLIST.md`; Protocol owns future report-only installed-profile drift detection under Infra Portal Next Execution, outside this closed slice. Home Infra/ForgeOS own adopter inventory and migration; Infra Portal coordinates. Other Protocol priorities remain.
@@ -796,3 +820,22 @@ is `infra-portal`.
 - Next gate: independent exact Opus source review, source publication, installed pilot.
 
 Continuity source receipt (2026-10-07 14:55:57 UTC): independent SOURCE_GO; explicit baseline and pinned helper verified. Required Dossier delivery remains open in the owning continuity note.
+
+## Protocol correction source review - 2026-10-13
+
+Exact claude-opus-5-5/high native session a1ccb565-36c3-4c72-8680-30a74394efe5
+returned SOURCE_GO in round 4 and confirmed it in round 5 after completing all
+mandatory onboarding. Actual provider metadata: firstParty; canonicalModel:
+claude-opus-5-5. Strict CAP-001 v2 round 5 capture accepted; manifest SHA-256:
+66de3a4fdaed3c4aed1ee8e111b87af10e0df892ce22a7deb3e5d8db17acfc77. Native parent, child, prompt, result and invocation
+remain in PriceBuddy private custody. Hook status is unknown with zero recorded
+errors; this is distinct from the accepted explicit capture.
+
+The approval covers source and bounded DEV/edge installation checks, not app
+delivery or Dossier sharing. Tested: 54 integration cases (12 explicit skips),
+13 Sentinel/intake cases, 15 auth-plan cases, 8 access cases, 8 ship cases,
+4 Protocol auth cases, 96 DocKit validator smoke cases and 2 host-hook cases.
+PriceBuddy's 8 focused supervisor cases and 710 upstream file hashes pass.
+The executor owns publication, installation/readback, PriceBuddy adoption,
+OIDC deployment, actual Sentinel lifecycle coverage and admitted Dossier upkeep.
+No provider choice is delegated to Carlos.

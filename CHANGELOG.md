@@ -2,6 +2,11 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.16.0] - 2026-10-13
+
+### Changed
+- Add provider-neutral login method and require adopter monitoring/identity obligations for temporary runtimes and project intake.
+
 ## [0.15.4] - 2026-10-12
 
 - Validate exact PR and published-main revisions with full continuity history.

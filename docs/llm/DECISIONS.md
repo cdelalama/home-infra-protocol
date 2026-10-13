@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -220,3 +220,15 @@ clarification does not reprioritize DF-015/DF-016 or adopt a Dossier for Protoco
 Origin: Carlos, current Finmars cleanup request and attached topology screenshot.
 
 Clarify the existing completion rule with a scoped service-retirement checklist and explicit fresh/retained consumer acceptance. Cover runtime, access, credentials, producers, schedules, catalog relations and current presentations where applicable. Shared resources and immutable audit history survive; exclusive data destruction needs explicit authority. A consumer applies valid authoritative catalog changes within a stated bound or explicitly requires reload; failed telemetry never proves retirement. No schema, tombstone or new lifecycle state is introduced. Historical installed checklist matches remain report-only; no fleet reinstall is authorized.
+
+
+## D-012 - Monitoring and federated identity are explicit delivery obligations (2026-10-13)
+
+Origin: Carlos explicitly required the complete ForgeOS/DocKit/Protocol/Portal/
+Dossier/Sentinel and OAuth route after PriceBuddy bypassed it as source-only.
+Tests, reviews, betas and DEV/NAS placement do not grant ecosystem exclusions.
+This owner implements its layer in `docs/COMPLETION_RULE.md`; existing source, running services,
+private custody, unrelated priorities and historical evidence remain. New
+requirements need explicit migration, source review and installed/live evidence.
+A declaration or fixture PASS does not establish runtime acceptance. Exact Opus
+5.5/high advisory confirmed the gap; final review and rollout are separate.

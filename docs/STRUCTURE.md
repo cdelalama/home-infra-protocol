@@ -1,4 +1,4 @@
-<!-- doc-version: 0.15.4 -->
+<!-- doc-version: 0.16.0 -->
 # Repository Structure
 
 ```text
@@ -88,3 +88,5 @@ home-infra-protocol/
 - `docs/IDEA_CONTINUITY.md`: shared capture, recall and closeout rules.
 - `docs/llm/IDEA_INDEX.json`: project-owned references, untracked ideas and bounded coverage batches.
 - `scripts/dockit-ideas.py`: pinned structural and baseline validation.
+
+- `docs/COMPLETION_RULE.md`: current project-intake correction and owner-specific evidence boundary.

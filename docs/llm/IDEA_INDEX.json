@@ -70,6 +70,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Preserve the existing historical queue.",
       "cursor": "Before retiring services or accepting long-lived consumer refresh."
+    },
+    {
+      "id": "B-project-intake-20261013",
+      "date": "2026-10-13",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "## D-012"
+        }
+      ],
+      "excluded": [
+        "Raw private conversations and unrelated project work."
+      ],
+      "unknown": [
+        "Complete historical conversation coverage and other-host installations."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Prior historical queues and unknown coverage remain unchanged.",
+      "cursor": "Recall before new project intake, existing-project adoption and temporary runtime delivery."
     }
   ],
   "entries": [
@@ -164,6 +183,29 @@
       "ref": {
         "path": "docs/llm/DECISIONS.md",
         "contains": "D-011"
+      }
+    },
+    {
+      "id": "REF-D-012-PROJECT-INTAKE",
+      "record": "reference",
+      "kind": "accepted_decision",
+      "title": "Monitoring and federated identity are explicit delivery obligations",
+      "origin": {
+        "date": "2026-10-13",
+        "attribution": "Carlos required complete project protocol, explicitly Sentinel and OAuth, after the PriceBuddy omission.",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "## D-012"
+          }
+        ]
+      },
+      "batch": "B-project-intake-20261013",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before project intake, safe adoption, test/beta runtime or delivery acceptance.",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "## D-012"
       }
     }
   ],
