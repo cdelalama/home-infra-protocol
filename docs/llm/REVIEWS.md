@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.16.0 -->
+<!-- doc-version: 0.16.1 -->
 
 ## 2026-09-23 - DocKit fleet source update
 

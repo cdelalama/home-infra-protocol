@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.0 -->
+<!-- doc-version: 0.16.1 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -304,6 +304,11 @@ Fields:
     method undeclared, preserving existing catalogs. No value proves a real
     login or selects a product/provider; those are owner policy and observed
     acceptance. Adopters validate consistency with placement and their policy.
+
+An application authentication library and a shared identity provider are distinct
+owner choices. Neither a `federated` method nor a portal entry selects a central
+provider or authorizes migrating other applications. Owners may require local
+application authentication without an OIDC discovery dependency.
 
 Authentication placement is intent, not runtime evidence. A consumer MAY
 render the declared mode neutrally or compare it with separate adopter-owned

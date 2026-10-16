@@ -2,6 +2,16 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.16.1] - 2026-10-16
+
+- Separate authentication implementation, login method and identity topology; require attributed owner decisions without inferring fleet migration.
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## [0.16.0] - 2026-10-13
 
 ### Changed

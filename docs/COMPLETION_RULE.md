@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.0 -->
+<!-- doc-version: 0.16.1 -->
 # Completion Rule
 
 An infrastructure change is not complete until the durable source-of-truth repo
@@ -21,13 +21,25 @@ loss, outage, expected stop and recovery. Monitor self-health or a catalog row
 alone cannot prove service coverage. Source-only planning does not invent health.
 Missing/stale evidence stays unknown; intentional stops are distinct from outages.
 
-Authentication placement and login method are separate. If the adopter requires
-OAuth 2.0/OIDC, local passwords or an API's 401 cannot satisfy it. Verify federated
-login, a protected operation, anonymous denial and logout against the declared
-issuer. Missing provider setup keeps delivery incomplete. Historical deployments
-retain their operation while newly required obligations remain unresolved.
-The adopter names its monitor, provider, authority and executable checks; this
-vendor-neutral contract does not install them or imply live verification.
+Authentication implementation, placement, login method and identity topology
+are separate owner decisions. A selected application library does not imply a
+common identity provider, Portal SSO or migration of existing applications.
+Resolve the current attributed owner policy at creation, runtime and delivery;
+never turn a generic continuation or reviewer advice into a provider selection.
+New applications must implement the owner's selected authentication library;
+unsupported stacks remain an explicit implementation gap, not permission for a
+custom substitute. Individually declared read-only machine health/status paths
+may be unauthenticated without exempting operator interfaces or private APIs.
+
+Verify real login, a protected operation, anonymous denial and logout/session
+revocation for application sessions. If the owner explicitly chooses OAuth/OIDC,
+verify issuer-bound login and discovery; local credentials cannot substitute.
+Application-local credentials do not depend on a common OIDC issuer. Preserve
+existing deployed access through exact attributed owner dispositions, separately
+from requirements for new applications. Existing HTTP Basic has no server-side
+logout; record that limit rather than fabricate revocation evidence.
+The adopter names its implementation, method, topology, authority and executable
+checks. This neutral contract neither chooses a vendor nor claims runtime proof.
 
 1. The live system was changed and verified, if applicable.
 2. Human-readable source-of-truth docs reflect the new observed state.

@@ -89,6 +89,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Prior historical queues and unknown coverage remain unchanged.",
       "cursor": "Recall before new project intake, existing-project adoption and temporary runtime delivery."
+    },
+    {
+      "id": "B-better-auth-policy-20261016",
+      "date": "2026-10-16",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "## D-013"
+        }
+      ],
+      "excluded": [
+        "Raw sessions, credentials, private runtime state and unrelated historical corpus."
+      ],
+      "unknown": [
+        "Earlier unreviewed conversation coverage remains unchanged."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Retain the previous historical backfill scope.",
+      "cursor": "D-013: installed policy and actual Sentinel producer qualification."
     }
   ],
   "entries": [
@@ -206,6 +225,29 @@
       "ref": {
         "path": "docs/llm/DECISIONS.md",
         "contains": "## D-012"
+      }
+    },
+    {
+      "id": "REF-D-013-BETTER-AUTH",
+      "record": "reference",
+      "kind": "accepted_decision",
+      "title": "Separate implementation, login method and identity topology",
+      "origin": {
+        "date": "2026-10-16",
+        "attribution": "Carlos explicitly selected Better Auth per new application, one operator, then Sentinel continuation.",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "## D-013"
+          }
+        ]
+      },
+      "batch": "B-better-auth-policy-20261016",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before selecting an auth implementation, inferring common identity, creating an app or continuing Sentinel deployment.",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "## D-013"
       }
     }
   ],

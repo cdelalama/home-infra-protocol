@@ -15,9 +15,11 @@ Project intake/adoption is mandatory for tests, reviews, betas, source preparati
 and VM/NAS previews. Use ForgeOS; a generic DocKit scaffold or a "source-only"
 label cannot create a homelab exclusion. Preserve existing files when adopting.
 Resolve the published Home Infra consumer policy, including Sentinel monitoring
-and the required OAuth/OIDC login method. Planning does not claim a running
-service. Before runtime and delivery use the installed integration checks;
-monitor self-health, a local password or HTTP 401 alone is insufficient.
+and the owner-selected authentication implementation and login method. Keep
+application-local authentication separate from identity-provider topology; never
+infer central SSO or a provider from a generic continuation. Planning does not
+claim a running service. Before runtime and delivery use the installed checks;
+a declaration, HTTP 401 or monitor self-health is not actual acceptance.
 Follow `home-infra-protocol/docs/COMPLETION_RULE.md` for current evidence and
 explicit migration gaps; never silently waive these obligations.
 

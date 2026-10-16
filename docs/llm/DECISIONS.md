@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.0 -->
+<!-- doc-version: 0.16.1 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -232,3 +232,21 @@ private custody, unrelated priorities and historical evidence remain. New
 requirements need explicit migration, source review and installed/live evidence.
 A declaration or fixture PASS does not establish runtime acceptance. Exact Opus
 5.5/high advisory confirmed the gap; final review and rollout are separate.
+
+
+## D-013 - Separate implementation, login method and identity topology (2026-10-16)
+
+Carlos explicitly selected Better Auth per new application for one operator and
+directed correcting the protocol before continuing Sentinel's producer phase.
+This supersedes universal OAuth/common-identity inference, not protected access,
+consumer obligations or immutable historical evidence. The private owner retains
+the exact attributed authority. Library, placement, login method and topology
+remain distinct. Existing services are preserved; current Sentinel access needs
+an exact owner-bound disposition, never an agent-created blanket exception.
+
+Source and installation require independent review and actual readback. A module
+plan does not implement authentication. Incompatible stacks remain explicit gaps;
+no manual/Basic/none substitute is permitted for new protected applications.
+Real login/use/anonymous denial and session logout remain delivery evidence.
+Prior product work, captures, family custody and physical recovery gaps remain.
+See `docs/COMPLETION_RULE.md` for this owner's implementation and the next observable step.
