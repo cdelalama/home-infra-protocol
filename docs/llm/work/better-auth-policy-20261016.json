@@ -1,0 +1,10 @@
+{
+  "artifacts": [],
+  "branch": "work/better-auth-policy-20261016",
+  "id": "better-auth-policy-20261016",
+  "next_step": "Publish the reviewed neutral authentication clarification; preserve historical guidance.",
+  "project": "home-infra-protocol",
+  "purpose": "Clarify owner-selected authentication implementation and per-service topology without inferred OAuth centralization",
+  "schema": 1,
+  "state": "active"
+}

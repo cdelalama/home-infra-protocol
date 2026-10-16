@@ -19,3 +19,5 @@ Retained records never authorize deleting work or evidence.
 - Final disposition: finmars-topology-20261012 closed; source-only correction published, checkout/evidence retained.
 
 - [project-protocol-20261013](work/project-protocol-20261013.json): active; corrective project intake, Sentinel and authentication protocol.
+
+- [better-auth-policy-20261016](work/better-auth-policy-20261016.json): active; Clarify owner-selected authentication implementation and per-service topology without inferred OAuth centralization
