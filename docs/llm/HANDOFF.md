@@ -1,6 +1,6 @@
 ## Better Auth correction and Sentinel continuation - 2026-10-16
 
-Last Updated: 2026-10-16 - Codex. Source preparation; not deployment acceptance.
+Last Updated: 2026-10-16 - Codex. Authentication correction published; installed controls verified.
 
 D-013: one operator; new applications use their own Better Auth. A common OAuth
 issuer, Portal SSO and fleet migration are not required. Exact existing Sentinel
@@ -10,24 +10,24 @@ a real per-application integration, never a silent auth substitute.
 
 ### Open work - next concrete step
 
-Read `docs/COMPLETION_RULE.md`. Publish the reviewed neutral authentication clarification and verify the installed creation template; preserve legacy adoption limits.
+Read `docs/COMPLETION_RULE.md`. Protocol0.16.1 is published, the actual installed creation route passes, and the52-row live owner matrix matches the reviewed candidate. No new implementation is pending for this correction. Existing legacy adoption and product delivery limits remain; Sentinel owns its producer activation.
 The requested order is policy correction, then the existing monitoring task.
 Other product priorities, all private custody and previous evidence remain
 separately owned and preserved. No data cleanup is authorized.
 
-Dossier: refresh_required for the changed authority/next step. Preserve every
-prior revision. Home shared history is at its reviewed capacity bound; native
-capture and a retained publication draft do not constitute shared delivery.
+Dossier: Protocol remains legacy/unadmitted; no new admission or reader is implied.
+The owner decision is reflected in admitted Sentinel/Home/ForgeOS curation, with
+all prior history and Home shared-capacity limits preserved.
 
 ### Trace Anchor - Better Auth correction
 
 - Role: executor
 - Sent: 2026-10-16 23:11:26 CEST (21:11:26 UTC)
 - Subject: explicit per-application Better Auth and existing Sentinel continuation
-- Resulting state: source preparation; runtime unchanged; gate=source-review
+- Resulting state: policy published and installed; live controls qualified
 - Repo state: isolated parent-owned task from freshly resolved publication
-- Validation: exact Opus R13 consensus; behavioral and source checks in progress
-- Next gate: reviewed publication and installed control verification
+- Validation: exact Opus R18 POLICY_PUBLICATION_GO; actual creator and52-row parity
+- Next gate: scoped reader/custody receipts; preserve independent product priorities
 
 ## Project protocol correction - 2026-10-13
 
