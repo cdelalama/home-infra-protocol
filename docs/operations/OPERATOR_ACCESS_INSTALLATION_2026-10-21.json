@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-21",
+  "review": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "verdict": "SOURCE_GO",
+    "round": 304,
+    "session": "7214cdb2-ab4c-42f7-a4b9-0946e31278ac",
+    "capture_sha256": "1b4479281747d95256dfe80048b19aee95cfe6dcfe4bd74bc1e85fdd2dbf3a99"
+  },
+  "validation": {
+    "focused_tests_dev": 18,
+    "focused_tests_octa": 18,
+    "integration_tests_with_owner_wrapper": 59,
+    "owner_wrapper_after_final_fix": 12,
+    "failures": 0
+  },
+  "checker_sha256": "b7a5bd90321e5a85a31c29d208911733aa3e07cbf1f036a8ac2bcfb99335aa2b",
+  "installation": {
+    "dev": "integration root and Claude/Codex creator/shipping skills verified",
+    "octa": "published source bytes, Codex creator/shipping skills and Home managed routes verified"
+  },
+  "real_regression": {
+    "source": "Existing protected application owner receipt, retained privately",
+    "installed_handoff_gate_exit": 3,
+    "reason": "First-access handoff missing"
+  },
+  "runtime_changes": "No application credentials, DNS or services changed",
+  "dossier": "refresh_required; existing shared reader/export and legacy-admission holds retained",
+  "sources": {
+    "forgeos": {
+      "commit": "60a1c0218c041daea269d0d304293c0c983dde65",
+      "tree": "07cad6c69c1f3d0af242fcdcb9a5bfbc068f62c9",
+      "version": "0.43.0"
+    },
+    "home-infra-protocol": {
+      "commit": "faf6052d484e92582823b3d066336a3333171705",
+      "tree": "0c098c969419ffba9aff6c94e3cc5526db8bfbba",
+      "version": "0.17.0"
+    },
+    "home-infra": {
+      "commit": "7739851b49bd9ebcd4895d2732281446d418e2ee",
+      "tree": "d8455355d1b9329338bdc5e6cd12d741d60f669c",
+      "version": "0.84.0"
+    }
+  }
+}

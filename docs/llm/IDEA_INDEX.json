@@ -315,6 +315,13 @@
         "REF-SERVICE-RETIREMENT-20261012"
       ],
       "no_ideas_reason": null
+    },
+    {
+      "task": "docs/llm/work/operator-access-handoff-20261021.json",
+      "ideas": [
+        "REF-D-014-OPERATOR-HANDOFF"
+      ],
+      "no_ideas_reason": null
     }
   ]
 }

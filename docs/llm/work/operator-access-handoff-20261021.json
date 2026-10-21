@@ -3,8 +3,8 @@
   "id": "operator-access-handoff-20261021",
   "project": "home-infra-protocol",
   "purpose": "Require a usable first-access handoff before application delivery",
-  "state": "active",
+  "state": "pending-integration",
   "branch": "work/operator-access-handoff-20261021",
   "artifacts": [],
-  "next_step": "Complete review, publication and managed installation; preserve explicit Dossier reader holds."
+  "next_step": "Source rule and installed templates complete; preserve the existing unadmitted Protocol consumer migration and shared reader hold. No overall integration closure claimed."
 }

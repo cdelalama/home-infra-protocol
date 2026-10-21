@@ -6,7 +6,8 @@ actual operator handoff; no credentials, accounts or application runtime change.
 
 ### Open work - next concrete step
 
-R304 exact Opus SOURCE_GO; complete source publication and installed checker/skill readback.
+R304 exact Opus SOURCE_GO; source published on main and installed on DEV/OCTA.
+Source rule and installed templates complete; preserve the existing unadmitted Protocol consumer migration and shared reader hold. No overall integration closure claimed.
 Require Spanish URL/account/retrieval/recovery instructions and an actual delivery
 receipt before protected delivery can pass. Preserve all prior owners and holds
 below; this maintenance task does not claim fleet or product acceptance.
