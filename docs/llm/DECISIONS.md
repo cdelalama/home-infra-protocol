@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -250,3 +250,17 @@ no manual/Basic/none substitute is permitted for new protected applications.
 Real login/use/anonymous denial and session logout remain delivery evidence.
 Prior product work, captures, family custody and physical recovery gaps remain.
 See `docs/COMPLETION_RULE.md` for this owner's implementation and the next observable step.
+
+
+## D-014 - Deliver usable initial access before application completion
+
+Date: 2026-10-21. Carlos explicitly requires correcting the protocol after
+repeated omissions of initial-password retrieval instructions. Agent login
+success alone cannot establish operator access. Require operator-language URL,
+account, owner-approved retrieval/activation and recovery steps, a real delivery
+receipt, matching tested account/credential identity and independent exact Opus
+review. No secret values in source or evidence. Current incomplete handoffs
+remain pending; historical receipts and running services remain unchanged.
+Protocol owns the completion rule; ForgeOS owns the delivery check; Home Infra
+owns concrete trusted routes. Operator confirmation is not an extra approval gate.
+The bounded implementation does not change accounts or grant fleet acceptance.

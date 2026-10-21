@@ -66,7 +66,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 
 ## 2026-09-23 - DocKit fleet source update
 
@@ -410,3 +410,27 @@ Private evidence: ~/.local/state/home-infra/finmars-topology-20261012, R2/R3.
 R4 exact Opus5.5/high SOURCE_GO: repair inherited shallow documentation CI checkout with full history and exact PR/push revision. Both PR and published-main validation required; no bypass. Strict capture and actual model metadata retained.
 
 The mandatory local version hook required a separate patch bump for the CI repair after0.15.3 had been committed. Candidate0.15.4 changes only managed version markers and the reviewed workflow; earlier0.15.3 source remains in history.
+
+## 2026-10-21 - Operator first-access handoff (R301-R304)
+
+Exact claude-opus-5-5/high, native session
+7214cdb2-ab4c-42f7-a4b9-0946e31278ac. Command: Claude CLI --resume with explicit
+--model claude-opus-5-5 --effort high --print --output-format json, tools disabled,
+strict MCP configuration and cwd /tmp. Actual result modelUsage confirms the
+exact model. R301 advice; R302 BLOCK; R303 SOURCE_GO with conditions; R304
+SOURCE_GO with all conditions satisfied. Native strict capture retained by the
+parent task; no raw private prompt/transcript or credential belongs in Git.
+
+Source candidate tree (before this review receipt): efdaec287c324af48aa61002c40ed9a7c3b99770.
+Validation: 18 focused handoff tests; 59 integration tests with Home owner wrapper,
+zero skips; 12 owner-wrapper tests repeated after the final Portal-exclusion fix.
+DocKit/version/idea checks and diff whitespace validation precede publication.
+R302 fixes cover fail-closed surfaces, original operator membership evidence,
+approved credential metadata and tested identity binding. R304 qualifies source
+only, not installation, actual human access or shared Dossier refresh.
+
+Remaining explicit limits: real Doppler metadata precision and per-app human
+usability require actual handoff evidence; no IdP route is approved. No generic
+free-prose secret detector is claimed. Existing shared Dossier export/reader and
+legacy-admission holds remain. Current missing handoff cannot close delivery;
+historical receipts and running services remain unchanged.

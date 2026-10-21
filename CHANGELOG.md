@@ -2,6 +2,12 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.17.0] - 2026-10-21
+
+### Changed
+- Require usable operator first-access instructions, tested identity binding and independent evidence before current protected application delivery.
+- Preserve historical receipts, existing accounts and running services during the explicit migration.
+
 ## [0.16.1] - 2026-10-16
 
 - Separate authentication implementation, login method and identity topology; require attributed owner decisions without inferring fleet migration.

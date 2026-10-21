@@ -27,6 +27,17 @@ the owner-resolved integration plan and authentic scoped operator exclusions.
 - [ ] No secret values committed to this repo, to `infra.contract.yml`,
   or to any docs.
 
+## Operator first access
+
+- [ ] The operator received the URL, account, concrete approved credential
+  retrieval/activation instructions and usable recovery route in their language.
+- [ ] The operator can use that route; agent-only access does not qualify.
+- [ ] Account and non-secret credential identity match the actual login proof.
+- [ ] Independent review inspected the actual handoff; the current delivery gate
+  verifies exact protected-service coverage and published non-secret evidence.
+- [ ] The final response repeats the handoff or links its approved private
+  location. No password/token values enter Git, Portal, Dossier or logs.
+
 ## Runtime
 
 - [ ] `docker-compose.yml` placed at the standard path:

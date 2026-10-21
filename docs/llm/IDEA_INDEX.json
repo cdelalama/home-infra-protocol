@@ -108,6 +108,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Retain the previous historical backfill scope.",
       "cursor": "D-013: installed policy and actual Sentinel producer qualification."
+    },
+    {
+      "id": "B-operator-access-handoff-20261021",
+      "date": "2026-10-21",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "## D-014"
+        }
+      ],
+      "excluded": [
+        "Credential values, unrelated CAD/OCR and existing product work."
+      ],
+      "unknown": [
+        "Historical omissions outside this bounded incident."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Preserve earlier historical backfill.",
+      "cursor": "Review, publish and install the first-access delivery correction."
     }
   ],
   "entries": [
@@ -248,6 +267,29 @@
       "ref": {
         "path": "docs/llm/DECISIONS.md",
         "contains": "## D-013"
+      }
+    },
+    {
+      "id": "REF-D-014-OPERATOR-HANDOFF",
+      "record": "reference",
+      "kind": "accepted_decision",
+      "title": "Require usable initial access before application delivery",
+      "origin": {
+        "date": "2026-10-21",
+        "attribution": "Carlos explicitly requires changing the shared protocol to prevent omitted first-password instructions.",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "## D-014"
+          }
+        ]
+      },
+      "batch": "B-operator-access-handoff-20261021",
+      "owner": "home-infra-protocol",
+      "recall_trigger": "Before delivering any protected application or component.",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "## D-014"
       }
     }
   ],

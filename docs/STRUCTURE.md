@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 # Repository Structure
 
 ```text
@@ -90,3 +90,5 @@ home-infra-protocol/
 - `scripts/dockit-ideas.py`: pinned structural and baseline validation.
 
 - `docs/COMPLETION_RULE.md`: current project-intake correction and owner-specific evidence boundary.
+
+Operator first-access delivery: see `docs/COMPLETION_RULE.md` and adopter templates/checklists.

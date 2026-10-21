@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 # Completion Rule
 
 An infrastructure change is not complete until the durable source-of-truth repo
@@ -51,6 +51,40 @@ checks. This neutral contract neither chooses a vendor nor claims runtime proof.
 If verification fails, the change is incomplete. Fix forward or roll back.
 Leaving source-of-truth data and deployed consumers in disagreement is not an
 acceptable end state.
+
+## Operator first access
+
+Every protected operator surface requires a usable first-access handoff before
+claiming delivery, including preserved existing access and independently protected
+components. Agent login/use/logout proves the service works for the agent; it
+does not prove the operator knows how to enter it.
+
+The handoff, in the operator's language, must give the canonical URL, the exact
+account or account-selection instruction, an owner-approved route for retrieving
+or activating the credential, and a usable recovery route. It must match the
+account and non-secret credential identity used by the verified login. Explain
+where to click or what to open, which entry to select, and any first-use step or
+expiry. An agent-only CLI, a secret-store name without an exact locator, or
+"log in" alone is insufficient. Verify operator access to the route; do not infer
+it from the agent's service token. Existing known credentials may be reused;
+never reset an account merely to create a new handoff.
+
+Present the handoff to the operator before closure and repeat it or link to its
+approved private location in the final response. Record source-bound, non-secret
+evidence of delivery and independently review the actual instructions. The
+adopter's current delivery check must reject missing or mismatched handoff
+coverage. Mechanical checks do not prove comprehension or personal acceptance;
+operator confirmation may strengthen evidence but is not a mandatory chore.
+
+Keep passwords, API keys, activation tokens and secret values out of Git,
+catalogs, Portal, Dossier, review packets and logs. Only approved non-secret
+locators and receipts belong in evidence. This requirement authorizes no new
+sharing channel, permission, credential rotation or weaker authentication.
+Preserve historical receipts. Rechecking an older delivery exposes missing
+handoff evidence as pending migration; it neither stops the running service nor
+rewrites previous acceptance. Source planning may record the intended route without
+claiming delivery. Changing a login URL, account, credential or retrieval route
+requires a new verified handoff before the changed access is called complete.
 
 ## Service retirement
 

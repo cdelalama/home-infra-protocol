@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -917,3 +917,10 @@ See `docs/COMPLETION_RULE.md`.
 ## Security Model
 
 See `docs/SECURITY_MODEL.md`.
+
+## Operator access delivery
+
+Protected service delivery includes the operator-facing first-access handoff in
+[Completion Rule](docs/COMPLETION_RULE.md#operator-first-access). Successful
+agent authentication alone is insufficient; adopter evidence must bind usable
+operator instructions to the tested account and non-secret credential identity.

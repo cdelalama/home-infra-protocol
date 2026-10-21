@@ -35,6 +35,17 @@ explicit migration gaps; never silently waive these obligations.
    `~/src/home-infra-protocol/SPEC.md` before completing or changing
    `infra.contract.yml`.
 
+## Operator access handoff
+
+Before delivery, follow the published Protocol
+`docs/COMPLETION_RULE.md#operator-first-access`. Give the operator the URL,
+account, exact approved retrieval/activation steps and recovery route in their
+language. Verify the route is usable by the operator and matches the login
+account/credential that was tested. Present the instructions before closure and
+repeat or link them in the final response. Agent-only secret custody is not
+delivery. Keep values out of source, consumers and logs; no silent reset or new
+sharing channel. Missing handoff evidence blocks current delivery.
+
 ## Mandatory updates
 
 When an operator-authorized deployment or acceptance changes the homelab —

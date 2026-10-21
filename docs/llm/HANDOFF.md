@@ -1,3 +1,18 @@
+## Operator first-access protocol correction - 2026-10-21
+
+Last Updated: 2026-10-21 - Codex. Carlos requires a durable correction to missing
+initial-password instructions. The reviewed correction separates agent login from
+actual operator handoff; no credentials, accounts or application runtime change.
+
+### Open work - next concrete step
+
+R304 exact Opus SOURCE_GO; complete source publication and installed checker/skill readback.
+Require Spanish URL/account/retrieval/recovery instructions and an actual delivery
+receipt before protected delivery can pass. Preserve all prior owners and holds
+below; this maintenance task does not claim fleet or product acceptance.
+Dossier: refresh_required for this visible decision; existing shared reader,
+capacity and legacy admission limits remain separately owned.
+
 ## Better Auth correction and Sentinel continuation - 2026-10-16
 
 Last Updated: 2026-10-16 - Codex. Authentication correction published; installed controls verified.
@@ -91,7 +106,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 
 ## Evaluation candidate identities - 2026-10-11
 

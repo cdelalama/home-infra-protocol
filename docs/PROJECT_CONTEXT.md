@@ -1,4 +1,4 @@
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -179,3 +179,11 @@ remain separate.
 - Private implementation: `home-infra`
 - First consumer: `infra-portal`
 - Scaffold: `LLM-DocKit`
+
+## Operator access delivery correction (2026-10-21)
+
+Protected delivery requires usable operator-language initial access and recovery
+instructions, actual delivery evidence and independent review, separately from
+agent login. Protocol owns the rule, ForgeOS checks current delivery and Home
+Infra approves retrieval routes. Historical receipts and runtime accounts remain
+unchanged. Shared reader/admission holds remain explicit.

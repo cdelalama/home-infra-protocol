@@ -1,3 +1,5 @@
+- 2026-10-21 - Codex - Require usable operator first access separately from agent login; published instructions, tested identity binding, approved recovery and independent review. Current missing handoff is pending migration; no secret/account/runtime changes. Source validation and exact Opus review precede installation. Dossier refresh_required; prior shared reader/admission holds remain. Trace: role=executor; state=source-review; next=publish-install-readback.
+
 - 2026-10-16 - Codex - Verify published per-application Better Auth policy through the retained installed ForgeOS checker/skills, actual creator refusals/defaults, three backed-up DEV guidance blocks and52-row owner parity. Exact Opus R18 accepted; source versions unchanged. No central provider or fleet login migration. Scoped consumer/native custody receipts follow; hosted account refusal and legacy owner limits remain. Trace: state=policy-installed-verified; next=reader-custody-and-existing-product-work.
 
 - 2026-10-16 - Codex - Prepare D-013 Better Auth per-application correction with exact existing Sentinel access preservation. Owner path: docs/COMPLETION_RULE.md. Opus R13 CONSENSUS_GO; source/installed/runtime qualification pending. No central identity or fleet migration; family custody and lighting preserved. Dossier refresh_required. Trace: role=executor; state=source-preparation; next=review-install-policy-and-producer-activation.
@@ -33,7 +35,7 @@
 - 2026-10-07 - Codex - Prepare project-owned idea continuity, pinned validation, bounded B001 historical recovery and explicit task reconciliation; preserve existing priorities and runtime. Exact Opus 5.5/high advisor consensus obtained; independent SOURCE_GO and final checks pass (16 idea, 14 capture, 96 validator regressions at their owners); source publication and required Dossier delivery tracked separately. See docs/llm/IDEA_CONTINUITY_2026-10-07.md.
 - 2026-10-05 - Codex - Record published Protocol 0.15.0 consumption by deployed Portal 0.34.1 and close this contract slice while retaining its checkout/evidence. Exact runtime, Dossier and wider fleet gates remain consumer-owned. Trace: role=executor; state=published-contract-consumed; validation=95-tests-and-eight-actual-browser-combinations; next=consumer-closing-receipts.
 
-<!-- doc-version: 0.16.1 -->
+<!-- doc-version: 0.17.0 -->
 - 2026-10-05 - Codex - Add the optional portable Service.icon presentation token. Files: icon contract/UI/catalog as owned, adoption/admission, task record and governance. Version impact: 0.15.0. Trace: role=executor; sent=2026-10-05 22:42:57 CEST (20:42:57 UTC); state=source-candidate; validation=95/95 tests PASS; documentary/version checks PASS; exact Opus SOURCE_GO; next=published-source-runtime-and-Dossier-delivery.
 
 
