@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "id": "execution-exceptions-20261114",
+  "project": "home-infra-protocol",
+  "purpose": "Scheduled omission monitoring correction",
+  "state": "active",
+  "branch": "work/execution-exceptions-20261114",
+  "artifacts": [],
+  "next_step": "Source review and publication, then bounded live acceptance; see docs/EXECUTION_EXCEPTIONS.md. Preserve prior owner holds and next natural backup gate."
+}

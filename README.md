@@ -1,4 +1,4 @@
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM

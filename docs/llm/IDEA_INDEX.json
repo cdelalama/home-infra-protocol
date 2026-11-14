@@ -127,6 +127,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Preserve earlier historical backfill.",
       "cursor": "Review, publish and install the first-access delivery correction."
+    },
+    {
+      "id": "B-EXECUTION-EXCEPTIONS-20261114",
+      "date": "2026-11-14",
+      "sources": [
+        {
+          "path": "docs/llm/DECISIONS.md",
+          "contains": "## D-015"
+        }
+      ],
+      "excluded": [
+        "Unrelated historical conversations and private runtime evidence."
+      ],
+      "unknown": [
+        "Full historical coverage remains unknown."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Previous historical queue unchanged.",
+      "cursor": "At any explicitly omitted scheduled occurrence."
     }
   ],
   "entries": [
@@ -291,6 +310,29 @@
         "path": "docs/llm/DECISIONS.md",
         "contains": "## D-014"
       }
+    },
+    {
+      "id": "REF-EXECUTION-EXCEPTIONS-20261114",
+      "record": "reference",
+      "kind": "accepted_decision",
+      "title": "Reconcile explicitly omitted scheduled work with bounded monitoring intent",
+      "origin": {
+        "date": "2026-11-14",
+        "attribution": "Carlos requires an explicitly skipped backup to be recognized by monitoring and the protocol.",
+        "sources": [
+          {
+            "path": "docs/llm/DECISIONS.md",
+            "contains": "## D-015"
+          }
+        ]
+      },
+      "owner": "home-infra-protocol",
+      "batch": "B-EXECUTION-EXCEPTIONS-20261114",
+      "ref": {
+        "path": "docs/llm/DECISIONS.md",
+        "contains": "## D-015"
+      },
+      "recall_trigger": "Before omitting scheduled work or suppressing its expected freshness alarm."
     }
   ],
   "task_reconciliations": [
@@ -320,6 +362,13 @@
       "task": "docs/llm/work/operator-access-handoff-20261021.json",
       "ideas": [
         "REF-D-014-OPERATOR-HANDOFF"
+      ],
+      "no_ideas_reason": null
+    },
+    {
+      "task": "docs/llm/work/execution-exceptions-20261114.json",
+      "ideas": [
+        "REF-EXECUTION-EXCEPTIONS-20261114"
       ],
       "no_ideas_reason": null
     }

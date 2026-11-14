@@ -1,4 +1,4 @@
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
@@ -264,3 +264,8 @@ remain pending; historical receipts and running services remain unchanged.
 Protocol owns the completion rule; ForgeOS owns the delivery check; Home Infra
 owns concrete trusted routes. Operator confirmation is not an extra approval gate.
 The bounded implementation does not change accounts or grant fleet acceptance.
+
+## D-015 - Planned omission includes bounded monitoring intent
+
+Date: 2026-11-14. Status: accepted operator requirement; source/consumer acceptance tracked in HANDOFF.
+Carlos explicitly corrected the false outage after an authorized one-night backup omission. Scheduling and monitoring must be reconciled together with attributed scope, exact occurrence, protected receipt/baseline binding and finite expiry. Observations, prior incidents, unrelated failures and the next normal execution remain independently true. This is separate alert policy, not producer next_run_at or incident closure. D-005/D-009 in Protocol keep their existing authority.

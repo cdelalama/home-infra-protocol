@@ -1,3 +1,24 @@
+## 2026-11-14 - Scheduled-execution exception maintenance
+
+Exact claude-opus-5-5/high; canonicalModel verified. Native session
+e14d024c-c8d2-4072-bd83-23e377e8581c, parent01a1d220-f94a-7443-b71c-4db421d86a07.
+R9-R11 design guardrails; R12 SOURCE_HOLD found cross-consumer transition races;
+R13 source condition was closed by actual per-request/no-store Portal source
+and stable live projection evidence. R14 SOURCE_GO / conditional OPERATION_GO.
+R9-R14 native strict schema2 captures retained privately under Home Infra custody.
+The reviewer read supplied code/evidence and ran no tools. Author tests:9policy/
+legacy Python,23NAS observer/witness, existing legacy shell suite; real incident
+state copies preserve bytes and send no messages. Pi clock sandbox returns yes.
+
+Operational conditions: actual maintenance closeout DocKit PASS with legacy
+INCOMPLETE_UNRESOLVED subjects recorded, published exact bytes, immediately fresh
+dry preflight, avoid reminders due during install, and natural readback of all
+three consumers. Keep existing permissions, Riego local difference, incident
+history and rollback. No new admission, integration closure or delivery claim.
+Existing producer1.6.0, scheduler, credentials, unit/timer and model relay unchanged.
+The explicit operator request authorizes this existing-monitor maintenance;
+source publication alone does not authorize an unrelated deployment.
+
 ## 2026-10-05 - Optional service icon contract
 
 Independent exact claude-opus-5-5 high, firstParty, returned SOURCE_GO for the
@@ -66,7 +87,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 
 ## 2026-09-23 - DocKit fleet source update
 

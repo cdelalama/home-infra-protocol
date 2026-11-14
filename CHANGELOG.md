@@ -2,6 +2,17 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.18.0] - 2026-11-14
+
+### Added
+- Explicit owner scheduled-execution exceptions with protected baseline/receipt binding, finite expiry and normal failure alerting.
+
+### Changed
+- Require monitoring and scheduling omission to be verified together; preserve real observation and incident history.
+
+### Fixed
+- Planned absence no longer implies suppression of unrelated service failures.
+
 ## [0.17.0] - 2026-10-21
 
 ### Changed

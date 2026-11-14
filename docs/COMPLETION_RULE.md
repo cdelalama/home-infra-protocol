@@ -1,4 +1,4 @@
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 # Completion Rule
 
 An infrastructure change is not complete until the durable source-of-truth repo
@@ -122,3 +122,11 @@ health observation, a disabled flag or an unknown state is not retirement.
 
 Any human or LLM-assisted infrastructure change must update the source-of-truth
 repo in the same session before the change is considered complete.
+
+## Intentionally omitted scheduled work
+
+A request to skip an occurrence includes reconciling its expected monitoring
+outcome. Follow [Execution Exceptions](EXECUTION_EXCEPTIONS.md): verify the
+scheduler receipt and all affected notification consumers together. Preserve
+actual observations, unrelated incidents, expiry and the next normal execution.
+A scheduler-only omission with continuing false alarms is incomplete delivery.

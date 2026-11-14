@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/home-infra/execution-exception.schema.json",
+  "title": "Owner scheduled-execution exception",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project",
+    "environment",
+    "target",
+    "actor",
+    "reason",
+    "decision",
+    "expected_reason",
+    "schema",
+    "issued_at",
+    "skipped_occurrence",
+    "next_expected_at",
+    "expires_at",
+    "baseline_sha256",
+    "projection_sha256",
+    "scheduler_receipt_sha256",
+    "period_seconds",
+    "grace_seconds",
+    "baseline_observed_at"
+  ],
+  "properties": {
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "environment": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "expected_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280
+    },
+    "schema": {
+      "const": "home-infra.execution-exception.v1"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "skipped_occurrence": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "next_expected_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "baseline_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "projection_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scheduler_receipt_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "period_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 604800
+    },
+    "grace_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 604800
+    },
+    "baseline_observed_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    }
+  }
+}

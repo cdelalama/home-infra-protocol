@@ -1,0 +1,20 @@
+{
+  "schema": "home-infra.execution-exception.v1",
+  "project": "document-backup",
+  "environment": "production",
+  "target": "daily-documents",
+  "actor": "operator",
+  "reason": "One explicitly omitted occurrence",
+  "decision": "Owner decision recorded in the private operation receipt",
+  "expected_reason": "backup_stale",
+  "issued_at": "2026-11-14T00:00:00Z",
+  "skipped_occurrence": "2026-11-14T00:20:00Z",
+  "next_expected_at": "2026-11-15T00:20:00Z",
+  "expires_at": "2026-11-15T02:40:00Z",
+  "period_seconds": 86400,
+  "grace_seconds": 8400,
+  "baseline_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "projection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "scheduler_receipt_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "baseline_observed_at": "2026-11-13T00:21:35Z"
+}

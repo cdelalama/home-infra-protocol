@@ -1,4 +1,4 @@
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 # Repository Structure
 
 ```text
@@ -92,3 +92,5 @@ home-infra-protocol/
 - `docs/COMPLETION_RULE.md`: current project-intake correction and owner-specific evidence boundary.
 
 Operator first-access delivery: see `docs/COMPLETION_RULE.md` and adopter templates/checklists.
+
+- `docs/EXECUTION_EXCEPTIONS.md`: bounded scheduled-execution exception authority and completion.

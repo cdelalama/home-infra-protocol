@@ -1,4 +1,4 @@
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -924,3 +924,12 @@ Protected service delivery includes the operator-facing first-access handoff in
 [Completion Rule](docs/COMPLETION_RULE.md#operator-first-access). Successful
 agent authentication alone is insufficient; adopter evidence must bind usable
 operator instructions to the tested account and non-secret credential identity.
+
+## Scheduled-execution exceptions
+
+Owners MAY publish a separate, bounded alert-policy record for an explicitly
+omitted occurrence. Adopters MUST follow [Execution Exceptions](docs/EXECUTION_EXCEPTIONS.md),
+including baseline/receipt binding, protected custody, exact reason matching,
+finite expiry and automatic normal evaluation. Observed status and freshness
+remain unchanged; `next_run_at` is never suppression authority. This optional
+overlay neither changes existing producer schemas nor promotes D-009.

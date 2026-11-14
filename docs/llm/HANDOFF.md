@@ -1,3 +1,23 @@
+## Scheduled omission monitoring correction - 2026-11-14
+
+Last Updated: 2026-11-14 - Codex. Source candidate 0.18.0; source review, publication and runtime qualification pending.
+
+### Open work - next concrete step
+
+Follow `docs/EXECUTION_EXCEPTIONS.md`. Complete exact source/operation review, publish the scoped change and qualify each actual consumer. Preserve all existing priorities, incidents, custody and independent owner holds. The next natural backup is separate acceptance.
+
+### Trace Anchor
+
+- Role: executor
+- Sent: 2026-11-14 16:32:55 CET (15:32:55 UTC)
+- Subject: bounded owner execution exception with truthful observation
+- Resulting state: version=0.18.0; gate=source-review-pending
+- Repo state: isolated parent-owned task branch; task changes unpublished
+- Validation: targeted policy/consumer tests; final composed checks pending
+- Next gate: source review, publication, bounded qualification
+- Dossier: refresh_required in admitted Home owner; legacy Protocol/NAS admission and shared reader holds retained
+
+
 ## Operator first-access protocol correction - 2026-10-21
 
 Last Updated: 2026-10-21 - Codex. Carlos requires a durable correction to missing
@@ -107,7 +127,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.17.0 -->
+<!-- doc-version: 0.18.0 -->
 
 ## Evaluation candidate identities - 2026-10-11
 
