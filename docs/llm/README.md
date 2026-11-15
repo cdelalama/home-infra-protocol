@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # LLM Documentation
 
 This directory is working memory for LLM-assisted maintenance.
@@ -13,3 +13,5 @@ This directory is working memory for LLM-assisted maintenance.
 ## Idea continuity
 
 Read `docs/llm/IDEA_INDEX.json` before relevant brainstorming. Policy: `docs/IDEA_CONTINUITY.md`. Existing owner registers retain decision authority and roadmap priority. Coverage is the declared batch only.
+
+Progress draft: `docs/PROGRESS.md`; current integration gate and next step: top of `HANDOFF.md`.

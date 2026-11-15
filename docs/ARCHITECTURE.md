@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # Architecture
 
 ## Overview
@@ -136,3 +136,7 @@ healthy.
 Capability validation extends the same boundary: the protocol validates shape
 and cross-object joins; the project owns declarations and observations; Home
 Infra accepts the interface; Portal and Hermes consume a sanitized projection.
+
+## Progress draft
+
+`infra.progress.json` is project-owned first-use scope and evidence. The canonical validator checks bounded shape and transitions. Owner verification, historical delivery snapshots and source acquisition remain separate; Portal renders their projection. See `docs/PROGRESS.md`.

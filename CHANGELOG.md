@@ -2,6 +2,11 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.19.0] - 2026-11-15
+
+### Added
+- Draft Progress record, canonical validator, sanitized examples and boundary tests; owner admission and real consumer qualification pending.
+
 ## [0.18.0] - 2026-11-14
 
 ### Added

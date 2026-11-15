@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "contract": "home-infra/progress-v1",
+  "project_id": "example-cli",
+  "target": {
+    "id": "first-usable",
+    "scope_version": 1,
+    "status": "accepted",
+    "outcome": "Convert a local folder of example invoices to a CSV file.",
+    "scope_ref": {
+      "project_id": "example-cli",
+      "path": "docs/RELEASE_SCOPE.md",
+      "revision": "1111111111111111111111111111111111111111",
+      "anchor": "First usable release"
+    },
+    "acceptance_ref": {
+      "project_id": "example-cli",
+      "path": "docs/DECISIONS.md",
+      "revision": "1111111111111111111111111111111111111111",
+      "anchor": "D-001"
+    }
+  },
+  "criteria": [
+    {
+      "id": "convert-folder",
+      "label": "Convert the authorized example folder end to end",
+      "requirement_ref": {
+        "project_id": "example-cli",
+        "path": "docs/RELEASE_SCOPE.md",
+        "revision": "1111111111111111111111111111111111111111",
+        "anchor": "First usable release"
+      },
+      "status": "verified",
+      "verified_at": "2026-11-15T13:00:00Z",
+      "evidence_refs": [
+        {
+          "project_id": "example-cli",
+          "path": "evidence/conversion.json",
+          "revision": "2222222222222222222222222222222222222222",
+          "anchor": "conversion-001"
+        }
+      ]
+    }
+  ],
+  "next_action": {
+    "actor": "agent",
+    "criterion_id": null,
+    "description": "Check the applicable owner delivery evidence before treating the release as delivered."
+  },
+  "blockers": [],
+  "pause": null,
+  "reviewed_at": "2026-11-15T13:00:00Z",
+  "last_activity_at": "2026-11-15T12:00:00Z",
+  "delivery_claim": {
+    "source_revision": "2222222222222222222222222222222222222222",
+    "delivered_at": "2026-11-15T13:00:00Z",
+    "receipt_ref": {
+      "project_id": "example-cli",
+      "path": "evidence/delivery.json",
+      "revision": "2222222222222222222222222222222222222222",
+      "anchor": "delivery-001"
+    },
+    "scope_version": 1
+  },
+  "effort": {
+    "size": "small",
+    "estimated_at": "2026-11-15T12:00:00Z",
+    "by": "agent"
+  }
+}

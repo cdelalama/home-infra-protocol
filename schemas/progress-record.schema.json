@@ -1,0 +1,402 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:home-infra:progress:1",
+  "title": "Progress first usable delivery record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "contract": {
+      "const": "home-infra/progress-v1"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "first-usable"
+        },
+        "scope_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "undefined",
+            "proposed",
+            "accepted"
+          ]
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/source_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptance_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/source_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "scope_version",
+        "status",
+        "outcome",
+        "scope_ref",
+        "acceptance_ref"
+      ]
+    },
+    "criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "pattern": "\\S"
+          },
+          "requirement_ref": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/source_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "verified"
+            ]
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/source_ref"
+            },
+            "maxItems": 20
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "requirement_ref",
+          "status",
+          "verified_at",
+          "evidence_refs"
+        ]
+      },
+      "maxItems": 100
+    },
+    "next_action": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "actor": {
+              "enum": [
+                "agent",
+                "operator",
+                "third_party"
+              ]
+            },
+            "criterion_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "actor",
+            "criterion_id",
+            "description"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+          },
+          "kind": {
+            "enum": [
+              "operator_decision",
+              "operator_input",
+              "external",
+              "technical"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "\\S"
+          },
+          "criterion_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "summary",
+          "criterion_ids"
+        ]
+      },
+      "maxItems": 100
+    },
+    "pause": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "since": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "pattern": "\\S"
+            },
+            "source_ref": {
+              "$ref": "#/$defs/source_ref"
+            }
+          },
+          "required": [
+            "since",
+            "reason",
+            "source_ref"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reviewed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "last_activity_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "delivery_claim": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "source_revision": {
+              "type": "string",
+              "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+            },
+            "delivered_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+            },
+            "receipt_ref": {
+              "$ref": "#/$defs/source_ref"
+            },
+            "scope_version": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "source_revision",
+            "delivered_at",
+            "receipt_ref",
+            "scope_version"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "effort": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": {
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "unknown"
+              ]
+            },
+            "estimated_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+            },
+            "by": {
+              "enum": [
+                "agent",
+                "operator"
+              ]
+            }
+          },
+          "required": [
+            "size",
+            "estimated_at",
+            "by"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract",
+    "project_id",
+    "target",
+    "criteria",
+    "next_action",
+    "blockers",
+    "pause",
+    "reviewed_at",
+    "last_activity_at",
+    "delivery_claim",
+    "effort"
+  ],
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$"
+        },
+        "path": {
+          "type": "string",
+          "maxLength": 240,
+          "pattern": "^[A-Za-z0-9._-][A-Za-z0-9._/ -]*$"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "project_id",
+        "path",
+        "revision",
+        "anchor"
+      ]
+    }
+  }
+}

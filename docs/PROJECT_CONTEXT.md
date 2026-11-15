@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # Project Context - Home Infra Protocol
 
 ## Vision
@@ -187,3 +187,7 @@ instructions, actual delivery evidence and independent review, separately from
 agent login. Protocol owns the rule, ForgeOS checks current delivery and Home
 Infra approves retrieval routes. Historical receipts and runtime accounts remain
 unchanged. Shared reader/admission holds remain explicit.
+
+## Progress prototype
+
+The first Progress source increment is documented in `docs/PROGRESS.md`. It implements a draft record and validator; owner admission, real pilot and consumer delivery are pending.

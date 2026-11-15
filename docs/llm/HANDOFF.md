@@ -1,3 +1,24 @@
+## Progress first source increment - 2026-11-15
+
+Last Updated: 2026-11-15 - Codex. Progress is the operator-selected name; Carlos explicitly requested starting design and implementation of this bounded increment. Version 0.19.0 is a draft task-branch candidate, not an integrated release.
+
+### Open work - next concrete step
+
+Read `docs/PROGRESS.md`, `schemas/progress-record.schema.json` and `scripts/validate-progress.py`. The first implementation contains a bounded project record, canonical validator, three fictional examples and 23 targeted tests. First regularize the canonical Protocol component through the owner's existing-project admission route. Then qualify one real project record; absent accepted scope stays undefined. The owner build matrix currently FAILs: missing admission, NOT_ADOPTED. Publish only the reviewed draft task branch until required integration checks pass. Extend D-006 explicitly at integration, then implement the owner projection and Portal pilot; ForgeOS/DocKit automation follows. No real project is declared delivered by this prototype.
+
+Existing DF work, consumer priorities and owner holds remain independently open. This increment adds no runtime, authentication or fleet migration. Dossier: refresh_required; Protocol admission is missing and the owner's capacity/reader hold remains unresolved. Do not replace history to clear that hold.
+
+### Trace Anchor - Progress
+
+- Role: executor
+- Sent: 2026-11-15 19:03:45 CET (18:03:45 UTC)
+- Subject: Progress first usable delivery record and validator
+- Resulting state: version=0.19.0 draft; gate=blocked-integration
+- Repo state: isolated work/progress-contract-20261115; source publication pending
+- Validation: 120 Protocol tests PASS (23 Progress); exact Opus R3 design/source GO; documentary validation PASS with existing size/reference warnings; diff/version checks PASS
+- Next gate: reviewed draft publication, owner admission and real pilot qualification
+- Dossier: assessment=refresh_required; capture/reader unavailable because admission remains missing; no new accepted revision claimed
+
 ## Scheduled omission monitoring correction - 2026-11-14
 
 Last Updated: 2026-11-14 - Codex. Source candidate 0.18.0; source review, publication and runtime qualification pending.
@@ -127,7 +148,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 
 ## Evaluation candidate identities - 2026-10-11
 

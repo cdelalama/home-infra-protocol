@@ -1,3 +1,7 @@
+## Progress implementation start - 2026-11-15
+
+Read the top of `docs/llm/HANDOFF.md` and `docs/llm/work/progress-contract-20261115.json`. Reviewed draft publication and Protocol admission remain distinct; no Portal delivery is claimed. Preserve all independent prior priorities and holds.
+
 ## Scheduled omission monitoring correction - 2026-11-14
 
 Source candidate 0.18.0; see `docs/llm/HANDOFF.md` and `docs/EXECUTION_EXCEPTIONS.md`. Preserve existing owner priorities and holds. Runtime acceptance is not yet claimed.
@@ -41,7 +45,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 
 ## Evaluation candidate identities - 2026-10-11
 

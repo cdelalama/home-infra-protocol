@@ -1,3 +1,24 @@
+## Progress draft review - 2026-11-15
+
+Exact `claude-opus-5-5`, high effort, native parent/session/round capture.
+R1 and R2 challenged scope changes, decision identity, missing next actions and
+claims against unaccepted scope. R3: CONTRACT_DESIGN_GO and SOURCE_PROTOTYPE_GO
+for the draft task branch only; no remaining code findings. OPERATOR_VIEW_REVISE
+was limited to wording/metadata: admission-before-pilot order, explicit start
+authority in Protocol, complete artifact pointers and assessment versus unavailable
+Dossier capture. Those changes were applied; R3 explicitly requires a diff check,
+not another design review. No integrated delivery is accepted.
+
+Accepted capture manifest digests:
+- R1: `00e4f37dc146fbf81714886a694cdda6fe790302dafb52a115c49bad7149b172`
+- R2: `6a4c9aae37a34344a3bdef92a9429eb37d724e41e9c99f567ed62333f25643e1`
+- R3: `c3427f639aeecf6cf2733e677fbd19d0d86bc98c8ba4078727cf6abc052ce4a4`
+
+Protocol full unit suite: 120 tests PASS, including 23 Progress tests. Reviewer
+read the source but did not independently run tests. Owner build matrix FAIL:
+missing Protocol admission / NOT_ADOPTED. Main integration, real pilot, owner
+projection, Portal, ForgeOS/DocKit and Dossier acceptance remain separate.
+
 ## 2026-11-14 - Scheduled-execution exception maintenance
 
 Exact claude-opus-5-5/high; canonicalModel verified. Native session
@@ -87,7 +108,7 @@ All raw prompts/transcripts and frozen cross-owner diffs stay outside Git.
 Windows installed acceptance, source installation and Home Infra Dossier
 curation/publication/actual-reader acceptance remain distinct follow-up gates.
 
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 
 ## 2026-09-23 - DocKit fleet source update
 

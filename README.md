@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # Home Infra Protocol
 
 A Git-based infrastructure memory protocol for humans, dashboards, and LLM
@@ -102,3 +102,7 @@ Released under the MIT License. See [LICENSE](LICENSE) for details.
 ---
 
 *Documentation scaffold powered by [LLM-DocKit](https://github.com/cdelalama/LLM-DocKit).*
+
+## Progress draft
+
+[Progress](docs/PROGRESS.md) is an optional draft record for first usable delivery. Its validator checks shape and transitions without certifying authority or delivery. Owner admission and real consumer qualification remain pending.

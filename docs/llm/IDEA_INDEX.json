@@ -146,6 +146,25 @@
       "coverage_claim": "declared_corpus_only",
       "remaining_backfill": "Previous historical queue unchanged.",
       "cursor": "At any explicitly omitted scheduled occurrence."
+    },
+    {
+      "id": "B-PROGRESS-20261115",
+      "date": "2026-11-15",
+      "sources": [
+        {
+          "path": "docs/llm/HANDOFF.md",
+          "contains": "Progress"
+        }
+      ],
+      "excluded": [
+        "Unrelated work and raw private conversations."
+      ],
+      "unknown": [
+        "Historical conversations outside the declared batch."
+      ],
+      "coverage_claim": "declared_corpus_only",
+      "remaining_backfill": "Preserve all earlier declared backfill.",
+      "cursor": "Resume owner admission, real pilot and Progress delivery."
     }
   ],
   "entries": [
@@ -333,6 +352,34 @@
         "contains": "## D-015"
       },
       "recall_trigger": "Before omitting scheduled work or suppressing its expected freshness alarm."
+    },
+    {
+      "id": "PROGRESS-FIRST-INCREMENT-20261115",
+      "record": "native",
+      "kind": "operator_request",
+      "title": "Progress: start first usable delivery visibility implementation",
+      "origin": {
+        "date": "2026-11-15",
+        "attribution": "Carlos selected Progress and explicitly asked to start design and implementation.",
+        "sources": [
+          {
+            "path": "docs/llm/HANDOFF.md",
+            "contains": "Progress"
+          }
+        ]
+      },
+      "batch": "B-PROGRESS-20261115",
+      "owner": "home-infra-protocol",
+      "state": "in_progress",
+      "recall_trigger": "Before Progress integration, first-use scope qualification, Portal pilot or ForgeOS project creation changes.",
+      "documentation_refs": [
+        {
+          "path": "docs/llm/HANDOFF.md",
+          "contains": "Progress"
+        }
+      ],
+      "authority": "Carlos, 2026-11-15: selected Progress and requested starting design and implementation.",
+      "rationale": "The first bounded contract and validator prototype exists; real owner admission, pilot and consumer delivery remain pending."
     }
   ],
   "task_reconciliations": [
@@ -369,6 +416,13 @@
       "task": "docs/llm/work/execution-exceptions-20261114.json",
       "ideas": [
         "REF-EXECUTION-EXCEPTIONS-20261114"
+      ],
+      "no_ideas_reason": null
+    },
+    {
+      "task": "docs/llm/work/progress-contract-20261115.json",
+      "ideas": [
+        "PROGRESS-FIRST-INCREMENT-20261115"
       ],
       "no_ideas_reason": null
     }

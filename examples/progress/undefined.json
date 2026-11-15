@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "contract": "home-infra/progress-v1",
+  "project_id": "example-cli",
+  "target": {
+    "id": "first-usable",
+    "scope_version": 1,
+    "status": "undefined",
+    "outcome": null,
+    "scope_ref": null,
+    "acceptance_ref": null
+  },
+  "criteria": [],
+  "next_action": null,
+  "blockers": [],
+  "pause": null,
+  "reviewed_at": null,
+  "last_activity_at": null,
+  "delivery_claim": null,
+  "effort": null
+}

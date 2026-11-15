@@ -43,3 +43,5 @@ targets:
 - path: integrations/dockit/INTEGRATION.md marker: html-comment
 - path: integrations/dockit/templates/infra.contract.yml marker: protocol-profile-comment
 - path: docs/DELIVERY_CONTRACT.md marker: html-comment
+
+- path: docs/PROGRESS.md marker: html-comment

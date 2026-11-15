@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # How To Use This Repository
 
 Home Infra Protocol is a specification and executable contract-validation
@@ -82,3 +82,7 @@ scripts/validate-project-interface.py \
   --contract integrations/dockit/templates/infra.contract.yml \
   --template
 ```
+
+## Try the Progress draft
+
+Run `python3 scripts/validate-progress.py --record examples/progress/pending.json`. A successful result checks shape only; it does not validate the fictional evidence or accept delivery. See `docs/PROGRESS.md` for transitions and remaining integration gates.

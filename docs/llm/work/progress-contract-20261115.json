@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "project": "home-infra-protocol",
+  "id": "progress-contract-20261115",
+  "purpose": "Design and implement the first Progress record contract and validator; preserve existing delivery gates",
+  "branch": "work/progress-contract-20261115",
+  "state": "pending-integration",
+  "next_step": "Publish reviewed draft; regularize owner admission and qualify one real pilot before main integration, owner projection and Portal delivery.",
+  "artifacts": [
+    "docs/PROGRESS.md",
+    "schemas/progress-record.schema.json",
+    "scripts/validate-progress.py",
+    "tests/test_progress.py",
+    "examples/progress/undefined.json",
+    "examples/progress/pending.json",
+    "examples/progress/claimed.json"
+  ]
+}

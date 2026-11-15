@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # Repository Structure
 
 ```text
@@ -94,3 +94,11 @@ home-infra-protocol/
 Operator first-access delivery: see `docs/COMPLETION_RULE.md` and adopter templates/checklists.
 
 - `docs/EXECUTION_EXCEPTIONS.md`: bounded scheduled-execution exception authority and completion.
+
+## Progress draft files
+
+- `docs/PROGRESS.md`: draft semantics and owner boundaries.
+- `schemas/progress-record.schema.json`: closed draft record.
+- `scripts/validate-progress.py`: canonical side-effect-free validator.
+- `examples/progress/`: three fictional records.
+- `tests/test_progress.py`: behavioral boundary regressions.

@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.19.0 -->
 # Home Infra Protocol Specification
 
 > Status: Draft v0.1
@@ -933,3 +933,7 @@ including baseline/receipt binding, protected custody, exact reason matching,
 finite expiry and automatic normal evaluation. Observed status and freshness
 remain unchanged; `next_run_at` is never suppression authority. This optional
 overlay neither changes existing producer schemas nor promotes D-009.
+
+## Progress draft contract
+
+See [Progress](docs/PROGRESS.md) for the proposed first-usable record and canonical validator. This task-branch prototype is not a stabilized compliance contract or accepted consumer integration.

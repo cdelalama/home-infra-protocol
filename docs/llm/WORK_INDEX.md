@@ -25,3 +25,5 @@ Retained records never authorize deleting work or evidence.
 - [operator-access-handoff-20261021](work/operator-access-handoff-20261021.json): pending-integration; usable initial access rule published and installed.
 
 - [execution-exceptions-20261114](work/execution-exceptions-20261114.json): active; Scheduled omission monitoring correction.
+
+- [progress-contract-20261115](work/progress-contract-20261115.json): pending-integration; Progress draft contract and validator, owner admission and Portal pilot pending.
