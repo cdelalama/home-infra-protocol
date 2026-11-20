@@ -41,7 +41,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.18.1 -->
 
 ## Evaluation candidate identities - 2026-10-11
 
@@ -415,6 +415,22 @@ review constraints remain in force. Projects that exclude this section through
 The source policy belongs to LLM-DocKit; Claude Code's user `model` setting is a
 separate runtime default and does not prove that project copies were synchronized.
 <!-- DOCKIT-TEMPLATE:END independent-review-policy -->
+
+<!-- DOCKIT-TEMPLATE:START runtime-lifecycle -->
+### Retire disposable test runtime
+
+Follow docs/RUNTIME_LIFECYCLE.md whenever a task creates disposable runtime.
+Preserve durable evidence outside the container, then retire its exact ID and
+verify disappearance before declaring success. Persist creation intent and run ID;
+reconcile interrupted attempts before retrying. A failed cleanup stops that
+producer. Respect host creation holds and allocation checks before engine writes.
+Debug holds require an owner, reason, finite lease and next action. Record one
+sanitized receipt per run in docs/llm/runtime; none is task-specific with a reason,
+never inferred from missing records. Use scripts/dockit-runtime.py --strict for
+runtime closeout. Do not delete unknown objects, data volumes, images or historical
+snapshots by age. DocKit checks declarations; host reconciliation finds undeclared
+objects. Installing this rule does not install a garbage collector.
+<!-- DOCKIT-TEMPLATE:END runtime-lifecycle -->
 
 <!-- DOCKIT-TEMPLATE:START footer -->
 ---

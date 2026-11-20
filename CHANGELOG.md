@@ -2,6 +2,12 @@
 
 All notable changes to Home Infra Protocol are tracked here.
 
+## [0.18.1] - 2026-11-20
+
+### Changed
+
+- Adopt reviewed disposable-runtime lifecycle and advisory receipt validation; runtime unchanged.
+
 ## [0.18.0] - 2026-11-14
 
 ### Added

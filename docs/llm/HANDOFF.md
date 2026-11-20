@@ -1,3 +1,5 @@
+Last Updated: 2026-11-20 - Codex (shared tooling installation; historical observations preserved).
+
 ## Scheduled omission monitoring correction - 2026-11-14
 
 Last Updated: 2026-11-14 - Codex. Source candidate 0.18.0; source review, publication and runtime qualification pending.
@@ -127,7 +129,7 @@ Last Updated: 2026-10-12 - Codex.
 
 Candidate 0.15.4 includes the CI repair and clarifies service retirement in COMPLETION_RULE and SPEC, with a short installation-checklist pointer. Verification covers fresh and retained consumer sessions; loss of telemetry is not removal authority. Scope/shared-resource/data disposition and immutable history remain explicit. No schema change or new lifecycle state. Checklist historical matches remain report-only; no fleet refresh is implied. Exact source review/publication is next. Protocol Dossier admission remains legacy unresolved; this source-only clarification does not create admission. DF-015/DF-016 priorities remain unchanged.
 
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.18.1 -->
 
 ## Evaluation candidate identities - 2026-10-11
 
@@ -444,6 +446,10 @@ The residual architectural reconciliation that may eventually produce
 `docs/ECOSYSTEM_MAP.md` remains deferred and is not the next protocol gate.
 
 ## Current Status
+
+- Last Updated: 2026-11-20 - Codex (shared tooling only).
+
+Shared tooling maintenance (2026-11-20): adopted reviewed LLM-DocKit aa04548 disposable-runtime lifecycle and advisory receipt checks. Undeclared runtime coverage is unproven. No application runtime or roadmap acceptance changed. See docs/RUNTIME_LIFECYCLE.md.
 
 - Last Updated: 2026-09-23 - Codex (DocKit fleet update).
 - Source tooling: DocKit 4.16.3 adopted; see `docs/llm/DOCKIT_ADOPTION.md`.

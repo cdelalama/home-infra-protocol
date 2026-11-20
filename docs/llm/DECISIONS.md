@@ -1,4 +1,4 @@
-<!-- doc-version: 0.18.0 -->
+<!-- doc-version: 0.18.1 -->
 # Decision Log
 
 Durable decisions for Home Infra Protocol.
